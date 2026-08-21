@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 4：電腦簡介｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="4">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 4</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">理論篇　單元 4</span>
+  <h1>電腦簡介</h1>
+  <p>計算機發展史、電腦世代與種類</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識計算機從機械式到電子式的發展歷程</li>
+<li>了解四個世代電腦的關鍵元件與特色</li>
+<li>認識摩爾定律及其對晶片發展的影響</li>
+<li>分辨超級電腦、大型電腦、工作站、個人電腦與嵌入式電腦</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>計算機的歷史</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>🧮 算盤</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Chinese_Suanpan_Abacus.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Chinese%20Suanpan%20Abacus.jpg?width=460" alt="中國算盤（算珠計算工具）" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 中國算盤（算珠計算工具）<br><small>需連網載入</small></span>
+</a><p>三千多年前中國人發明，是人類最早的機械計算設備之一。</p></div>
+  <div class="tile"><h4>➕ 巴斯卡計算機（1642）</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Blaise_pascal.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Blaise%20pascal.jpg?width=460" alt="巴斯卡 Blaise Pascal 畫像" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 巴斯卡 Blaise Pascal 畫像<br><small>需連網載入</small></span>
+</a><p>法國數學家<strong>巴斯卡（Blaise Pascal）</strong>發明機械計算器，可直接做加減運算。</p></div>
+  <div class="tile"><h4>🧵 打孔卡織布機（1801）</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:A_la_m%C3%A9moire_de_J.M._Jacquard.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20la%20m%C3%A9moire%20de%20J.M.%20Jacquard.jpg?width=460" alt="雅卡爾 Joseph Marie Jacquard 織像（用他發明的織布機織成）" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 雅卡爾 Joseph Marie Jacquard 織像（用他發明的織布機織成）<br><small>需連網載入</small></span>
+</a><p><strong>雅卡爾（Joseph Marie Jacquard）</strong>用打孔卡控制織布機，帶來「資訊可編碼」與「卡片可當程式指令」兩個重要概念。（這張人像其實就是用他發明的織布機「織」出來的）</p></div>
+  <div class="tile"><h4>⚙️ 差分機／分析機（1833）</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Charles_Babbage_1860.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Charles%20Babbage%201860.jpg?width=460" alt="巴貝奇 Charles Babbage 照片" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 巴貝奇 Charles Babbage 照片<br><small>需連網載入</small></span>
+</a><p>英國數學家<strong>巴貝奇（Charles Babbage）</strong>的設計概念與現代電腦極相似，被尊稱為「<strong>電腦之父</strong>」。</p></div>
+  <div class="tile"><h4>🗳️ 何樂禮普查機（1890）</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Hollerith.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hollerith.jpg?width=460" alt="何樂禮 Herman Hollerith 照片" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 何樂禮 Herman Hollerith 照片<br><small>需連網載入</small></span>
+</a><p>由<strong>何樂禮（Herman Hollerith）</strong>設計，以打孔卡儲存資料、電力驅動，協助美國人口普查，把耗時 10 年的工作縮短到 1 年。</p></div>
+  <div class="tile"><h4>💡 內儲程式（1945）</h4><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:JohnvonNeumann-LosAlamos.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/JohnvonNeumann-LosAlamos.jpg?width=460" alt="范紐曼 John von Neumann 照片" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 范紐曼 John von Neumann 照片<br><small>需連網載入</small></span>
+</a><p><strong>范紐曼（John von Neumann，另譯 馮·諾伊曼）</strong>提出把程式全部儲存在電腦內部的概念，開啟「內儲程式」的先河。</p></div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>四個世代的電腦</h2>
+  
+<div class="table-wrap"><table>
+<thead><tr><th>世代</th><th>關鍵元件</th><th>年代</th><th>特色</th></tr></thead>
+<tbody>
+<tr><td>第一代</td><td><strong>真空管</strong></td><td>1946～</td><td>ENIAC 第一台電子電腦，體積龐大、耗電高、易損壞</td></tr>
+<tr><td>第二代</td><td><strong>電晶體</strong></td><td>1947～</td><td>比真空管小 20 倍、省電、故障率低，體積大幅縮小</td></tr>
+<tr><td>第三代</td><td><strong>積體電路 (IC)</strong></td><td>1964～</td><td>IBM 360 代表，把多種元件整合在矽晶片上</td></tr>
+<tr><td>第四代</td><td><strong>超大型積體電路 (VLSI)</strong></td><td>1972～</td><td>一晶片容納數千至數萬個元件，效能飛躍</td></tr>
+</tbody></table></div>
+<div class="callout"><span class="t">💡 這些元件怎麼變成 0 與 1？</span>
+<p>家裡的電燈開關，要用<strong>「人的手指」</strong>去按，燈才會亮。但電腦裡有<strong>幾億個開關</strong>，人的手根本來不及一個一個去按——所以我們需要一種「<strong>不用人手、用電就能控制電</strong>」的魔法開關。真空管、電晶體就是這種<strong>「電子開關」</strong>：<strong>接通（電流過得去）＝ 1、斷開（電流過不去）＝ 0</strong>。</p>
+<ul class="tidy">
+  <li><strong>真空管：</strong>像一道需要<strong>「加熱」才會打開的門</strong>。給燈絲一點電去加熱，它產生的熱就會讓「大門」打開、放電流通過。缺點是體積大、耗電、容易燒壞。</li>
+  <li><strong>電晶體：</strong>像一道<strong>「電子感應門」</strong>。只要在控制端給一點小小的電壓（就像刷一下感應卡），大門立刻打開、放電流通過。又小、又省電、又耐用，因此取代了真空管。</li>
+  <li><strong>積體電路／VLSI：</strong>把幾百萬到幾百億個電晶體（開關）塞進一小片晶片，就成了現在的 CPU。</li>
+</ul>
+<p style="margin:10px 0 0">重點：它們的作用<strong>不是「自己發電」</strong>，而是扮演那隻<strong>「隱形的手」</strong>，用極快的速度去控制後面電路的<strong>通與不通</strong>——通就是 <strong>1</strong>，不通就是 <strong>0</strong>。</p>
+<div class="swx" role="img" aria-label="電子開關示意動畫：開機供電後，控制端給電時開關接通、電流從供電經過燈與開關流到接地、燈亮為 1；控制端沒電時開關斷開、燈滅為 0">
+  <div class="swx-row">
+    <div class="swx-cell">
+      <span class="swx-pwr"><svg class="swx-sym" viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><g fill="none" stroke="var(--brand)" stroke-width="2.4" stroke-linecap="round"><path d="M13 3.5 V12.5"/><path d="M7.7 6.6 A8 8 0 1 0 18.3 6.6"/></g></svg></span>
+      <div class="swx-cap">供電（開機）<br><small>電流從這裡來</small></div>
+    </div>
+    <div class="swx-arrow swx-fa">➜</div>
+    <div class="swx-cell swx-gcell">
+      <div class="swx-ctrlbox"><span class="swx-ctrl">⚡</span><span class="swx-cdown">↓</span></div>
+      <div class="swx-track">
+        <div class="swx-wire"></div>
+        <div class="swx-dots"><span class="swx-dot d1"></span><span class="swx-dot d2"></span><span class="swx-dot d3"></span></div>
+        <span class="swx-door l"></span><span class="swx-door r"></span>
+      </div>
+      <div class="swx-cap">電子開關（電晶體）<br><small>控制端＝隱形的手</small></div>
+    </div>
+    <div class="swx-arrow swx-fa">➜</div>
+    <div class="swx-cell">
+      <div class="swx-bulb">💡</div>
+      <div class="swx-num"><span class="one">1</span><span class="zero">0</span></div>
+      <div class="swx-cap">燈（輸出）</div>
+    </div>
+    <div class="swx-arrow swx-fa">➜</div>
+    <div class="swx-cell">
+      <span class="swx-gnd"><svg class="swx-sym" viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><g fill="none" stroke="var(--text-faint)" stroke-width="2.2" stroke-linecap="round"><line x1="13" y1="3" x2="13" y2="12"/><line x1="4.5" y1="12" x2="21.5" y2="12"/><line x1="7.5" y1="17" x2="18.5" y2="17"/><line x1="10.5" y1="22" x2="15.5" y2="22"/></g></svg></span>
+      <div class="swx-cap">接地<br><small>電流回到大地</small></div>
+    </div>
+  </div>
+  <p class="swx-cap2">電腦一<b>開機（供電）</b>，電流就準備好從左邊流向右邊的<b>接地</b>。中間的開關由<b>控制端</b>（那隻「隱形的手」）決定通不通：控制端一<b>給電</b> → 開關接通、電流通過 → 燈亮 ＝ <b>1</b>；控制端<b>沒電</b> → 開關斷開、電流被擋 → 燈滅 ＝ <b>0</b>。</p>
+</div></div>
+<div class="callout tip"><span class="t">🔗 這種開關，就是拿來做邏輯閘的</span>
+<p>還記得上一單元嗎？我們用開關的<strong>串聯＝AND、並聯＝OR、反相＝NOT</strong> 介紹過邏輯閘——這裡的真空管、電晶體，正是那種<strong>「電子開關」</strong>。整條脈絡是：<strong>電晶體（開關）→ 拼成邏輯閘（AND／OR／NOT）→ 再組成加法器、記憶體…… → 整台電腦</strong>。現在一顆 CPU 裡面，就是<strong>幾百億個這種開關</strong>在飛快地運算。</p></div>
+<div class="grid cols-2">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Eniac%20%28cropped%29.jpg?width=560" alt="第一代電腦 ENIAC，由大量真空管組成、佔滿整個房間" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>第一代電腦 ENIAC，由大量真空管組成、佔滿整個房間</span></div>
+  <figcaption>第一代：ENIAC（1946），用真空管製造，體積龐大、耗電驚人。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Eniac_%28cropped%29.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Replica-of-first-transistor.jpg?width=560" alt="1947 年貝爾實驗室發明的第一顆電晶體複製品" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>1947 年貝爾實驗室發明的第一顆電晶體複製品</span></div>
+  <figcaption>第二代：第一顆電晶體（1947，貝爾實驗室），比真空管小又省電。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Replica-of-first-transistor.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+</div>
+<div class="callout"><span class="t">🔔 冷知識：電晶體與我們的前校長</span>
+<p>把電腦推進第二代的<strong>電晶體</strong>，是 1947 年在美國<strong>貝爾實驗室（Bell Labs）</strong>發明的——這間實驗室誕生過無數改變世界的發明。</p>
+<p style="margin-bottom:0">而我們明道的<strong>明道文教基金會汪董－汪大久（前校長）</strong>，當年也曾是<strong>貝爾實驗室的員工</strong>！
+（<a href="https://www.google.com/search?q=%E6%B1%AA%E5%A4%A7%E4%B9%85+%E8%B2%9D%E7%88%BE%E5%AF%A6%E9%A9%97%E5%AE%A4" target="_blank" rel="noopener">搜尋：汪大久 貝爾實驗室</a>）</p></div>
+<div class="callout tip"><span class="t">📈 摩爾定律 Moore's Law</span>
+<p>1965 年<strong>高登·摩爾（Gordon Moore）</strong>提出：晶片上的電晶體數量約<strong>每兩年翻一倍</strong>。1971 年 Intel 4004 只有 2300 個電晶體，2023 年的 A16 晶片已達<strong>約 160 億個</strong>電晶體。</p>
+<p style="margin-bottom:0">不過近年電晶體越做越小、逼近物理極限，摩爾定律的速度已<strong>明顯放緩</strong>，有人甚至說它「快走到盡頭」。</p></div>
+<div class="diagram-card"><svg class="diagram" viewBox="0 0 320 188" xmlns="http://www.w3.org/2000/svg" role="img"><line class="axis" x1="42" y1="150" x2="305" y2="150"/><line class="axis" x1="42" y1="150" x2="42" y2="18"/><text x="150" y="172" class="cap2" text-anchor="middle">年份 →</text><text x="10" y="90" class="cap2" transform="rotate(-90 10 90)" text-anchor="middle">效能 →</text><line class="samp" x1="42" y1="150" x2="42" y2="153"/><text x="42" y="164" class="cap2" text-anchor="middle" style="font-size:9px">1970</text><line class="samp" x1="120" y1="150" x2="120" y2="153"/><text x="120" y="164" class="cap2" text-anchor="middle" style="font-size:9px">1990</text><line class="samp" x1="210" y1="150" x2="210" y2="153"/><text x="210" y="164" class="cap2" text-anchor="middle" style="font-size:9px">2010</text><line class="samp" x1="285" y1="150" x2="285" y2="153"/><text x="285" y="164" class="cap2" text-anchor="middle" style="font-size:9px">2025</text><polyline class="wave" points="42,148 120,138 180,120 225,96 262,66 295,40" fill="none"/><text x="132" y="116" style="font-size:9px;fill:var(--brand)">摩爾定律（約每 2 年 ×2）</text><polyline class="wave dg" points="205,148 240,120 262,84 282,50 298,24" fill="none"/><text x="150" y="38" style="font-size:9px;fill:var(--accent)">輝達定律（GPU AI 效能約每年 ×2）</text><text x="150" y="182" class="cap2" text-anchor="middle" style="font-size:8px">※ 示意圖：實際為對數成長，此處僅比較兩者的成長速度</text></svg></div>
+<div class="callout"><span class="t">🚀 輝達定律 Huang's Law（黃氏定律）</span>
+<p>以 NVIDIA 創辦人<strong>黃仁勳（Jensen Huang）</strong>命名。他指出：靠著 GPU 架構、軟體與製程的整體進步，<strong>GPU 用於 AI 的運算效能大約每年就翻倍</strong>，換算下來約<strong>十年提升 1000 倍</strong>——遠比摩爾定律（每兩年 2 倍）快得多。這也是為什麼 AI 這幾年進步這麼快。</p>
+<p style="margin-bottom:0;font-size:.82rem;color:var(--text-faint)">來源：黃氏定律（維基百科）、《數位時代》《INSIDE》等報導；此為 NVIDIA 提出的觀察，非嚴格科學定律。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>電腦的種類</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Frontier_Supercomputer_%283%29.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Frontier%20Supercomputer%20%283%29.jpg?width=460" alt="Frontier 超級電腦機櫃" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ Frontier 超級電腦機櫃<br><small>需連網載入</small></span>
+</a><h4>🖥️ 超級電腦</h4><p>處理速度最快，強調<strong>浮點運算</strong>。用於氣象預報、國防、太空研究（見 TOP500 榜單）。圖為美國橡樹嶺國家實驗室的 <strong>Frontier</strong>，全球首部突破每秒百億億次（Exascale）的超級電腦。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:IBM_Z15_mainframe.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/IBM%20Z15%20mainframe.jpg?width=460" alt="IBM z15 大型主機" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ IBM z15 大型主機<br><small>需連網載入</small></span>
+</a><h4>🏦 大型電腦</h4><p>傾向<strong>整數運算</strong>，重視安全性、可靠性與穩定性。用於銀行、訂單等海量交易資料。圖為 <strong>IBM z15</strong> 大型主機。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Dell_Precision_T3500_Workstation_-_IPAS_Research.jpeg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dell%20Precision%20T3500%20Workstation%20-%20IPAS%20Research.jpeg?width=460" alt="Dell Precision 工作站" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ Dell Precision 工作站<br><small>需連網載入</small></span>
+</a><h4>🛠️ 工作站</h4><p>專注數學計算與圖形運算，常用於工程設計與科研分析。外型像高階個人電腦，但零件更專業、更耐操。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Desktop_personal_computer.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Desktop%20personal%20computer.jpg?width=460" alt="桌上型個人電腦" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 桌上型個人電腦<br><small>需連網載入</small></span>
+</a><h4>💻 個人電腦</h4><p>體積小、價格低、易用。桌機、筆電、平板皆屬之，是你我日常最常接觸的電腦。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Arduino_Uno_-_R3.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Arduino%20Uno%20-%20R3.jpg?width=460" alt="Arduino Uno 微控制板" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ Arduino Uno 微控制板<br><small>需連網載入</small></span>
+</a><h4>📟 嵌入式電腦</h4><p>藏在裝置裡的控制核心：機器人、智慧穿戴、汽車電子、智慧家電。圖為常見於自造課程的 <strong>Arduino</strong> 控制板。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:BrainGate.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/BrainGate.jpg?width=460" alt="BrainGate 腦機介面晶片" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ BrainGate 腦機介面晶片<br><small>需連網載入</small></span>
+</a><h4>🤖 AI 與電腦結合</h4><p>智慧醫療、自動駕駛、智能助理，甚至<strong>腦機介面（BCI）</strong>——把大腦的神經訊號直接連上電腦。像馬斯克的 <strong>Neuralink</strong> 就是這類技術；圖為同屬腦機介面的 <strong>BrainGate</strong> 神經晶片。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Cern_datacenter.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Cern%20datacenter.jpg?width=460" alt="資料中心大量伺服器機房" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 資料中心大量伺服器機房<br><small>需連網載入</small></span>
+</a><h4>☁️ 雲端電腦（Cloud Computing）</h4><p>不需要自己買高性能電腦，而是<strong>透過網路</strong>使用遠端伺服器的運算與儲存。用途如 Google Drive、線上 AI、影音串流、企業系統；代表業者有 Amazon Web Services、Microsoft Azure、Google Cloud。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Servers%20in%20a%20Rack.jpg?width=460" alt="機櫃中的伺服器" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 機櫃中的伺服器<br><small>需連網載入</small></span>
+</a><h4>🖥️ 伺服器（Server）</h4><p>專門<strong>提供服務</strong>給其他電腦，例如網站、遊戲、電子郵件、AI 推論伺服器。和大型主機不同，伺服器通常由<strong>許多台一起運作</strong>。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Assorted_smartphones.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Assorted%20smartphones.jpg?width=460" alt="各式智慧型手機" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ 各式智慧型手機<br><small>需連網載入</small></span>
+</a><h4>📱 行動裝置（Mobile Computing）</h4><p>智慧型手機和平板其實也是<strong>完整的電腦</strong>。特色：低耗電、採 <strong>ARM 處理器</strong>、觸控操作，還內建 GPS、相機、陀螺儀等感測器。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Waymo_self-driving_car_front_view.gk.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Waymo%20self-driving%20car%20front%20view.gk.jpg?width=460" alt="Waymo 自動駕駛車" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ Waymo 自動駕駛車<br><small>需連網載入</small></span>
+</a><h4>🤖 邊緣電腦（Edge Computing）</h4><p>資料<strong>直接在設備附近就地處理</strong>，不必全部送到雲端，反應更快。例如自動駕駛、工廠自動化、智慧攝影機、AI 監控。圖為自動駕駛車。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:Tensor_Processing_Unit_3.0.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tensor%20Processing%20Unit%203.0.jpg?width=460" alt="Google TPU 張量處理器" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ Google TPU 張量處理器<br><small>需連網載入</small></span>
+</a><h4>🧠 AI 專用電腦</h4><p>專門<strong>訓練與執行人工智慧</strong>，常見硬體有 <strong>GPU、TPU、NPU</strong>（AI 加速器）。像手機裡的 NPU 就能快速完成拍照、人臉辨識和語音辨識。圖為 Google 的 TPU。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:IBM_Quantum_System_One.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/IBM%20Quantum%20System%20One.jpg?width=460" alt="IBM Quantum System One 量子電腦" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ IBM Quantum System One 量子電腦<br><small>需連網載入</small></span>
+</a><h4>⚛️ 量子電腦（Quantum Computer）</h4><p>利用<strong>量子位元（Qubit）</strong>運算，目前仍在研究與早期商業化階段。適合密碼學、新藥研發、材料科學、最佳化問題，但還無法取代一般個人電腦。圖為 IBM Quantum System One。</p></div>
+  <div class="tile"><a class="tile-imgwrap" href="https://commons.wikimedia.org/wiki/File:DNA_Double_Helix_by_NHGRI.jpg" target="_blank" rel="noopener" title="圖片來源：Wikimedia Commons ↗（點圖看原始出處）">
+  <img class="tile-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/DNA%20Double%20Helix%20by%20NHGRI.jpg?width=460" alt="DNA 雙螺旋結構" loading="lazy" onerror="this.closest('.tile-imgwrap').classList.add('img-fail')">
+  <span class="tile-imgfb">🖼️ DNA 雙螺旋結構<br><small>需連網載入</small></span>
+</a><h4>🧬 生物電腦（Biological Computer）</h4><p>利用 <strong>DNA、蛋白質或活細胞</strong>進行運算，目前大多仍在研究階段。未來可能應用於醫療、生物工程、分子計算。</p></div>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>電腦的優點與使用注意</h2>
+  
+<div class="grid cols-2">
+<div class="card"><h3>✅ 電腦的優點</h3>
+<ul><li><strong>高速處理</strong>：每百萬分之一秒可執行多個運算。</li>
+<li><strong>準確性高</strong>：輸入正確，結果精準無誤。</li>
+<li><strong>儲存量大</strong>：小型裝置即可存海量資料。</li>
+<li><strong>傳輸便利</strong>：透過網路快速交換資訊。</li></ul>
+</div>
+<div class="card"><h3>⚠️ 使用注意事項</h3>
+<ul><li><strong>確保輸入正確</strong>：避免「垃圾進、垃圾出」(GIGO)。</li>
+<li><strong>資訊查證</strong>：網路資訊未必可靠，使用前要驗證。</li>
+<li><strong>防止資料遺失</strong>：注意軟硬體維護。</li>
+<li><strong>定期備份</strong>：建立備份機制防止意外損失。</li></ul>
+</div>
+</div>
+<div class="callout"><span class="t">🖱️ 使用者介面的演進</span>
+<p>從純文字的 <strong>DOS</strong> 命令列 → 圖形化介面 <strong>GUI</strong>（圖示、視窗、滑鼠）→ 自然語言介面（語音／文字與 AI 互動）→ 未來的腦機介面。核心趨勢：介面越來越貼近「人本來就習慣的方式」——從背指令 → 用點的 → 用說的 → 用想的。</p>
+<p class="uigif-hint">👆 把滑鼠移到下面四個方框（手機點一下），看看每個階段「怎麼操作」。</p>
+<div class="uievo-flow">
+  <div class="uigif uievo-card" onclick="this.classList.toggle('on')" tabindex="0">
+    <div class="uievo-ic">⌨️</div><div class="uievo-nm">文字命令列</div><div class="uievo-tg">DOS・1980s</div><div class="uievo-nt">打指令、背指令操作</div>
+    <div class="uigif-pop"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/MS-DOS%20Deutsch.png?width=320" alt="早期 MS-DOS 黑底命令列畫面" loading="lazy" onerror="this.closest('.uigif-pop').classList.add('nogif')"><div class="uigif-cap">早期的 <b>DOS</b>：黑底白字，整台電腦都要靠「打指令」操作，指令還得自己背（圖：維基百科）</div></div>
+  </div>
+  <div class="uievo-ar">→</div>
+  <div class="uigif uievo-card" onclick="this.classList.toggle('on')" tabindex="0">
+    <div class="uievo-ic">🖱️</div><div class="uievo-nm">圖形介面</div><div class="uievo-tg">GUI・1990s</div><div class="uievo-nt">視窗、圖示、滑鼠點選</div>
+    <div class="uigif-pop"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ubuntu%2020.04%20Desktop%20animated%20GIF.gif?width=320" alt="圖形介面桌面操作示範" loading="lazy" onerror="this.closest('.uigif-pop').classList.add('nogif')"><div class="uigif-cap">其實你<b>現在正在看的這個網頁</b>——有視窗、圖示、按鈕，還能用滑鼠點——就是 <b>GUI</b>（圖形使用者介面）！不用背指令，用點的、拖的就能操作（圖：Ubuntu 桌面，Wikimedia Commons）</div></div>
+  </div>
+  <div class="uievo-ar">→</div>
+  <div class="uigif uievo-card" onclick="this.classList.toggle('on')" tabindex="0">
+    <div class="uievo-ic">💬</div><div class="uievo-nm">自然語言</div><div class="uievo-tg">AI・2020s</div><div class="uievo-nt">用說的跟 AI 對話</div>
+    <div class="uigif-pop"><div class="uigif-demo ai-demo"><span class="chat u">幫我整理明天的行程</span><span class="chat b">好，我幫你排好了 <span class="dots"><i></i><i></i><i></i></span></span></div><div class="uigif-cap">直接用「說的」或「打字」跟 AI 對話，電腦就聽得懂（自製示意動畫）</div></div>
+  </div>
+  <div class="uievo-ar">→</div>
+  <div class="uigif uievo-card" onclick="this.classList.toggle('on')" tabindex="0">
+    <div class="uievo-ic">🧠</div><div class="uievo-nm">腦機介面</div><div class="uievo-tg">BCI・未來</div><div class="uievo-nt">用腦波操控（發展中）</div>
+    <div class="uigif-pop"><div class="uigif-demo bci-demo"><span class="brain">🧠</span><span class="wav">〜〜〜</span><span class="mon">💻</span></div><div class="uigif-cap">用腦波直接操控電腦，連手都不用動（發展中，自製示意動畫）。<br>延伸影片：<a class="uigif-vid" href="https://www.youtube.com/watch?v=23zW_jXC14g" target="_blank" rel="noopener">▶ TVBS：馬斯克腦機介面突破，助漸凍症患者自主進食 ↗</a><a class="uigif-vid" href="https://www.youtube.com/watch?v=sRmglNd1NuI" target="_blank" rel="noopener">▶ GQ：腦機介面專家解析常見疑問 ↗</a></div></div>
+  </div>
+</div></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>家裡的電燈開關要用「手」去按；但電腦裡有幾億個開關，為什麼<strong>不能</strong>用這種要用手按的開關？真空管、電晶體又是怎麼在<strong>「沒有人手」</strong>的情況下做出 <strong>1 和 0</strong> 的？（提示：用「電去控制電」「隱形的手」來想）</li>
+  <li><strong>電晶體</strong>比真空管好在哪裡？為什麼第二代電腦要用它取代真空管？</li>
+  <li>「摩爾定律」和「輝達定律」各在講什麼？兩者的成長速度差在哪？</li>
+  <li>氣象局做數值天氣預報，最適合用哪一種電腦？為什麼？</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>因為幾億個開關，人的手根本按不完、也太慢。真空管／電晶體是<strong>「電子開關」</strong>：只要在控制端給一點電（真空管靠<strong>加熱</strong>、電晶體靠<strong>一點電壓</strong>，就像刷感應卡），就能像一隻<strong>「隱形的手」</strong>把電路<strong>接通或斷開</strong>——<strong>接通（電流通過）＝ 1、斷開（不通）＝ 0</strong>，而且速度極快。</li>
+<li>電晶體比真空管<strong>小很多、更省電、故障率低、又耐用</strong>，所以第二代電腦用它取代真空管。</li>
+<li>摩爾定律：晶片上電晶體數量約<strong>每 2 年翻一倍</strong>；輝達定律：GPU 的 AI 效能約<strong>每年翻一倍</strong>（約 10 年 1000 倍），比摩爾定律快很多。</li>
+<li>超級電腦，因其<strong>浮點運算</strong>效能最強，適合大量數值運算。</li>
+</ol></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit03.html"><div class="dir">← 上一單元</div><div class="ttl">資料運算與儲存</div></a>
+    <a class="next" href="unit05.html"><div class="dir">下一單元 →</div><div class="ttl">電腦五大單元</div></a>
+  </nav>
+</main>
+
+
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

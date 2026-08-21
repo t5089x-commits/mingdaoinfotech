@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 6：電腦硬體與組裝｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="6">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 6</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">理論篇　單元 6</span>
+  <h1>電腦硬體與組裝</h1>
+  <p>主機板、CPU、RAM、顯示卡、儲存裝置</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識主機板、CPU、RAM、顯示卡等主要零組件</li>
+<li>了解各零組件的品牌、規格與等級差異</li>
+<li>認識 SSD / HDD 的介面與差異</li>
+<li>建立依需求挑選與組裝一台電腦的觀念</li>
+  </ul>
+</div>
+<nav class="part-nav" aria-label="零件快速跳轉">
+  <div class="part-nav-t">🧭 零件跳轉</div>
+  <a href="#sec1">🟩 主機板</a>
+  <a href="#sec2">🧠 CPU</a>
+  <a href="#sec3">🧩 RAM／顯卡</a>
+  <a href="#sec4">💽 儲存裝置</a>
+  <a href="#sec5">⚡ 電源／機殼／螢幕</a>
+  <a href="#sec6">🛠️ 需求分析與組裝</a>
+</nav>
+<div class="part">
+<figure class="fig">
+  <img src="images/case_inside.jpg" alt="電腦主機內部圖，標示電源供應器、風扇、CPU、主機板、顯示卡、記憶體、光碟機、硬碟" loading="lazy" style="background:#fff">
+  <figcaption>打開機殼看內部的樣子。</figcaption>
+</figure>
+  <div>
+    <p>先打開一台桌機看看裡面有什麼——各個零組件都裝在機殼裡，並接到主機板上：</p>
+    <ul class="tidy">
+      <li>🔌 電源供應器（供電）</li>
+      <li>🧠 CPU（上面有散熱風扇）</li>
+      <li>🟩 主機板（把一切連在一起）</li>
+      <li>🧩 記憶體、🎮 顯示卡、💽 硬碟／光碟機</li>
+    </ul>
+  </div>
+</div>
+<section class="block" id="sec1">
+  <h2><span class="num">01</span>主機板 Motherboard</h2>
+  
+<div class="part">
+<figure class="fig">
+  <img src="images/mb_annotated.jpg" alt="主機板各部位標示圖：PCIE x16 接顯卡、M.2 接口、SATA 接口、CPU 插槽、記憶體插槽等" loading="lazy" style="background:#fff">
+  <figcaption>主機板各部位標示。</figcaption>
+</figure>
+  <div>
+    <p>主機板是電腦的<strong>中樞</strong>，各種周邊都要與它連結才能發揮功能，是 CPU 與外界溝通的橋樑。</p>
+    <p>圖中標出了各插槽與接口的位置，對照下表就能看懂每個接口是做什麼的。</p>
+  </div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>接口 / 插槽</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>PCIe x16</td><td>主要接<strong>顯示卡</strong></td></tr>
+<tr><td>PCIe x1</td><td>接網路卡、音效卡等</td></tr>
+<tr><td>CPU 插槽</td><td>安裝 CPU</td></tr>
+<tr><td>記憶體插槽</td><td>安裝 RAM</td></tr>
+<tr><td>M.2 接口</td><td>安裝 M.2 SSD（新、速度快）</td></tr>
+<tr><td>SATA 接口</td><td>接 SATA SSD / HDD（舊）</td></tr>
+</tbody></table></div>
+<ul class="tidy">
+  <li><strong>品牌：</strong>華碩、技嘉、微星、華擎</li>
+  <li><strong>晶片組等級（低→高）：</strong>Intel 為 B → H → Z；AMD 為 A → B → X</li>
+  <li><strong>板型：</strong>特大、大板、小板、迷你板</li>
+</ul>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>CPU 中央處理器</h2>
+  
+<div class="part">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/AMD%20Ryzen%209%209950X.jpg?width=560" alt="AMD Ryzen 9 桌上型處理器正面" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>AMD Ryzen 9 桌上型處理器正面</span></div>
+  <figcaption>CPU（中央處理器）：電腦的大腦，負責運算與控制。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:AMD_Ryzen_9_9950X.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+  <div>
+    <p>CPU 是電腦的運算核心。市面上主要有兩大品牌，各自有由低（入門）到高（高階）的產品線：</p>
+    <div class="tile" style="margin-bottom:12px"><h4>🔵 Intel</h4>
+      <p style="margin:0">目前（2024 年起）改用 <strong>Core Ultra</strong> 命名：</p>
+      <p style="margin:2px 0">Core Ultra 5 → Ultra 7 → <strong>Ultra 9</strong>（例：Ultra 7 265K）</p>
+      <p style="margin:2px 0 0;font-size:.86rem;color:var(--text-faint)">舊命名（前幾代）：Core i3 → i5 → i7 → i9</p></div>
+    <div class="tile"><h4>🔴 AMD</h4>
+      <p style="margin:0">Ryzen 5 → Ryzen 7 → <strong>Ryzen 9</strong></p>
+      <p style="margin:2px 0 0;font-size:.86rem;color:var(--text-faint)">目前為 9000 系列（Zen 5）；遊戲最強是 X3D 版，如 Ryzen 7 9800X3D</p></div>
+  </div>
+</div>
+<h3>看懂型號後面的英文字母（尾碼）</h3>
+<p>CPU 型號後面的字母代表它的<strong>功能定位</strong>，挑選時很重要：</p>
+<div class="grid cols-2">
+  <div class="card"><h4>🔵 Intel 常見尾碼</h4>
+  <div class="table-wrap"><table>
+  <thead><tr><th>尾碼</th><th>意義</th></tr></thead>
+  <tbody>
+  <tr><td><strong>K</strong></td><td>不鎖倍頻、可超頻（如 Core Ultra 7 265K）</td></tr>
+  <tr><td><strong>F</strong></td><td><strong>沒有內建顯示晶片</strong>，一定要搭獨立顯卡（如 Ultra 5 245F）</td></tr>
+  <tr><td><strong>U</strong></td><td>筆電專用，極低功耗</td></tr>
+  </tbody></table></div></div>
+  <div class="card"><h4>🔴 AMD 常見尾碼</h4>
+  <div class="table-wrap"><table>
+  <thead><tr><th>尾碼</th><th>意義</th></tr></thead>
+  <tbody>
+  <tr><td><strong>X</strong></td><td>標準效能版，頻率通常較高</td></tr>
+  <tr><td><strong>X3D</strong></td><td>內建大容量快取（3D V-Cache），<strong>遊戲效能最強</strong>（如 9800X3D）</td></tr>
+  <tr><td><strong>F</strong></td><td>沒有內建顯示晶片，要搭獨立顯卡</td></tr>
+  </tbody></table></div></div>
+</div>
+<div class="callout tip"><span class="t">💡 記一個重點</span><p>看到 <strong>F</strong>（Intel）或 <strong>F</strong>（AMD）結尾＝<strong>沒有內顯</strong>，這台電腦就<strong>一定要裝獨立顯卡</strong>才有畫面；其餘型號多半有內顯，文書、上網、看影片不必另外買顯卡。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>RAM 主記憶體與顯示卡</h2>
+  
+<div class="grid cols-2">
+  <div class="card"><h3>🧩 RAM 主記憶體</h3>
+  <figure class="fig"><img src="https://pimg.1px.tw/ofeyhong/1730720226-1135020535-g.jpg" alt="DDR5 記憶體實體照片" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')"><div class="img-fallback">🖼️ 圖片需連網載入<br><span>DDR5 記憶體實體照</span></div><figcaption>DDR5 記憶體實體照。<a class="credit" href="https://ofeyhong.pixnet.net/blog/posts/12059851482" target="_blank" rel="noopener">圖片來源：ofeyhong 痞客邦 ↗</a></figcaption></figure>
+  <p><strong>品牌：</strong>美光、金士頓、威剛、芝奇、十銓、海盜船等。</p>
+  <p><strong>容量：</strong>4G、8G、16G、32G…（越大越能同時開多個程式）。</p></div>
+  <div class="card"><h3>🎮 顯示卡</h3>
+  <figure class="fig">
+  <img src="images/gpu_naming.jpg" alt="顯示卡型號解讀：RTX 3060 Ti 的系列、世代、等級、後綴" loading="lazy" style="background:#fff">
+  <figcaption>看懂顯示卡型號：以 RTX 3060 Ti 為例＝系列＋世代＋等級＋後綴。</figcaption>
+</figure>
+  <ul class="tidy">
+    <li><strong>GPU 晶片廠：</strong>NVIDIA、AMD</li>
+    <li><strong>板卡品牌：</strong>華碩、技嘉、微星等</li>
+    <li><strong>等級（看型號中間數字）：</strong>2~4 低階、5 中階、6~9 高階</li>
+  </ul></div>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>儲存裝置：HDD 與 SSD</h2>
+  
+<div class="grid cols-2">
+<div class="card"><h3>💽 HDD 傳統硬碟</h3>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Laptop-hard-drive-exposed.jpg?width=760" alt="拆開外殼的傳統硬碟，可看到碟片與讀寫磁頭" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>拆開外殼的傳統硬碟，可看到碟片與讀寫磁頭</span></div>
+  <figcaption>傳統硬碟（HDD）：靠碟片旋轉＋磁頭讀寫（機械式），容量大、便宜。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Laptop-hard-drive-exposed.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<ul class="tidy">
+  <li><strong>品牌：</strong>Seagate（希捷）、WD（威騰）、Toshiba（東芝）</li>
+  <li><strong>依用途分：</strong>家用型（三年保）、企業型（五年保）、監控型、NAS 型</li>
+</ul></div>
+<div class="card"><h3>⚡ SSD 固態硬碟</h3>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1TB%202280%20NVME%20SSD.jpg?width=760" alt="一條 M.2 2280 規格的 NVMe 固態硬碟" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>一條 M.2 2280 規格的 NVMe 固態硬碟</span></div>
+  <figcaption>M.2 NVMe SSD：用快閃記憶體（無機械），體積小、速度快。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:1TB_2280_NVME_SSD.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<ul class="tidy">
+  <li><strong>儲存顆粒（壽命/成本）：</strong>SLC → MLC → TLC → QLC</li>
+  <li>沒有機械結構，較耐震、安靜、省電</li>
+</ul></div>
+</div>
+<h3>三種儲存裝置比較</h3>
+<div class="table-wrap"><table class="center">
+<thead><tr><th>項目</th><th>傳統硬碟 HDD</th><th>SATA SSD</th><th>M.2 NVMe SSD</th></tr></thead>
+<tbody>
+<tr><td>介面</td><td>SATA</td><td>SATA</td><td><strong>M.2</strong></td></tr>
+<tr><td>通道</td><td>SATA（窄）</td><td>SATA（窄）</td><td><strong>PCIe（寬）</strong></td></tr>
+<tr><td>協議</td><td>AHCI</td><td>AHCI</td><td><strong>NVMe</strong></td></tr>
+<tr><td>讀取速度（約）</td><td>100～200 MB/s</td><td>約 500 MB/s</td><td><strong>3500 MB/s 以上</strong></td></tr>
+<tr><td>運作原理</td><td>碟片旋轉＋磁頭（機械）</td><td colspan="2">快閃記憶體（無機械）</td></tr>
+<tr><td>優點</td><td>容量大、最便宜</td><td>比 HDD 快、耐震</td><td><strong>最快</strong>、體積最小</td></tr>
+<tr><td>缺點</td><td>慢、怕震、有噪音</td><td>比 NVMe 慢</td><td>單位容量較貴</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">💡 速度差多少？</span><p>HDD ＜ SATA SSD ＜ M.2 NVMe SSD。從 HDD 換成 NVMe SSD，開機和開程式的速度感受最明顯。</p></div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>電源、機殼與螢幕</h2>
+  
+<div class="grid cols-3">
+  <div class="tile"><h4>🔌 電源供應器</h4>
+  <figure class="fig">
+  <img src="images/psu_80plus.jpg" alt="80 PLUS 效率認證等級：白牌、銅牌、銀牌、金牌、白金、鈦金" loading="lazy" style="background:#fff">
+  <figcaption>80 PLUS 效率等級（低→高）：白牌→銅→銀→金→白金→鈦金。</figcaption>
+</figure>
+  <ul class="tidy" style="margin-top:6px">
+    <li>常見瓦數：450／550／650／750／850W</li>
+    <li>等級越高越省電、用料通常越好</li>
+  </ul>
+  <p style="font-size:.85rem;margin:6px 0 0"><strong>怎麼選瓦數／等級？</strong></p>
+  <ul class="tidy" style="font-size:.85rem">
+    <li>文書機（無獨顯）：450～550W、白牌／銅牌就夠</li>
+    <li>中階遊戲機（有獨顯）：650～750W、銅牌～金牌</li>
+    <li>高階／高瓦顯卡：750W 以上、金牌以上較穩</li>
+  </ul></div>
+  <div class="tile"><h4>🗄️ 機殼</h4>
+  <figure class="fig">
+  <img src="images/case_types.jpg" alt="三種機殼款式：一般型、側透型、側透 +RGB" loading="lazy" style="background:#fff">
+  <figcaption>機殼款式：一般型、側透型、側透 +RGB。</figcaption>
+</figure>
+  <ul class="tidy" style="margin-top:6px">
+    <li>款式：一般型、側透型、側透 +RGB</li>
+    <li>規格：ATX、mATX</li>
+  </ul>
+  <div class="callout warn" style="margin-top:8px"><span class="t">⚠ 要對到主機板大小！</span>
+  <p style="font-size:.85rem;margin-bottom:0">買機殼要看能不能裝下你的主機板：<br>
+  ・<strong>ATX 機殼</strong>：可裝 ATX 大板（約 30.5 × 24.4 cm）<br>
+  ・<strong>mATX 機殼</strong>：裝 mATX 小板（約 24.4 × 24.4 cm）<br>
+  大機殼通常能裝小板，反過來則不行。</p></div></div>
+  <div class="tile"><h4>🖥️ 螢幕</h4>
+  <figure class="fig">
+  <img src="images/monitor_ports.jpg" alt="螢幕接頭比較：D-Sub(VGA)、DVI-D、HDMI、DisplayPort" loading="lazy" style="background:#fff">
+  <figcaption>常見螢幕接頭：D-Sub(VGA)、DVI、HDMI、DisplayPort。</figcaption>
+</figure>
+  <ul class="tidy" style="margin-top:6px">
+    <li>面板色彩：IPS ＞ VA ＞ TN</li>
+    <li>反應速度：TN ＞ IPS ＞ VA</li>
+    <li>解析度：常見 1920×1080（Full HD）</li>
+    <li>更新率：電競建議 120Hz 以上</li>
+    <li>接頭：建議具備 HDMI／DP</li>
+  </ul></div>
+</div>
+<h3>認識兩種主流螢幕接頭：HDMI 與 DP</h3>
+<div class="grid cols-2">
+  <div class="tile"><h4>📺 HDMI</h4><p>最普及的影音接頭，<strong>影像＋聲音一條線搞定</strong>。電視、螢幕、遊戲機幾乎都有，接電視、投影機很方便。</p></div>
+  <div class="tile"><h4>🖥️ DisplayPort（DP）</h4><p>電腦與顯示卡上更常見，<strong>高解析度、高更新率</strong>（如 2K/4K 144Hz 以上）表現通常更好，打電競、接多螢幕常用它。</p></div>
+</div>
+<div class="grid cols-2">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/HDMI%20connector-male%202%20sharp%20PNr%C2%B00059.jpg?width=440" alt="HDMI 接頭：左右對稱的倒梯形" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>HDMI 接頭：左右對稱的倒梯形</span></div>
+  <figcaption><strong>HDMI</strong>：接頭是<strong>左右對稱的倒梯形</strong>。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:HDMI_connector-male_2_sharp_PNr%C2%B00059.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/DisplayPort%20connector-male-front%20PNr%C2%B00442.jpg?width=440" alt="DisplayPort 接頭正面：有一角是斜切的（缺一角）" loading="lazy"
+       onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>DisplayPort 接頭正面：有一角是斜切的（缺一角）</span></div>
+  <figcaption><strong>DisplayPort（DP）</strong>：注意接頭<strong>有一角是斜切的（缺一角）</strong>。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:DisplayPort_connector-male-front_PNr%C2%B00442.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+</div>
+<p style="font-size:.85rem;color:var(--text-faint);margin:2px 0 0">看接頭形狀就能分辨：<strong>HDMI 左右對稱、DP 缺一角</strong>。（兩張圖皆取自 Wikimedia Commons，可自由使用，沒有版權疑慮）</p>
+<div class="reveal" onclick="toggleWork(this)"><span class="wk-arrow">▶</span> 🕹️ 冷知識：為什麼會有 DP？</div>
+<div class="answer">
+<p>HDMI 由幾家消費電子大廠主導，<strong>廠商每年要付授權金（權利金）</strong>。於是電腦業界的 VESA 組織在 2006 年推出 <strong>DisplayPort</strong>，主打<strong>「免權利金」的開放標準</strong>，用來取代老舊的 VGA／DVI，也讓電腦廠不必再付 HDMI 授權費——這就是 DP 出現的主因。</p>
+<p style="margin-bottom:0;font-size:.82rem;color:var(--text-faint)">說法來源：DisplayPort vs HDMI 比較（新基科技、EcLife 等）；DisplayPort 為 VESA 於 2006 年發布的免權利金標準。</p></div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>需求分析與組裝專題</h2>
+  
+<p>組裝一台電腦前，先做<strong>需求分析</strong>：這台電腦要拿來做什麼？再依需求與預算配置零組件。</p>
+<div class="table-wrap"><table>
+<thead><tr><th>用途</th><th>配置重點</th></tr></thead>
+<tbody>
+<tr><td>文書上網</td><td>CPU <strong>內顯即可</strong>、<strong>16GB RAM</strong>（8GB 已偏緊）、<strong>NVMe SSD</strong>；不需獨立顯卡</td></tr>
+<tr><td>遊戲電競</td><td>中高階<strong>獨立顯卡</strong>（如 RTX 5060 以上）、<strong>16～32GB RAM</strong>（32GB 逐漸成主流）、<strong>高更新率螢幕</strong>（144Hz 以上）</td></tr>
+<tr><td>影音剪輯 / 繪圖</td><td>多核心 CPU、<strong>32GB 以上 RAM</strong>、大容量高速 <strong>NVMe SSD</strong>；建議搭獨立顯卡做 GPU 加速</td></tr>
+</tbody></table></div>
+<p style="font-size:.82rem;color:var(--text-faint);margin:6px 0 0">※ 依 <strong>2026 年</strong>市場現況調整：文書機的 RAM 已從 8GB 提升到 <strong>16GB</strong> 較安心；遊戲／剪輯的 <strong>32GB</strong> 正逐漸成為新標準，NVMe SSD 也幾乎是標配。（參考：歐飛先生、無尾熊電腦、renjoyit 等 2026 組裝指南）</p>
+<div class="callout warn"><span class="t">🧰 組裝提醒</span><p>組裝時注意：CPU 與主機板腳位相容、電源瓦數足夠、記憶體與主機板相容、機殼容納得下顯示卡長度。</p></div>
+<a class="compiler-cta" href="https://www.coolpc.com.tw/evaluate.php" target="_blank" rel="noopener">
+  <span class="ic">🛒</span>
+  <span class="tx"><strong>原價屋線上估價系統（作業要用）</strong><small>用它挑選零組件、配一台電腦並估算價格（另開新分頁）</small></span>
+  <span class="go">↗</span>
+</a>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>顯示卡通常安裝在主機板的哪個插槽？</li>
+  <li>M.2 NVMe SSD 與 SATA SSD，哪個速度較快？</li>
+  <li>Intel 目前的 <strong>Core Ultra</strong> 處理器，由低到高排列：Ultra 9、Ultra 5、Ultra 7，正確順序是？</li>
+  <li>CPU 型號結尾是 <strong>F</strong>（例：Ultra 5 245F）代表什麼？裝機時要注意什麼？</li>
+  <li>幫「只用來<strong>文書上網、看 YouTube／Netflix</strong>」的長輩配一台電腦，需要加獨立顯卡嗎？為什麼？</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>PCIe x16。</li>
+<li>M.2 NVMe SSD。</li>
+<li>Ultra 5 → Ultra 7 → Ultra 9（數字越大越高階）。</li>
+<li>F ＝<strong>沒有內建顯示晶片</strong>，所以這台電腦<strong>一定要另外裝獨立顯卡</strong>才有畫面。</li>
+<li><strong>不用加獨立顯卡。</strong>現在的 CPU 大多內建顯示（內顯），播 YouTube／Netflix、甚至 4K 影片、文書上網都沒問題；獨立顯卡主要是給<strong>遊戲、3D 繪圖、影片剪輯</strong>用的。把省下的錢放在 SSD 或 RAM 更有感。（但若選到結尾 <strong>F</strong> 的 CPU 就沒內顯，那就非裝獨顯不可。）
+<div class="callout" style="margin-top:8px"><span class="t">🖥️ 哪些 CPU 的內顯就能應付 4K 影音？（截至 2026 年 7 月）</span>
+<ul class="tidy" style="margin-bottom:0">
+  <li><strong>Intel：</strong>Core Ultra 200 系列（內建 <strong>Arc 內顯</strong>）、以及較新一代帶內顯的 Core／Core Ultra（非 F 版），都可輸出並硬體解碼 4K 影片。</li>
+  <li><strong>AMD：</strong>Ryzen 8000G 系列、以及 Ryzen 7000／9000 帶 <strong>Radeon 內顯</strong>的型號（非 F 版），同樣支援 4K 影音。</li>
+  <li><strong>更省的選擇：</strong>其實只要「有內顯」，連入門的 Intel UHD、AMD Radeon 內顯都能靠硬體解碼順播 4K 串流——文書＋看影片用這種就非常夠。</li>
+</ul></div></li>
+</ol></div>
+</div>
+<section class="block">
+  <h2>🛒 組裝估價器（點開使用）</h2>
+  <p>把「現在價」填成<a href="https://www.coolpc.com.tw/evaluate.php" target="_blank" rel="noopener">原價屋</a>今天的價格，下面會<strong>即時算出一月總價、現在總價與價差</strong>，用來比較同規格現在變貴還是變便宜。</p>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 打開組裝估價器</div>
+  <div class="answer">
+    <div class="callout"><span class="t">💡 使用說明</span>
+    <p style="margin-bottom:0">預設放入的是<strong>老師 2026 年 1 月的實際配單</strong>（當時總報價 <strong>32,719 元</strong>，含稅）。<strong>「你的一月價」是當時的成交價；「現在價」請自己到<a href="https://www.coolpc.com.tw/evaluate.php" target="_blank" rel="noopener">原價屋</a>查今天同規格的價格填進去</strong>，下面會自動算出<strong>兩邊的總價與價差</strong>，就能比較同規格現在是變貴還是變便宜。（預設「現在價」先等於一月價，改了才會看到差額。）</p></div>
+    <div class="estimator">
+      <div class="table-wrap"><table class="est-table">
+        <thead><tr><th>計入</th><th>類別</th><th>品項／規格</th><th>你的一月價</th><th>現在價（原價屋）</th><th></th></tr></thead>
+        <tbody id="est-body">
+<tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="處理器 CPU"></td><td><input class="est-name" value="AMD R5 7500F(含風扇)【6核12緒】3.7G↑5.0G 代理三年保"></td><td class="est-pcell"><input type="number" class="est-price" value="4690" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr><tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="主機板 MB"></td><td><input class="est-name" value="華擎 B650M-H/M.2+ WiFi(M-ATX/LAN 1G+無線/註四年/2DIMM)"></td><td class="est-pcell"><input type="number" class="est-price" value="2990" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr><tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="記憶體 RAM"></td><td><input class="est-name" value="金士頓 32GB(16G×2) DDR5-5600 CL36 FURY Beast RGB 黑"></td><td class="est-pcell"><input type="number" class="est-price" value="9100" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr><tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="固態硬碟 SSD"></td><td><input class="est-name" value="威剛 XPG MARS 980Blade 1TB Gen5 讀14000/寫10000(五年)"></td><td class="est-pcell"><input type="number" class="est-price" value="5999" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr><tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="顯示卡 VGA"></td><td><input class="est-name" value="藍寶石 黑鑽版 RX7650GRE GAMING OC 8GB(三風扇/三年)"></td><td class="est-pcell"><input type="number" class="est-price" value="7990" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr><tr><td><input type="checkbox" class="est-inc" checked onchange="estCalc()"></td><td><input class="est-cat" value="電源 PSU"></td><td><input class="est-name" value="海韻 S12III-650W 銅牌/智慧溫控風扇(五年)"></td><td class="est-pcell"><input type="number" class="est-price" value="1950" oninput="estCalc()"> 元</td><td class="est-pcell"><input type="number" class="est-now" value="0" oninput="estCalc()"> 元</td><td><button class="est-del" onclick="estDel(this)" title="刪除">✕</button></td></tr>
+        </tbody>
+      </table></div>
+      <div class="est-bar">
+        <button class="btn ghost" onclick="estAddRow()">＋ 新增品項</button>
+        <div class="est-total">已計入 <span id="est-count">0</span> 項　·　一月總計：<span id="est-sum">0</span> 元　·　現在總計：<span id="est-now-sum">0</span> 元　·　價差：<span id="est-diff" class="est-diff">0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+  <nav class="unit-nav">
+    <a class="prev" href="unit05.html"><div class="dir">← 上一單元</div><div class="ttl">電腦五大單元</div></a>
+    <a class="next" href="unit07.html"><div class="dir">下一單元 →</div><div class="ttl">BEBRAS 運算思維</div></a>
+  </nav>
+</main>
+
+
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

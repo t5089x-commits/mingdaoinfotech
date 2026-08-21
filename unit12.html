@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 14：Python（七）函式與綜合應用｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="14">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 14</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Python 程式設計篇　單元 14</span>
+  <h1>Python（七）函式與綜合應用</h1>
+  <p>函式定義、參數、回傳值與整合專題</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>會定義與呼叫自訂函式</li>
+<li>理解參數 (parameter) 與回傳值 (return)</li>
+<li>分辨區域變數與全域變數</li>
+<li>能整合變數、判斷、迴圈與函式完成綜合題</li>
+  </ul>
+</div><section class="block">
+  <h2><span class="num">01</span>為什麼要用函式？</h2>
+  
+<p><strong>函式</strong>是一段<strong>包裝好、可重複使用</strong>的程式碼。把常用功能寫成函式，可讓程式更簡潔、好維護。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">def say_hello():
+    print("哈囉！我是阿翔，歡迎學 Python")
+
+# 呼叫函式（可重複呼叫）
+say_hello()
+say_hello()</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>參數與回傳值</h2>
+  
+<p><strong>參數</strong>讓函式能接收外部資料；<code>return</code> 把結果傳回給呼叫者。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">def add(a, b):        # a, b 是參數
+    return a + b       # 回傳（相加的結果）
+
+def multiply(a, b):   # 再定義一個「相乘」的函式
+    return a * b       # 回傳（相乘的結果）
+
+print("8 + 9 =", add(8, 9))        # 17
+print("7 × 4 =", multiply(7, 4))   # 28</code></pre>
+</div>
+<h3>再看一個：判斷是否及格</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">def is_pass(score):
+    if score &gt;= 60:
+        return "及格"
+    else:
+        return "不及格"
+
+print(is_pass(85))   # 及格
+print(is_pass(40))   # 不及格</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">03</span>區域變數與全域變數</h2>
+  
+<p>函式<strong>裡面</strong>定義的是<strong>區域變數</strong>，只在函式內有效；函式<strong>外面</strong>定義的是<strong>全域變數</strong>。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">total = 100          # 全域變數
+
+def show():
+    msg = "函式內部"    # 區域變數
+    print(msg, total)
+
+show()
+print(total)
+# print(msg)   # ← 這行會出錯，msg 只存在於函式內</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">04</span>綜合應用專題</h2>
+  
+<p>整合前面學過的<strong>變數、輸入輸出、判斷、迴圈、函式</strong>，做一個成績計算小工具：</p>
+<div class="card"><h3>🧮 成績計算小工具</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">成績計算小工具</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">def grade(score):
+    if score &gt;= 90: return "A"
+    elif score &gt;= 80: return "B"
+    elif score &gt;= 70: return "C"
+    elif score &gt;= 60: return "D"
+    else: return "F"
+
+scores = [92, 78, 55, 88, 63]
+total = 0
+for s in scores:
+    total += s
+    print(f"分數 {s} → 等第 {grade(s)}")
+
+avg = total / len(scores)
+print("-" * 20)
+print(f"平均分數：{avg:.1f}")
+print("平均等第：", grade(avg))</code></pre>
+</div>
+</div>
+<div class="callout"><span class="t">💡 小技巧：只有一行的 if 可以寫在同一行</span>
+<p>如果 <code>if</code>／<code>elif</code>／<code>else</code> 裡<strong>只有一行</strong>程式碼，可以直接寫在冒號 <code>:</code> 後面，像上面 <code>grade()</code> 那樣 <code>if score >= 90: return "A"</code>，程式更精簡好讀。<br>但如果 if 裡面有<strong>好幾行</strong>要做，就還是要<strong>換行、縮排</strong>寫，不能全部擠在同一行。</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>寫函式 <code>square(n)</code> 回傳 n 的平方，並印出 1~5 的平方。</li>
+  <li>寫函式 <code>bigger(a, b)</code> 回傳兩數中<strong>較大</strong>的那個。</li>
+  <li>綜合題：寫函式 <code>is_prime(n)</code> 判斷 n 是否為<strong>質數</strong>，並找出 2~30 之間所有質數。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 3 題
+def is_prime(n):
+    if n &lt; 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+for n in range(2, 31):
+    if is_prime(n):
+        print(n, end=" ")
+# 2 3 5 7 11 13 17 19 23 29</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit11.html"><div class="dir">← 上一單元</div><div class="ttl">Python（六）迴圈進階與綜合</div></a>
+    <a class="next disabled"><div class="dir">下一單元 →</div><div class="ttl">已是最後一個</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
