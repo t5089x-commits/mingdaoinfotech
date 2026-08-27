@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教師專區 · 需要密鑰｜明道中學．資訊科技教學網</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gate.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html">
+      <span class="logo">教</span>
+      <span>明道中學．資訊科技教學網<small>五科共用｜影片資源庫</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="../../index.html">教學網首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap">
+  <div class="gate-card">
+    <div class="gate-ico">🔒</div>
+    <h1>教師專區</h1>
+    <p class="gate-sub">影片資源庫為教學規劃用，需要<strong>密鑰</strong>才能進入。<br>請輸入密鑰後按「進入」。</p>
+    <div class="gate-form">
+      <input id="pw" type="password" placeholder="請輸入密鑰" autocomplete="off" aria-label="密鑰">
+      <button class="btn" onclick="tryEnter()">進入 →</button>
+    </div>
+    <div class="gate-err" id="err"></div>
+  </div>
+</main>
+<a href="access-mechanism.html" title="?" aria-label="機制說明"
+   style="position:fixed;right:7px;bottom:7px;z-index:60;font-size:11px;line-height:1;
+          color:var(--text-faint);opacity:.07;text-decoration:none;letter-spacing:1px;
+          padding:6px;border-radius:6px;transition:opacity .25s"
+   onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='.07'">· ? ·</a>
+<!-- 你正在找密碼嗎? 有興趣你就努力試試看吧~ -->
+<div hidden aria-hidden="true" data-note="nothing-to-see-here"><!-- …確定沒有嗎？這個 ▶ 點開看看 -->
+  <div><!-- 咦你居然點開了。還沒到，再往下一層 ▽ -->
+    <div><!-- 有耐心喔。繼續 ▽ -->
+      <div><!-- 快到了，再一層就好 ▽ -->
+        <div><!-- 最後一層，恭喜你挖到了 ▽ -->
+          <!--
+            接下來使用 Base64 即可破解：
+
+            6Kej6ZaL5LqG77yM5YGa5b6X5aW977yB5o6l5LiL5L6G6KaB5omT6ZaL6YCZ5Lu95YWx55So6LOH5paZ5aS+6KOh55qEIHRlYWNoZXIta2V5LmpzIOaqlOahiO+8jOWFqeWAi+aWueazleaTh+S4gO+8migxKSDmiornj77lnKjntrLlnYDliJfmnIDlvoznmoQgdmlkZW8tYWNjZXNzLmh0bWwg5pS55oiQIHRlYWNoZXIta2V5LmpzIOWGjeaMiSBFbnRlcu+8mygyKSDmjIkgRjEyIOmBuOOAjOS+hua6kCBTb3VyY2Vz44CN5YiG6aCB77yM5Zyo6YCZ5YCL6LOH5paZ5aS+6KOh6bue6ZaLIHRlYWNoZXIta2V5Lmpz44CC5a+G56K85ZKM6ICB5bir5oOz6Lef5L2g6Kqq55qE6Kmx6YO95Zyo6YCZ6KOh6Z2i44CC
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="teacher-key.js"></script>
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var cur=html.getAttribute("data-theme")==="dark"?"dark":"light";
+  var next=cur==="dark"?"light":"dark";
+  html.setAttribute("data-theme",next);
+  var btn=document.querySelector(".theme-toggle");
+  if(btn) btn.textContent = next==="dark"?"☀️":"🌙";
+}
+function tkey(){ return (window.COURSE_PROGRESS && COURSE_PROGRESS.teacherKey) || ""; }
+function param(n){ var m=new RegExp("[?&]"+n+"=([^&#]*)").exec(location.search); return m?decodeURIComponent(m[1]):null; }
+function enter(){ location.href="video-library.html"; }
+function tryEnter(){
+  var v=(document.getElementById("pw").value||"").trim();
+  // 這個比對是在「你的瀏覽器」裡做的（前端）——這正是它擋不住高手的地方。
+  //     正確密鑰是怎麼來的？順著 tkey() 追追看它讀的是哪個變數、那個變數又是誰給的 :)
+  if(v && v===tkey()){ enter(); }
+  else{ document.getElementById("err").textContent="✗ 密鑰錯誤，請再試一次。"; }
+}
+// 網址已帶正確 key 就直接放行
+if(tkey() && param("key")===tkey()){ enter(); }
+document.addEventListener("DOMContentLoaded", function(){
+  var i=document.getElementById("pw");
+  i.focus();
+  i.addEventListener("keydown", function(e){ if(e.key==="Enter") tryEnter(); });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 02：流程圖的表示方法｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="2">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 02</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資訊教育篇　週次 2</span>
+  <h1>流程圖的表示方法</h1>
+  <p>流程圖是用圖形把演算法畫出來的方式。這一單元直接拿你們高一 Python 課寫過的程式碼，練習畫成對應的流程圖。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識六種常用流程圖符號的名稱與用途</li>
+<li>能把已經會寫的 Python 程式碼，反推畫成流程圖</li>
+<li>理解循序、選擇、重複三種結構在流程圖上的畫法</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>常用流程圖符號</h2>
+  <div class="symtable">
+  <div class="symcard"><div class="symshape"><div class="shp oval">起止</div></div><div class="symname">起止符號</div><div class="symdesc">Terminator，代表流程的「開始」或「結束」</div></div>
+  <div class="symcard"><div class="symshape"><div class="shp">處理</div></div><div class="symname">處理符號</div><div class="symdesc">Process，代表一個運算或處理步驟</div></div>
+  <div class="symcard"><div class="symshape"><div class="shp para"><span>輸入/輸出</span></div></div><div class="symname">輸入輸出符號</div><div class="symdesc">I/O，代表資料的輸入或輸出</div></div>
+  <div class="symcard"><div class="symshape"><div class="shp dia"><span>判斷</span></div></div><div class="symname">決策判斷符號</div><div class="symdesc">Decision，條件成立(是)／不成立(否)兩條路</div></div>
+  <div class="symcard"><div class="symshape" style="font-size:1.6rem;color:var(--brand)">↓</div><div class="symname">流向線</div><div class="symdesc">Flow line，箭頭指出下一步要往哪裡走</div></div>
+  <div class="symcard"><div class="symshape"><div class="shp" style="border-radius:50%;width:38px">A</div></div><div class="symname">連接符號</div><div class="symdesc">Connector，流程圖太大張要接到別處時使用</div></div>
+</div><p>流程圖是用「圖形」把演算法的每一步畫出來，最大的好處是不用寫程式語法、任何人都看得懂邏輯。這一單元我們會用一個新角度來學：<b>直接拿你們高一 Python 課寫過的程式碼，練習把它畫成流程圖</b>——因為程式邏輯你們已經會了，這裡只是換一種方式表達同樣的邏輯。</p>
+</section><section class="block">
+  <h2><span class="num">02</span>循序結構：由上而下依序執行</h2>
+  
+<p>這段程式碼你們高一應該寫過：輸入半徑、算面積、輸出結果，一行一行由上往下執行，沒有任何分支或迴圈。我們把它畫成流程圖，會發現每一行程式碼剛好對應流程圖的一個方塊，順序完全一樣。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>💻 程式碼</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">計算圓面積</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">r = float(input("請輸入圓的半徑："))
+area = 3.14159 * r * r
+print("圓面積是：", area)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    double r;
+    cout &lt;&lt; "請輸入圓的半徑：";
+    cin &gt;&gt; r;
+    double area = 3.14159 * r * r;
+    cout &lt;&lt; "圓面積是：" &lt;&lt; area &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div></div>
+  <div class="tile"><h4>📊 畫成流程圖</h4><div class="boxflow">
+  <div class="bf-step start">開始</div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step io"><span>輸入半徑 r</span></div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step proc">計算面積 = π × r × r</div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step io"><span>輸出面積</span></div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step start">結束</div>
+</div></div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>選擇結構：把 if / else 畫成流程圖</h2>
+  
+<p>這是你們高一學過的 <code>if / else</code>。流程圖用「決策符號（菱形）」來畫分支：菱形裡面寫判斷條件，「是 True」走一邊、「否 False」走另一邊，兩條路最後會再合併，繼續往下走。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>💻 程式碼</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">判斷奇偶數</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = int(input("請輸入一個整數："))
+if n % 2 == 0:
+    print("偶數")
+else:
+    print("奇數")</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int n;
+    cout &lt;&lt; "請輸入一個整數：";
+    cin &gt;&gt; n;
+    if (n % 2 == 0) cout &lt;&lt; "偶數" &lt;&lt; endl;
+    else cout &lt;&lt; "奇數" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div></div>
+  <div class="tile"><h4>📊 畫成流程圖</h4><div class="boxflow">
+  <div class="bf-step start">開始</div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step io"><span>輸入 n</span></div>
+  <div class="bf-arrow">↓</div>
+  <div class="bf-step dec">n % 2 == 0 ?</div>
+</div>
+<svg class="bf-connector" viewBox="0 0 220 46" width="220" height="46">
+  <defs><marker id="bfArrow" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="var(--text-faint)"/></marker></defs>
+  <line x1="110" y1="0" x2="110" y2="14" stroke="var(--text-faint)" stroke-width="2"/>
+  <line x1="30" y1="14" x2="190" y2="14" stroke="var(--text-faint)" stroke-width="2"/>
+  <line x1="30" y1="14" x2="30" y2="40" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#bfArrow)"/>
+  <line x1="190" y1="14" x2="190" y2="40" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#bfArrow)"/>
+</svg>
+<div class="bf-branch">
+  <div class="bf-col"><div class="bf-tag">是 True</div><div class="bf-step proc">輸出「偶數」</div></div>
+  <div class="bf-col"><div class="bf-tag">否 False</div><div class="bf-step proc">輸出「奇數」</div></div>
+</div>
+<div class="boxflow"><div class="bf-arrow">↓</div><div class="bf-step start">結束</div></div></div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">04</span>重複結構：把 while 畫成流程圖</h2>
+  
+<p>重複結構有「前判斷式」跟「後判斷式」兩種：<b>前判斷式（while）</b>先判斷條件，成立才執行，可能一次都不執行；<b>後判斷式（do-while）</b>先執行一次，再判斷是否要重複，至少會執行一次。Python 沒有內建 do-while 語法，通常用 <code>while True</code> + <code>break</code> 來模擬。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>💻 程式碼</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">用 while 印出 1 到 5</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">i = 1
+while i &lt;= 5:
+    print(i)
+    i += 1</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int i = 1;
+    while (i &lt;= 5){
+        cout &lt;&lt; i &lt;&lt; endl;
+        i++;
+    }
+    return 0;
+}</code></pre>
+</div></div>
+  <div class="tile"><h4>📊 畫成流程圖</h4><div class="fc-fig"><svg viewBox="0 0 340 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;display:block;margin:14px auto" role="img" aria-label="while 迴圈流程圖"><defs><marker id="fcArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L8,3 z" fill="var(--text-faint)"/></marker></defs><rect x="85.0" y="9.0" width="130" height="42" rx="21" ry="21" fill="var(--brand)" opacity=".85"/>
+<text x="150" y="35" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">開始</text><rect x="50.0" y="74.0" width="200" height="42" rx="4" fill="var(--surface)" stroke="var(--brand)" stroke-width="2"/>
+<text x="150" y="100" text-anchor="middle" font-size="13.5" fill="var(--text)">i = 1</text><polygon points="150,151.0 245.0,195 150,239.0 55.0,195" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="2"/>
+<text x="150" y="200" text-anchor="middle" font-size="13.5" fill="var(--warn)" font-weight="700">i ≤ 5 ?</text><rect x="50.0" y="309.0" width="200" height="42" rx="4" fill="var(--surface)" stroke="var(--brand)" stroke-width="2"/>
+<text x="150" y="335" text-anchor="middle" font-size="13.5" fill="var(--text)">輸出 i；i = i + 1</text><rect x="85.0" y="439.0" width="130" height="42" rx="21" ry="21" fill="var(--brand)" opacity=".85"/>
+<text x="150" y="465" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">結束</text><line x1="150" y1="51" x2="150" y2="74" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#fcArrow)"/><line x1="150" y1="116" x2="150" y2="151" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#fcArrow)"/><line x1="150" y1="239" x2="150" y2="309" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#fcArrow)"/><text x="162" y="259" font-size="12.5" fill="var(--brand-strong)" font-weight="700">是</text><polyline points="255,330 295,330 295,195 245,195" fill="none" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#fcArrow)"/><polyline points="55,195 5,195 5,460 129,460" fill="none" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#fcArrow)"/><text x="25" y="187" font-size="12.5" fill="var(--brand-strong)" font-weight="700">否</text><text x="303" y="262.5" font-size="11.5" fill="var(--text-faint)">回到判斷之前</text></svg></div></div>
+</div>
+<div class="callout warn"><span class="t">⚠ 流程圖裡「回到判斷之前」怎麼畫</span>
+<p>重複結構畫完之後，箭頭要從最後一步「繞回」判斷符號之前，這條回頭的箭頭就是迴圈的關鍵——沒有畫這條線，就變成選擇結構而不是重複結構了。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">05</span>課後作業：自己畫畫看</h2>
+  
+<div class="exercise">
+  <h3>📝 作業一：練習用（畫完可以自己核對）</h3>
+  <p>請把下面這段程式碼，畫成流程圖（可以先畫在紙上或習作本上）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">作業一：奇偶數標記</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">for i in range(1, 11):
+    if i % 2 == 0:
+        print(i, "偶數")
+    else:
+        print(i, "奇數")</code></pre>
+</div>
+  <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 畫完了嗎？點我核對步驟</p>
+  <div class="answer">
+    <p>你的流程圖應該包含這些步驟，順序是：</p>
+    <p>① 開始 → ② i = 1 → ③ 判斷「i ≤ 10 ?」→ 是的話進到 ④，否的話跳到 ⑦<br>
+    ④ 判斷「i % 2 == 0 ?」→ 是的話輸出「i 偶數」，否的話輸出「i 奇數」<br>
+    ⑤ i = i + 1 → ⑥ 回到步驟 ③ 重新判斷（這是一個迴圈套判斷的結構）<br>
+    ⑦ 結束</p>
+    <p>重點：這一題裡面，「重複結構」裡面又包了一層「選擇結構」——這種巢狀畫法，是這一題最容易漏掉線條的地方，畫的時候要特別注意「判斷完之後要繞回哪裡」。</p>
+  </div>
+</div>
+
+<div class="exercise">
+  <h3>📝 作業二：正式作業（請依照老師指示的方式繳交）</h3>
+  <p>請把下面這段程式碼畫成流程圖，畫在習作本／學習單上，依照老師指定的方式繳交：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">作業二：偶數總和</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 20
+total = 0
+i = 1
+while i &lt;= n:
+    if i % 2 == 0:
+        total += i
+    i += 1
+print("偶數總和：", total)</code></pre>
+</div>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit01.html"><span class="dir">← 上一單元</span>01 演算法概念</a>
+  <a class="next" href="unit02b.html"><span class="dir">下一單元 →</span>附 函式、串列與輸入技巧（高一補充）</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 02：流程圖的表示方法</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

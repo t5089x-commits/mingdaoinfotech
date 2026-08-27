@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 01：演算法概念｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="1">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 01</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資訊教育篇　週次 1</span>
+  <h1>演算法概念</h1>
+  <p>課程一開始，先搞懂「資料」跟「資訊」的差別、演算法的五個必要條件，以及往後每個單元都會用到的時間複雜度概念。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能分辨資料 (Data) 與資訊 (Information)</li>
+<li>說出演算法的五個必要條件</li>
+<li>理解大 O 符號的意義，並能判斷簡單程式碼的時間複雜度</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>資料、資訊與演算法</h2>
+  
+<p><b>資料 (Data)</b>：未經處理的原始記錄，例如某位學生的各科原始成績。</p>
+<p><b>資訊 (Information)</b>：經過整理、計算、分析後，對決策者有意義的結果，例如全班的排名與分佈圖。</p>
+<p>演算法（Algorithm）就是「解決問題的一連串明確步驟」——它不是程式碼本身，而是程式碼背後的邏輯。同一個演算法，可以用 Python 寫、也可以用 C++ 寫，這也是這個課程從頭到尾都給你兩種語言對照的原因。</p>
+
+</section><section class="block">
+  <h2><span class="num">02</span>演算法的五個必要條件</h2>
+  
+<ul class="tidy">
+  <li><b>輸入 (Input)</b>：可以是 0 個或多個。</li>
+  <li><b>輸出 (Output)</b>：至少要有一個。</li>
+  <li><b>明確性 (Definiteness)</b>：每一步都必須清楚，不可模稜兩可。</li>
+  <li><b>有限性 (Finiteness)</b>：必須在有限步驟內結束（真正的程式可以寫無窮迴圈，但「演算法」不行）。</li>
+  <li><b>正確性 (Correctness)</b>：符合前面四點不代表正確，邏輯本身要能真正解決問題。</li>
+</ul>
+<div class="callout warn"><span class="t">⚠ 常見誤解</span>
+<p>很多人以為「程式能執行、不會當機」就是好的演算法，但「明確性」跟「正確性」是兩回事——程式可能會跑，但答案是錯的。寫完程式之後，養成用不同測試資料驗證答案的習慣非常重要。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>時間複雜度 Time Complexity</h2>
+  
+<p>時間複雜度是用大 O 符號描述「演算法執行次數」隨資料量成長的速度，跟電腦實際跑多快（硬體、程式語言）沒有直接關係，重點是「成長趨勢」。</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>記法</th><th>唸法</th><th>意義</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>O(1)</td><td>常數時間</td><td>跟資料量無關，永遠差不多快</td><td>取陣列第 0 個元素</td></tr>
+<tr><td>O(log n)</td><td>對數時間</td><td>每次都把範圍砍半</td><td>二分搜尋</td></tr>
+<tr><td>O(n)</td><td>線性時間</td><td>資料量變 2 倍，時間也變 2 倍</td><td>從頭找到尾</td></tr>
+<tr><td>O(n log n)</td><td>
+  恩肉格恩
+  <details class="hint" style="margin-top:4px">
+    <summary></summary>
+    <div class="hint-body"><p><b>正式唸法：</b>線性對數時間</p></div>
+  </details>
+</td><td>目前已知排序最好的等級</td><td>合併排序、快速排序（平均）</td></tr>
+<tr><td>O(n²)</td><td>平方時間</td><td>資料量變 2 倍，時間變 4 倍</td><td>氣泡排序、選擇排序</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">🎬 經典例子：租片店 vs 網路下載</span>
+<p><b>租片店</b>：不管店裡有幾萬部片，走路過去單程都是 25 分鐘、來回 50 分鐘——這是 <b>O(1)</b>，跟資料量（片庫大小）完全無關。<br>
+<b>網路一部一部下載</b>：每部片下載要 3 分鐘（現在的網路速度），這是 <b>O(n)</b>，資料量變大，時間就跟著等比例變大。</p></div>
+
+<h3>🏁 自己動手比一比</h3>
+<p>輸入想看的片數，按下開始：如果片數少，下載可能比走路還快完成，你會看到走路的人「停在半路上」（因為片子早就下載完了，人卻還沒走回家）；如果片數很大，你會看到走路的人早就來回到家了，下載的進度卻幾乎不會前進。右下角有即時計時器，方便你邊看動畫邊講解目前經過了幾分鐘：</p>
+<div class="race-demo" id="race-demo">
+  <div class="race-input-row">
+    <label for="race-n">要看幾部片？</label>
+    <input type="number" id="race-n" value="1000000" min="1" max="1000000000" step="1">
+    <button type="button" class="vs-btn" id="race-start">▶ 開始比較</button>
+  </div>
+  <div class="race-presets"><button type="button" class="vs-btn ghost race-preset" data-n="5">5 部</button><button type="button" class="vs-btn ghost race-preset" data-n="10">10 部</button><button type="button" class="vs-btn ghost race-preset" data-n="20">20 部</button><button type="button" class="vs-btn ghost race-preset" data-n="50">50 部</button><button type="button" class="vs-btn ghost race-preset" data-n="100">100 部</button><button type="button" class="vs-btn ghost race-preset" data-n="1000">1000 部</button></div>
+
+  <div class="race-track">
+    <div class="race-label">🚶 走路去租片店（O(1)，來回固定 50 分鐘）</div>
+    <div class="race-path">
+      <div class="race-home">🏠</div>
+      <div class="race-store">🏪</div>
+      <div class="race-runner" id="race-runner">🚶</div>
+    </div>
+    <div class="race-status" id="race-status-shop">尚未開始</div>
+    <div class="race-timer-wrap"><div class="race-timer">⏱️ 走路時間：<b id="race-clock-shop">0</b> 分鐘</div></div>
+  </div>
+
+  <div class="race-track">
+    <div class="race-label">💻 網路一部一部下載（O(n)，每部 3 分鐘）</div>
+    <div class="race-bar-wrap"><div class="race-bar" id="race-bar"></div></div>
+    <div class="race-status" id="race-status-dl">尚未開始</div>
+    <div class="race-timer-wrap"><div class="race-timer">⏱️ 下載時間：<b id="race-clock-dl">0</b> 分鐘</div></div>
+  </div>
+
+  <div class="race-result" id="race-result"></div>
+</div>
+<script>
+(function(){
+  var root = document.getElementById("race-demo");
+  if(!root) return;
+  var nInput = document.getElementById("race-n");
+  var startBtn = document.getElementById("race-start");
+  var presetBtns = root.querySelectorAll(".race-preset");
+  var runner = document.getElementById("race-runner");
+  var bar = document.getElementById("race-bar");
+  var statusShop = document.getElementById("race-status-shop");
+  var statusDl = document.getElementById("race-status-dl");
+  var clockShopEl = document.getElementById("race-clock-shop");
+  var clockDlEl = document.getElementById("race-clock-dl");
+  var result = document.getElementById("race-result");
+
+  var ROUNDTRIP_MIN = 50;        // 來回共 50 分鐘（25 去，25 回）
+  var MIN_PER_MOVIE = 3;         // 每部下載 3 分鐘
+  var MS_PER_SIM_MIN = 96;       // 每模擬 1 分鐘對應多少動畫毫秒（已改慢，原本速度的一半）
+  var TOTAL_DEMO_MS = 18000;     // 演示總長 18 秒
+
+  var rafId = null;
+
+  function fmtDuration(totalMin){
+    if (totalMin < 1) return "不到1分鐘";
+    if (totalMin < 60) return Math.round(totalMin) + " 分鐘";
+    var hours = totalMin / 60;
+    if (hours < 24) return hours.toFixed(1) + " 小時";
+    var days = hours / 24;
+    if (days < 365) return days.toFixed(1) + " 天";
+    var years = days / 365;
+    return years.toFixed(1) + " 年";
+  }
+
+  function run(){
+    var n = parseInt(nInput.value, 10);
+    if (!n || n < 1) n = 1;
+    var dlTotalMin = n * MIN_PER_MOVIE;
+    var walkerCapMin = Math.min(ROUNDTRIP_MIN, dlTotalMin);   // 下載若比走路快完成，走路的人會停在那一刻
+
+    if (rafId) cancelAnimationFrame(rafId);
+    runner.style.left = "4px";
+    bar.style.width = "0%";
+    statusShop.textContent = "出發前往租片店...";
+    statusDl.textContent = "開始下載第 1 部...";
+    clockShopEl.textContent = "0";
+    clockDlEl.textContent = "0";
+    result.classList.remove("show");
+
+    var startTime = null;
+    var shopFrozeMsg = false;
+
+    function frame(ts){
+      if (startTime === null) startTime = ts;
+      var elapsed = ts - startTime;
+      var simMinutes = elapsed / MS_PER_SIM_MIN;
+
+      // ---- 走路位置：去程 + 回程，受 walkerCapMin 限制（若下載先完成就會凍結在半路） ----
+      var walkerMinutes = Math.min(simMinutes, walkerCapMin);
+      clockShopEl.textContent = walkerMinutes.toFixed(1);
+      var half = ROUNDTRIP_MIN / 2;
+      var posFrac;
+      if (walkerMinutes <= half) {
+        posFrac = walkerMinutes / half;             // 0 -> 1，去程，走向商店
+      } else {
+        posFrac = 1 - (walkerMinutes - half) / half; // 1 -> 0，回程，走回家
+      }
+      runner.style.left = "calc(" + (posFrac*100) + "% - " + (posFrac*36) + "px + 4px)";
+
+      if (walkerMinutes >= walkerCapMin) {
+        if (!shopFrozeMsg) {
+          shopFrozeMsg = true;
+          if (walkerCapMin < ROUNDTRIP_MIN) {
+            statusShop.textContent = "⭕ 停在半路上！因為下載早已在 " + walkerCapMin.toFixed(0) + " 分鐘完成，還沒走回家呢！";
+          } else {
+            statusShop.textContent = "到家了！來回共花費：50 分鐘（O(1)，跟片庫大小無關）";
+          }
+        }
+      } else if (walkerMinutes <= half) {
+        statusShop.textContent = "前往租片店中...（已過 " + walkerMinutes.toFixed(1) + " 分鐘）";
+      } else {
+        statusShop.textContent = "扳著片子回家中...（已過 " + walkerMinutes.toFixed(1) + " 分鐘）";
+      }
+
+      // ---- 下載進度：每部影片跑一次讀條，完成後嚰零換下一部 ----
+      var totalMoviesElapsed = simMinutes / MIN_PER_MOVIE;
+      var moviesDone = Math.min(n, Math.floor(totalMoviesElapsed));
+      var allDone = moviesDone >= n;
+      var withinMovieFrac = allDone ? 1 : (totalMoviesElapsed - moviesDone);
+      bar.style.width = (withinMovieFrac * 100) + "%";
+      clockDlEl.textContent = Math.min(simMinutes, dlTotalMin).toFixed(1);
+      if (allDone) {
+        statusDl.innerHTML = "全部下載完成！共 <span class='num'>" + n.toLocaleString() + "</span> 部（花了 " + dlTotalMin.toFixed(0) + " 分鐘）";
+      } else {
+        statusDl.innerHTML = "正在下載第 <span class='num'>" + (moviesDone + 1).toLocaleString() + "</span> 部（已完成 " + moviesDone.toLocaleString() + " / " + n.toLocaleString() + " 部）";
+      }
+
+      var stillNeed = elapsed < TOTAL_DEMO_MS && !(allDone && walkerMinutes >= walkerCapMin && walkerCapMin >= ROUNDTRIP_MIN);
+      if (stillNeed && elapsed < TOTAL_DEMO_MS) {
+        rafId = requestAnimationFrame(frame);
+      } else {
+        result.innerHTML = "演示到這裡：下載完成了 <b>" + moviesDone.toLocaleString() + " / " + n.toLocaleString() + "</b> 部。如果要把全部 <b>" + n.toLocaleString() + "</b> 部片都下載完，一部接一部、每部 " + MIN_PER_MOVIE + " 分鐘，實際上大約需要：<b>" + fmtDuration(dlTotalMin) + "</b>。而走路去租片店來回，不管片庫多大，永遠都是 <b>50 分鐘</b>。";
+        result.classList.add("show");
+      }
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  startBtn.addEventListener("click", run);
+  presetBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      nInput.value = btn.getAttribute("data-n");
+      run();
+    });
+  });
+})();
+</script>
+
+<h3>五種時間複雜度，各自的程式範例</h3>
+<h4 style="margin:18px 0 6px">O(1) 常數時間：直接用索引取值</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(1) 常數時間：直接用索引取值</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">arr = [10, 20, 30, 40, 50]
+print(arr[0])          # 不管 arr 有幾個元素，永遠只做這一步
+print(arr[-1])</code></pre>
+</div><h4 style="margin:18px 0 6px">O(n) 線性時間：單層迴圈跑 n 次</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(n) 線性時間：單層迴圈跑 n 次</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 1000000
+total = 0
+for i in range(n):      # 單層迴圈跑 n 次 → O(n)
+    total += i
+print(total)</code></pre>
+</div><h4 style="margin:18px 0 6px">O(n²) 平方時間：兩層巢狀迴圈</h4><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(n²) 平方時間：兩層巢狀迴圈</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 1000
+count = 0
+for i in range(n):          # 外層跑 n 次
+    for j in range(n):        # 內層也跑 n 次
+        count += 1
+print(count)                  # 總共執行 n × n 次</code></pre>
+</div><h4 style="margin:18px 0 6px">O(log n) 對數時間：二分搜尋，每次砍半</h4>
+<details class="hint">
+  <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
+  <div class="hint-body" style="background:transparent;padding:0"><p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「二分搜尋」會在後面的單元才正式教，這裡只是先讓大家知道 O(log n) 長什麼樣子，看不懂沒關係。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(log n) 對數時間：二分搜尋，每次砍半</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def binary_search(a, key):
+    left, right = 0, len(a) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if a[mid] == key:
+            return mid
+        elif a[mid] &lt; key:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1</code></pre>
+</div></div>
+</details><h4 style="margin:18px 0 6px">O(n log n)：合併排序（切一半、分別排序、再合併）</h4>
+<details class="hint">
+  <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
+  <div class="hint-body" style="background:transparent;padding:0"><p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「合併排序」也是後面排序單元才會教的演算法，先看過一次眼熟就好。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(n log n)：合併排序（切一半、分別排序、再合併）</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def merge_sort(a):
+    if len(a) &lt; 2:
+        return a
+    mid = len(a) // 2
+    left = merge_sort(a[:mid])     # 切一半，遞迴排序
+    right = merge_sort(a[mid:])
+    return merge(left, right)       # 合併兩個排好的部分
+
+def merge(left, right):
+    result = []
+    while left and right:
+        result.append(left.pop(0) if left[0] &lt; right[0] else right.pop(0))
+    return result + left + right</code></pre>
+</div></div>
+</details>
+
+<div class="exercise">
+  <h3>✏️ 練習：判斷時間複雜度（依速度由快到慢排列）</h3>
+  <ol>
+    <li>這段程式的時間複雜度是多少？<div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">python</span></div><pre class="lang-pane lang-py show"><code data-lang="python">scores = [88, 92, 76, 65, 99]
+print(scores[0])
+print(scores[-1])</code></pre></div>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>O(1)。不管 scores 裡面有幾個元素，這段程式永遠只執行「固定 2 行」，取第一個、取最後一個都是直接用索引定位，跟資料量 n 完全無關。</p></div>
+    </li>    <li>這段程式的時間複雜度是多少？<div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">python</span></div><pre class="lang-pane lang-py show"><code data-lang="python">for x in range(m):
+    for y in range(m):
+        print(x, y)</code></pre></div>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>O(m²)。兩層迴圈互相巢狀，外層跑 m 次、每次內層又跑 m 次，總共 m × m 次（跟資料量的字母是 n 還是 m 沒有關係，看的是巢狀的層數）。</p></div>
+    </li>    <li>這段程式的時間複雜度是多少？（提示：內層迴圈執行的次數，每一輪都不一樣）<div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">python</span></div><pre class="lang-pane lang-py show"><code data-lang="python">for a in range(k):
+    for b in range(a):
+        print(a, b)</code></pre></div>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>O(k²)。雖然內層迴圈執行次數不是每次都固定是 k（第 a 輪只跑 a 次：0+1+2+…+(k-1)），但把這些次數全部加起來大約是 k²/2——省略係數跟低次項之後，時間複雜度仍然算 O(k²)，跟寫成 range(k) 是同一個等級。這是很多人會誤判成 O(k) 的地方，要特別小心（雖然跟上一題同樣是平方等級，但這題的迴圈次數不是一眼就能看出來的，要特別留意）。</p></div>
+    </li>
+  </ol>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a class="disabled" href="#"><span class="dir">← 上一單元</span>（已是第一單元）</a>
+  <a class="next" href="unit02.html"><span class="dir">下一單元 →</span>02 流程圖的表示方法</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 01：演算法概念</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 5：虛擬貨幣與比特幣｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="5">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 5</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 5</span>
+  <h1>虛擬貨幣與比特幣</h1>
+  <p>Bitcoin、錢包、公私鑰直覺</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>知道比特幣的誕生故事與幾個關鍵時刻（中本聰、披薩日）</li>
+<li>認識比特幣的專有名詞：地址、聰、礦工、挖礦、獎勵</li>
+<li>建立私鑰／公鑰／地址三者關係的直覺，為後面的公開金鑰單元鋪路</li>
+<li>理解 51% 攻擊的原理與為什麼「很貴、不划算」</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>比特幣的誕生故事</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>👤 中本聰 Satoshi Nakamoto</h4><p>設計比特幣、開發程式碼的化名人物（或團隊），真實身分至今未知。他們率先解決了數位貨幣的「雙重支付」問題。</p></div>
+  <div class="tile"><h4>🍕 比特幣披薩日</h4><p>2010 年 5 月 22 日，工程師 Laszlo Hanyecz 用 1 萬顆比特幣換了 2 片披薩 —— 那時 1 顆比特幣只值 0.0041 美元。</p></div>
+</div>
+<div class="callout tip"><span class="t">💸 如果當初沒花掉……</span>
+<p>用今天的價格回推，那 1 萬顆比特幣的故事常被拿來說「早期不懂得長期持有」的教訓 —— 但反過來想，也正是因為有人願意拿它換真實商品，比特幣才第一次證明自己可以當「錢」用。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>比特幣是什麼？四項關鍵創新</h2>
+  
+<p>比特幣代表數十年密碼學與分散式系統研究的高峰，融合了四項關鍵創新：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">🌐</span>去中心化的點對點網路</h4><p>不存在中央伺服器，是比特幣協議本身。</p></div>
+  <div class="tile"><h4><span class="ico">📒</span>公開的帳本（區塊鏈）</h4><p>所有交易紀錄公開透明、可被任何人查詢。</p></div>
+  <div class="tile"><h4><span class="ico">📜</span>獨立交易驗證與貨幣發行規則</h4><p>共識協議：大家都遵守同一套規則來驗證交易。</p></div>
+  <div class="tile"><h4><span class="ico">⛏️</span>工作證明機制（Proof of Work）</h4><p>在有效的區塊鏈上達成全球分散共識的機制。</p></div>
+</div>
+<div class="tile"><h4><span class="ico">🔎</span>比特幣公開帳本總覽（mempool.space）</h4><p>即時瀏覽比特幣區塊鏈上的區塊、交易與手續費，任何人都能公開查詢 —— 這就是「公開的帳本」實際的樣子。</p><a class="video-link-btn" href="https://mempool.space/" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+<p>擁有<strong>私鑰</strong>就能證明比特幣的所有權、簽署交易來解鎖價值；私鑰通常存在數位錢包裡。<strong>控制權完全掌握在使用者自己手中</strong> —— 這正呼應了上一個單元的「數位身分」概念。</p>
+<p>上面提到的「共識協議」不是一成不變的 —— 比特幣網路可以透過共識機制升級規則，量子電腦的發展就是未來協議可能必須調整的原因之一。</p>
+<div class="callout"><span class="t">💬 量子電腦來了，比特幣的規則會怎麼變？</span>
+
+<div class="reveal" onclick="toggleWork(this)"><span class="wk-arrow">▶</span> 展開：量子電腦對比特幣的威脅，以及協議如何因應</div>
+<div class="answer">
+<figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=uaOeOw0ZnKw" target="_blank" rel="noopener" title="揭露量子電腦對比特幣的真正威脅｜腦哥 Chill塊鏈"><img class="video-thumb" src="https://img.youtube.com/vi/uaOeOw0ZnKw/hqdefault.jpg" alt="揭露量子電腦對比特幣的真正威脅｜腦哥 Chill塊鏈" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=uaOeOw0ZnKw" target="_blank" rel="noopener">&#9654; 揭露量子電腦對比特幣的真正威脅｜腦哥 Chill塊鏈 <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>去年課堂分享過的延伸影片，適合放在私鑰概念之後討論。</figcaption></figure>
+<p>影片的重點：如果量子電腦真的發展到能破解現在的橢圓曲線加密，理論上任何「公鑰已經在鏈上曝光過」的舊地址，都有可能被反推出私鑰、資產被偷走。這也是為什麼比特幣協議需要因應量子威脅去調整規則（例如影片提到的 BIP-360）—— 但協議調整不會「自動」保護所有舊地址：沒有主動把資產搬到新格式地址的人，那部分比特幣就可能因此變得不安全，甚至實質上無法再安全使用。根據產業估計，目前已經有數百萬顆比特幣（包含被認為是中本聰持有的比特幣）因為公鑰已經曝光過，會是最先暴露在風險中的資產。</p>
+<div class="bf-note">📝 <strong>這支影片的一處勘誤（BIP-360 段落）：</strong>影片中說「P2MR 地址格式支付時不會暴露公鑰」，這個說法不完全準確 —— P2MR 花費時仍然需要在該次交易中暴露公鑰，讓網路節點驗證簽章；它做到的是把公鑰暴露的「時間窗口」壓縮到只剩下真正花費的那一刻，而不是完全不暴露公鑰。而且 P2MR 本身還不是比特幣「完全抗量子」的終點：真正要做到完全抗量子，最終仍需要導入後量子密碼學（PQC）簽章演算法 —— P2MR 是把地址架構換成一個未來可以接上 PQC 模組的新框架，是遷移路徑的第一塊拼圖，而不是量子防禦的最終解答。</div>
+</div>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>挖礦、獎勵與專有名詞</h2>
+  
+<p>礦工靠什麼拿到比特幣獎勵？下面是簡化過的流程：</p>
+<div class="diagram-card"><svg class="diagram" viewBox="0 0 614 126" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="mnar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="10" y="44" width="138" height="66" rx="9"/><text x="79.0" y="66" text-anchor="middle" style="font-size:19px">📥</text><text x="79.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">蒐集交易</text><text x="79.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">打包成候選區塊</text><rect class="dev" x="162" y="44" width="138" height="66" rx="9"/><text x="231.0" y="66" text-anchor="middle" style="font-size:19px">🧮</text><text x="231.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">競猜 Nonce</text><text x="231.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">反覆試算，找出符合難度的雜湊</text><rect class="dev" x="314" y="44" width="138" height="66" rx="9"/><text x="383.0" y="66" text-anchor="middle" style="font-size:19px">📢</text><text x="383.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">廣播新區塊</text><text x="383.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">全網其他節點驗證後接受</text><rect class="dev" x="466" y="44" width="138" height="66" rx="9"/><text x="535.0" y="66" text-anchor="middle" style="font-size:19px">🎁</text><text x="535.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">獲得獎勵</text><text x="535.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">新發行比特幣＋區塊內所有手續費</text><line class="flow" x1="148" y1="77.0" x2="160" y2="77.0" marker-end="url(#mnar)"/><line class="flow" x1="300" y1="77.0" x2="312" y2="77.0" marker-end="url(#mnar)"/><line class="flow" x1="452" y1="77.0" x2="464" y2="77.0" marker-end="url(#mnar)"/><text x="307.0" y="16" text-anchor="middle" class="cap" style="font-size:11px">⛏️ 誰先解出 Nonce，誰就記帳並拿走這個區塊的獎勵</text></svg><div class="cap" style="margin-top:8px;font-size:.84rem;color:var(--text-soft)">礦工蒐集交易、競猜出符合難度的答案、把新區塊廣播給全網驗證後，就能拿走這個區塊的獎勵。</div></div>
+<div class="callout"><span class="t">⚙️ 技術一點的說法：Proof of Work 到底在算什麼？</span>
+<p>礦工把候選區塊的內容（含一個可以任意調整的數字 <strong>nonce</strong>）拿去做雜湊運算，目標是找到一個 nonce，讓算出來的雜湊值<strong>小於某個難度目標值</strong>（也就是雜湊值開頭要有夠多個 0）。因為雜湊函數不可逆、無法反推，唯一辦法就是不斷換不同的 nonce 硬算、硬試 —— 這就是「工作證明」：想要記帳的資格，得先證明你確實花了大量運算資源。全網算力越高，找到符合條件雜湊值的難度也會動態調高，讓平均每 10 分鐘都恰好有一位礦工找到答案。</p>
+</div>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>名詞</th><th>白話解釋</th></tr></thead>
+  <tbody><tr><td>地址 address</td><td>由公開金鑰算出來的一串字元，就像收款用的「帳號」</td></tr><tr><td>聰 satoshi</td><td>最小的比特幣單位，1 顆比特幣 = 1 億聰</td></tr><tr><td>礦工 miner</td><td>透過大量計算競猜數學題答案（雜湊碰撞）來驗證交易、記帳的網路節點</td></tr><tr><td>挖礦難度 difficulty</td><td>動態調整計算難度，讓平均每 10 分鐘都有一位礦工找到答案</td></tr><tr><td>獎勵 reward</td><td>礦工成功記帳後獲得新發行的比特幣，目前約每區塊 6.25 顆，每 4 年減半</td></tr><tr><td>錢包 wallet</td><td>熱錢包（連網、方便）／冷錢包（離線、安全）／交易所錢包（方便但私鑰不在自己手上）</td></tr></tbody>
+</table>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>51% 攻擊：為什麼「很貴、不划算」</h2>
+  
+<p>如果有人掌握全網超過 51% 的算力，理論上可以維護一條「秘密版本」的區塊鏈，等它比大家認可的鏈更長時再突然公布，讓其他礦工切換過去，藉此撤銷已經確認的交易（造成雙重支付）。</p>
+<div class="callout"><span class="t">💰 但代價極高</span>
+<p>以比特幣目前全網算力（約 220 EH/s）估算，要掌握 50% 算力等於要買下數十萬台頂級礦機，加上電費、廠房等固定成本 —— 對比特幣這種總算力極大的鏈來說，攻擊成本遠高於能得到的好處；但對算力較小的區塊鏈而言，風險就不一定這麼低了（後面「Web3 資安風險」單元會再回來談）。</p>
+</div>
+
+</section><div class="callout tip"><span class="t">🧭 這個單元的教學方式</span>
+<p>採用<strong>故事＋名詞卡</strong>的方式，循序漸進建立比特幣的核心概念：披薩日故事 → 四項關鍵創新（公開帳本、共識協議與量子威脅已經直接整合進上面的內容） → 挖礦與獎勵的圖解 → 專有名詞表 → 51% 攻擊，維持同一個敘事節奏、資訊量循序漸進，適合按部就班的班級。</p>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit04.html"><div class="dir">← 上一單元</div><div class="ttl">區塊鏈是什麼</div></a>
+    <a class="next" href="unit06.html"><div class="dir">下一單元 →</div><div class="ttl">Ethereum 與智能合約</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

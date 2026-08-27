@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 10：古典密碼學（傳統密碼）｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="10">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 10</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 10</span>
+  <h1>古典密碼學（傳統密碼）</h1>
+  <p>凱薩、維吉尼亞、破解實作（專題並行）</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解對稱式加密的基本模型：共用一把 key、安全管道</li>
+<li>動手做凱撒加密的加解密與暴力破解</li>
+<li>理解單字母加密為什麼會被「字母出現頻率」破解</li>
+<li>認識多字母加密（維吉尼亞）如何降低頻率特徵、以及它仍會被 Kasiski 檢驗找出規律</li>
+<li>認識轉輪機（Enigma）如何把加密自動化、機械化</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>對稱式加密：共用一把 key</h2>
+  
+<p>對稱式加密（Symmetric Encryption，又稱 Single-key Encryption）有幾個共同要素：雙方<strong>共用一把 key</strong>、需要<strong>安全管道</strong>先把 key 交換好、要有<strong>夠強固且公開的演算法</strong>（安全性不能只靠「演算法沒人知道」）。用數學式表示就是：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">對稱式加密公式</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">C = E_K(M)　（用 key K 把明文 M 加密成密文 C）
+M = D_K(C)　（用同一把 key K 把密文 C 解回明文 M）</code></pre>
+</div>
+<p>接下來四種古典密碼，都是「對稱式加密」的不同設計方式 —— 差別在於 key 怎麼決定、怎麼套用。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>① 凱撒加密（Caesar Cipher）：位移</h2>
+  
+<p>凱撒加密的 key 是一個位移量：把字母表整個往後移動固定格數。若把 26 個字母對應到 0~25 的數字，加解密就是一條 mod 26 的算式：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">凱撒加密公式與範例</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">加密：C = (M + K) mod 26
+解密：M = (C - K) mod 26
+
+明文：meet me after the toga party
+密文：phhw ph diwhu wkh wrjd sduwb　（key = 3）</code></pre>
+</div>
+<div class="callout"><span class="t">🔓 破解：暴力破解法</span>
+<p>Key 只有 25 種可能（位移 1~25 格），逐一測試、看哪一個結果是有意義的句子即可 —— 這叫做<strong>暴力破解（Brute-force Cryptanalysis）</strong>。key 空間太小，是凱撒加密最大的弱點。</p>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>② 單字母加密（Monoalphabetic Cipher）：任意對照表</h2>
+  
+<p>把 key 從「固定位移」升級成「任意一張字母對照表」，key 的排列組合有 26! ≈ 4 × 10²⁶ 種，看起來安全多了：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">單字母加密範例</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">原文字母：abcdefghijklmnopqrstuvwxyz
+對照密文：dkvqfibjwpescxhtmyauolrgzn
+
+明文：meet me after the toga party
+密文：cffu cf diufv ujf uhbd tdyuz</code></pre>
+</div>
+<div class="callout warn"><span class="t">🔓 破解：統計字母頻率（statistics & guess）</span>
+<p>Key 雖然有天文數字般的組合，但<strong>加密不會改變字元的相對出現頻率</strong>。英文裡 e 出現頻率最高、其次是 t、r、n、i、o、a、s；z、j、k、q、x 很少見。統計密文的字母頻率、對照已知的英文字母頻率表，就能一步步猜出對照表，逐字還原明文。<strong>金鑰空間大，不代表真的安全。</strong></p>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>③ 多字母加密（Polyalphabetic / Vigenère）：用一個字當 key</h2>
+  
+<p>維吉尼亞密碼選一個單字當 key，把 key 的每個字母對應的數值，依序疊加到明文上（相當於「以字母為單位重複做凱撒加密」，key 用完就從頭循環）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">Vigenère 加密範例</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">Key ：deceptivedeceptivedeceptive
+明文：wearediscoveredsaveyourself
+密文：zicvtwqngrzgvtwavzhcqyglmgj</code></pre>
+</div>
+<p>因為每個位置用不同的位移量，密文的字母頻率被打散、不再明顯 —— 但 key 會循環使用，還是留下了規律。<strong>Kasiski 檢驗</strong>：找出密文中重複出現的片段，重複片段之間的間隔，透露了 key 長度的線索（間隔的公因數，很可能就是 key 長度）；猜出 key 長度後，再依 key 長度分組統計字母頻率，逐步破解。</p>
+<div class="callout tip"><span class="t">🧬 AutoKey：讓 key 跟明文一樣長</span>
+<p>把 key 改良成「一個前導關鍵字 + 後面自動接上明文本身」，key 長度就會跟明文一樣長，不再循環，密文的字母頻率也就沒有統計意義了 —— 這已經非常接近<strong>一次性密碼本（One-Time Pad）</strong>，理論上無法被破解。</p>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>④ 轉輪機（Rotor Machine）與 Enigma</h2>
+  
+<p>轉輪機把「單字母加密」自動化：三個滾輪各自是一張字母對照表，疊在一起就像三層單字母加密。關鍵是滾輪會「互動」—— 每按一次鍵，右滾輪就轉一格；轉滿一圈（26 次）帶動中滾輪轉一格；中滾輪轉滿一圈再帶動左滾輪。這讓同一個字母每次按鍵，都被不同的組合加密，等於自動產生了一長串不循環（或很晚才循環）的 key。</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>時間</th><th>事件</th></tr></thead>
+  <tbody><tr><td>1918</td><td>德國發明家 Arthur Scherbius 開發出 Enigma，取得美國專利</td></tr><tr><td>1934</td><td>波蘭數學家雷傑夫斯基（Rejewski）等人研究出破譯 Enigma 的方法</td></tr><tr><td>1938-39</td><td>德國把滾輪增加到 5 選 3、接線板連線增加到 10 根，可能性推進到約 1.95 兆種</td></tr><tr><td>1939</td><td>英國在布萊奇利莊園（Bletchley Park）成立解碼團隊，圖靈（Turing）發現如何大幅減少暴力破解所需的嘗試次數，工程師打造出「圖靈炸彈」破譯機</td></tr></tbody>
+</table>
+</div>
+<p>接線板另外還能做 6 對字母的接線，變化高達上億種可能 —— 但即使組合數字大到誇張，Enigma 最終仍被有系統的密碼分析攻破，再次印證：<strong>金鑰空間大，不等於無法破解；破解往往靠的是找出系統設計裡沒被隨機化掉的規律。</strong></p>
+
+</section><div class="callout tip"><span class="t">🧭 這個單元的兩種教學方案（先都放上來，之後再挑一種調整／混用）</span>
+<p>「轉輪機／Enigma」這一段，是去年很受歡迎的內容，有兩種呈現方式：</p>
+<div class="grid cols-2">
+  <div class="card"><h3>🅰️ 簡報講述 + 歷史故事</h3><p>用上面整理的簡報內容（滾輪互動原理 + 波蘭／英國破解 Enigma 的歷史）循序講解，強調「機械化的單字母加密」這個核心概念。</p></div>
+  <div class="card"><h3>🅱️ 影片 + 線上模擬器動手玩</h3><p>去年很受歡迎的組合：先看影片了解 Enigma 怎麼被使用，再讓學生自己上線動手轉滾輪、體驗加解密。</p>
+        <div class="grid cols-2">
+  <figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=kE3Xb-XH8NU" target="_blank" rel="noopener" title="【不止遊戲】二戰德軍號稱「謎」的密碼機，究竟是如何使用的？"><img class="video-thumb" src="https://img.youtube.com/vi/kE3Xb-XH8NU/hqdefault.jpg" alt="【不止遊戲】二戰德軍號稱「謎」的密碼機，究竟是如何使用的？" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=kE3Xb-XH8NU" target="_blank" rel="noopener">&#9654; 【不止遊戲】二戰德軍號稱「謎」的密碼機，究竟是如何使用的？ <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>說明 Enigma 的操作方式與歷史背景。</figcaption></figure>
+  <figure class="video-embed"><div class="video-placeholder"><span class="vp-ico">🎬</span><span class="vp-t">Enigma Machine Emulator（101 Computing）</span><a class="video-link-btn" href="https://www.101computing.net/enigma-machine-emulator/" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div><figcaption>線上恩尼格瑪機模擬器，可以自己設定滾輪、實際打字體驗加密。</figcaption></figure>
+</div></div>
+</div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">基本版建議：Caesar／單字母／多字母用「簡報＋動手算」講清楚原理，最後的 Enigma 段落用影片＋模擬器收尾、當作整個古典密碼單元的高潮。</p>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit09.html"><div class="dir">← 上一單元</div><div class="ttl">Hash 與資料完整性</div></a>
+    <a class="next" href="unit11.html"><div class="dir">下一單元 →</div><div class="ttl">公開金鑰密碼學（非對稱）</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

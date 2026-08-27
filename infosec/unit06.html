@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 6：Ethereum 與智能合約｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="6">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 6</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 6</span>
+  <h1>Ethereum 與智能合約</h1>
+  <p>DApp、智能合約</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解智能合約「自動執行的程式碼」概念，以及 DApp 的意義</li>
+<li>認識 DeFi（去中心化金融）、DAO（去中心化自治組織）等延伸應用</li>
+<li>能舉出至少一個智能合約／DApp 的生活或新聞案例</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>從「帳本」到「可執行程式」</h2>
+  
+<p>比特幣的區塊鏈基本上是一本「誰付給誰多少錢」的公開帳本。以太坊（Ethereum）在這個基礎上多加了一件事：<strong>讓區塊鏈也能執行程式碼</strong>，這段自動執行、寫死在鏈上、任何人都無法片面竄改的程式碼，就叫做<strong>智能合約（Smart Contract）</strong>。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>📜 智能合約</h4><p>「如果條件 A 成立，就自動執行 B」的程式碼，部署在區塊鏈上後就會照規則自動執行，不需要中間人。</p></div>
+  <div class="tile"><h4>📱 DApp</h4><p>Decentralized Application，用智能合約當後端邏輯的應用程式，例如去中心化交易所、借貸平台。</p></div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>DeFi 與 DAO</h2>
+  <div class="table-wrap">
+<table class="center">
+  <thead><tr><th>名詞</th><th>白話解釋</th><th>例子</th></tr></thead>
+  <tbody><tr><td>DeFi<br>去中心化金融</td><td>把借貸、交易、保險等金融服務搬到智能合約上執行，不需要銀行當中介</td><td>去中心化交易所、去中心化借貸平台</td></tr><tr><td>DAO<br>去中心化自治組織</td><td>組織的規則寫在智能合約裡，成員靠持有的代幣投票決定事務，沒有傳統的老闆／董事會</td><td>社群共同管理的基金、專案治理</td></tr></tbody>
+</table>
+</div>
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>延伸影片：預測市場——智能合約的新玩法</h2>
+  <div class="grid cols-1">
+  <figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=sq5nbne5tao" target="_blank" rel="noopener" title="全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈"><img class="video-thumb" src="https://img.youtube.com/vi/sq5nbne5tao/hqdefault.jpg" alt="全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=sq5nbne5tao" target="_blank" rel="noopener">&#9654; 全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈 <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>去中心化預測市場（如 Polymarket）是智能合約的實際應用：用市場機制讓大家「用錢包票」預測未來事件。</figcaption></figure>
+</div><div class="callout tip"><span class="t">🤔 看完想一想</span>
+<p>「用智能合約做的賭盤」跟傳統賭博有什麼不一樣？少了中間莊家，風險跑去哪裡了？這跟下一個 Part 要談的「智能合約漏洞」有什麼關係？</p>
+</div>
+</section><div class="callout tip"><span class="t">🧭 這個單元的兩種教學方案（先都放上來，之後再挑一種調整／混用）</span>
+<p>這個單元資訊量較新、較抽象，可以挑一種切入：</p>
+<div class="grid cols-2">
+  <div class="card"><h3>🅰️ 自動販賣機比喻</h3><p>用「投幣、選商品、自動吐貨，沒有店員」的自動販賣機比喻智能合約：條件成立就自動執行、沒有人能中途插手。適合先建立直覺再看影片。</p></div>
+  <div class="card"><h3>🅱️ 影片直接切入 + 回推原理</h3><p>直接播放上面的預測市場影片，讓學生先感受「這東西真的存在、而且很多人在玩」，再回頭拆解背後的智能合約與去中心化原理。</p></div>
+</div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">以太坊/智能合約的技術細節（如 Gas 費、EVM）屬於進階內容，基本版先不展開，聚焦在「概念＋案例」。</p>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit05.html"><div class="dir">← 上一單元</div><div class="ttl">虛擬貨幣與比特幣</div></a>
+    <a class="next" href="unit07.html"><div class="dir">下一單元 →</div><div class="ttl">定期評量</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -3,152 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>明道中學 · 資訊科技｜課程首頁</title>
+<title>資訊科技教學網｜明道中學</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7fb; --surf:#ffffff; --surf2:#eef3fa; --bd:#dbe4f0;
+  --tx:#1e2a3a; --txs:#51637a; --txf:#7c8ba1;
+  --f:"Noto Sans TC",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+  --radius:16px; --shadow:0 1px 2px rgba(16,32,64,.06),0 6px 20px rgba(16,32,64,.06);
+}
+html[data-theme="dark"]{
+  --bg:#080b10; --surf:#0d1219; --surf2:#121a24; --bd:#1b2632;
+  --tx:#dbe6f0; --txs:#8b9bb0; --txf:#5c6b80;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--f);line-height:1.7}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--bd);padding:14px 0}
+.top-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:1.05rem}
+.theme-toggle{border:1px solid var(--bd);background:var(--surf);color:var(--tx);border-radius:10px;
+  padding:7px 10px;cursor:pointer;font-size:1rem;line-height:1}
+.hero{padding:52px 0 20px}
+.hero h1{margin:0 0 10px;font-size:clamp(1.6rem,4vw,2.3rem)}
+.hero p{color:var(--txs);margin:0;max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:30px 0 50px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--surf);border:1px solid var(--bd);
+  border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);border-top:5px solid var(--ac,#888);
+  transition:.15s;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(16,32,64,.14)}
+.card .grade{font-family:var(--mono);font-size:.72rem;font-weight:800;letter-spacing:.03em;
+  color:var(--ac,#666);text-transform:uppercase}
+.card h2{margin:6px 0 8px;font-size:1.25rem}
+.card p{margin:0;color:var(--txs);font-size:.92rem}
+.card .arrow{position:absolute;right:20px;bottom:18px;color:var(--ac,#888);font-weight:800}
+.c-it{--ac:#2563eb}
+.c-algo{--ac:#4f46e5}
+.c-infosec{--ac:#0d9488}
+.c-advprog{--ac:#ea580c}
+  .c-apcs{--ac:#e11d48}
+.note{background:var(--surf2);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;
+  color:var(--txs);font-size:.86rem;margin:0 0 50px}
+.note b{color:var(--tx)}
+footer{border-top:1px solid var(--bd);color:var(--txf);text-align:center;padding:24px 0;font-size:.82rem}
+</style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html"><span class="logo">IT</span>
-      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span></a>
-    <span class="spacer"></span>
-    <button class="theme-toggle" onclick="toggleTheme()" title="切換深淺色">🌙</button>
-  </div>
-</header>
+<div class="top"><div class="wrap top-inner">
+  <span class="brand">明道中學．資訊科技教學網</span>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+</div></div>
 
-<section class="hero">
-  <span class="badge">115 學年度第一學期 · 高中部　·　陳楷翔 老師</span>
-  <h1>資訊科技　<span class="grad">學習網站</span></h1>
-  <p>從數字系統、電腦硬體到 Python 程式設計，一整個學期的課程都在這裡。點選下方單元開始學習，每個單元都是獨立頁面，內含教學說明、圖表、互動工具與課堂練習。</p>
-  <div class="meta">
-    <span>📘 14 個教學單元</span>
-    <span>🧮 進位轉換器</span>
-    <span>🔌 邏輯閘互動</span>
-    <span>🐍 Python 範例可複製</span>
+<div class="wrap">
+  <div class="hero">
+    <h1>教學內容總首頁</h1>
+    <p>高一資訊科技、高二演算法、高三資訊安全導論、高三進階程式設計、APCS 先修班 —— 五個科目網站的統整入口。點卡片進入各科課程首頁。</p>
   </div>
-</section>
 
-<main class="wrap">
-  <div class="section-title">
-    <span class="bar"></span><h2>理論篇 · 電腦科學基礎</h2>
-    <span class="cnt">單元 1–7</span>
-  </div>
-  <div class="unit-cards">
-    <a class="ucard" href="unit01.html" data-unit="1">
+  <div class="grid">
+    <a class="card c-it" href="it-tech/index.html">
+      <span class="grade">高一 · 資訊科技</span>
+      <h2>資訊科技</h2>
+      <p>數字系統、電腦硬體與組裝、運算思維、Python 入門。</p>
       <span class="arrow">→</span>
-      <div class="n">01</div>
-      <h3>課程介紹</h3>
-      <p>認識整學期的學習地圖、資訊科技的重要性與課程配分方式。</p>
-      <div class="tags"><span>學習動機</span><span>課程規劃</span><span>評量方式</span></div>
     </a>
-    <a class="ucard" href="unit02.html" data-unit="2">
+    <a class="card c-algo" href="algo/index.html">
+      <span class="grade">高二 · 演算法</span>
+      <h2>基礎演算法</h2>
+      <p>資料結構（陣列／串列／堆疊／佇列／樹／集合）、排序與搜尋演算法。</p>
       <span class="arrow">→</span>
-      <div class="n">02</div>
-      <h3>數字系統</h3>
-      <p>2 / 8 / 10 / 16 進位的表示、互相轉換與二進位加減；附即時進位轉換器。</p>
-      <div class="tags"><span>進位系統</span><span>進位轉換</span><span>互動工具</span></div>
     </a>
-    <a class="ucard" href="unit03.html" data-unit="3">
+    <a class="card c-infosec" href="infosec/index.html">
+      <span class="grade">高三 · 資訊安全</span>
+      <h2>資訊安全導論</h2>
+      <p>資安觀念、攻防基礎、加密與網路安全通識。</p>
       <span class="arrow">→</span>
-      <div class="n">03</div>
-      <h3>資料運算與儲存</h3>
-      <p>AND/OR/XOR/NOT 邏輯閘、半加器與全加器、資料儲存單位、類比與數位訊號、資料傳輸。</p>
-      <div class="tags"><span>邏輯閘</span><span>加法器</span><span>互動真值表</span></div>
     </a>
-    <a class="ucard" href="unit04.html" data-unit="4">
+    <a class="card c-advprog" href="advprog/index.html">
+      <span class="grade">高三 · 進階程式設計</span>
+      <h2>進階程式設計</h2>
+      <p>專題導向，資料分析與視覺化實作。</p>
       <span class="arrow">→</span>
-      <div class="n">04</div>
-      <h3>電腦簡介</h3>
-      <p>從算盤到 AI 的發展歷程、四代電腦、摩爾定律與各類型電腦的應用。</p>
-      <div class="tags"><span>發展史</span><span>電腦世代</span><span>電腦種類</span></div>
     </a>
-    <a class="ucard" href="unit05.html" data-unit="5">
+    <a class="card c-apcs" href="apcs/index.html">
+      <span class="grade">APCS 先修班</span>
+      <h2>APCS</h2>
+      <p>延續高一 Python 基礎，加深加廣挑戰 APCS 中級檢定。</p>
       <span class="arrow">→</span>
-      <div class="n">05</div>
-      <h3>電腦五大單元</h3>
-      <p>電腦的組成、五大單元的功能、指令運作週期與影響 CPU 效能的因素。</p>
-      <div class="tags"><span>五大單元</span><span>CPU</span><span>指令週期</span></div>
-    </a>
-    <a class="ucard" href="unit06.html" data-unit="6">
-      <span class="arrow">→</span>
-      <div class="n">06</div>
-      <h3>電腦硬體與組裝</h3>
-      <p>認識各主要零組件的規格與品牌，建立挑選與組裝一台電腦的觀念。</p>
-      <div class="tags"><span>硬體規格</span><span>選購</span><span>組裝</span></div>
-    </a>
-    <a class="ucard" href="unit07.html" data-unit="7">
-      <span class="arrow">→</span>
-      <div class="n">07</div>
-      <h3>BEBRAS 運算思維</h3>
-      <p>認識運算思維的四大支柱與 BEBRAS 國際挑戰賽，透過題型培養解題能力。</p>
-      <div class="tags"><span>運算思維</span><span>解題</span><span>競賽</span></div>
     </a>
   </div>
 
-  <div class="section-title py">
-    <span class="bar"></span><h2>Python 程式設計篇</h2>
-    <span class="cnt">單元 8–14</span>
+  <div class="note">
+    <b>給老師（陳楷翔）的備忘：</b>這個網站的資料夾架構、單元命名規則、共用機制說明，
+    都寫在根目錄的 <code>MANIFEST.md</code> 裡。之後要把某一科的某個單元丟回原本製作它的
+    對話去改之前，建議先看一下 MANIFEST.md，確認共用檔案（<code>shared/</code>）跟命名規則
+    沒有被搬動或改壞。
   </div>
-  <div class="unit-cards">
-    <a class="ucard py" href="unit08.html" data-unit="8">
-      <span class="arrow">→</span>
-      <div class="n">08</div>
-      <h3>Python（一）開發環境與變數</h3>
-      <p>建立 Python 環境、認識變數與資料型態、型別轉換。</p>
-      <div class="tags"><span>變數</span><span>型別</span><span>資料型態</span></div>
-    </a>
-    <a class="ucard py" href="unit13.html" data-unit="9">
-      <span class="arrow">→</span>
-      <div class="n">09</div>
-      <h3>Python（二）基礎輸入與輸出</h3>
-      <p>用 input() 讀取輸入、print() 的 sep／end，以及 %、format、f-string 四種格式化輸出。</p>
-      <div class="tags"><span>input</span><span>print</span><span>格式化輸出</span></div>
-    </a>
-    <a class="ucard py" href="unit14.html" data-unit="10">
-      <span class="arrow">→</span>
-      <div class="n">10</div>
-      <h3>Python（三）運算子</h3>
-      <p>算術、比較、邏輯、身分與成員、複合指定運算子，搭配 BMI、判斷奇數等範例。</p>
-      <div class="tags"><span>算術</span><span>比較邏輯</span><span>複合指定</span></div>
-    </a>
-    <a class="ucard py" href="unit09.html" data-unit="11">
-      <span class="arrow">→</span>
-      <div class="n">11</div>
-      <h3>Python（四）選擇結構</h3>
-      <p>單向、雙向、多向條件判斷 if / elif / else 與巢狀判斷。</p>
-      <div class="tags"><span>if 判斷</span><span>elif</span><span>巢狀判斷</span></div>
-    </a>
-    <a class="ucard py" href="unit10.html" data-unit="12">
-      <span class="arrow">→</span>
-      <div class="n">12</div>
-      <h3>Python（五）重複結構</h3>
-      <p>for 與 while 迴圈、range、break 與 continue 的用法。</p>
-      <div class="tags"><span>for</span><span>while</span><span>迴圈控制</span></div>
-    </a>
-    <a class="ucard py" href="unit11.html" data-unit="13">
-      <span class="arrow">→</span>
-      <div class="n">13</div>
-      <h3>Python（六）迴圈進階與綜合</h3>
-      <p>巢狀迴圈、累加與計數樣式、迴圈追蹤技巧與綜合實作題。</p>
-      <div class="tags"><span>巢狀迴圈</span><span>程式追蹤</span><span>實作</span></div>
-    </a>
-    <a class="ucard py" href="unit12.html" data-unit="14">
-      <span class="arrow">→</span>
-      <div class="n">14</div>
-      <h3>Python（七）函式與綜合應用</h3>
-      <p>自訂函式、參數與回傳值、區域與全域變數，以及整合前面單元的綜合應用。</p>
-      <div class="tags"><span>函式</span><span>參數</span><span>綜合專題</span></div>
-    </a>
-  </div>
-</main>
+</div>
 
-<footer class="site">
-  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師　·　教材網站
-</footer>
-<a class="teacher-fab" href="video-access.html" title="教師專區：需密鑰才能進入影片資源庫">🔒 教師專區<small>影片資源庫</small></a>
-<script src="assets/progress.js"></script>
-<script src="assets/script.js"></script>
+<footer>明道中學 · 資訊科技教學網</footer>
+
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var cur=html.getAttribute('data-theme');
+  html.setAttribute('data-theme', cur==='dark'?'light':'dark');
+}
+</script>
 </body>
 </html>

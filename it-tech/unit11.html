@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 13：Python（六）迴圈進階與綜合｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="13">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 13</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Python 程式設計篇　單元 13</span>
+  <h1>Python（六）迴圈進階與綜合</h1>
+  <p>巢狀迴圈、迴圈追蹤與綜合練習</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>會使用巢狀迴圈處理二維的重複</li>
+<li>掌握累加、計數、找最大值等常見樣式</li>
+<li>會用「程式追蹤」預測程式的輸出</li>
+  </ul>
+</div><section class="block">
+  <h2><span class="num">01</span>巢狀迴圈</h2>
+  
+<p>迴圈裡再放迴圈稱為<strong>巢狀迴圈</strong>：外層跑一次，內層就整個跑完一輪。常用於表格與圖形。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 九九乘法表（部分）
+for i in range(1, 4):
+    for j in range(1, 10):
+        print(f"{i}x{j}={i*j}", end="\t")
+    print()      # 換行</code></pre>
+</div>
+<div class="callout"><span class="t">🔎 <code>\t</code> 是什麼？</span>
+<p><code>\t</code> 是「Tab（跳格／定位）」字元，會讓游標<strong>跳到下一個定位停格</strong>，把後面的字對齊成整齊的欄位——比用空格更容易對齊。所以這裡把 <code>end="\t"</code> 當每個算式之間的分隔，印出來的乘法表就會像用「表格欄位」一樣<strong>上下對齊</strong>。（<code>\t</code> 跟 <code>\n</code> 一樣是「一個字元」，不是兩個字；<code>\n</code> 是換行、<code>\t</code> 是跳格。）</p></div>
+<h3>印出三角形圖案</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">for i in range(1, 6):
+    print("*" * i)</code></pre>
+</div>
+<div class="callout"><span class="t">🔎 <code>"*" * i</code> 是什麼意思？</span>
+<p>字串乘以整數（<code>字串 * 數字</code>）代表把這個字串<strong>重複串接幾次</strong>。例如 <code>"*" * 3</code> 會得到 <code>"***"</code>、<code>"ab" * 2</code> 會得到 <code>"abab"</code>。所以迴圈裡 <code>i</code> 從 1 變到 5，<code>"*" * i</code> 就依序印出 1、2、3、4、5 個星號，疊成一個三角形。<br>（注意：<code>*</code> 一定要「<strong>字串 × 整數</strong>」；寫成 <code>"*" * 3.0</code> 或 <code>"*" * "3"</code> 都會出錯。）</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>常見迴圈樣式</h2>
+  
+<div class="grid cols-2">
+<div class="card"><h3>➕ 累加 / 計數</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">累加與計數</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">nums = [12, 7, 25, 9, 30]
+total = 0
+count = 0
+for n in nums:
+    total += n            # 累加
+    if n &gt; 10:
+        count += 1        # 計數
+print("總和 =", total)     # 83
+print("大於 10 的有", count, "個")</code></pre>
+</div></div>
+<div class="card"><h3>🔝 找最大值</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">找最大值</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">nums = [12, 7, 25, 9, 30]
+biggest = nums[0]
+for n in nums:
+    if n &gt; biggest:
+        biggest = n
+print("最大值 =", biggest)  # 30</code></pre>
+</div></div>
+</div>
+<div class="callout"><span class="t">🧭 從「找最大值」延伸：排序與搜尋</span>
+<p>「用一個迴圈掃過所有資料、隨時記住目前最好的那一個」這個想法，正是很多<strong>演算法</strong>的起點：</p>
+<ul class="tidy">
+  <li><strong>排序（Sorting）</strong>：把一堆資料<strong>由小到大（或由大到小）排好</strong>。最直覺的「選擇排序」就是不斷「找出最小的、放到最前面」——等於把上面的「找最大／最小值」重複做很多次。</li>
+  <li><strong>搜尋（Searching）</strong>：在資料裡<strong>找出某個目標</strong>。最基本的「線性搜尋」就是用迴圈一個一個比對；如果資料<strong>已經排好序</strong>，還能用更快的「二分搜尋」，每次把範圍砍一半。</li>
+</ul>
+<p style="margin-bottom:0">這些「排序、搜尋」正式的演算法（怎麼寫、怎麼比較快慢）會在<strong>高二選修的「演算法」</strong>課程更完整地介紹。現在先體會「原來一個 <code>for</code> 迴圈就能做到這些事」就可以了。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>程式追蹤（Trace）</h2>
+  
+<p>「程式追蹤」是<strong>一行一行在紙上模擬執行</strong>、記錄變數變化，是讀懂程式與抓錯的重要能力。</p>
+<div class="card"><h3>試著追蹤，猜猜輸出：</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">先追蹤再對答案</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = 0
+for i in range(1, 5):
+    x = x + i
+    print(i, x)</code></pre>
+</div>
+<div class="reveal" onclick="toggleAnswer(this)">▶ 顯示追蹤表</div>
+<div class="answer">
+<div class="table-wrap"><table class="center">
+<thead><tr><th>i</th><th>x = x + i</th><th>印出</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>0+1=1</td><td>1 1</td></tr>
+<tr><td>2</td><td>1+2=3</td><td>2 3</td></tr>
+<tr><td>3</td><td>3+3=6</td><td>3 6</td></tr>
+<tr><td>4</td><td>6+4=10</td><td>4 10</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>用巢狀迴圈印出完整的<strong>九九乘法表</strong>（1×1 到 9×9）。</li>
+  <li>印出底邊 5 的<strong>直角三角形</strong>（第 1 列 1 顆星、第 5 列 5 顆星）。</li>
+  <li>給分數 <code>[55, 88, 72, 90, 47]</code>，算出<strong>平均</strong>並數出<strong>及格人數</strong>。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 3 題
+scores = [55, 88, 72, 90, 47]
+total = 0
+passed = 0
+for s in scores:
+    total += s
+    if s &gt;= 60:
+        passed += 1
+print("平均 =", total / len(scores))
+print("及格人數 =", passed)</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit10.html"><div class="dir">← 上一單元</div><div class="ttl">Python（五）重複結構</div></a>
+    <a class="next" href="unit12.html"><div class="dir">下一單元 →</div><div class="ttl">Python（七）函式與綜合應用</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

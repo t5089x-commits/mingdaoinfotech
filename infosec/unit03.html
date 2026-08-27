@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 3：數位身分與數位錢包｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="3">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 3</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 3</span>
+  <h1>數位身分與數位錢包</h1>
+  <p>數位身分、去中心化帳號；生活案例</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解「去中心化」的概念，以及它想解決什麼問題</li>
+<li>理解「數位身分」與傳統帳號密碼的差異</li>
+<li>認識去中心化身分（DID）與數位錢包的基本概念</li>
+<li>能舉出生活中數位身分／數位錢包的實際案例</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>先講：什麼是去中心化？</h2>
+  
+<p>先回答一個更根本的問題：什麼是「去中心化」？我們平常用的系統，大多是<strong>中心化</strong>的 —— 有一個中央機構掌握所有資料、決定所有規則。<strong>去中心化</strong>則是把權力和資料分散到很多參與者手上，不存在單一的「管理者」。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🏢 中心化 Centralized</h4><p>一個中央機構（銀行、政府、平台公司）掌握資料與決策權，大家都得信任、依賴這個機構。</p></div>
+  <div class="tile"><h4>🌐 去中心化 Decentralized</h4><p>權力與資料分散給很多參與者，靠規則（協定）與數學方法達成共識，不用單獨信任某一個人或機構。</p></div>
+</div>
+<div class="callout"><span class="t">🤔 去中心化想解決什麼問題？</span>
+
+<ul class="tidy">
+<li><strong>單一失效點：</strong>中心化系統只要那個「中央」出問題（被駭、倒閉、審查），所有人都受影響。<br><span style='color:var(--text-faint);font-size:.85rem'>例如：如果 IG 公司哪天倒閉或系統掛掉，你所有的追蹤者、私訊紀錄、多年來的貼文，可能就這樣一次歸零 —— 因為所有資料都放在同一個「中央」手上。</span></li>
+<li><strong>需要盲目信任：</strong>你必須相信這個機構不會亂搞你的資料、不會被駭、不會消失。<br><span style='color:var(--text-faint);font-size:.85rem'>例如：你把錢存進銀行，其實是相信銀行不會捲款潛逃、帳務系統不會被駭、也不會突然凍結你的帳戶 —— 你沒辦法自己驗證，只能選擇相信。</span></li>
+<li><strong>審查與掌控：</strong>中央機構可以片面決定「誰可以用」「誰的資料要被封鎖」。<br><span style='color:var(--text-faint);font-size:.85rem'>例如：社群平台可以片面下架某則貼文、停權某個帳號，使用者往往沒有申訴或置喙的餘地。</span></li>
+</ul>
+<p style="margin-bottom:0">去中心化用「大家一起維護、規則寫死、可公開驗證」取代「相信某個中央機構」—— 這句話會貫穿這學期的區塊鏈、比特幣、智能合約等單元。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>什麼是數位身分？</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>🪪 傳統帳號</h4><p>由平台（學校、銀行、社群網站）發給你一組帳號密碼，平台掌握你的身分資料，也負責驗證你是誰 —— 是「中心化」的身分。</p></div>
+  <div class="tile"><h4>🔑 去中心化身分 DID</h4><p>你自己保管一把私鑰，用「你能證明自己擁有這把鑰匙」來證明身分，不需要透過單一平台核發。</p></div>
+</div>
+<p>去中心化身分（Decentralized Identity, DID）的核心想法是：<strong>身分證明從「平台說了算」變成「數學證明說了算」</strong>。這需要密碼學（後面單元會學到的公開金鑰）當後盾。</p>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>數位錢包：不只是裝錢的錢包</h2>
+  
+<p>「數位錢包」常被誤會成「一個存錢的 App」，但它真正存的是<strong>金鑰</strong>（也就是你的數位身分）。有了金鑰，你才能證明「這筆資產是我的」、「這份文件是我簽的」。</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>生活案例</th><th>背後的數位身分／錢包概念</th></tr></thead>
+  <tbody><tr><td>手機的生物辨識解鎖</td><td>用指紋／臉部當作「你就是你」的驗證方式，取代記憶密碼</td></tr><tr><td>行動支付（Apple Pay 等）</td><td>手機安全晶片保管一把金鑰，交易時用金鑰簽章，而不是直接傳卡號</td></tr><tr><td>加密貨幣錢包（如 Trust Wallet）</td><td>保管私鑰與「註記詞」，註記詞遺失＝資產永久遺失（後面單元會細講）</td></tr><tr><td>自然人憑證 / 健保卡</td><td>由政府憑證中心核發的數位身分，可用來報稅、領補助等</td></tr></tbody>
+</table>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 想一想</h3>
+  
+<p>你手機裡有哪些「其實在幫你管理數位身分」的功能或 App？試著列出 2-3 個，並說說看它們各自用什麼方式證明「這是你本人」。</p>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer"><p>參考方向：Face ID／指紋辨識、學校的單一登入（SSO）帳號、Line/Google 帳號登入其他網站（OAuth）、悠遊卡自動加值的信用卡授權等，都是不同層次的「數位身分」。</p></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">Web1.0 → 3.0 演進</div></a>
+    <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">區塊鏈是什麼</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

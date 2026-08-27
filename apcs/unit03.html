@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 3：運算子大全：算術・比較・邏輯・位元｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="3">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 3</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">起點篇　單元 3</span>
+  <h1>運算子大全：算術・比較・邏輯・位元</h1>
+  <p>APCS 初級明確會考的四大類運算子，這裡一次補齊</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>熟悉算術、比較、邏輯運算子與複合指定運算子</li>
+    <li>認識並會使用<strong>位元運算子</strong>：AND、OR、XOR、NOT、位移</li>
+    <li>能判斷一段運算式的運算子優先順序與結果</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>算術運算子</h2>
+  <p><code>+</code> 加、<code>-</code> 減、<code>*</code> 乘、<code>/</code> 除、<code>%</code> 餘數、<code>//</code> 整數除（商）、<code>**</code> 指數。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a, b = 17, 5
+print(a + b)   # 22
+print(a - b)   # 12
+print(a * b)   # 85
+print(a / b)   # 3.4   （/ 一定回傳浮點數）
+print(a % b)   # 2     （餘數）
+print(a // b)  # 3     （商，捨去小數）
+print(a ** b)  # 1419857</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 <code>%</code> 和 <code>//</code> 是好朋友</span>
+  <p style="margin-bottom:0">任何整數 <code>a</code>、<code>b</code>（<code>b</code> 不為 0），一定滿足 <code>a == (a // b) * b + a % b</code>。<code>//</code> 求「商」、<code>%</code> 求「餘數」，APCS 常考「奇偶判斷」（<code>n % 2 == 0</code>）、「個位數」（<code>n % 10</code>）都是靠它們。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>比較與邏輯運算子</h2>
+  <p>比較運算子的結果一定是布林值：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&gt;=</code>、<code>&lt;</code>、<code>&lt;=</code>。邏輯運算子用來組合多個條件：<code>and</code>（且）、<code>or</code>（或）、<code>not</code>（否定）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">score = 78
+print(score &gt;= 60)                          # True
+print(score &gt;= 90 or score &gt;= 60)            # True（有一個為真就是 True）
+print(score &gt;= 60 and score &lt; 90)            # True（兩個都要為真）
+print(not (score &gt;= 60))                     # False
+
+n = 15
+print(1 &lt;= n &lt;= 100)                          # Python 可以連續比較，等同 (1&lt;=n) and (n&lt;=100)</code></pre>
+  </div>
+  <table class="center" style="margin:14px 0">
+    <thead><tr><th>a</th><th>b</th><th>a and b</th><th>a or b</th></tr></thead>
+    <tbody>
+      <tr><td>True</td><td>True</td><td>True</td><td>True</td></tr>
+      <tr><td>True</td><td>False</td><td>False</td><td>True</td></tr>
+      <tr><td>False</td><td>True</td><td>False</td><td>True</td></tr>
+      <tr><td>False</td><td>False</td><td>False</td><td>False</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>位元運算子（APCS 初級必考）</h2>
+  <p>位元運算子把數字看成<strong>二進位</strong>，一個 bit 一個 bit 做運算。這是資訊科技數字系統單元學過的二進位概念，在 APCS 會直接考它的<strong>運算結果</strong>：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>運算子</th><th>名稱</th><th>規則</th><th>範例</th></tr></thead>
+      <tbody>
+        <tr><td><code>&amp;</code></td><td>AND</td><td>兩個 bit 都是 1 才是 1</td><td><code>0b1100 &amp; 0b1010</code> → <code>0b1000</code>（8）</td></tr>
+        <tr><td><code>|</code></td><td>OR</td><td>只要有一個 bit 是 1 就是 1</td><td><code>0b1100 | 0b1010</code> → <code>0b1110</code>（14）</td></tr>
+        <tr><td><code>^</code></td><td>XOR</td><td>兩個 bit <strong>不同</strong>才是 1</td><td><code>0b1100 ^ 0b1010</code> → <code>0b0110</code>（6）</td></tr>
+        <tr><td><code>~</code></td><td>NOT</td><td>每個 bit 反過來（結果 = <code>-x-1</code>）</td><td><code>~5</code> → <code>-6</code></td></tr>
+        <tr><td><code>&lt;&lt;</code></td><td>左移</td><td>所有 bit 往左移 n 位，右邊補 0（等於 ×2ⁿ）</td><td><code>3 &lt;&lt; 2</code> → <code>12</code></td></tr>
+        <tr><td><code>&gt;&gt;</code></td><td>右移</td><td>所有 bit 往右移 n 位（等於整數除以 2ⁿ）</td><td><code>12 &gt;&gt; 2</code> → <code>3</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = 12   # 二進位 1100
+b = 10   # 二進位 1010
+
+print(bin(a))     # 0b1100
+print(a &amp; b)      # 8   →  1000
+print(a | b)      # 14  →  1110
+print(a ^ b)      # 6   →  0110
+print(a &lt;&lt; 1)      # 24  → 11000（左移 1 位＝乘以 2）
+print(a &gt;&gt; 2)      # 3   → 0011（右移 2 位＝除以 4，取商）</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 位元運算子 vs 邏輯運算子：不要搞混！</span>
+  <p style="margin-bottom:0"><code>&amp;</code>／<code>|</code> 是<strong>位元運算</strong>，作用在整數的每一個 bit 上；<code>and</code>／<code>or</code> 是<strong>邏輯運算</strong>，作用在 <code>True</code>／<code>False</code> 這種布林值上，考慮的是「兩個條件成不成立」。<code>3 &amp; 5</code>（結果是 1）和 <code>3 and 5</code>（結果是 5，因為兩者都不是 0，取後面那個）意思完全不一樣，這是程式識讀很愛出的陷阱題。</p></div>
+  <div class="callout tip"><span class="t">💡 為什麼要學位元運算？</span>
+  <p style="margin-bottom:0">位元運算常用來<strong>用一個整數同時記錄很多個開關狀態</strong>（例如用 8 個 bit 記錄 8 種權限的開／關），或是快速做「乘 2 的次方」「除 2 的次方」「判斷奇偶」（<code>n &amp; 1</code> 就能判斷 <code>n</code> 是不是奇數）。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">04</span>複合指定運算子</h2>
+  <p>把「運算」和「指定」合在一起的簡寫：<code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code>、<code>//=</code>、<code>**=</code>，位元運算也有對應的 <code>&amp;=</code>、<code>|=</code>、<code>^=</code>、<code>&lt;&lt;=</code>、<code>&gt;&gt;=</code>。<code>a += b</code> 就等同 <code>a = a + b</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">total = 0
+for i in range(1, 6):
+    total += i     # total = total + i
+print(total)        # 15
+
+flags = 0b0000
+flags |= 0b0100     # 開啟第 3 個開關
+flags &amp;= ~0b0100    # 再關掉它
+print(bin(flags))   # 0b0</code></pre>
+  </div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li><code>13 // 4</code>、<code>13 % 4</code>、<code>2 ** 6</code> 分別是多少？</li>
+    <li><code>a = 6</code>（<code>0b0110</code>），<code>b = 3</code>（<code>0b0011</code>），求 <code>a &amp; b</code>、<code>a | b</code>、<code>a ^ b</code>。</li>
+    <li>不用 <code>%</code>，改用位元運算判斷一個整數 <code>n</code> 是不是奇數，該怎麼寫？</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+    <ol>
+      <li><code>13 // 4 = 3</code>、<code>13 % 4 = 1</code>、<code>2 ** 6 = 64</code>。</li>
+      <li><code>0b0110 &amp; 0b0011 = 0b0010</code>（2）、<code>0b0110 | 0b0011 = 0b0111</code>（7）、<code>0b0110 ^ 0b0011 = 0b0101</code>（5）。</li>
+      <li><code>n &amp; 1 == 1</code>：奇數的最後一個 bit 一定是 1，偶數一定是 0。</li>
+    </ol>
+  </div>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">變數、資料型態與輸出入</div></a>
+    <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">條件判斷與迴圈</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

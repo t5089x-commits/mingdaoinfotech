@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 6：字元與字串（String）｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="6">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 6</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">挑戰篇　單元 6</span>
+  <h1>字元與字串（String）</h1>
+  <p>中級的另一半：文字處理與流程模擬</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>理解字元（character）與 ASCII 碼的對應關係</li>
+    <li>會用索引、切片走訪字串，並知道字串<strong>不可變</strong>的特性</li>
+    <li>熟悉常用字串方法，能處理基本的文字處理題</li>
+    <li>能組合迴圈＋字串，寫出「迴文判斷」等 APCS 常見題型</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>字元與 ASCII</h2>
+  <p>電腦裡的每個字元都對應一個數字編碼，英文字母、數字、符號常用的是 <strong>ASCII 碼</strong>。Python 用 <code>ord()</code> 查字元對應的編碼，<code>chr()</code> 反過來把編碼變回字元：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(ord('A'))    # 65
+print(ord('a'))    # 97
+print(ord('0'))    # 48
+print(chr(65))      # 'A'
+print(chr(97))      # 'a'
+
+# A~Z 是連續的 65~90，a~z 是連續的 97~122
+c = 'D'
+print(chr(ord(c) + 1))   # 'E'　←　字母往後移一位</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">💡 大小寫轉換的原理</span>
+  <p style="margin-bottom:0">大寫和小寫字母的 ASCII 碼剛好差 <code>32</code>（<code>'a' - 'A' == 32</code>）。所以 <code>chr(ord(c) + 32)</code> 可以把大寫字母 <code>c</code> 轉成小寫——雖然平常直接用 <code>.upper()</code>／<code>.lower()</code> 更方便，但看懂原理，遇到「自己刻轉換」的題目才不會卡住。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>字串是「字元的序列」</h2>
+  <p>字串的索引、切片規則和 list 完全一樣：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = "Mingdao"
+print(s[0])       # 'M'
+print(s[-1])       # 'o'
+print(s[1:4])       # 'ing'
+print(s[::-1])       # 'oadgniM'　（反轉）
+print(len(s))         # 7
+
+for ch in s:
+    print(ch, end="-")   # M-i-n-g-d-a-o-
+print()</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 字串是「不可變」的（immutable）</span>
+  <p style="margin-bottom:0">跟 list 不一樣，<strong>字串不能直接改某一個字元</strong>：<code>s[0] = 'X'</code> 會直接 <code>TypeError</code> 報錯！要「修改」字串，只能建立一個<strong>新的字串</strong>去取代它，例如 <code>s = 'X' + s[1:]</code>。這是程式測試與除錯常考的觀念。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>常用字串方法</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>方法</th><th>作用</th><th>範例</th></tr></thead>
+      <tbody>
+        <tr><td><code>.upper() / .lower()</code></td><td>轉大寫／小寫</td><td><code>"Hi".upper()</code> → <code>"HI"</code></td></tr>
+        <tr><td><code>.strip()</code></td><td>去掉頭尾空白（含換行）</td><td><code>" hi ".strip()</code> → <code>"hi"</code></td></tr>
+        <tr><td><code>.split(sep)</code></td><td>依分隔符切成 list</td><td><code>"a,b,c".split(",")</code> → <code>['a','b','c']</code></td></tr>
+        <tr><td><code>sep.join(list)</code></td><td>把 list 用分隔符接成字串（split 的相反）</td><td><code>"-".join(['a','b'])</code> → <code>"a-b"</code></td></tr>
+        <tr><td><code>.replace(a, b)</code></td><td>把所有 a 換成 b</td><td><code>"aabb".replace("a","x")</code> → <code>"xxbb"</code></td></tr>
+        <tr><td><code>.find(sub)</code></td><td>回傳子字串第一次出現的索引，找不到回傳 -1</td><td><code>"hello".find("l")</code> → <code>2</code></td></tr>
+        <tr><td><code>.count(sub)</code></td><td>計算子字串出現次數</td><td><code>"banana".count("a")</code> → <code>3</code></td></tr>
+        <tr><td><code>.isdigit() / .isalpha()</code></td><td>是不是純數字／純英文字母</td><td><code>"123".isdigit()</code> → <code>True</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block">
+  <h2><span class="num">04</span>常見題型：迴圈＋字串</h2>
+  <h3>算母音字母個數（不用內建方法，自己判斷）</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = "hello world"
+vowels = "aeiou"
+count = 0
+for ch in s:
+    if ch in vowels:      # in 可以直接判斷字元在不在另一個字串裡
+        count += 1
+print(count)   # 3</code></pre>
+  </div>
+  <h3>判斷迴文（正著讀、反著讀一樣）</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def is_palindrome(s):
+    n = len(s)
+    for i in range(n // 2):
+        if s[i] != s[n - 1 - i]:
+            return False
+    return True
+
+print(is_palindrome("level"))    # True
+print(is_palindrome("apple"))    # False</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">💡 更快的寫法</span>
+  <p style="margin-bottom:0">如果題目沒有限制不能用切片，其實一行 <code>s == s[::-1]</code> 就能判斷迴文（比較原字串和反轉後的字串是否相同）。但用迴圈手刻一次，能確保自己真的理解「頭尾往中間比對」這個邏輯，遇到變化題（例如「只看英文字母，忽略大小寫與空白」）才寫得出來。</p></div>
+  <h3>字串組字（用迴圈一個字一個字組出新字串）</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = "abcde"
+result = ""
+for ch in s:
+    result += ch.upper() + "-"   # 逐字組合成新字串
+print(result)   # A-B-C-D-E-</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 為什麼要練「自己刻」，不直接呼叫方法？</span>
+  <p style="margin-bottom:0">程式識讀考的是<strong>邏輯拆解能力</strong>，題目常常要求「不能用某個內建函式」，逼你用迴圈把邏輯自己想一遍。內建方法（如 <code>.count()</code>）平常寫程式當然可以直接用，但練習時建議兩種都會，遇到限制條件也不慌。</p></div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li>輸入一個字串，統計裡面有幾個數字字元（可用 <code>.isdigit()</code>）。</li>
+    <li>不用 <code>[::-1]</code>，用迴圈把字串反轉後輸出。</li>
+    <li>輸入一段句子，計算裡面出現最多次的字元是哪一個、出現幾次。</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">s = "hello"
+result = ""
+for ch in s:
+    result = ch + result   # 每次把新字元加在「前面」，就會自然反過來
+print(result)   # olleh</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">s = "programming"
+best_ch, best_n = "", 0
+for ch in s:
+    n = s.count(ch)
+    if n &gt; best_n:
+        best_ch, best_n = ch, n
+print(best_ch, best_n)   # r 2（或 g 2，看哪個先達到最大次數）</code></pre>
+</div>
+  </div>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit05.html"><div class="dir">← 上一單元</div><div class="ttl">陣列與串列（List）</div></a>
+    <a class="next" href="unit07.html"><div class="dir">下一單元 →</div><div class="ttl">函式使用規則大全</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

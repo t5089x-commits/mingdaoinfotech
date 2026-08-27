@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 9：Python（二）基礎輸入與輸出｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="9">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 9</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Python 程式設計篇　單元 9</span>
+  <h1>Python（二）基礎輸入與輸出</h1>
+  <p>input() 讀取、print() 與四種格式化輸出</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>會用 input() 讀取輸入，並知道它一定是字串（str）</li>
+<li>熟悉 print() 的多項輸出、sep 分隔字元與 end 結束字元</li>
+<li>會用 %、str.format() 與 f-string 三種方式格式化輸出</li>
+<li>能控制欄寬、對齊、小數位數與進位前綴</li>
+  </ul>
+</div><section class="block">
+  <h2><span class="num">01</span>輸入 input()</h2>
+  
+<p><code>input()</code> 會讀進使用者輸入的一行文字，<strong>回傳的一定是字串（str）</strong>。語法：</p>
+<p><code>變數 = input([提示字串])</code></p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">a = input('請輸入數字：')
+print(a)
+print(type(a))        # &lt;class 'str'&gt;  —— input 讀進來是「字串」</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠️ 常見陷阱</span>
+<p><code>input()</code> 讀到的是<strong>字串</strong>，不能直接拿來算數學。要當數字用，得先轉型別：<code>int(input())</code> 或 <code>float(input())</code>。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>輸出 print()</h2>
+  
+<p>語法：<code>print(項目1 [, 項目2, … , sep=分隔字元, end=結束字元])</code>。多個項目用逗號隔開；字串也可以用 <code>+</code> 組合，但<strong>不同型別要先轉成字串</strong>。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">print(87, "吃水果會過敏", 87)
+print(str(87) + "吃水果會過敏" + str(87))          # 用 + 組合，數字要先 str()
+print(87, "吃水果會過敏", 87, sep="&amp;")             # 用 &amp; 當分隔字元
+print("不要叫我吃水果了啦", 87, sep="&amp;", end=".")   # 結尾不換行、改成 .</code></pre>
+</div>
+<h4><code>\n</code>：在字串裡換行</h4>
+<p>在字串中間放一個 <code>\n</code>，印出來時那個位置就會<strong>換到下一行</strong>。它是「一個字元」，不是兩個字。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">print("吃水果會過敏\n不要叫我吃水果了啦")     # \n 的位置會換行
+print("都沒有人相信我吃水果會過敏")</code></pre>
+</div>
+<p class="hint">上面第一行會印成兩行：先印「吃水果會過敏」，再換行印「不要叫我吃水果了啦」；第二行再自成一行。</p>
+<div class="callout"><span class="t">🔎 sep 與 end</span>
+<p><code>sep</code>：各項目之間的<strong>分隔字元</strong>（預設是一個空格）。<code>end</code>：整行輸出後的<strong>結束字元</strong>（預設是換行 <code>\n</code>，所以每個 <code>print()</code> 才會各自成一行）。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>格式化輸出：統一用 f-string</h2>
+  
+<p>把變數和數字「漂亮地」放進字串裡（對齊、補零、指定小數位數、轉進位…）就叫<strong>格式化輸出</strong>。Python 有三種寫法：最舊的 <code>%</code>、後來的 <code>.format()</code>，和現在最推薦的 <strong>f-string</strong>。<strong>本課之後一律用 f-string 就好</strong>——只要在字串前面加一個 <code>f</code>，再把變數直接寫進 <code>{ }</code> 裡：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = "阿翔"
+math = 87
+print(f"{name}的數學成績是 {math} 分")   # 直接把變數塞進 { }</code></pre>
+</div>
+<h3>在 <code>{ }</code> 裡加格式：<code>{值:格式}</code></h3>
+<p>在大括號裡、變數後面加一個冒號 <code>:</code>，就能指定<strong>寬度、對齊、小數位數、補零、進位</strong>。以 <code>math</code> 為例：</p>
+<div class="table-wrap"><table class="center">
+<thead><tr><th>想做什麼</th><th>寫法</th><th>印出來（<code>█</code> 代表空格）</th></tr></thead>
+<tbody>
+<tr><td>寬度 8、靠右（數值預設）</td><td><code>{math:&gt;8}</code></td><td><code>██████87</code></td></tr>
+<tr><td>寬度 8、靠左</td><td><code>{math:&lt;8}</code></td><td><code>87██████</code></td></tr>
+<tr><td>寬度 8、置中</td><td><code>{math:^8}</code></td><td><code>███87███</code></td></tr>
+<tr><td>保留 2 位小數</td><td><code>{math:.2f}</code></td><td><code>87.00</code></td></tr>
+<tr><td>共 6 格、2 位小數、前面補 0</td><td><code>{math:06.2f}</code></td><td><code>087.00</code></td></tr>
+<tr><td>轉二／八／十六進位</td><td><code>{n:b}</code>／<code>{n:o}</code>／<code>{n:x}</code></td><td>11 → <code>1011</code>／13 → <code>15</code>／11 → <code>b</code></td></tr>
+<tr><td>進位再加前綴 <code>0b/0o/0x</code></td><td><code>{n:#x}</code></td><td>11 → <code>0xb</code></td></tr>
+</tbody></table></div>
+<p class="hint">對齊符號：<code>&lt;</code> 靠左、<code>&gt;</code> 靠右、<code>^</code> 置中；字串預設靠左、數值預設靠右。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = "阿翔"
+math = 87.67
+print(f"{name}數學成績{math:06.2f}")   # 補 0、共 6 格、2 位小數 → 087.67
+print(f"{0b1011:#x}")                  # 二進位 1011 = 11 → 十六進位 0xb</code></pre>
+</div>
+<p style="margin:10px 0 2px;color:var(--text-soft);font-size:.9rem">👇 f-string 怎麼把變數和格式「填」進字串？點「下一步」一行一行看：</p>
+<div class="varstep" id="fstep">
+  <div class="vs-stage">
+    <div class="vs-boxes">
+      <div class="vs-box empty wide" id="fs-name"><span class="vs-name">name</span><span class="vs-val"></span></div>
+      <div class="vs-box empty wide" id="fs-math"><span class="vs-name">math</span><span class="vs-val"></span></div>
+    </div>
+  </div>
+  <div class="vs-cc"><div class="vs-srccard">
+    <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">格式化.py　—　目前執行的那一行會反白</span></div>
+    <div class="vs-src">
+      <div class="vs-ln" data-ln="0">name = "阿翔"</div>
+      <div class="vs-ln" data-ln="1">math = 87.67</div>
+      <div class="vs-ln" data-ln="2">print(f"{name}數學成績{math:06.2f}")   # 補 0、共 6 格、2 位小數 → 087.67</div>
+      <div class="vs-ln" data-ln="3">print(f"{0b1011:#x}")                  # 二進位 1011 = 11 → 十六進位 0xb</div>
+    </div>
+  </div>
+    <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body" id="fs-out"></div></div>
+  </div>
+  <div class="vs-cap" id="fs-cap">點「下一步 ▶」，看看 f-string 怎麼把變數和格式填進字串、再印到右邊。</div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="fs-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="fs-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById("fstep"); if(!root) return;
+  var steps=[
+    {name:"",math:"",ln:-1,cap:"點「下一步 ▶」，看看 f-string 怎麼把變數和格式填進字串、再印到右邊。",hi:[],out:[]},
+    {name:'"阿翔"',math:"",ln:0,cap:'把字串 "阿翔" 放進 name。',hi:["name"],out:[]},
+    {name:'"阿翔"',math:"87.67",ln:1,cap:"把 87.67 放進 math。",hi:["math"],out:[]},
+    {name:'"阿翔"',math:"87.67",ln:2,cap:"f-string：{name} 換成「阿翔」；{math:06.2f} 把 87.67 補成「共 6 格、2 位小數、前面補 0」→ 087.67。",hi:["name","math"],out:["阿翔數學成績087.67"]},
+    {name:'"阿翔"',math:"87.67",ln:3,cap:"{0b1011:#x}：0b1011 是二進位（= 11），:#x 把它轉成十六進位、加上前綴 → 0xb。",hi:[],out:["阿翔數學成績087.67","0xb"]}
+  ];
+  var i=0;
+  var nameB=document.getElementById("fs-name"),mathB=document.getElementById("fs-math");
+  var nameV=nameB.querySelector(".vs-val"),mathV=mathB.querySelector(".vs-val");
+  var cap=document.getElementById("fs-cap"),out=document.getElementById("fs-out");
+  var srclns=root.querySelectorAll(".vs-ln");
+  var next=document.getElementById("fs-next"),reset=document.getElementById("fs-reset");
+  function one(box,el,val,hi,prev){
+    el.textContent=val;
+    if(val===""){box.classList.add("empty");}else{box.classList.remove("empty");}
+    box.classList.toggle("hi",hi);
+    if(prev!==val){box.classList.remove("pop");void box.offsetWidth;box.classList.add("pop");}
+  }
+  function render(prev){
+    var s=steps[i],p=prev!=null?steps[prev]:{name:null,math:null,out:[]};
+    one(nameB,nameV,s.name,s.hi.indexOf("name")>=0,p.name);
+    one(mathB,mathV,s.math,s.hi.indexOf("math")>=0,p.math);
+    for(var q=0;q<srclns.length;q++){srclns[q].classList.toggle("hi",srclns[q].getAttribute("data-ln")===String(s.ln));}
+    cap.textContent=s.cap;
+    var prevLen=(p.out||[]).length; out.innerHTML="";
+    if(s.out.length===0){var ph=document.createElement("div");ph.className="vs-outph";ph.textContent="（還沒有 print 輸出）";out.appendChild(ph);}
+    else{for(var j=0;j<s.out.length;j++){var l=document.createElement("div");l.className="vs-outline"+(j>=prevLen?" fresh":"");l.textContent=s.out[j];out.appendChild(l);}}
+    next.textContent=(i>=steps.length-1)?"✓ 完成":"下一步 ▶"; next.disabled=(i>=steps.length-1);
+  }
+  next.addEventListener("click",function(){if(i<steps.length-1){var pv=i;i++;render(pv);}});
+  reset.addEventListener("click",function(){var pv=i;i=0;render(pv);});
+  render(null);
+})();
+</script>
+<div class="reveal" onclick="toggleWork(this)"><span class="wk-arrow">▶</span> 📜 想看看舊寫法 <code>%</code> 和 <code>.format()</code> 嗎？（了解就好，平常一律用 f-string）</div>
+<div class="answer">
+<p style="margin-top:0">在 f-string 出現前，Python 用 <code>%</code>（最舊）和 <code>.format()</code> 來格式化。同樣一句「阿翔數學成績 69.00」，三種寫法對照：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = "阿翔"
+math = 69
+
+# 舊寫法 1：%（最舊）
+print("%s數學成績%6.2f" % (name, math))
+
+# 舊寫法 2：.format()
+print("{}數學成績{:6.2f}".format(name, math))
+
+# 推薦：f-string（最直覺，變數直接寫在字串裡）
+print(f"{name}數學成績{math:6.2f}")</code></pre>
+</div>
+<p style="margin-bottom:0">三種印出來完全一樣，但 f-string <strong>最好讀、最不容易寫錯</strong>——所以本課之後<strong>一律用 f-string</strong>，另外兩種看得懂就好。</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li><code>input()</code> 讀進來的資料是什麼型別？要當數字算，該怎麼做？</li>
+  <li>寫一行 <code>print()</code>，讓 <code>100</code> 和 <code>60</code> 中間用 <code>&amp;</code> 分隔、結尾不換行。</li>
+  <li>用 f-string 把 <code>3.14159</code> 印成寬度 8、保留 2 位小數、靠右對齊。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>字串（str）；要先用 <code>int()</code> 或 <code>float()</code> 轉型別，例如 <code>int(input())</code>。</li>
+<li><code>print(100, 60, sep="&", end="")</code>。</li>
+<li><code>print(f"{3.14159:>8.2f}")</code>。</li>
+</ol></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit08.html"><div class="dir">← 上一單元</div><div class="ttl">Python（一）開發環境與變數</div></a>
+    <a class="next" href="unit14.html"><div class="dir">下一單元 →</div><div class="ttl">Python（三）運算子</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

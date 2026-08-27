@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 2：Web1.0 → 3.0 演進｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="2">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 2</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 2</span>
+  <h1>Web1.0 → 3.0 演進</h1>
+  <p>把「未來資訊科技」拆成資安主題，建立全學期主軸</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識 Web1.0（唯讀）、Web2.0（互動共享）、Web3.0（自主與去中心化）的差異</li>
+<li>理解「誰擁有資料」在三個階段的轉變，抓住本學期資安主軸</li>
+<li>看懂「去中心化」這個關鍵字，為後面的區塊鏈單元鋪路</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>破題：一起來科幻思考</h2>
+  
+<p>我們先一起來「科幻思考」一下：<strong>2050 年，網路會是什麼樣子？</strong>你每天打開的網路世界，會長什麼樣子、用什麼方式證明「你是你」、你的資料和資產又掌握在誰手上？先別急著找答案，帶著這個問題看看下面這支影片。</p>
+<div class="grid cols-1">
+  <figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=Ks_QkNTbGJY" target="_blank" rel="noopener" title="終將徹底改變一切的Web3.0，人類走向全面虛擬的開端｜老高與小茉 Mr &amp; Mrs Gao"><img class="video-thumb" src="https://img.youtube.com/vi/Ks_QkNTbGJY/hqdefault.jpg" alt="終將徹底改變一切的Web3.0，人類走向全面虛擬的開端｜老高與小茉 Mr &amp; Mrs Gao" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=Ks_QkNTbGJY" target="_blank" rel="noopener">&#9654; 終將徹底改變一切的Web3.0，人類走向全面虛擬的開端｜老高與小茉 Mr &amp; Mrs Gao <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>老高與小茉對 Web3.0 的說故事式介紹，適合當破題影片（去年課堂分享內容）。</figcaption></figure>
+</div>
+<div class="callout tip"><span class="t">💬 看完，全班討論</span>
+<p>影片裡說的「全面虛擬」「自主掌握」，到底想解決什麼問題？試著用一句話回答：<strong>Web3.0 到底解決了什麼問題？</strong></p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>收斂：從唯讀到共享，再到自主</h2>
+  <div class="table-wrap">
+<table class="center">
+  <thead><tr><th>階段</th><th>特色</th><th>資料掌握在誰手上</th><th>生活例子</th></tr></thead>
+  <tbody><tr><td><strong>Web1.0</strong><br>唯讀網頁</td><td>網站單向發布資訊，使用者只能瀏覽</td><td>網站經營者</td><td>早期的個人網站、電子布告欄</td></tr><tr><td><strong>Web2.0</strong><br>互動共享</td><td>使用者可以留言、上傳、社群互動</td><td>平台公司（社群、雲端業者）</td><td>Facebook、YouTube、Google 帳號</td></tr><tr><td><strong>Web3.0</strong><br>自主 / 去中心化</td><td>以區塊鏈、加密技術讓使用者掌握自己的資料與資產</td><td>使用者自己（私鑰）</td><td>數位錢包、去中心化應用程式（DApp）</td></tr></tbody>
+</table>
+</div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">把剛剛討論的答案，對照這張表收斂一下：Web3.0 想解決的，正是 Web2.0「資料掌握在平台公司手上」的問題。</p>
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>支撐 Web3.0 的背後技術：區塊鏈</h2>
+  
+<p>Web3.0 能做到「資料與資產由使用者自己掌握」，背後最關鍵的技術就是<strong>區塊鏈（blockchain）</strong> —— 簡單說，它是一本由很多人一起維護、公開透明、幾乎不可能被偷改的分散式帳本。數位錢包、私鑰、去中心化應用程式（DApp），全都是建立在區塊鏈這個底層技術之上。</p>
+<div class="callout tip"><span class="t">🔍 區塊鏈實際上怎麼運作？</span>
+<p>這裡先記得一句話就好：<strong>沒有區塊鏈，就沒有 Web3.0</strong>。區塊鏈到底怎麼把資料一筆一筆「串」起來、怎麼做到不能被竄改，從下一個單元開始會一步步拆解，動手看懂它的技術面。</p>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>為什麼 Web3.0 需要「資訊安全」撐腰？</h2>
+  
+<p>Web2.0 時代，我們把帳號密碼交給平台保管，安全與否是平台的責任；Web3.0 想讓使用者自己保管資產與身分，這代表<strong>密碼學、私鑰管理、數位簽章</strong>不再只是工程師的事，而是每個使用者都要有基本概念的事。這正是這學期要建立的能力。</p>
+<div class="callout tip"><span class="t">💡 老師的話</span>
+<p>Web3.0 是不是「絕對比較好」，其實業界還在爭論（後面單元也會談到 Web3 的資安風險）。這堂課的重點不是選邊站，而是<strong>看懂背後的技術，才有能力自己判斷</strong>。</p>
+</div>
+
+</section>
+  <nav class="unit-nav">
+    <a class="prev" href="unit01.html"><div class="dir">← 上一單元</div><div class="ttl">課程介紹＋2050 未來情境</div></a>
+    <a class="next" href="unit03.html"><div class="dir">下一單元 →</div><div class="ttl">數位身分與數位錢包</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

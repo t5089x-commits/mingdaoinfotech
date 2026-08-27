@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 9：Hash 與資料完整性｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="9">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 9</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 9</span>
+  <h1>Hash 與資料完整性</h1>
+  <p>數位指紋、不可竄改（專題並行：資料蒐集）</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解單向雜湊函數（one-way hash function）的三個特性</li>
+<li>動手用線上工具體驗 SHA-256，觀察「雪崩效應」</li>
+<li>理解雜湊如何用來驗證資料完整性、防止偽造</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>什麼是雜湊函數？</h2>
+  
+<p>雜湊（hash）這個字，可以想成「隨興設計一個亂湊出來的方式，把不論多長的資料都摘錄成一個不太大的數值」。生活中一個有趣的類比是報章雜誌的「生命靈數」算法：把出生年月日一路加總、簡化到剩一位數 —— 不管輸入多長，輸出永遠固定長度。這其實就是一種土法煉鋼版的 hash function。</p>
+<div class="callout"><span class="t">🔑 單向雜湊函數的三個特性</span>
+
+<ul class="tidy">
+<li><strong>正向好算：</strong>給 x，很容易算出 y = H(x)</li>
+<li><strong>抗碰撞：</strong>幾乎不可能找到兩個不同的 x1、x2，讓 H(x1) = H(x2)</li>
+<li><strong>單向不可逆：</strong>只知道 y，幾乎不可能反推回 x</li>
+</ul>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>動手做：SHA-256 與雪崩效應</h2>
+  
+<p>SHA-256（Secure Hash Algorithm 256-bit）不論輸入多長，都會輸出一個固定 256 位元長的雜湊值。用線上工具實際試試看：</p>
+<div class="tile"><h4><span class="ico">🧮</span>線上 SHA-256 計算工具</h4><p>輸入一段文字算出雜湊值，改一個字元再算一次，比較兩次結果差多少。</p><a class="video-link-btn" href="https://emn178.github.io/online-tools/sha256.html" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">雪崩效應範例（只加了一個驚嘆號）</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">輸入：Hello World
+SHA-256：a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146
+
+輸入：Hello World!
+SHA-256：7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069</code></pre>
+</div>
+<p>只改了一個字元，輸出的雜湊值卻完全變了樣 —— 這就是「雪崩效應」，也是雜湊能拿來驗證資料完整性的關鍵：<strong>資料只要被動過手腳，雜湊值馬上就對不上。</strong></p>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>雜湊在區塊鏈與數位簽章裡的角色</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>⛓️ 區塊鏈</h4><p>每個區塊的區塊頭裡放著「前一個區塊的雜湊值」，串成一條改不了的鏈（回顧單元 4）。</p></div>
+  <div class="tile"><h4>🌳 Merkle Tree</h4><p>把大量交易資料層層雜湊、彙整成一個 root，快速驗證某筆資料是否在區塊裡（回顧單元 4）。</p></div>
+  <div class="tile"><h4>✍️ 數位簽章</h4><p>簽章前先對明文取雜湊值，只簽這個「摘要」，而不是簽整份文件（下個單元會細講原因）。</p></div>
+  <div class="tile"><h4>🔐 密碼儲存</h4><p>網站不會存你的明碼密碼，而是存密碼的雜湊值，登入時比對雜湊值是否相同。</p></div>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 想一想</h3>
+  <p>如果雜湊函數不是「單向不可逆」，會發生什麼事？想想看，網站儲存的「密碼雜湊值」如果能被反推回明碼密碼，會有什麼後果？</p>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer"><p>參考方向：駭客只要拿到資料庫外洩的雜湊值，就能直接反推出所有人的明碼密碼，等於整個「儲存雜湊值而不是明碼」的安全機制完全失效。這也是為什麼真正上線的系統還會加上「加鹽（salt）」等額外機制。</p></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit08.html"><div class="dir">← 上一單元</div><div class="ttl">專題啟動（PBL）</div></a>
+    <a class="next" href="unit10.html"><div class="dir">下一單元 →</div><div class="ttl">古典密碼學（傳統密碼）</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

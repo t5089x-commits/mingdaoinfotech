@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 3：資料運算與儲存｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="3">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 3</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">理論篇　單元 3</span>
+  <h1>資料運算與儲存</h1>
+  <p>邏輯閘、加法器、資料單位與訊號傳輸</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解 AND / OR / XOR / NOT 邏輯運算與真值表</li>
+<li>認識半加器與全加器的運作</li>
+<li>熟悉資料儲存單位與圖像、音檔容量的計算</li>
+<li>分辨類比訊號與數位訊號，了解資料傳輸方式</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>邏輯運算與邏輯閘</h2>
+  
+<p>邏輯閘是數位電路中最基本的元件，用來實現邏輯運算。</p>
+<div class="callout tip"><span class="t">🔦 先用「開關」來想：邏輯閘是怎麼來的</span>
+<p>邏輯閘聽起來很抽象，其實可以先想成<strong>電燈開關</strong>：<strong>通（1）＝ 電流過得去、斷（0）＝ 過不去</strong>。把開關<strong>接的方式</strong>換一換，就得到不同的邏輯閘——</p>
+<div class="grid cols-3 sw2gate">
+  <div class="card"><h3>串聯 ＝ AND</h3>
+  <div class="diagram-card"><div class="swint" data-kind="series" data-a="0" data-b="0" tabindex="0" role="button" aria-label="點一下切換 A、B 的輸入，看燈會不會亮" onclick="swCycle(this)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();swCycle(this);}"><svg class="diagram swint-svg" viewBox="0 0 160 62" xmlns="http://www.w3.org/2000/svg" role="img"><circle cx="8" cy="34" r="3.4" style="fill:var(--text-faint)"/><line x1="8" y1="34" x2="40" y2="34" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="60" y1="34" x2="82" y2="34" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="102" y1="34" x2="122" y2="34" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><circle cx="136" cy="34" r="12" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><line x1="131" y1="30" x2="141" y2="38" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><line x1="141" y1="30" x2="131" y2="38" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><circle cx="40" cy="34" r="3" style="fill:var(--text)"/><circle cx="60" cy="34" r="3" style="fill:var(--bg-elev);stroke:var(--text-faint);stroke-width:1.6"/><g class="sw a"><line class="lo" x1="40" y1="34" x2="56" y2="22" style="stroke:var(--text-faint);stroke-width:2.6;fill:none;stroke-linecap:round"/><line class="lc" x1="40" y1="34" x2="60" y2="34" style="stroke:var(--text);stroke-width:3.2;fill:none;stroke-linecap:round"/></g><circle cx="82" cy="34" r="3" style="fill:var(--text)"/><circle cx="102" cy="34" r="3" style="fill:var(--bg-elev);stroke:var(--text-faint);stroke-width:1.6"/><g class="sw b"><line class="lo" x1="82" y1="34" x2="98" y2="22" style="stroke:var(--text-faint);stroke-width:2.6;fill:none;stroke-linecap:round"/><line class="lc" x1="82" y1="34" x2="102" y2="34" style="stroke:var(--text);stroke-width:3.2;fill:none;stroke-linecap:round"/></g><line class="cond cond-main" x1="8" y1="34" x2="122" y2="34" style="stroke:var(--brand);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round"/><g class="bulb-lit"><circle cx="136" cy="34" r="12" style="stroke:var(--brand);stroke-width:2.6;fill:var(--brand);fill-opacity:.28"/><line x1="131" y1="30" x2="141" y2="38" style="stroke:var(--brand);stroke-width:2.6"/><line x1="141" y1="30" x2="131" y2="38" style="stroke:var(--brand);stroke-width:2.6"/></g><text x="50" y="18" style="fill:var(--text);font-size:12px;font-weight:700;font-family:inherit;text-anchor:middle">A</text><text x="92" y="18" style="fill:var(--text);font-size:12px;font-weight:700;font-family:inherit;text-anchor:middle">B</text></svg><div class="swint-state">A=<b class="va">0</b>、B=<b class="vb">0</b> → 燈 <b class="vo">滅（0）</b></div><div class="swint-hint">👆 點一下，換下一組輸入</div></div></div>
+  <p>兩個開關<strong>「串聯」</strong>（一個接一個）：<strong>A、B 都通(1)，燈才亮</strong>。只要有一個沒通就滅 → 這就是 <strong>AND</strong>。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M45,15 H80 A25,25 0 0 1 80,65 H45 Z"/></g><g class="wire"><line x1="12" y1="28" x2="45" y2="28"/><line x1="12" y1="52" x2="45" y2="52"/><line x1="106" y1="40" x2="135" y2="40"/></g><text x="2" y="24" class="pin">A</text><text x="2" y="58" class="pin">B</text><text x="75" y="92" class="glabel">AND</text></svg></div></div>
+  <div class="card"><h3>並聯 ＝ OR</h3>
+  <div class="diagram-card"><div class="swint" data-kind="parallel" data-a="0" data-b="0" tabindex="0" role="button" aria-label="點一下切換 A、B 的輸入，看燈會不會亮" onclick="swCycle(this)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();swCycle(this);}"><svg class="diagram swint-svg" viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" role="img"><circle cx="10" cy="40" r="3.4" style="fill:var(--text-faint)"/><line x1="10" y1="40" x2="34" y2="40" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="34" y1="18" x2="34" y2="62" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="34" y1="18" x2="46" y2="18" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="66" y1="18" x2="96" y2="18" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="34" y1="62" x2="46" y2="62" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="66" y1="62" x2="96" y2="62" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="96" y1="18" x2="96" y2="62" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><line x1="96" y1="40" x2="118" y2="40" style="stroke:var(--text-faint);stroke-width:2.4;fill:none;stroke-linecap:round"/><circle cx="132" cy="40" r="12" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><line x1="127" y1="36" x2="137" y2="44" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><line x1="137" y1="36" x2="127" y2="44" style="stroke:var(--text-faint);stroke-width:2.2;fill:none"/><circle cx="46" cy="18" r="3" style="fill:var(--text)"/><circle cx="66" cy="18" r="3" style="fill:var(--bg-elev);stroke:var(--text-faint);stroke-width:1.6"/><g class="sw a"><line class="lo" x1="46" y1="18" x2="62" y2="30" style="stroke:var(--text-faint);stroke-width:2.6;fill:none;stroke-linecap:round"/><line class="lc" x1="46" y1="18" x2="66" y2="18" style="stroke:var(--text);stroke-width:3.2;fill:none;stroke-linecap:round"/></g><circle cx="46" cy="62" r="3" style="fill:var(--text)"/><circle cx="66" cy="62" r="3" style="fill:var(--bg-elev);stroke:var(--text-faint);stroke-width:1.6"/><g class="sw b"><line class="lo" x1="46" y1="62" x2="62" y2="50" style="stroke:var(--text-faint);stroke-width:2.6;fill:none;stroke-linecap:round"/><line class="lc" x1="46" y1="62" x2="66" y2="62" style="stroke:var(--text);stroke-width:3.2;fill:none;stroke-linecap:round"/></g><path class="cond cond-a" d="M34,40 L34,18 L96,18 L96,40" style="stroke:var(--brand);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round"/><path class="cond cond-b" d="M34,40 L34,62 L96,62 L96,40" style="stroke:var(--brand);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round"/><path class="cond cond-out" d="M10,40 L34,40 M96,40 L118,40" style="stroke:var(--brand);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round"/><g class="bulb-lit"><circle cx="132" cy="40" r="12" style="stroke:var(--brand);stroke-width:2.6;fill:var(--brand);fill-opacity:.28"/><line x1="127" y1="36" x2="137" y2="44" style="stroke:var(--brand);stroke-width:2.6"/><line x1="137" y1="36" x2="127" y2="44" style="stroke:var(--brand);stroke-width:2.6"/></g><text x="56" y="12" style="fill:var(--text);font-size:12px;font-weight:700;font-family:inherit;text-anchor:middle">A</text><text x="56" y="90" style="fill:var(--text);font-size:12px;font-weight:700;font-family:inherit;text-anchor:middle">B</text></svg><div class="swint-state">A=<b class="va">0</b>、B=<b class="vb">0</b> → 燈 <b class="vo">滅（0）</b></div><div class="swint-hint">👆 點一下，換下一組輸入</div></div></div>
+  <p>兩個開關<strong>「並聯」</strong>（各走各的）：<strong>只要有一個通(1)，燈就亮</strong> → 這就是 <strong>OR</strong>。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M40,15 C62,15 88,24 106,40 C88,56 62,65 40,65 C52,50 52,30 40,15 Z"/></g><g class="wire"><line x1="12" y1="28" x2="40" y2="28"/><line x1="12" y1="52" x2="40" y2="52"/><line x1="106" y1="40" x2="135" y2="40"/></g><text x="2" y="24" class="pin">A</text><text x="2" y="58" class="pin">B</text><text x="75" y="92" class="glabel">OR</text></svg></div></div>
+  <div class="card"><h3>反相 ＝ NOT</h3>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M46,15 L46,65 L92,40 Z"/><circle cx="99" cy="40" r="6"/></g><g class="wire"><line x1="12" y1="40" x2="46" y2="40"/><line x1="105" y1="40" x2="135" y2="40"/></g><text x="8" y="35" class="pin">A</text><text x="75" y="92" class="glabel">NOT</text></svg></div>
+  <p>把訊號<strong>「反過來」</strong>：<strong>進 1 出 0、進 0 出 1</strong> → 這就是 <strong>NOT</strong>（反閘）。</p></div>
+</div>
+<p style="margin:6px 0 0">有了這個「開關」的直覺，下面再看正式的<strong>符號</strong>和<strong>真值表</strong>就會清楚很多 👇</p></div>
+<p>以下是四種基本邏輯閘的符號與真值表：</p>
+<div class="grid cols-2">
+  <div class="card"><h3>AND（及閘，邏輯「與」）</h3>
+  <p>兩個輸入<strong>都是 1</strong> 時輸出才是 1。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M45,15 H80 A25,25 0 0 1 80,65 H45 Z"/></g><g class="wire"><line x1="12" y1="28" x2="45" y2="28"/><line x1="12" y1="52" x2="45" y2="52"/><line x1="106" y1="40" x2="135" y2="40"/></g><text x="2" y="24" class="pin">A</text><text x="2" y="58" class="pin">B</text><text x="75" y="92" class="glabel">AND</text></svg></div>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>B</th><th>A AND B</th></tr></thead>
+  <tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><h3>OR（或閘，邏輯「或」）</h3>
+  <p>只要有<strong>一個輸入是 1</strong> 就輸出 1。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M40,15 C62,15 88,24 106,40 C88,56 62,65 40,65 C52,50 52,30 40,15 Z"/></g><g class="wire"><line x1="12" y1="28" x2="40" y2="28"/><line x1="12" y1="52" x2="40" y2="52"/><line x1="106" y1="40" x2="135" y2="40"/></g><text x="2" y="24" class="pin">A</text><text x="2" y="58" class="pin">B</text><text x="75" y="92" class="glabel">OR</text></svg></div>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>B</th><th>A OR B</th></tr></thead>
+  <tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><h3>XOR（互斥或閘）</h3>
+  <p>兩個輸入<strong>不同</strong>時輸出 1，相同時輸出 0。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M46,15 C58,15 84,24 102,40 C84,56 58,65 46,65 C58,50 58,30 46,15 Z"/><path d="M35,15 C47,30 47,50 35,65" fill="none"/></g><g class="wire"><line x1="8" y1="28" x2="35" y2="28"/><line x1="8" y1="52" x2="35" y2="52"/><line x1="106" y1="40" x2="135" y2="40"/></g><text x="2" y="24" class="pin">A</text><text x="2" y="58" class="pin">B</text><text x="75" y="92" class="glabel">XOR</text></svg></div>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>B</th><th>A XOR B</th></tr></thead>
+  <tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><h3>NOT（反相器 / 反閘，邏輯「非」）</h3>
+  <p>把輸入<strong>反過來</strong>：0 變 1、1 變 0。</p>
+  <div class="diagram-card"><svg class="diagram gate-svg" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" role="img"><g class="body"><path d="M46,15 L46,65 L92,40 Z"/><circle cx="99" cy="40" r="6"/></g><g class="wire"><line x1="12" y1="40" x2="46" y2="40"/><line x1="105" y1="40" x2="135" y2="40"/></g><text x="8" y="35" class="pin">A</text><text x="75" y="92" class="glabel">NOT</text></svg></div>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>NOT A</th></tr></thead>
+  <tbody><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td></tr></tbody></table></div>
+  </div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>加法器</h2>
+  
+<p>加法器是執行加法運算的數位電路，是 CPU 中算術邏輯單元（ALU）的基礎。</p>
+<div class="grid cols-2">
+  <div class="card"><h3>半加器 Half Adder</h3>
+  <p>兩個輸入 A、B，輸出<strong>和 S</strong> 與<strong>進位 C</strong>。（S＝A XOR B，C＝A AND B）</p>
+  <figure class="fig">
+  <img src="images/half_adder.png" alt="半加器邏輯電路圖：一個 XOR 閘產生和 S、一個 AND 閘產生進位 C" loading="lazy" style="background:#fff">
+  <figcaption>半加器電路：XOR → 和 S；AND → 進位 C。</figcaption>
+</figure>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>B</th><th>C</th><th>S</th></tr></thead>
+  <tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><h3>全加器 Full Adder</h3>
+  <p>多了一個<strong>進位輸入 Cin</strong>，可串接處理多位元加法。</p>
+  <figure class="fig">
+  <img src="images/full_adder.png" alt="全加器邏輯電路圖：由兩個 XOR、兩個 AND 與一個 OR 閘組成" loading="lazy" style="background:#fff">
+  <figcaption>全加器電路：兩個 XOR 求和 S、兩個 AND 加一個 OR 求進位 Cout。</figcaption>
+</figure>
+  <div class="table-wrap"><table class="truth"><thead><tr><th>A</th><th>B</th><th>Cin</th><th>Cout</th><th>S</th></tr></thead>
+  <tbody>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </tbody></table></div>
+  </div>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>資料儲存的單位</h2>
+  
+<p>電腦中最基本的儲存單位是<strong>位元 (bit)</strong>，只能存 0 或 1；最小的資料儲存單位是<strong>位元組 (Byte)</strong>。</p>
+<div class="bitb" id="bitb-byte" data-val="0" data-bits="8"><div class="bitb-note">一顆燈泡＝一個 bit（亮＝1、暗＝0）。<b>8 顆燈泡就是 1 個位元組（Byte）</b>——按按鈕從 00000000 一路數到 11111111，共 2⁸ = <b>256</b> 種。</div><div class="bitb-row"><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div></div><div class="bitb-simple">二進位 <span class="bv" data-b="bin">00000000</span> ＝ <b class="bv" data-b="dec">0</b>（十進位）</div><div class="bitb-btns"><button type="button" onclick="bitStep('bitb-byte',-1)">－1</button><button type="button" class="primary" onclick="bitStep('bitb-byte',1)">＋1</button><button type="button" class="bitb-play" onclick="bitPlay('bitb-byte',this)">▶ 自動</button><button type="button" onclick="bitZero('bitb-byte')">歸零</button></div></div>
+<div class="callout"><span class="t">1 Byte = 8 bits = 2⁸ = 256 種狀態</span>
+<p>1 個位元組可以用來儲存 1 個英文字母、數字或特殊符號（ASCII 編碼）。</p></div>
+<div style="display:flex;gap:34px;flex-wrap:wrap;justify-content:center">
+<table class="unit-table"><thead><tr><th>單位</th><th>換算</th></tr></thead><tbody>
+<tr><td>1 KB</td><td>= 1024 Byte</td></tr>
+<tr><td>1 MB</td><td>= 1024 KB</td></tr>
+<tr><td>1 GB</td><td>= 1024 MB</td></tr>
+<tr><td>1 TB</td><td>= 1024 GB</td></tr>
+</tbody></table>
+<table class="unit-table"><thead><tr><th>單位</th><th>換算</th></tr></thead><tbody>
+<tr><td>1 PB</td><td>= 1024 TB</td></tr>
+<tr><td>1 EB</td><td>= 1024 PB</td></tr>
+<tr><td>1 ZB</td><td>= 1024 EB</td></tr>
+<tr><td>1 YB</td><td>= 1024 ZB</td></tr>
+</tbody></table>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>圖像與音檔容量計算</h2>
+  
+<div class="card"><h3>🖼️ 圖像檔案大小</h3>
+<p>數位圖像其實是由一格一格的<strong>像素（點）</strong>組成的。放大來看就像下面這張明道校徽——每一格都是一個像素：</p>
+<div class="part">
+<figure class="fig">
+  <img src="images/mingdao_pixel_labeled.png" alt="明道中學校徽以 32×32 像素方格呈現，標示寬 32、高 32 像素" loading="lazy" style="background:#fff">
+  <figcaption>把明道校徽縮成寬 32、高 32：共 32 × 32 = 1024 個像素，每一格就是一個像素，都要用位元記錄它的顏色。</figcaption>
+</figure>
+  <div>
+    <p><strong>圖像儲存空間<br>＝ 圖像高(點) × 圖像寬(點) × 像素深度(位元組)</strong></p>
+    <p>像素深度看<strong>色彩模式</strong>——顏色越多，每個像素要用越多位元來記錄。</p>
+  </div>
+</div>
+<div class="table-wrap"><table class="center">
+<thead><tr><th>色彩模式</th><th>可表示的顏色數</th><th>每個像素需要</th></tr></thead>
+<tbody>
+<tr><td>單色</td><td>2 色（黑／白）</td><td>1 bit</td></tr>
+<tr><td>16 色</td><td>2⁴ ＝ 16 色</td><td>4 bit</td></tr>
+<tr><td>256 色</td><td>2⁸ ＝ 256 色</td><td>8 bit（＝ 1 Byte）</td></tr>
+<tr><td><strong>全彩 True Color</strong></td><td>2²⁴ ≈ 1677 萬色</td><td><strong>24 bit（＝ 3 Byte，RGB 各 8 bit）</strong></td></tr>
+</tbody></table></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">圖像計算範例</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">例：寬 10 公分、高 8 公分、解析度 28 點/公分、全彩儲存
+高(點) = 8 × 28 = 224
+寬(點) = 10 × 28 = 280
+所需空間 = 224 × 280 × (24 / 8)
+        = 224 × 280 × 3
+        = 188160 bytes</code></pre>
+</div>
+</div>
+<div class="card"><h3>🎵 音檔大小</h3>
+<p>聲音是連續的類比波形，電腦要每隔固定時間「取樣」一次，把振幅記成數字，才能變成數位音檔：</p>
+<div class="diagram-card"><svg class="diagram wave-svg" viewBox="0 0 300 128" xmlns="http://www.w3.org/2000/svg" role="img"><line class="axis" x1="0" y1="55" x2="300" y2="55"/><polyline class="wave" points="0,55.0 3,46.0 6,39.3 9,36.4 12,37.1 15,39.6 18,41.5 21,40.9 24,37.5 27,32.4 30,27.9 33,26.3 36,29.1 39,36.0 42,45.1 45,53.8 48,59.8 51,62.4 54,62.4 57,61.8 60,62.8 63,66.8 66,73.7 69,81.5 72,87.8 75,90.3 78,88.2 81,82.3 84,74.7 87,68.0 90,64.0 93,62.8 96,63.1 99,62.6 102,59.4 105,52.5 108,43.0 111,32.9 114,25.1 117,21.4 120,22.2 123,26.1 126,30.8 129,34.1 132,34.8 135,33.3 138,31.6 141,31.9 144,36.1 147,44.3 150,55.0 153,65.7 156,73.9 159,78.1 162,78.4 165,76.7 168,75.2 171,75.9 174,79.2 177,83.9 180,87.8 183,88.6 186,84.9 189,77.1 192,67.0 195,57.5 198,50.6 201,47.4 204,46.9 207,47.2 210,46.0 213,42.0 216,35.3 219,27.7 222,21.8 225,19.7 228,22.2 231,28.5 234,36.3 237,43.2 240,47.2 243,48.2 246,47.6 249,47.6 252,50.2 255,56.2 258,64.9 261,74.0 264,80.9 267,83.7 270,82.1 273,77.6 276,72.5 279,69.1 282,68.5 285,70.4 288,72.9 291,73.6 294,70.7 297,64.0 300,55.0" fill="none"/><line class="samp" x1="15" y1="55" x2="15" y2="90"/><circle class="dot" cx="15" cy="55" r="2.5"/><line class="samp" x1="37" y1="55" x2="37" y2="90"/><circle class="dot" cx="37" cy="55" r="2.5"/><line class="samp" x1="59" y1="55" x2="59" y2="90"/><circle class="dot" cx="59" cy="55" r="2.5"/><line class="samp" x1="81" y1="55" x2="81" y2="90"/><circle class="dot" cx="81" cy="55" r="2.5"/><line class="samp" x1="103" y1="55" x2="103" y2="90"/><circle class="dot" cx="103" cy="55" r="2.5"/><line class="samp" x1="125" y1="55" x2="125" y2="90"/><circle class="dot" cx="125" cy="55" r="2.5"/><line class="samp" x1="147" y1="55" x2="147" y2="90"/><circle class="dot" cx="147" cy="55" r="2.5"/><line class="samp" x1="169" y1="55" x2="169" y2="90"/><circle class="dot" cx="169" cy="55" r="2.5"/><line class="samp" x1="191" y1="55" x2="191" y2="90"/><circle class="dot" cx="191" cy="55" r="2.5"/><line class="samp" x1="213" y1="55" x2="213" y2="90"/><circle class="dot" cx="213" cy="55" r="2.5"/><line class="samp" x1="235" y1="55" x2="235" y2="90"/><circle class="dot" cx="235" cy="55" r="2.5"/><line class="samp" x1="257" y1="55" x2="257" y2="90"/><circle class="dot" cx="257" cy="55" r="2.5"/><line class="samp" x1="279" y1="55" x2="279" y2="90"/><circle class="dot" cx="279" cy="55" r="2.5"/><text x="6" y="14" class="cap">聲音波形（連續的類比訊號）</text><text x="6" y="30" class="cap2" style="font-size:9px">↕ 波的高低 ＝ 振幅（音量大小）</text><text x="256" y="52" class="cap2" style="font-size:9px">時間 →</text><text x="150" y="106" class="cap2" text-anchor="middle" style="font-size:8.5px">↑ 每隔固定時間取樣一次 ＝ 取樣頻率（例：每秒 44100 次 = 44.1 kHz）</text><text x="150" y="120" class="cap2" text-anchor="middle" style="font-size:8.5px">每次用幾 bit 記錄振幅 ＝ 取樣位數（例：16 bit）→ 變成數位訊號</text></svg></div>
+<p><strong>資料量 = 取樣頻率 × 取樣位數 × 聲道數 × 時間 ÷ 8</strong></p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">音檔計算</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">例：5 分鐘、雙聲道、16 位取樣、44.1 kHz、不壓縮
+= 44100 × 16 × 2 × (5×60) ÷ 8 ÷ 1024 ÷ 1024
+≈ 50.47 MB</code></pre>
+</div>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>類比訊號 vs 數位訊號</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>🌊 類比訊號</h4>
+  <div class="diagram-card"><svg class="diagram" viewBox="0 0 150 105" xmlns="http://www.w3.org/2000/svg" role="img"><line class="axis" x1="0" y1="45" x2="150" y2="45"/><polyline class="wave" points="5,45.0 7,41.5 9,38.1 11,34.8 13,31.7 15,28.8 17,26.2 19,24.0 21,22.1 23,20.7 25,19.7 27,19.1 29,19.0 31,19.4 33,20.3 35,21.6 37,23.3 39,25.4 41,27.9 43,30.7 45,33.7 47,37.0 49,40.4 51,43.8 53,47.3 55,50.8 57,54.1 59,57.3 61,60.3 63,63.0 65,65.3 67,67.3 69,68.9 71,70.1 73,70.8 75,71.0 77,70.8 79,70.1 81,68.9 83,67.3 85,65.3 87,63.0 89,60.3 91,57.3 93,54.1 95,50.8 97,47.3 99,43.8 101,40.4 103,37.0 105,33.7 107,30.7 109,27.9 111,25.4 113,23.3 115,21.6 117,20.3 119,19.4 121,19.0 123,19.1 125,19.7 127,20.7 129,22.1 131,24.0 133,26.2 135,28.8 137,31.7 139,34.8 141,38.1 143,41.5 145,45.0" fill="none"/><text x="2" y="43" class="cap2" style="font-size:9px">0V</text><text x="120" y="20" class="cap2" style="font-size:9px">+</text><text x="120" y="76" class="cap2" style="font-size:9px">−</text><text x="78" y="98" class="cap2" text-anchor="middle">類比：連續、平滑的波</text></svg></div>
+  <p>連續值，大自然的訊號都屬於類比（聲音、光、溫度、壓力）。<strong>缺點：容易被雜訊影響而失真</strong>，長距離傳輸或多次複製尤其明顯。</p></div>
+  <div class="tile"><h4>💠 數位訊號</h4>
+  <div class="diagram-card"><svg class="diagram" viewBox="0 0 150 105" xmlns="http://www.w3.org/2000/svg" role="img"><line class="samp" x1="5" y1="22" x2="150" y2="22"/><line class="samp" x1="5" y1="68" x2="150" y2="68"/><text x="6" y="18" class="cap2" style="font-size:9px">1（高電位）</text><text x="6" y="80" class="cap2" style="font-size:9px">0（低電位 = 0V）</text><polyline class="wave dg" points="5,68 22,68 22,22 39,22 39,22 56,22 56,68 73,68 73,22 90,22 90,68 107,68 107,68 124,68 124,22 141,22" fill="none"/><text x="78" y="98" class="cap2" text-anchor="middle">數位：一格一格（0 與 1）</text></svg></div>
+  <p>不連續值，以二進位 0/1 表示（0＝低電位、1＝高電位）。<strong>優點：容易處理</strong>——儲存、傳輸、壓縮、加密、偵錯都方便。</p></div>
+</div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>資料傳輸方式</h2>
+  
+<h3>依傳輸方向分類</h3>
+<div class="grid cols-3">
+  <div class="diagram-card"><div class="flow-demo" onclick="toggleFlow(this)" title="點一下看資料流動"><svg class="diagram trans-svg" viewBox="0 0 240 105" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="8" y="30" width="52" height="40" rx="7"/><text x="34" y="55" class="devt" text-anchor="middle">A</text><rect class="dev" x="180" y="30" width="52" height="40" rx="7"/><text x="206" y="55" class="devt" text-anchor="middle">B</text><line class="flow" x1="66" y1="50" x2="174" y2="50" marker-end="url(#ar)"/><text x="120" y="92" class="cap2" text-anchor="middle">單工：只能 A → B 單向</text></svg><span class="hd-hint">👆 點圖看資料流動</span></div><div class="tx-desc"><div class="tx-name">單工 Simplex</div><div>只能單向傳送</div><div class="tx-eg">🔊 生活實例：AM/FM 廣播、喇叭播放</div></div></div>
+  <div class="diagram-card"><div class="hd-wrap" onclick="toggleDuplex(this)" title="點一下切換傳送方向"><svg class="diagram trans-svg" viewBox="0 0 240 105" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="8" y="30" width="52" height="40" rx="7"/><text x="34" y="55" class="devt" text-anchor="middle">A</text><rect class="dev" x="180" y="30" width="52" height="40" rx="7"/><text x="206" y="55" class="devt" text-anchor="middle">B</text><line class="flow hd-ab" x1="66" y1="40" x2="174" y2="40" marker-end="url(#ar)"/><line class="flow dim hd-ba" x1="174" y1="62" x2="66" y2="62" marker-end="url(#ar)"/><text x="120" y="92" class="cap2 hd-cap" text-anchor="middle">半雙工：現在 A → B 傳送中</text></svg><span class="hd-hint">👆 點圖切換方向（半雙工：一次只能一個方向）</span></div><div class="tx-desc"><div class="tx-name">半雙工 Half-duplex</div><div>可雙向，但同時只能單向</div><div class="tx-eg">📻 生活實例：無線電對講機</div></div></div>
+  <div class="diagram-card"><div class="flow-demo" onclick="toggleFlow(this)" title="點一下看資料流動"><svg class="diagram trans-svg" viewBox="0 0 240 105" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="8" y="30" width="52" height="40" rx="7"/><text x="34" y="55" class="devt" text-anchor="middle">A</text><rect class="dev" x="180" y="30" width="52" height="40" rx="7"/><text x="206" y="55" class="devt" text-anchor="middle">B</text><line class="flow" x1="66" y1="40" x2="174" y2="40" marker-end="url(#ar)"/><line class="flow" x1="174" y1="62" x2="66" y2="62" marker-end="url(#ar)"/><text x="120" y="92" class="cap2" text-anchor="middle">全雙工：同一時間可雙向傳輸</text></svg><span class="hd-hint">👆 點圖看資料流動（雙向同時）</span></div><div class="tx-desc"><div class="tx-name">全雙工 Full-duplex</div><div>同時可雙向傳輸</div><div class="tx-eg">📞 生活實例：電話、通訊軟體聊天</div></div></div>
+</div>
+
+<h3>基頻與寬頻、交換方式</h3>
+<ul class="tidy">
+  <li><strong>基頻 (baseband)</strong>：以<strong>數位</strong>方式直接傳送，一次傳送一個訊號、佔用整個媒介（例如區域網路 LAN）。</li>
+  <li><strong>寬頻 (broadband)</strong>：以<strong>類比載波調變、分頻多工</strong>，可同時傳送多個訊號／頻道（例如有線電視 Cable）。</li>
+</ul>
+<div class="callout warn"><span class="t">⚠ 容易混淆：學術定義 vs 日常用語</span>
+<p>上面是<strong>教科書/考試</strong>的定義（寬頻＝類比多工）。但日常說的「<strong>寬頻上網</strong>」（光纖、ADSL、第四台網路）是指「<strong>高速的網路存取服務</strong>」，本身其實是<strong>數位</strong>傳輸——這是口語用法，著重「速度快」，和學術上「寬頻＝類比」的意義不同，兩者不要混為一談。</p></div>
+<p><strong>電路交換</strong>建立專用實體線路（速度快、錯誤率低，但不共用頻寬）；<strong>訊息交換</strong>先儲存再轉送、可選路徑（線路使用率高，但大量資料時易壅塞）。</p>
+
+<div style="margin-top:30px;padding-top:14px;border-top:2px solid var(--brand)">
+  <span style="font-size:1.35rem;font-weight:800;color:var(--brand-strong)">🌐 網路速度</span>
+</div>
+<h3>計算網路速度：下載檔案要多久？</h3>
+<p>網路速率的單位是 <strong>bps（每秒位元數）</strong>，檔案大小的單位是 <strong>Byte（位元組）</strong>，換算時<strong>別忘了 1 Byte = 8 bits</strong>。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">範例一</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">基本例：網路速率 2 Mbps，傳送 150 MB 檔案需多久？
+150 MB = 150 × 1024 × 1024 × 8 bits = 1,258,291,200 bits
+時間 = 1,258,291,200 ÷ 2,000,000 ≈ 629 秒 ≈ 10.5 分鐘</code></pre>
+</div>
+<p>換個生活情境：假設你家是<strong>中華電信 100M 光纖</strong>（下載 100 Mbps），要下載《俠盜獵車手 6》（GTA 6，假設檔案 <strong>150 GB</strong>），理想狀況下要多久？</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">範例二：中華電信 100M 下載 GTA 6</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">生活例：中華電信 100M（100 Mbps）下載 GTA 6（150 GB）
+檔案大小 = 150 GB
+        = 150 × 1024 × 1024 × 1024 Bytes
+        = 150 × 1024 × 1024 × 1024 × 8 bits
+        ≈ 1,288,490,188,800 bits
+
+下載速率 = 100 Mbps = 100 × 1,000,000 = 100,000,000 bps
+
+時間 = 1,288,490,188,800 ÷ 100,000,000
+     ≈ 12,885 秒
+     ≈ 214.7 分鐘
+     ≈ 約 3.6 小時
+
+※ 這是「理論最快」值。實際上還會受到伺服器速度、
+   線路壅塞、Wi-Fi 訊號等影響，通常會更久。</code></pre>
+</div>
+<div class="reveal" onclick="toggleWork(this)"><span class="wk-arrow">▶</span> 💡 小提示：為什麼有時候 GB 好像不是 1024？</div>
+<div class="answer">
+<p>其實「1 GB」有<strong>兩種算法</strong>，這就是混亂的來源：</p>
+<ul class="tidy">
+<li><strong>二進位（每級 ×1024）</strong>：1 GB＝1024 MB＝1024×1024 KB…，正式名稱其實叫 <strong>GiB</strong>（Gibibyte）。電腦內部、Windows、Steam 都用這種算。</li>
+<li><strong>十進位（每級 ×1000）</strong>：1 GB＝1000 MB…，硬碟廠商、網路速率、蘋果 macOS 用的是這種。</li>
+</ul>
+<p>麻煩的是：大家畫面上都寫「GB」，但有人心裡是 1024、有人是 1000，數字自然對不起來。三個最常見的例子：</p>
+<ol class="tidy">
+<li><strong>Windows／Steam ＶＳ macOS</strong>：Windows 和 Steam 骨子裡用 1024（其實是 GiB）算容量，畫面卻寫「GB」；蘋果 macOS 從 2009 年起改成「畫面寫 GB 就是真的 1000」。所以同一個檔案，在 Windows 和 Mac 上顯示的數字會不一樣。</li>
+<li><strong>買硬碟／隨身碟</strong>：包裝寫「1 TB＝1000 GB」（廠商用 1000），插上 Windows 後系統改用 1024 去算、單位又還是寫「GB」，於是 1,000,000,000,000 Bytes 就變成畫面上看到的 <strong>931 GB</strong>。硬碟沒有縮水，只是換算基準不同。</li>
+<li><strong>雲端服務（Google Cloud、AWS、Azure）</strong>：規格書裡 GB（1000）和 GiB（1024）常常混用——記憶體用 GiB 算、網路流量或硬碟空間又用 GB，工程師估容量和費用時很容易搞錯。</li>
+</ol>
+<p style="margin-bottom:0"><strong>一句話記住：</strong>看到 GB，先想一下「這是 1024 的、還是 1000 的？」——電腦內部／Windows／Steam 多半是 1024（其實是 GiB）；硬碟包裝／網速／雲端流量多半是 1000。</p>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>先自己<strong>對照上面的邏輯閘符號與真值表</strong>，寫出 <strong>A=1, B=0</strong> 時 XOR 與 NAND 的輸出各是多少；寫完後，可再用頁面最下方「課堂互動工具」的邏輯閘實驗<strong>驗證答案</strong>。</li>
+  <li>一張寬 15 公分、高 10 公分、解析度 30 點/公分的<strong>全彩</strong>圖片，先算出需要多少 bytes，再換算成 <strong>KB 與 MB</strong>（記得 1 KB＝1024 bytes、1 MB＝1024 KB）。</li>
+  <li>1 GB 等於多少 Byte？（以 1024 換算）</li>
+  <li>「使用 LINE 視訊通話」屬於單工、半雙工還是全雙工？</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>A=1,B=0：XOR=1、NAND=1。</li>
+<li>高(點)=10×30=300，寬(點)=15×30=450，全彩每點 3 bytes。<br>
+→ 300 × 450 × 3 = <strong>405,000 bytes</strong><br>
+→ 405,000 ÷ 1024 ≈ <strong>395.5 KB</strong><br>
+→ 395.5 ÷ 1024 ≈ <strong>0.39 MB</strong>（約 0.4 MB）</li>
+<li>1 GB = 1024×1024×1024 = 1,073,741,824 Byte。</li>
+<li>全雙工（雙方可同時收發）。</li>
+</ol></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">數字系統</div></a>
+    <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">電腦簡介</div></a>
+  </nav>
+</main>
+<section class="tools-zone">
+  <div class="wrap">
+    <h2>🧪 課堂互動工具</h2>
+    <p class="tz-note">先自己動手算算看／推推看，再用下面的工具對答案，學習效果最好。</p>
+    
+<div class="widget">
+  <div class="w-title">🔌 邏輯閘互動實驗</div>
+  <div class="w-sub">選擇一個邏輯閘，點擊開關切換 A、B 的 0/1，即時看到輸出結果。</div>
+  <div class="gate-btns">
+    <button onclick="setGate('AND', this)">AND</button>
+    <button onclick="setGate('OR', this)">OR</button>
+    <button onclick="setGate('XOR', this)">XOR</button>
+    <button onclick="setGate('NOT', this)">NOT</button>
+    <button onclick="setGate('NAND', this)">NAND</button>
+    <button onclick="setGate('NOR', this)">NOR</button>
+  </div>
+  <div class="switch-row">
+    <div class="switch"><span class="lbl">輸入 A</span>
+      <div class="sw-row">
+        <button class="toggle" id="sw-a" onclick="flipSwitch('a')" aria-label="切換輸入 A"></button>
+        <span class="sw-val" id="val-a">0</span>
+      </div></div>
+    <div class="switch" id="sw-b-wrap"><span class="lbl">輸入 B</span>
+      <div class="sw-row">
+        <button class="toggle" id="sw-b" onclick="flipSwitch('b')" aria-label="切換輸入 B"></button>
+        <span class="sw-val" id="val-b">0</span>
+      </div></div>
+  </div>
+  <div class="gate-result">
+    <span class="eq" id="gate-eq">0 AND 0 =</span>
+    <span class="out v0" id="gate-out">0</span>
+  </div>
+</div>
+  </div>
+</section>
+
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

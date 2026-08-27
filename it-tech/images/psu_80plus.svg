@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 232" font-family="Noto Sans TC, sans-serif">
+<rect x="0" y="0" width="680" height="232" fill="#ffffff"/>
+<text x="340.0" y="28" text-anchor="middle" font-size="16.5" font-weight="800" fill="#1e293b">80 PLUS 效率認證等級（實測滿載 50% 時，約略效率）</text>
+<text x="30" y="48" font-size="11.5" fill="#64748b">低 ← 效率</text>
+<text x="650" y="48" text-anchor="end" font-size="11.5" fill="#64748b">效率 → 高</text>
+<line x1="85" y1="44" x2="595" y2="44" stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow)"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#64748b"/></marker></defs>
+<rect x="30.0" y="146.0" width="93.33333333333333" height="44.0" rx="8" fill="#94a3b8"/>
+<text x="76.66666666666666" y="166.0" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">白牌</text>
+<text x="76.66666666666666" y="184.0" text-anchor="middle" font-size="11.5" fill="#fff">約80%</text>
+<rect x="135.33333333333331" y="136.4" width="93.33333333333333" height="53.6" rx="8" fill="#b45309"/>
+<text x="181.99999999999997" y="161.20000000000002" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">銅牌</text>
+<text x="181.99999999999997" y="179.20000000000002" text-anchor="middle" font-size="11.5" fill="#fff">約82%</text>
+<rect x="240.66666666666666" y="126.8" width="93.33333333333333" height="63.2" rx="8" fill="#94a3b8"/>
+<text x="287.3333333333333" y="156.4" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">銀牌</text>
+<text x="287.3333333333333" y="174.4" text-anchor="middle" font-size="11.5" fill="#fff">約85%</text>
+<rect x="346.0" y="117.2" width="93.33333333333333" height="72.8" rx="8" fill="#ca8a04"/>
+<text x="392.6666666666667" y="151.6" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">金牌</text>
+<text x="392.6666666666667" y="169.6" text-anchor="middle" font-size="11.5" fill="#fff">約87%</text>
+<rect x="451.3333333333333" y="107.6" width="93.33333333333333" height="82.4" rx="8" fill="#7c8ba1"/>
+<text x="498.0" y="146.8" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">白金</text>
+<text x="498.0" y="164.8" text-anchor="middle" font-size="11.5" fill="#fff">約90%</text>
+<rect x="556.6666666666666" y="98.0" width="93.33333333333333" height="92.0" rx="8" fill="#0d9488"/>
+<text x="603.3333333333333" y="142.0" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">鈦金</text>
+<text x="603.3333333333333" y="160.0" text-anchor="middle" font-size="11.5" fill="#fff">約92%</text>
+<line x1="30" y1="190" x2="650" y2="190" stroke="#64748b" stroke-width="1.5"/>
+<text x="340.0" y="210" text-anchor="middle" font-size="11" fill="#64748b">等級越高＝轉換效率越好、越省電、發熱越少（數字為簡化教學參考值，實際依瓦數與負載變動）</text>
+</svg>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 278" font-family="Noto Sans TC, sans-serif">
+<rect x="0" y="0" width="680" height="278" fill="#ffffff"/>
+<text x="340.0" y="26" text-anchor="middle" font-size="16.5" font-weight="800" fill="#1e293b">常見螢幕接頭比較：看外型就能分辨</text>
+<g><polygon points="35.0,89.0 135.0,89.0 127.0,151.0 43.0,151.0" fill="#2563eb" opacity="0.15" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="45.0" cy="106.4" r="2.6" fill="#2563eb"/>
+<circle cx="65.0" cy="106.4" r="2.6" fill="#2563eb"/>
+<circle cx="85.0" cy="106.4" r="2.6" fill="#2563eb"/>
+<circle cx="105.0" cy="106.4" r="2.6" fill="#2563eb"/>
+<circle cx="125.0" cy="106.4" r="2.6" fill="#2563eb"/>
+<circle cx="47.0" cy="120.0" r="2.6" fill="#2563eb"/>
+<circle cx="66.0" cy="120.0" r="2.6" fill="#2563eb"/>
+<circle cx="85.0" cy="120.0" r="2.6" fill="#2563eb"/>
+<circle cx="104.0" cy="120.0" r="2.6" fill="#2563eb"/>
+<circle cx="123.0" cy="120.0" r="2.6" fill="#2563eb"/>
+<circle cx="49.0" cy="133.6" r="2.6" fill="#2563eb"/>
+<circle cx="67.0" cy="133.6" r="2.6" fill="#2563eb"/>
+<circle cx="85.0" cy="133.6" r="2.6" fill="#2563eb"/>
+<circle cx="103.0" cy="133.6" r="2.6" fill="#2563eb"/>
+<circle cx="121.0" cy="133.6" r="2.6" fill="#2563eb"/></g>
+<text x="85.0" y="196" text-anchor="middle" font-size="14.5" font-weight="800" fill="#1e293b">D-Sub（VGA）</text>
+<text x="85.0" y="216" text-anchor="middle" font-size="11.3" fill="#64748b">梯形，3 排圓孔針腳</text>
+<g><rect x="200.0" y="90.0" width="110.0" height="60.0" rx="4" fill="#0d9488" opacity="0.15" stroke="#0d9488" stroke-width="2.5"/>
+<circle cx="196.0" cy="120" r="3.2" fill="none" stroke="#0d9488" stroke-width="2"/>
+<circle cx="314.0" cy="120" r="3.2" fill="none" stroke="#0d9488" stroke-width="2"/>
+<circle cx="208.0" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="218.7" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="229.4" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="240.1" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="250.7" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="261.4" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="272.1" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="282.8" cy="99.0" r="1.8" fill="#0d9488"/>
+<circle cx="208.0" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="218.7" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="229.4" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="240.1" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="250.7" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="261.4" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="272.1" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="282.8" cy="120.0" r="1.8" fill="#0d9488"/>
+<circle cx="208.0" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="218.7" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="229.4" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="240.1" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="250.7" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="261.4" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="272.1" cy="141.0" r="1.8" fill="#0d9488"/>
+<circle cx="282.8" cy="141.0" r="1.8" fill="#0d9488"/>
+<rect x="288.2" y="103.2" width="4" height="33.6" fill="#0d9488"/></g>
+<text x="255.0" y="196" text-anchor="middle" font-size="14.5" font-weight="800" fill="#1e293b">DVI-D</text>
+<text x="255.0" y="216" text-anchor="middle" font-size="11.3" fill="#64748b">長方形＋一側扁平插腳</text>
+<g><polygon points="370.0,99.0 480.0,99.0 464.0,141.0 386.0,141.0" fill="#ea580c" opacity="0.15" stroke="#ea580c" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="385.4" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="394.2" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="403.0" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="411.8" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="420.6" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="429.4" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="438.2" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="447.0" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="455.8" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="464.6" cy="113.3" r="1.7" fill="#ea580c"/>
+<circle cx="386.4" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="395.0" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="403.6" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="412.1" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="420.7" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="429.3" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="437.9" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="446.4" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="455.0" cy="126.7" r="1.7" fill="#ea580c"/>
+<circle cx="463.6" cy="126.7" r="1.7" fill="#ea580c"/></g>
+<text x="425.0" y="196" text-anchor="middle" font-size="14.5" font-weight="800" fill="#1e293b">HDMI</text>
+<text x="425.0" y="216" text-anchor="middle" font-size="11.3" fill="#64748b">左右對稱的倒梯形</text>
+<g><polygon points="561.0,93.0 645.0,93.0 645.0,147.0 545.0,147.0 545.0,109.0" fill="#7c3aed" opacity="0.15" stroke="#7c3aed" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="561.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="569.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="577.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="585.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="593.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="601.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="609.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="617.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="625.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="633.0" cy="103.8" r="1.6" fill="#7c3aed"/>
+<circle cx="561.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="569.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="577.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="585.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="593.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="601.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="609.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="617.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="625.0" cy="136.2" r="1.6" fill="#7c3aed"/>
+<circle cx="633.0" cy="136.2" r="1.6" fill="#7c3aed"/></g>
+<text x="595.0" y="196" text-anchor="middle" font-size="14.5" font-weight="800" fill="#1e293b">DisplayPort</text>
+<text x="595.0" y="216" text-anchor="middle" font-size="11.3" fill="#64748b">近似長方形，缺一角</text>
+</svg>

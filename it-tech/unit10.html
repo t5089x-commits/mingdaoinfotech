@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 12：Python（五）重複結構｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="12">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 12</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Python 程式設計篇　單元 12</span>
+  <h1>Python（五）重複結構</h1>
+  <p>for 迴圈、while 迴圈與迴圈控制</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>會用 for 迴圈搭配 range() 重複執行</li>
+<li>會用 while 迴圈依條件重複</li>
+<li>理解 break 與 continue 的差別</li>
+  </ul>
+</div><section class="block">
+  <h2><span class="num">01</span>for 迴圈</h2>
+  
+<p><strong>先認識 <code>list</code>（串列）：</strong>用中括號 <code>[ ]</code> 把多個資料<strong>依序</strong>裝起來、中間用逗號 <code>,</code> 分隔，例如 <code>["香蕉", "蘋果", "橘子"]</code>。它就像「一排有順序的箱子」：第 1 個是 <code>list1[0]</code>（<strong>從 0 開始數</strong>）、第 2 個是 <code>list1[1]</code>、第 3 個是 <code>list1[2]</code>。</p>
+<p><code>for</code> 迴圈最方便的用法，就是把 list 裡的元素<strong>一個一個取出來</strong>處理——每繞一圈，<code>s</code> 就依序變成「香蕉 → 蘋果 → 橘子」，各印一次：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">list1 = ["香蕉", "蘋果", "橘子"]
+for s in list1:
+    print(s)</code></pre>
+</div>
+<h3>搭配 range()</h3>
+<p><code>range(start, stop, step)</code> 產生數字序列（不含 stop），預設 start=0、step=1。</p>
+<div class="table-wrap"><table class="center">
+<thead><tr><th>寫法</th><th>產生的數字</th></tr></thead>
+<tbody>
+<tr><td><code>range(5)</code></td><td>0, 1, 2, 3, 4</td></tr>
+<tr><td><code>range(1, 11)</code></td><td>1, 2, …, 10</td></tr>
+<tr><td><code>range(0, 10, 2)</code></td><td>0, 2, 4, 6, 8</td></tr>
+</tbody></table></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 計算 1+2+…+10
+sum = 0
+for i in range(1, 11, 1):
+    sum += i
+print(sum)   # 55</code></pre>
+</div>
+<p style="margin:10px 0 2px;color:var(--text-soft);font-size:.9rem">👇 看不懂 <code>i</code> 怎麼跑、<code>sum</code> 怎麼越加越大嗎？點「下一步」一圈一圈跑跑看：</p>
+<div class="loopstep" id="loopstep">
+  <div class="vs-cc">
+    <div class="vs-srccard" style="max-width:none;margin:0">
+      <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">加總.py　—　目前執行的那一行會反白</span></div>
+      <div class="vs-src">
+        <div class="vs-ln" data-ln="init">sum = 0</div>
+        <div class="vs-ln" data-ln="loop">for i in range(1, 11, 1):</div>
+        <div class="vs-ln" data-ln="loop">    sum += i</div>
+        <div class="vs-ln" data-ln="end">print(sum)   # 55</div>
+      </div>
+    </div>
+    <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body" id="ls-out"></div></div>
+  </div>
+  <div class="ls-body">
+    <div class="ls-left">
+      <div class="ls-vars">
+        <div class="ls-chip">i ＝ <b id="ls-i">－</b></div>
+        <div class="ls-chip">sum ＝ <b id="ls-sum">0</b></div>
+      </div>
+      <div class="ls-say" id="ls-say">按「下一步 ▶」開始跑迴圈：i 會從 1 一路數到 10，每一圈把 i 加進 sum。</div>
+      <div class="ls-tablewrap">
+        <table class="ls-table"><thead><tr><th>第幾圈</th><th>i</th><th>sum ＋ i</th><th>sum 變成</th></tr></thead>
+        <tbody id="ls-rows"></tbody></table>
+      </div>
+    </div>
+    <div class="ls-right">
+      <button type="button" class="vs-btn" id="ls-next">下一步 ▶</button>
+      <button type="button" class="vs-btn ghost" id="ls-auto">▶▶ 自動播放</button>
+      <button type="button" class="vs-btn ghost" id="ls-reset">↺ 重來</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById("loopstep"); if(!root) return;
+  var iEl=document.getElementById("ls-i"),sumEl=document.getElementById("ls-sum"),say=document.getElementById("ls-say"),rows=document.getElementById("ls-rows");
+  var next=document.getElementById("ls-next"),auto=document.getElementById("ls-auto"),reset=document.getElementById("ls-reset");
+  var i=0,sum=0,timer=null;
+  var srclns=root.querySelectorAll(".vs-ln"),out=document.getElementById("ls-out");
+  function setHi(v){ for(var q=0;q<srclns.length;q++){ srclns[q].classList.toggle("hi", srclns[q].getAttribute("data-ln")===v); } }
+  function setOut(v){ out.innerHTML = (v!=="") ? '<div class="vs-outline fresh">'+v+'</div>' : '<div class="vs-outph">（迴圈跑完才會 print，還沒有輸出）</div>'; }
+  function stop(){ if(timer){clearInterval(timer);timer=null;auto.textContent="▶▶ 自動播放";} }
+  function finish(){
+    stop(); next.disabled=true; next.textContent="✓ 迴圈結束"; setHi("end"); setOut(sum);
+    say.innerHTML="迴圈跑完 10 圈，i 走過 1→10，最後 <b>sum = "+sum+"</b>。所以 <code>print(sum)</code> 會印出 <b>"+sum+"</b>（看右邊）。";
+  }
+  function step(){
+    if(i>=10){ finish(); return; }
+    i++; var before=sum; sum=before+i;
+    iEl.textContent=i; sumEl.textContent=sum;
+    var tr=document.createElement("tr"); tr.className="fresh";
+    tr.innerHTML="<td>第 "+i+" 圈</td><td>"+i+"</td><td>"+before+" ＋ "+i+"</td><td><b>"+sum+"</b></td>";
+    rows.appendChild(tr);
+    say.textContent="第 "+i+" 圈：i = "+i+"，把 "+i+" 加進 sum → sum 從 "+before+" 變成 "+sum+"。";
+    setHi("loop");
+    if(i>=10){ finish(); }
+  }
+  function resetAll(){ stop(); i=0;sum=0; iEl.textContent="－"; sumEl.textContent="0"; rows.innerHTML=""; next.disabled=false; next.textContent="下一步 ▶"; say.textContent="按「下一步 ▶」開始跑迴圈：i 會從 1 一路數到 10，每一圈把 i 加進 sum。"; setHi("init"); setOut(""); }
+  next.addEventListener("click",step);
+  auto.addEventListener("click",function(){ if(timer){stop();return;} if(i>=10)resetAll(); auto.textContent="⏸ 暫停"; timer=setInterval(step,700); });
+  reset.addEventListener("click",resetAll);
+  setHi("init"); setOut("");
+})();
+</script>
+<h3>應用：倍數判斷</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">n = int(input("請輸入一個數："))
+for i in range(1, n + 1):
+    if i % 6 == 0:
+        print(f"{i}是2和3的倍數")
+    elif i % 3 == 0:
+        print(f"{i}是3的倍數")
+    elif i % 2 == 0:
+        print(f"{i}是2的倍數")</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>while 迴圈</h2>
+  
+<p><code>while</code> 在<strong>條件成立時</strong>一直重複，適合「次數由條件決定」的情況。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">total = 0
+n = 0
+while n &lt; 10:
+    n += 1
+    total = total + n
+print(total)   # 55</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 小心無窮迴圈</span>
+<p>while 的條件<strong>一定要有機會變成 False</strong>（記得讓變數遞增／遞減），否則程式會停不下來。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>break 與 continue</h2>
+  
+<div class="callout"><span class="t">⏱️ 提醒：動畫是「慢動作」</span>
+<p>下面的動畫為了讓大家<strong>看懂程式的邏輯</strong>，是把數字<strong>一個一個、慢慢地</strong>顯示出來。但實際執行時，因為電腦跑得<strong>非常非常非常快</strong>，你會看到輸出<strong>幾乎一瞬間就全部跳出來</strong>，不會像動畫這樣一格一格慢慢跑。</p></div>
+<h3>⛔ break：強制離開迴圈</h3>
+<p>遇到 <code>break</code> 就<strong>立刻跳出整個迴圈</strong>，後面的圈數都不再跑。點「下一步」跑跑看：</p>
+<div class="looptrace" id="brk">
+  <div class="vs-cc">
+    <div class="vs-srccard" style="max-width:none;margin:0">
+      <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">break.py　—　目前執行的那一行會反白</span></div>
+      <div class="vs-src">
+        <div class="vs-ln" data-ln="0">for i in range(1, 11):</div>
+        <div class="vs-ln" data-ln="1">    if i == 6:</div>
+        <div class="vs-ln" data-ln="2">        break</div>
+        <div class="vs-ln" data-ln="3">    print(i, end=",")</div>
+      </div>
+    </div>
+    <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body ltout"></div></div>
+  </div>
+  <div class="lt-row"><span class="lt-i">i ＝ <b>–</b></span></div>
+  <div class="lt-say">按「下一步 ▶」開始。</div>
+  <div class="vs-controls"><button type="button" class="vs-btn ltn">下一步 ▶</button><button type="button" class="vs-btn ghost ltr">↺ 重來</button></div>
+</div>
+<h3 style="margin-top:22px">⏭️ continue：跳過本次</h3>
+<p>遇到 <code>continue</code> 就<strong>跳過這一圈剩下的動作</strong>，直接進入下一圈（迴圈本身不會停）。點「下一步」跑跑看：</p>
+<div class="looptrace" id="cont">
+  <div class="vs-cc">
+    <div class="vs-srccard" style="max-width:none;margin:0">
+      <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">continue.py　—　目前執行的那一行會反白</span></div>
+      <div class="vs-src">
+        <div class="vs-ln" data-ln="0">for i in range(1, 11):</div>
+        <div class="vs-ln" data-ln="1">    if i == 6:</div>
+        <div class="vs-ln" data-ln="2">        continue</div>
+        <div class="vs-ln" data-ln="3">    print(i, end=",")</div>
+      </div>
+    </div>
+    <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body ltout"></div></div>
+  </div>
+  <div class="lt-row"><span class="lt-i">i ＝ <b>–</b></span></div>
+  <div class="lt-say">按「下一步 ▶」開始。</div>
+  <div class="vs-controls"><button type="button" class="vs-btn ltn">下一步 ▶</button><button type="button" class="vs-btn ghost ltr">↺ 重來</button></div>
+</div>
+<script>
+(function(){
+  function mk(id,steps){
+    var root=document.getElementById(id); if(!root) return;
+    var iEl=root.querySelector(".lt-i b"),outEl=root.querySelector(".ltout"),say=root.querySelector(".lt-say");
+    var next=root.querySelector(".ltn"),reset=root.querySelector(".ltr"),srclns=root.querySelectorAll(".vs-ln");
+    var i=0;
+    function render(){
+      var s=steps[i];
+      iEl.textContent=s.i;
+      outEl.innerHTML = s.out ? '<div class="vs-outline">'+s.out+'</div>' : '<div class="vs-outph">（還沒有 print 輸出）</div>';
+      say.innerHTML=s.say;
+      for(var q=0;q<srclns.length;q++){srclns[q].classList.toggle("hi",(s.lns||[]).indexOf(srclns[q].getAttribute("data-ln"))>=0);}
+      var end=i>=steps.length-1;
+      next.textContent=end?"✓ 結束":"下一步 ▶"; next.disabled=end;
+    }
+    next.addEventListener("click",function(){if(i<steps.length-1){i++;render();}});
+    reset.addEventListener("click",function(){i=0;render();});
+    render();
+  }
+  mk("brk",[
+    {i:"–",lns:[],out:"",say:"按「下一步 ▶」開始。"},
+    {i:"–",lns:["0"],out:"",say:"先看 <code>for i in range(1, 11)</code>：接下來 <b>i 會依序拿到 1、2、3、…、10</b>，一個一個進迴圈。每個 i 進來，都會先做下面的 <code>if i == 6</code> 判斷。"},
+    {i:"1",lns:["1","3"],out:"1,",say:"i = 1，判斷 <code>if i == 6</code>：<b>不等於 6</b>（不符合 if）→ 就跳過 if 裡的 break，改做 if 後面的 print，印出 1。"},
+    {i:"2",lns:["1","3"],out:"1,2,",say:"i = 2，判斷 <code>if i == 6</code>：<b>不等於 6</b> → 跳過 if 裡的 break，印出 2。"},
+    {i:"3",lns:["1","3"],out:"1,2,3,",say:"i = 3，判斷 <code>if i == 6</code>：<b>不等於 6</b> → 印出 3。"},
+    {i:"4",lns:["1","3"],out:"1,2,3,4,",say:"i = 4，判斷 <code>if i == 6</code>：<b>不等於 6</b> → 印出 4。"},
+    {i:"5",lns:["1","3"],out:"1,2,3,4,5,",say:"i = 5，判斷 <code>if i == 6</code>：<b>不等於 6</b> → 印出 5。"},
+    {i:"6",lns:["1","2"],out:"1,2,3,4,5,",say:"i = 6，判斷 <code>if i == 6</code>：<b>等於 6</b> → 執行 <b>break</b>，立刻跳出整個迴圈，後面的 7、8、9、10 都不再做。"}
+  ]);
+  mk("cont",[
+    {i:"–",lns:[],out:"",say:"按「下一步 ▶」開始。"},
+    {i:"–",lns:["0"],out:"",say:"先看 <code>for i in range(1, 11)</code>：接下來 <b>i 會依序拿到 1、2、3、…、10</b>，一個一個進迴圈。每個 i 進來，都會先做下面的 <code>if i == 6</code> 判斷。"},
+    {i:"1",lns:["1","3"],out:"1,",say:"i = 1，判斷 <code>if i == 6</code>：<b>不成立</b> → 不 continue，改做 if 後面的 print，印出 1。"},
+    {i:"2",lns:["1","3"],out:"1,2,",say:"i = 2，判斷 <code>if i == 6</code>：<b>不成立</b> → 印出 2。"},
+    {i:"3",lns:["1","3"],out:"1,2,3,",say:"i = 3，判斷 <code>if i == 6</code>：<b>不成立</b> → 印出 3。"},
+    {i:"4",lns:["1","3"],out:"1,2,3,4,",say:"i = 4，判斷 <code>if i == 6</code>：<b>不成立</b> → 印出 4。"},
+    {i:"5",lns:["1","3"],out:"1,2,3,4,5,",say:"i = 5，判斷 <code>if i == 6</code>：<b>不成立</b> → 印出 5。"},
+    {i:"6",lns:["1","2"],out:"1,2,3,4,5,",say:"i = 6，判斷 <code>if i == 6</code>：<b>成立</b> → 執行 <b>continue</b>，跳過這一圈剩下的 print（不印 6），直接進下一圈。"},
+    {i:"7",lns:["1","3"],out:"1,2,3,4,5,7,",say:"i = 7，判斷 <code>if i == 6</code>：<b>不成立</b> → 印出 7。"},
+    {i:"8",lns:["1","3"],out:"1,2,3,4,5,7,8,",say:"i = 8，判斷不成立 → 印出 8。"},
+    {i:"9",lns:["1","3"],out:"1,2,3,4,5,7,8,9,",say:"i = 9，判斷不成立 → 印出 9。"},
+    {i:"10",lns:["1","3"],out:"1,2,3,4,5,7,8,9,10,",say:"i = 10，判斷不成立 → 印出 10。迴圈跑完，結束。"}
+  ]);
+})();
+</script>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>用 for 迴圈印出 1~10 的<strong>平方</strong>。</li>
+  <li>用 while 迴圈算出 <strong>1×2×3×…×10</strong>（10 的階乘）。</li>
+  <li>用迴圈印出 1~50 中所有<strong>7 的倍數</strong>。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 2 題
+result = 1
+n = 1
+while n &lt;= 10:
+    result *= n
+    n += 1
+print("10! =", result)   # 3628800</code></pre>
+</div><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 3 題
+for i in range(1, 51):
+    if i % 7 == 0:
+        print(i, end=" ")
+# 7 14 21 28 35 42 49</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit09.html"><div class="dir">← 上一單元</div><div class="ttl">Python（四）選擇結構</div></a>
+    <a class="next" href="unit11.html"><div class="dir">下一單元 →</div><div class="ttl">Python（六）迴圈進階與綜合</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

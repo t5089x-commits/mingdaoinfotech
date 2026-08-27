@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APCS 先修班｜明道中學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="logo">AP</span>
+      <span>明道中學 · APCS 先修班<small>115 學年度第一學期 · 高中部</small></span></a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="badge">115 學年度第一學期 · 高中部　·　陳楷翔 老師</span>
+  <h1>APCS　<span class="grad">先修挑戰班</span></h1>
+  <p>教材延續高一資訊科技的 Python 基礎，針對 APCS 大學程式設計先修檢測重新整理、加深加廣。這學期的目標很明確：把「初級」練到熟、把「中級」練到能上考場挑戰。</p>
+  <div class="meta">
+    <span>📘 8 個教學單元</span>
+    <span>🎯 目標：挑戰中級</span>
+    <span>🐍 全程 Python</span>
+    <span>🧩 APCS 風格題型</span>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="block" style="margin-top:6px">
+    <h2><span class="num">ℹ️</span>APCS 是什麼？</h2>
+    <p><strong>APCS（Advanced Placement Computer Science）</strong>是大學程式設計先修檢測，用來檢定高中生的程式設計與運算思維能力，成績可以用在大學特殊選才、繁星、申請入學等管道的備審或加分。官方網站在
+      <a href="https://apcs.csie.ntnu.edu.tw/" target="_blank" rel="noopener">apcs.csie.ntnu.edu.tw ↗</a>，
+      詳細簡章、報名時間、歷屆試題都以官網公告為準，這裡整理的是<strong>這學期上課會用到的重點</strong>。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>測驗科目</th><th>題型 / 配分</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>程式識讀</strong></td>
+            <td>單選題・滿分 100 分<br>電腦自動評分</td>
+            <td>程式運行追蹤（code tracing）、程式填空、程式測試與除錯、程式效能分析、解析計算邏輯</td>
+          </tr>
+          <tr>
+            <td><strong>程式實作</strong></td>
+            <td>寫完整程式・滿分 300 分<br>電腦自動評分</td>
+            <td>可自選 C、C++、Java、Python 撰寫；我們課堂上一律用 <strong>Python</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:18px">整份檢測依難度分成四個題本，範圍是<strong>一路往上疊加</strong>的（中級包含初級的能力、中高級包含中級……以此類推）：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>題本</th><th>著重能力</th><th>檢測範圍</th><th>這學期</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>初級</strong></td>
+            <td>基礎程式設計能力：用變數存資料、選擇結構做邏輯判斷、迴圈處理重複性任務</td>
+            <td>輸入與輸出・算術／邏輯／位元運算・條件判斷與迴圈</td>
+            <td><span class="unit-tag go">✅ 主力範圍</span></td>
+          </tr>
+          <tr>
+            <td><strong>中級</strong></td>
+            <td>序列型資料結構運用能力：用陣列／串列存資料，處理文字與流程模擬</td>
+            <td>陣列（arrays）・字元（character）・字串（string）</td>
+            <td><span class="unit-tag go">🎯 本學期目標</span></td>
+          </tr>
+          <tr>
+            <td>中高級</td>
+            <td>基礎資料結構運用能力</td>
+            <td>函式與遞迴・佇列／堆疊・簡單樹／圖・搜尋（二分搜尋、DFS）</td>
+            <td><span class="unit-tag soon">🔜 函式先暖身，其餘下學期</span></td>
+          </tr>
+          <tr>
+            <td>高級</td>
+            <td>基礎演算法運用能力，具備複雜度分析能力</td>
+            <td>樹／圖・動態規劃・分治法・貪心法則</td>
+            <td><span class="unit-tag later">📅 下學期深入</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="t">🎯 這學期的目標</span>
+      <p>把<strong>初級</strong>的內容練到穩，並把<strong>中級</strong>（陣列、字元、字串）練到能上場挑戰。函式（function）雖然正式列在「中高級」範圍，但因為函式是寫出「乾淨、可重複使用」程式的基本功，我們會提早在單元 7 詳細講——把函式的使用規則練熟，也是替下學期的遞迴打地基。</p>
+    </div>
+    <div class="callout tip">
+      <span class="t">📅 下學期預告</span>
+      <p>如果下學期繼續修 APCS，我們會接著把<strong>中高級到高級</strong>的內容講得更深入：遞迴（recursion）、佇列與堆疊（queue／stack）、樹與圖（tree／graph）的基本操作、二分搜尋與深度優先搜尋（DFS），一路往上到動態規劃（DP）、分治法、貪心法則，目標是挑戰中高級以上的題本。</p>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>起點篇 · 初級打底</h2>
+    <span class="cnt">單元 1–4</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit01.html" data-unit="1">
+      <span class="arrow">→</span>
+      <div class="n">01</div>
+      <h3>APCS 是什麼？學期地圖</h3>
+      <p>認識檢測架構、題本範圍、這學期與下學期的規劃，建立準備方向。</p>
+      <div class="tags"><span>檢測介紹</span><span>題本範圍</span><span>學習地圖</span></div>
+    </a>
+    <a class="ucard" href="unit02.html" data-unit="2">
+      <span class="arrow">→</span>
+      <div class="n">02</div>
+      <h3>變數、資料型態與輸出入</h3>
+      <p>資料型態、常數與變數、指定與表達式，用 input()／print() 讀寫資料。</p>
+      <div class="tags"><span>資料型態</span><span>變數</span><span>input/print</span></div>
+    </a>
+    <a class="ucard" href="unit03.html" data-unit="3">
+      <span class="arrow">→</span>
+      <div class="n">03</div>
+      <h3>運算子大全：算術・比較・邏輯・位元</h3>
+      <p>算術、比較、邏輯運算子之外，加上 APCS 明確會考的位元運算（&amp;、|、^、~、&lt;&lt;、&gt;&gt;）。</p>
+      <div class="tags"><span>算術運算</span><span>邏輯運算</span><span>位元運算</span></div>
+    </a>
+    <a class="ucard" href="unit04.html" data-unit="4">
+      <span class="arrow">→</span>
+      <div class="n">04</div>
+      <h3>條件判斷與迴圈</h3>
+      <p>if／elif／else 條件判斷，for／while 迴圈與 break／continue，含程式追蹤練習。</p>
+      <div class="tags"><span>條件判斷</span><span>迴圈</span><span>程式追蹤</span></div>
+    </a>
+  </div>
+
+  <div class="section-title py">
+    <span class="bar"></span><h2>挑戰篇 · 邁向中級</h2>
+    <span class="cnt">單元 5–8</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard py" href="unit05.html" data-unit="5">
+      <span class="arrow">→</span>
+      <div class="n">05</div>
+      <h3>陣列與串列（List）</h3>
+      <p>索引、切片、走訪串列，搭配常見的最大值、搜尋、反轉等操作模式。</p>
+      <div class="tags"><span>List</span><span>索引切片</span><span>常見樣式</span></div>
+    </a>
+    <a class="ucard py" href="unit06.html" data-unit="6">
+      <span class="arrow">→</span>
+      <div class="n">06</div>
+      <h3>字元與字串（String）</h3>
+      <p>字元與 ASCII、字串索引切片、常用字串方法，練習文字處理與流程模擬題。</p>
+      <div class="tags"><span>字元</span><span>字串方法</span><span>文字處理</span></div>
+    </a>
+    <a class="ucard py" href="unit07.html" data-unit="7">
+      <span class="arrow">→</span>
+      <div class="n">07</div>
+      <h3>函式使用規則大全</h3>
+      <p>參數（位置／預設值／關鍵字／不定量）、回傳值、區域與全域變數，附遞迴搶先看。</p>
+      <div class="tags"><span>函式</span><span>參數規則</span><span>遞迴暖身</span></div>
+    </a>
+    <a class="ucard py" href="unit08.html" data-unit="8">
+      <span class="arrow">→</span>
+      <div class="n">08</div>
+      <h3>綜合實戰與下學期預告</h3>
+      <p>整合陣列、字串、函式的 APCS 風格練習題，並預告下學期要深入的內容。</p>
+      <div class="tags"><span>綜合實作</span><span>模擬題</span><span>下學期預告</span></div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師　·　教材網站
+</footer>
+<a class="teacher-fab" href="../shared/video/video-access.html" title="教師專區：需密鑰才能進入影片資源庫（五科共用）">🔒 教師專區<small>影片資源庫</small></a>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

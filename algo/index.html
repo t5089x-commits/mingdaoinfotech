@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基礎演算法｜明道中學 · 高二資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<section class="hero">
+  <span class="badge">高二資訊科技 · 全 20 單元</span>
+  <h1>基礎演算法 <span class="grad">Python 版教學網站</span></h1>
+  <p>依照課綱順序製作：演算法概念、流程圖，接著是四種資料結構加集合，後半學期是排序與搜尋演算法。每頁程式碼都是 Python 為主、對照 C++。</p>
+  <div class="meta">
+    <span>🐍 Python 預設顯示</span>
+    <span>⧉ 一鍵複製程式碼</span>
+    <span>🎬 排序／搜尋／堆疊步驟動畫</span>
+    <span>📘 部分單元整合 APCS／AP325</span>
+  </div>
+</section>
+<div class="wrap">
+<div class="section-title py"><span class="bar"></span><h2>資訊教育篇</h2><span class="cnt">3 單元</span></div>
+<div class="unit-cards">
+<a class="ucard py" data-unit="1" href="unit01.html"><span class="n">01</span><h3>演算法概念</h3><p>資料與資訊的差別、演算法五大條件、時間複雜度 O(1)~O(n²) 的判斷方法。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="2" href="unit02.html"><span class="n">02</span><h3>流程圖的表示方法</h3><p>六種常用流程圖符號，把高一寫過的 if / while 程式碼畫成流程圖。</p><span class="arrow">→</span></a>
+<a class="ucard py" href="unit02b.html"><span class="n">附</span><h3>函式、串列與輸入技巧（高一補充）</h3><p>函式定義、參數與回傳值；串列基本操作；split()／map() 讀取輸入的 APCS 常用技巧。</p><span class="arrow">→</span></a>
+
+</div>
+<div class="section-title py"><span class="bar"></span><h2>資料結構篇</h2><span class="cnt">7 單元</span></div>
+<div class="unit-cards">
+<a class="ucard py" data-unit="3" href="unit03.html"><span class="n">03</span><h3>資料結構(一) 陣列</h3><p>陣列宣告、種類、位置計算公式（標明 C/C++ 底層概念）、Row/Column-major 反推、基本操作時間複雜度。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="4" href="unit04.html"><span class="n">04</span><h3>資料結構(二) 鏈結串列</h3><p>指標串接節點、單向雙向環狀三種型態，插入刪除為什麼比陣列快。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="5" href="unit05.html"><span class="n">05</span><h3>資料結構(三) 佇列</h3><p>FIFO 先進先出、環狀佇列的容量陷阱、手刻與 deque 兩種實作方式。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="6" href="unit06.html"><span class="n">06</span><h3>資料結構(四) 堆疊</h3><p>LIFO 後進先出、括號配對檢查、中序／前序／後序表示法手算與動畫。</p><span class="arrow">→</span></a>
+<a class="ucard py" href="unit06b.html"><span class="n">附</span><h3>堆疊 vs 佇列 比較</h3><p>堆疊和佇列放在一起比較：不要看怎麼放，要看怎麼拿出來。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="7" href="unit07.html"><span class="n">07</span><h3>資料結構(五) 樹狀結構</h3><p>二元樹三種走訪方式，二元搜尋樹 (BST) 的建立與搜尋。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="8" href="unit08.html"><span class="n">08</span><h3>資料結構(六) 集合</h3><p>元素不重複、平均 O(1) 查詢，聯集交集差集運算與 APCS 應用。</p><span class="arrow">→</span></a>
+
+</div>
+<div class="section-title py"><span class="bar"></span><h2>排序演算法篇</h2><span class="cnt">6 單元</span></div>
+<div class="unit-cards">
+<a class="ucard py" data-unit="9" href="unit09.html"><span class="n">09</span><h3>演算法(一) 泡沫排序</h3><p>相鄰比較交換的逐步動畫，看懂氣泡排序實際上怎麼跑。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="10" href="unit10.html"><span class="n">10</span><h3>演算法(二) 選擇排序</h3><p>每輪找最小值換到前面，交換次數比氣泡排序少很多。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="11" href="unit11.html"><span class="n">11</span><h3>演算法(三) 插入排序</h3><p>像整理撲克牌一樣往前插入，資料接近排序好時效率最佳。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="12" href="unit12.html"><span class="n">12</span><h3>演算法(四) 快速排序</h3><p>選基準值分割、遞迴排序，分治法的經典應用。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="13" href="unit13.html"><span class="n">13</span><h3>演算法(五) 合併排序</h3><p>切到底再合併，保證 O(n log n)，Python 內建排序的底層邏輯。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="14" href="unit14.html"><span class="n">14</span><h3>演算法(六) 排序效能分析</h3><p>五種排序法總比較，O(n²) 與 O(n log n) 在大資料量下的實際差距。</p><span class="arrow">→</span></a>
+
+</div>
+<div class="section-title py"><span class="bar"></span><h2>搜尋演算法篇</h2><span class="cnt">3 單元</span></div>
+<div class="unit-cards">
+<a class="ucard py" data-unit="15" href="unit15.html"><span class="n">15</span><h3>演算法(七) 循序搜尋法</h3><p>從頭到尾逐一比對，不需排序，但資料量大時效率較差。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="16" href="unit16.html"><span class="n">16</span><h3>演算法(八) 二元搜尋法</h3><p>資料排序後每次砍半搜尋，附逐步動畫，理解 O(log n)。</p><span class="arrow">→</span></a>
+<a class="ucard py" data-unit="17" href="unit17.html"><span class="n">17</span><h3>演算法(九) 搜尋演算法分析</h3><p>循序 vs 二元搜尋總整理，另外介紹內插搜尋法（選讀）。</p><span class="arrow">→</span></a>
+
+</div>
+<div class="section-title py"><span class="bar"></span><h2>總複習</h2><span class="cnt">1 單元</span></div>
+<div class="unit-cards">
+<a class="ucard py" data-unit="18" href="unit18.html"><span class="n">18</span><h3>課程總複習</h3><p>整學期重點清單，點卡片可以直接跳回各單元複習。</p><span class="arrow">→</span></a>
+
+</div>
+
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程</footer>
+<a class="teacher-fab" href="../shared/video/video-access.html" title="教師專區：需密鑰才能進入影片資源庫（五科共用）">🔒 教師專區<small>影片資源庫</small></a>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

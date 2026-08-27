@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 20：課程總整理＋期末複習｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="20">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 20</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 4　單元 20</span>
+  <h1>課程總整理＋期末複習</h1>
+  <p>從未來回看密碼學如何撐起數位信任</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>串起整學期學過的技術，形成一條完整的「數位信任」故事線</li>
+<li>完成期末複習，檢視自己還有哪些概念不清楚</li>
+<li>回顧專題成果，反思這學期的學習歷程</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>一條故事線：密碼學怎麼撐起數位信任</h2>
+  
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>問題</th><th>撐起答案的技術</th><th>對應單元</th></tr></thead>
+  <tbody><tr><td>這份資料有沒有被動過手腳？</td><td>雜湊函數、Merkle Tree</td><td>單元 4、9</td></tr><tr><td>這是不是真的你（本人／這台裝置）？</td><td>古典密碼學的基本概念、公開金鑰密碼學、Passkey</td><td>單元 10、11、18</td></tr><tr><td>這份文件／這筆交易，真的是你簽的嗎？</td><td>數位簽章、RSA</td><td>單元 11、12</td></tr><tr><td>我怎麼知道這把公鑰真的是對方的？</td><td>數位憑證、CA、信任鏈、HTTPS</td><td>單元 12</td></tr><tr><td>整本帳本會不會被竄改？大家怎麼達成共識？</td><td>區塊鏈、工作證明、51% 攻擊</td><td>單元 4、5</td></tr><tr><td>未來這些技術會被用在哪裡？又有什麼新風險？</td><td>智能合約、AI 詐騙、Web3 風險、零信任、CBDC</td><td>單元 6、16-19</td></tr></tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">🎯 總結一句話</span>
+<p>這學期學的每一個技術，其實都在回答同一個問題：<strong>在一個沒有人能百分之百信任誰的網路世界裡，怎麼用數學方法，讓「信任」變得可以被驗證，而不用靠猜的？</strong>這就是「數位信任」的核心。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>期末複習重點整理</h2>
+  <div class="grid cols-2">
+  <div class="card"><h3>密碼學家族</h3><p>對稱式加密（凱薩／單字母／多字母／轉輪機）→ 非對稱加密（RSA）→ 雜湊函數 → 數位簽章 → 數位憑證，一路串起來的邏輯關係。</p></div>
+  <div class="card"><h3>區塊鏈家族</h3><p>區塊／鏈結／Merkle Tree → 比特幣的專有名詞與 51% 攻擊 → 智能合約與 DApp → Web3 風險。</p></div>
+  <div class="card"><h3>未來與治理</h3><p>AI 詐騙與 Deepfake 辨識、零信任架構與 Passkey、CBDC 與數位皮夾、數位身分治理的隱私課題。</p></div>
+  <div class="card"><h3>專題回顧</h3><p>回頭看看自己這學期的專題，用今天複習到的完整故事線，能不能幫專題內容補上更完整的技術脈絡？</p></div>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 期末反思</h3>
+  <p>用 3-5 句話，寫下你這學期對「資訊安全」看法的轉變 —— 開學第一堂課的作業裡，你怎麼回答「為什麼選這堂課」？現在的你，會怎麼回答同樣的問題？</p>
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit19.html"><div class="dir">← 上一單元</div><div class="ttl">未來數位社會</div></a>
+    <a class="next disabled"><div class="dir">下一單元 →</div><div class="ttl">已是最後一個</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

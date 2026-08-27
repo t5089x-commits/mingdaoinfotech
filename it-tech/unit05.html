@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 5：電腦五大單元｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="5">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 5</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">理論篇　單元 5</span>
+  <h1>電腦五大單元</h1>
+  <p>輸入 / 輸出 / 控制 / ALU / 記憶</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>用生活比喻理解電腦「輸入 → 運算 → 輸出」的運作</li>
+<li>認識電腦五大單元各自負責什麼工作</li>
+<li>知道 CPU 是什麼，以及哪些因素會影響它的快慢</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>電腦怎麼運作？用「一家餐廳」來想</h2>
+  
+<p>電腦做任何事，都逃不出三個步驟：<strong>輸入 → 運算 → 輸出</strong>。這其實跟一家餐廳出餐的流程一模一樣：</p>
+<div class="callout"><span class="t">🍜 餐廳流程</span>
+<p>客人點餐（<strong>輸入</strong>）→ 廚房做菜（<strong>運算</strong>）→ 把菜端上桌（<strong>輸出</strong>）</p></div>
+<p>電腦裡負責這整個流程的，就是接下來要介紹的<strong>五大單元</strong>。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>電腦的五大單元（配餐廳比喻）</h2>
+  
+<p>把電腦想成一家餐廳，五大單元就是餐廳裡的五種角色：</p>
+<div class="table-wrap"><table>
+<thead><tr><th>五大單元</th><th>餐廳裡的角色</th><th>負責什麼</th><th>實際例子</th></tr></thead>
+<tbody>
+<tr><td>⌨️ <strong>輸入單元</strong></td><td>點餐服務生</td><td>接收外面來的資料與指令</td><td>鍵盤、滑鼠</td></tr>
+<tr><td>💾 <strong>記憶單元</strong></td><td>冰箱／倉庫</td><td>暫時存放要處理的資料與半成品</td><td>記憶體 RAM</td></tr>
+<tr><td>🧠 <strong>控制單元</strong></td><td>店長</td><td>指揮大家：誰先做、做什麼</td><td rowspan="2">在 CPU 裡</td></tr>
+<tr><td>🧮 <strong>算術邏輯單元</strong></td><td>廚師</td><td>真正動手「運算」（加減乘除、判斷）</td></tr>
+<tr><td>🖥️ <strong>輸出單元</strong></td><td>上菜</td><td>把做好的結果送出來給人看</td><td>螢幕、印表機、喇叭</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">🧩 CPU 就是「廚房」</span>
+<p>其中<strong>控制單元（店長）＋ 算術邏輯單元（廚師）</strong>合在一起，就是電腦的大腦——<strong>CPU（中央處理器）</strong>。所以買電腦時 CPU 好不好，影響很大。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>CPU 的快慢看什麼？</h2>
+  
+<p>同樣是「廚房」，有的出餐快、有的出餐慢。CPU 的快慢主要看三件事：</p>
+<div class="grid cols-3">
+  <div class="tile"><h4>⏱️ 時脈（速度）</h4><p>廚師手腳多快。單位是 GHz，數字越大、每秒能做的事越多。</p></div>
+  <div class="tile"><h4>👥 核心數</h4><p>有幾個廚師同時做菜。核心越多，越能一次處理多件事（多工）。</p></div>
+  <div class="tile"><h4>⚡ 快取記憶體</h4><p>廚師手邊的小備料檯。快取越大，越不用一直跑遠去倉庫拿東西。</p></div>
+</div>
+<div class="callout"><span class="t">🔎 想更深入（可略過）</span>
+<p>CPU 每做一個指令，其實會經過「擷取 → 解碼 → 執行 → 儲存」四個小步驟（合稱一個機器週期）。這部分是進階內容，先知道「CPU 一步步照指令做事」就夠了。</p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>資料放哪裡？儲存單元金字塔</h2>
+  
+<p>電腦裡存放資料的地方不只一種，它們像金字塔一樣分層：<strong>越上面越快、越貴、容量越小；越下面越慢、越便宜、容量越大</strong>。</p>
+<p>另外要記得：暫存器、快取、主記憶體是<strong>揮發性</strong>（一斷電資料就不見），硬碟／SSD 是<strong>非揮發性</strong>（斷電資料還在）——這也是為什麼打字要記得存檔！</p>
+<figure class="fig">
+  <img src="images/storage_pyramid.png" alt="儲存單元金字塔：暫存器、快取(SRAM)、主記憶體(DRAM)、硬碟，越上面越快越貴" loading="lazy" style="background:#fff">
+  <figcaption>儲存單元金字塔：處理速度／價格由上到下遞減，容量由上到下遞增。</figcaption>
+</figure>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>電腦做任何事都包含哪三個步驟？</li>
+  <li>用餐廳比喻：負責「運算（做菜）」的是哪個單元？負責「指揮」的又是哪個？</li>
+  <li>CPU 是由哪兩個單元合起來的？</li>
+  <li>其他條件相同時，時脈 3.5 GHz 與 2.0 GHz 的 CPU 哪個比較快？</li>
+  <li>為什麼打字打到一半突然停電，沒存檔的內容會不見？（提示：揮發性）</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>輸入 → 運算 → 輸出。</li>
+<li>做菜（運算）＝算術邏輯單元（廚師）；指揮＝控制單元（店長）。</li>
+<li>控制單元 ＋ 算術邏輯單元。</li>
+<li>3.5 GHz 較快（時脈較高）。</li>
+<li>因為打字的內容暫時放在「記憶體（RAM）」，它是揮發性的，一斷電就消失；存檔是把它寫進非揮發性的硬碟／SSD。</li>
+</ol></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit04.html"><div class="dir">← 上一單元</div><div class="ttl">電腦簡介</div></a>
+    <a class="next" href="unit06.html"><div class="dir">下一單元 →</div><div class="ttl">電腦硬體與組裝</div></a>
+  </nav>
+</main>
+
+
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

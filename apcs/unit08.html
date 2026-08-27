@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 8：綜合實戰與下學期預告｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="8">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 8</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">挑戰篇　單元 8</span>
+  <h1>綜合實戰與下學期預告</h1>
+  <p>把陣列、字串、函式整合起來，挑戰 APCS 風格的實作題</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>整合變數、運算子、條件、迴圈、陣列、字串、函式，完成綜合題</li>
+    <li>熟悉 APCS 程式實作題常見的輸入輸出格式</li>
+    <li>清楚下學期要往中高級、高級延伸的具體內容</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>綜合實戰一：成績統計小工具</h2>
+  <p>輸入若干學生的分數（用空白分隔的一行），計算並輸出：<strong>總人數、平均分數（取小數點後 2 位）、最高分、最低分，以及及格（≥60）人數</strong>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">score_stats.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def stats(scores):
+    total = sum(scores)
+    avg = total / len(scores)
+    hi = max(scores)
+    lo = min(scores)
+    passed = 0
+    for s in scores:
+        if s &gt;= 60:
+            passed += 1
+    return avg, hi, lo, passed
+
+line = input("請輸入分數（用空白分隔）：")
+scores = [int(x) for x in line.split()]   # 字串切割後逐一轉成整數
+
+avg, hi, lo, passed = stats(scores)
+print(f"總人數：{len(scores)}")
+print(f"平均分數：{avg:.2f}")
+print(f"最高分：{hi}　最低分：{lo}")
+print(f"及格人數：{passed}")</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 <code>[int(x) for x in line.split()]</code> 是什麼？</span>
+  <p style="margin-bottom:0">這叫<strong>串列生成式（list comprehension）</strong>，是「<code>for</code> 迴圈 ＋ 建立新 list」的精簡寫法，等同：
+  <code>scores = []</code><br><code>for x in line.split(): scores.append(int(x))</code><br>
+  APCS 題目常常要「一行讀進多個數字」，這個寫法非常實用，值得記起來。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>綜合實戰二：檢查密碼強度</h2>
+  <p>輸入一個字串當作密碼，判斷是否符合：<strong>長度至少 8、同時包含英文字母與數字</strong>。符合輸出 <code>"通過"</code>，否則輸出 <code>"不通過"</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">check_password.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def is_strong(pw):
+    if len(pw) &lt; 8:
+        return False
+    has_alpha = False
+    has_digit = False
+    for ch in pw:
+        if ch.isalpha():
+            has_alpha = True
+        if ch.isdigit():
+            has_digit = True
+    return has_alpha and has_digit
+
+pw = input("請輸入密碼：")
+print("通過" if is_strong(pw) else "不通過")</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">💡 <code>a if 條件 else b</code>：三元運算子</span>
+  <p style="margin-bottom:0">這是 if／else 的「單行寫法」：條件成立取 <code>a</code>，不成立取 <code>b</code>。<code>print("通過" if is_strong(pw) else "不通過")</code> 等同：
+  <code>if is_strong(pw): print("通過")</code><br><code>else: print("不通過")</code>，寫法更精簡。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>綜合實戰三：字串加密（凱薩密碼）</h2>
+  <p>把每個英文字母往後移動 <code>k</code> 位（超過 <code>z</code> 就繞回 <code>a</code>），數字與符號不變。這題整合了<strong>字元運算（ord/chr）、位元／餘數運算、函式、迴圈與字串組合</strong>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">caesar_cipher.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def caesar(s, k):
+    result = ""
+    for ch in s:
+        if ch.isupper():
+            base = ord('A')
+            result += chr((ord(ch) - base + k) % 26 + base)
+        elif ch.islower():
+            base = ord('a')
+            result += chr((ord(ch) - base + k) % 26 + base)
+        else:
+            result += ch          # 數字、符號、空白原封不動
+    return result
+
+msg = input("請輸入訊息：")
+k = int(input("請輸入位移量："))
+print("加密結果：", caesar(msg, k))</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 為什麼要 <code>% 26</code>？</span>
+  <p style="margin-bottom:0">英文字母只有 26 個，<code>(ord(ch) - base + k) % 26</code> 讓位移「超過 <code>z</code> 之後自動繞回 <code>a</code>」——例如 <code>'y'</code> 位移 3：<code>(24 + 3) % 26 = 1</code>，對應回 <code>chr(1 + base)</code> 就是 <code>'b'</code>。這種「繞圈」的除餘技巧，在陣列、字串題目裡非常常見。</p></div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習：自己動手拼一題</h3>
+  <ol>
+    <li>結合陣列與函式：寫函式 <code>second_max(nums)</code>，回傳 list 中<strong>第二大</strong>的數字（不能用 <code>sort()</code>）。</li>
+    <li>結合字串與函式：寫函式 <code>count_words(s)</code>，回傳字串 <code>s</code> 裡的<strong>單字數</strong>（用空白分隔）。</li>
+    <li>綜合題：輸入一段英文句子，輸出<strong>每個單字的第一個字母大寫、其餘小寫</strong>（例如 <code>"hello apcs world"</code> → <code>"Hello Apcs World"</code>），並統計句子裡總共有幾個字母（不含空白）。</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def second_max(nums):
+    first = second = None
+    for x in nums:
+        if first is None or x &gt; first:
+            second = first
+            first = x
+        elif x != first and (second is None or x &gt; second):
+            second = x
+    return second
+
+print(second_max([5, 1, 9, 9, 4]))   # 5</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def capitalize_words(s):
+    words = s.split()
+    result = []
+    for w in words:
+        result.append(w[0].upper() + w[1:].lower())
+    return " ".join(result)
+
+def count_letters(s):
+    count = 0
+    for ch in s:
+        if ch.isalpha():
+            count += 1
+    return count
+
+sentence = "hello apcs world"
+print(capitalize_words(sentence))     # Hello Apcs World
+print(count_letters(sentence))          # 14</code></pre>
+</div>
+  </div>
+</div>
+
+<section class="block">
+  <h2><span class="num">04</span>下學期預告：往中高級、高級邁進</h2>
+  <p>這學期把初級練穩、中級（陣列、字元、字串）練到能上場，加上函式的暖身。如果下學期繼續修 APCS，我們會接著往上爬：</p>
+  <div class="timeline"><div class="tl-row">
+    <div class="tl-block a"><span class="tl-when">這學期</span><span class="tl-what">✅ 初級＋中級</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block b"><span class="tl-when">下學期前半</span><span class="tl-what">🧩 中高級</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block c"><span class="tl-when">下學期後半</span><span class="tl-what">🚀 挑戰高級</span></div>
+  </div></div>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>🧩 下學期前半：中高級</h3>
+      <ul>
+        <li>遞迴（recursion）完整講解：呼叫堆疊、遞迴 vs 迴圈</li>
+        <li>佇列與堆疊（queue／stack）的操作與應用</li>
+        <li>簡單樹狀結構（如二元樹）的基本操作</li>
+        <li>簡單圖（如網格）的表示方式</li>
+        <li>枚舉、資料遍歷</li>
+        <li>搜尋：二分搜尋（binary search）、深度優先搜尋（DFS）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🚀 下學期後半：挑戰高級</h3>
+      <ul>
+        <li>樹／圖的進階應用</li>
+        <li>動態規劃（dynamic programming）</li>
+        <li>分治法（divide and conquer）</li>
+        <li>貪心法則（greedy method）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout tip"><span class="t">🎯 給這學期認真練完的你</span>
+  <p style="margin-bottom:0">如果初級、中級都練熟了，代表你已經具備「用程式解決問題」最核心的能力：資料怎麼存、邏輯怎麼判斷、重複的事怎麼交給迴圈、複雜的邏輯怎麼拆成函式。中高級以上的內容，其實都是在這個基礎上，多學幾種「解決問題的工具」而已——地基打穩了，接下來會走得更輕鬆。</p></div>
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit07.html"><div class="dir">← 上一單元</div><div class="ttl">函式使用規則大全</div></a>
+    <a class="next disabled"><div class="dir">下一單元 →</div><div class="ttl">已是最後一個</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

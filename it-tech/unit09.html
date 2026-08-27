@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 11：Python（四）選擇結構｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="11">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 11</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Python 程式設計篇　單元 11</span>
+  <h1>Python（四）選擇結構</h1>
+  <p>條件判斷 if / elif / else</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>看懂流程圖，理解程式怎麼「判斷條件、決定走哪一條路」</li>
+<li>會用 if 撰寫單向判斷、雙向判斷（if–else）與多向判斷（if–elif–else）</li>
+<li>知道 Python 用「縮排」表示一個程式區塊</li>
+  </ul>
+</div><section class="block">
+  <h2><span class="num">01</span>單向判斷 if</h2>
+  
+<p>條件成立（<code>True</code>）時才執行縮排區塊；不成立就<strong>直接跳過</strong>。<strong>Python 用縮排（通常 4 個空格）表示一個程式區塊。</strong></p>
+<div class="cf-row"><div class="flowwrap"><svg class="flow" viewBox="0 0 320 254" role="img" style="max-width:410px" aria-label="單向判斷 if 流程圖">
+  <defs><marker id="fa1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-faint)"/></marker></defs>
+  <rect x="110" y="6" width="100" height="30" rx="15" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="160" y="26" text-anchor="middle" style="font-size:19px;fill:var(--text)">開始</text>
+  <line x1="160" y1="36" x2="160" y2="58" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa1)"/>
+  <polygon points="160,60 228,95 160,130 92,95" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.6"/>
+  <text x="160" y="92" text-anchor="middle" style="font-size:18px;fill:var(--text);font-weight:700">分數 ≥ 60 ？</text>
+  <text x="160" y="108" text-anchor="middle" style="font-size:16px;fill:var(--text-soft)">條件成立？</text>
+  <line x1="160" y1="130" x2="160" y2="154" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa1)"/>
+  <text x="150" y="147" text-anchor="end" style="font-size:17px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="96" y="154" width="128" height="38" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="160" y="178" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">執行縮排的程式</text>
+  <line x1="160" y1="192" x2="160" y2="216" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa1)"/>
+  <path d="M228,95 H294 V232 H226" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa1)"/>
+  <text x="250" y="88" text-anchor="middle" style="font-size:17px;fill:var(--danger);font-weight:800">否</text>
+  <rect x="96" y="216" width="128" height="32" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="160" y="236" text-anchor="middle" style="font-size:18px;fill:var(--text)">繼續後面的程式</text>
+</svg></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = int(input("請輸入你的分數："))
+if score &gt;= 60:
+    print("恭禧你及格了！")
+    print(score)
+
+# 區間判斷
+number = int(input("請輸入一個數:"))
+if number &gt;= 10 and number &lt;= 20:
+    print(f"{number}在10~20區間")</code></pre>
+</div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>雙向判斷 if–else</h2>
+  
+<p>條件成立走 <code>if</code> 區塊、不成立走 <code>else</code> 區塊——<strong>兩條路一定會走到其中一條</strong>，走完再合流繼續。</p>
+<div class="cf-row"><div class="flowwrap"><svg class="flow" viewBox="0 0 360 250" role="img" style="max-width:450px" aria-label="雙向判斷 if-else 流程圖">
+  <defs><marker id="fa2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-faint)"/></marker></defs>
+  <rect x="130" y="6" width="100" height="30" rx="15" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="180" y="26" text-anchor="middle" style="font-size:19px;fill:var(--text)">開始</text>
+  <line x1="180" y1="36" x2="180" y2="56" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2)"/>
+  <polygon points="180,58 248,92 180,126 112,92" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.6"/>
+  <text x="180" y="88" text-anchor="middle" style="font-size:18px;fill:var(--text);font-weight:700">分數 ≥ 60 ？</text>
+  <text x="180" y="104" text-anchor="middle" style="font-size:16px;fill:var(--text-soft)">條件成立？</text>
+  <path d="M112,92 H62 V150" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2)"/>
+  <text x="80" y="84" text-anchor="middle" style="font-size:17px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="8" y="150" width="108" height="38" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="62" y="173" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「及格」</text>
+  <path d="M248,92 H298 V150" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2)"/>
+  <text x="280" y="84" text-anchor="middle" style="font-size:17px;fill:var(--danger);font-weight:800">否</text>
+  <rect x="244" y="150" width="108" height="38" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="298" y="173" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「被當了」</text>
+  <path d="M62,188 V218 H126" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2)"/>
+  <path d="M298,188 V218 H234" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2)"/>
+  <rect x="126" y="204" width="108" height="30" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="180" y="224" text-anchor="middle" style="font-size:18px;fill:var(--text)">繼續程式</text>
+</svg></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = int(input("請輸入你的分數："))
+if score &gt;= 60:
+    print("恭禧你及格了！")
+else:
+    print("天啊，你被當了！")</code></pre>
+</div>
+</div>
+<h3>再看一個：判斷奇數／偶數</h3>
+<p>同樣是雙向判斷：餘數（<code>%</code>）是 1 就印「奇數」，否則印「偶數」。</p>
+<div class="cf-row"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 奇偶判斷
+number = int(input("請輸入一個數:"))
+if number % 2 == 1:
+    print(f"{number}是奇數")
+else:
+    print(f"{number}是偶數")</code></pre>
+</div>
+<div class="flowwrap"><svg class="flow" viewBox="0 0 360 250" role="img" style="max-width:450px" aria-label="奇偶判斷 if-else 流程圖">
+  <defs><marker id="fa2b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-faint)"/></marker></defs>
+  <rect x="130" y="6" width="100" height="30" rx="15" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="180" y="26" text-anchor="middle" style="font-size:19px;fill:var(--text)">開始</text>
+  <line x1="180" y1="36" x2="180" y2="52" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2b)"/>
+  <polygon points="180,52 262,92 180,132 98,92" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.6"/>
+  <text x="180" y="90" text-anchor="middle" style="font-size:16px;fill:var(--text);font-weight:700">number % 2 == 1 ？</text>
+  <text x="180" y="110" text-anchor="middle" style="font-size:14px;fill:var(--text-soft)">餘數是 1 ？</text>
+  <path d="M98,92 H58 V150" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2b)"/>
+  <text x="76" y="84" text-anchor="middle" style="font-size:17px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="6" y="150" width="108" height="38" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="60" y="174" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「奇數」</text>
+  <path d="M262,92 H302 V150" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2b)"/>
+  <text x="284" y="84" text-anchor="middle" style="font-size:17px;fill:var(--danger);font-weight:800">否</text>
+  <rect x="248" y="150" width="108" height="38" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="302" y="174" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「偶數」</text>
+  <path d="M60,188 V218 H126" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2b)"/>
+  <path d="M302,188 V218 H234" fill="none" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa2b)"/>
+  <rect x="126" y="204" width="108" height="30" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="180" y="224" text-anchor="middle" style="font-size:18px;fill:var(--text)">繼續程式</text>
+</svg></div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>多向判斷 if–elif–else</h2>
+  
+<p>用 <code>elif</code> 處理多個條件，<strong>由上往下依序檢查</strong>，符合就執行那一塊並跳出、不再往下檢查；全部都不符合才走 <code>else</code>。</p>
+<div class="cf-row"><div class="flowwrap"><svg class="flow" viewBox="0 0 400 372" role="img" style="max-width:470px" aria-label="多向判斷 if-elif-else 流程圖">
+  <defs><marker id="fa3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-faint)"/></marker></defs>
+  <rect x="25" y="6" width="90" height="26" rx="13" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="70" y="24" text-anchor="middle" style="font-size:18px;fill:var(--text)">開始</text>
+  <line x1="70" y1="32" x2="70" y2="46" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <polygon points="70,46 130,70 70,94 10,70" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+  <text x="70" y="74" text-anchor="middle" style="font-size:17px;fill:var(--text);font-weight:700">分數 ≥ 90 ？</text>
+  <line x1="130" y1="70" x2="246" y2="70" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="152" y="63" text-anchor="middle" style="font-size:16.5px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="248" y="54" width="120" height="32" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+  <text x="308" y="74" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「甲等」</text>
+  <line x1="70" y1="94" x2="70" y2="116" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="80" y="110" text-anchor="start" style="font-size:16.5px;fill:var(--danger);font-weight:800">否</text>
+  <polygon points="70,116 130,140 70,164 10,140" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+  <text x="70" y="144" text-anchor="middle" style="font-size:17px;fill:var(--text);font-weight:700">分數 ≥ 80 ？</text>
+  <line x1="130" y1="140" x2="246" y2="140" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="152" y="133" text-anchor="middle" style="font-size:16.5px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="248" y="124" width="120" height="32" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+  <text x="308" y="144" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「乙等」</text>
+  <line x1="70" y1="164" x2="70" y2="186" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="80" y="180" text-anchor="start" style="font-size:16.5px;fill:var(--danger);font-weight:800">否</text>
+  <polygon points="70,186 130,210 70,234 10,210" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+  <text x="70" y="214" text-anchor="middle" style="font-size:17px;fill:var(--text);font-weight:700">分數 ≥ 70 ？</text>
+  <line x1="130" y1="210" x2="246" y2="210" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="152" y="203" text-anchor="middle" style="font-size:16.5px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="248" y="194" width="120" height="32" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+  <text x="308" y="214" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「丙等」</text>
+  <line x1="70" y1="234" x2="70" y2="256" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="80" y="250" text-anchor="start" style="font-size:16.5px;fill:var(--danger);font-weight:800">否</text>
+  <polygon points="70,256 130,280 70,304 10,280" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+  <text x="70" y="284" text-anchor="middle" style="font-size:17px;fill:var(--text);font-weight:700">分數 ≥ 60 ？</text>
+  <line x1="130" y1="280" x2="246" y2="280" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="152" y="273" text-anchor="middle" style="font-size:16.5px;fill:var(--ok);font-weight:800">是</text>
+  <rect x="248" y="264" width="120" height="32" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+  <text x="308" y="284" text-anchor="middle" style="font-size:18px;fill:var(--brand-strong);font-weight:700">印「丁等」</text>
+  <line x1="70" y1="304" x2="70" y2="328" stroke="var(--text-faint)" stroke-width="1.6" marker-end="url(#fa3)"/>
+  <text x="80" y="322" text-anchor="start" style="font-size:16.5px;fill:var(--danger);font-weight:800">否（else）</text>
+  <rect x="10" y="328" width="140" height="34" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.4"/>
+  <text x="80" y="349" text-anchor="middle" style="font-size:18px;fill:var(--text);font-weight:700">印「你被當了！」</text>
+</svg></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = int(input("請輸入你的分數："))
+if score &gt;= 90:
+    print("甲等")
+elif score &gt;= 80:
+    print("乙等")
+elif score &gt;= 70:
+    print("丙等")
+elif score &gt;= 60:
+    print("丁等")
+else:
+    print("你被當了！")</code></pre>
+</div>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>輸入一個整數，判斷它是<strong>奇數還是偶數</strong>。</li>
+  <li>輸入 BMI 值，印出「過輕 / 正常 / 過重」（過輕 &lt;18.5、正常 18.5–24、過重 &gt;24）。</li>
+  <li>輸入三科成績，若三科都 ≥ 60 印「全部及格」，否則印「有不及格」。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 1 題
+n = int(input("請輸入一個整數："))
+if n % 2 == 0:
+    print("偶數")
+else:
+    print("奇數")</code></pre>
+</div><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 2 題
+bmi = float(input("BMI："))
+if bmi &lt; 18.5:
+    print("過輕")
+elif bmi &lt;= 24:
+    print("正常")
+else:
+    print("過重")</code></pre>
+</div><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python"># 第 3 題
+chi = int(input("國文："))
+eng = int(input("英文："))
+mat = int(input("數學："))
+if chi &gt;= 60 and eng &gt;= 60 and mat &gt;= 60:
+    print("全部及格")
+else:
+    print("有不及格")</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit14.html"><div class="dir">← 上一單元</div><div class="ttl">Python（三）運算子</div></a>
+    <a class="next" href="unit10.html"><div class="dir">下一單元 →</div><div class="ttl">Python（五）重複結構</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

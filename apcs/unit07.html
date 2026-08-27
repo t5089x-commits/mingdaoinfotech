@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 7：函式使用規則大全｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="7">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 7</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">挑戰篇　單元 7</span>
+  <h1>函式使用規則大全</h1>
+  <p>正式來說屬於中高級範圍，但值得提早練熟——也是下學期遞迴的地基</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>熟悉函式定義與呼叫的完整語法規則</li>
+    <li>搞懂四種參數規則：位置參數、預設值、關鍵字參數、不定量參數</li>
+    <li>理解 return 的行為：單一回傳、多重回傳、不寫 return 會怎樣</li>
+    <li>分清楚區域變數、全域變數，以及 <code>global</code> 關鍵字的用途</li>
+    <li>認識常見的函式陷阱，並搶先看一眼「遞迴」長什麼樣子</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>為什麼函式值得提早學？</h2>
+  <p><strong>函式（function）</strong>正式列在 APCS「中高級」的檢測範圍，跟遞迴、佇列、堆疊排在一起。但函式其實是<strong>寫出乾淨、可重複使用程式</strong>的基本功——中級的陣列、字串題目，只要用函式包裝，程式會更好讀、好除錯。所以我們提早在這裡把函式的規則練熟，一方面現在就能寫出更好的程式，一方面也替下學期的遞迴打好地基。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def is_even(n):
+    return n % 2 == 0
+
+nums = [3, 8, 15, 24, 7]
+for x in nums:
+    if is_even(x):
+        print(x, "是偶數")</code></pre>
+  </div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>定義與呼叫的語法規則</h2>
+  <ul class="tidy">
+    <li>用 <code>def</code> 開頭，接函式名稱、括號裡放參數，最後一定要有冒號 <code>:</code></li>
+    <li>函式主體要<strong>縮排</strong>（通常 4 個空格），縮排結束就代表函式定義結束</li>
+    <li>函式<strong>必須先定義、才能呼叫</strong>——Python 是由上往下讀程式的，呼叫寫在定義前面會出錯</li>
+    <li>呼叫函式時，<strong>參數的順序、個數要對應</strong>（除非用了關鍵字參數，見下一節）</li>
+  </ul>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def greet(name):        # 定義：name 是「參數」
+    print(f"哈囉，{name}！")
+
+greet("陳老師")           # 呼叫：把 "陳老師" 傳給 name
+greet("APCS")             # 同一個函式可以重複呼叫，傳不同的值</code></pre>
+  </div>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>參數規則大全</h2>
+
+  <h3>① 位置參數（positional）——最基本的方式</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def rect_area(w, h):
+    return w * h
+
+print(rect_area(3, 5))   # 15　←　w=3, h=5（按「順序」對應）
+print(rect_area(5, 3))   # 15　←　剛好結果一樣，但 w、h 對調了！</code></pre>
+  </div>
+
+  <h3>② 預設參數值（default value）</h3>
+  <p>參數可以給預設值，呼叫時<strong>不傳這個參數</strong>就會用預設值。<strong>規則：有預設值的參數，一定要放在沒有預設值的參數後面</strong>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def power(base, exp=2):     # exp 預設是 2（平方）
+    return base ** exp
+
+print(power(5))        # 25　←　沒傳 exp，用預設值 2
+print(power(5, 3))      # 125　←　傳了 exp=3，蓋過預設值
+
+# def bad(a=1, b):    # ❌ 錯誤！有預設值的 a 不能放在沒預設值的 b 前面
+#     ...</code></pre>
+  </div>
+
+  <h3>③ 關鍵字參數（keyword argument）</h3>
+  <p>呼叫時用 <code>參數名=值</code> 指定，可以<strong>不照順序</strong>傳、也能讓程式碼更清楚看得懂每個值的意思：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def rect_area(w, h):
+    return w * h
+
+print(rect_area(w=3, h=5))    # 15
+print(rect_area(h=5, w=3))    # 15　←　用關鍵字參數，順序對調也沒差
+print(rect_area(3, h=5))       # 15　←　位置參數和關鍵字參數可以混用（位置的要放前面）</code></pre>
+  </div>
+
+  <h3>④ 不定量參數（*args）</h3>
+  <p>不知道呼叫時會傳幾個值進來，可以用 <code>*args</code> 收成一個 tuple：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def my_sum(*args):     # args 會是一個 tuple，裝所有傳進來的值
+    total = 0
+    for x in args:
+        total += x
+    return total
+
+print(my_sum(1, 2, 3))         # 6
+print(my_sum(10, 20, 30, 40))   # 100
+print(my_sum())                  # 0（沒傳也可以）</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 名字不是重點，<code>*</code> 才是關鍵</span>
+  <p style="margin-bottom:0"><code>*args</code> 的 <code>args</code> 只是慣用的命名，寫成 <code>*nums</code> 效果一樣——真正讓 Python「把多個值收成一個 tuple」的是參數名前面的那個 <code>*</code>。</p></div>
+
+  <h3>⑤ 傳參數時：不可變 vs 可變型態，行為不一樣</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def add_one(n):        # n 是 int（不可變）
+    n += 1
+    return n
+
+x = 5
+print(add_one(x))    # 6
+print(x)               # 5　←　x 本身沒被改變
+
+def add_item(lst):     # lst 是 list（可變）
+    lst.append(99)      # 直接修改「傳進來的那個」list 本身
+
+y = [1, 2, 3]
+add_item(y)
+print(y)                # [1, 2, 3, 99]　←　y 被函式改變了！</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 這是 APCS 除錯題最愛考的觀念</span>
+  <p style="margin-bottom:0">數字、字串是<strong>不可變（immutable）</strong>型態，傳進函式後在函式裡怎麼改，都不會影響外面的原始變數。但 list 是<strong>可變（mutable）</strong>型態，函式拿到的是「同一個 list」，在函式裡用 <code>.append()</code>、<code>[i]=</code> 這種<strong>直接修改內容</strong>的操作，會反映到外面。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">04</span>回傳值（return）的規則</h2>
+  <ul class="tidy">
+    <li><code>return</code> 執行到就<strong>立刻結束函式</strong>，後面的程式碼不會再執行</li>
+    <li>沒有寫 <code>return</code>，或 <code>return</code> 後面沒接值，函式會回傳 <code>None</code></li>
+    <li><code>return</code> 可以一次回傳<strong>多個值</strong>（其實是包成一個 tuple）</li>
+  </ul>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def classify(n):
+    if n &gt; 0:
+        return "正數"
+    if n &lt; 0:
+        return "負數"
+    return "零"          # 前兩個 return 都沒觸發才會跑到這行
+
+print(classify(5))    # 正數
+print(classify(-3))    # 負數
+
+def no_return(n):
+    print(n * 2)          # 只是印出來，沒有 return
+result = no_return(5)      # 10（print 的輸出）
+print(result)                # None　←　函式沒 return，回傳值是 None
+
+def min_max(nums):
+    return min(nums), max(nums)   # 一次回傳兩個值
+
+lo, hi = min_max([4, 8, 1, 9, 3])   # 用兩個變數「解包」接住
+print(lo, hi)                          # 1 9</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 多重回傳的本質：其實是一個 tuple</span>
+  <p style="margin-bottom:0"><code>return lo, hi</code> 其實回傳的是 <code>(lo, hi)</code> 這個 tuple；<code>a, b = min_max(...)</code> 則是用「解包（unpacking）」把 tuple 拆開分別存進兩個變數。如果只用一個變數接，<code>r = min_max(nums)</code>，<code>r</code> 就會是整個 tuple <code>(1, 9)</code>。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">05</span>區域變數與全域變數</h2>
+  <p>函式<strong>裡面</strong>定義（包括參數）的是<strong>區域變數（local）</strong>，只在函式執行期間存在；函式<strong>外面</strong>定義的是<strong>全域變數（global）</strong>，整個程式都看得到。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">score = 100           # 全域變數
+
+def show():
+    msg = "函式內部"     # 區域變數，只存在於 show() 執行期間
+    print(msg, score)     # 函式裡「可以讀」全域變數
+
+show()
+print(score)             # 100
+# print(msg)             # ❌ NameError：msg 只在 show() 裡面存在
+
+def change_score():
+    score = 0             # ⚠ 這是「新建立」一個區域變數 score，不是改外面的！
+    print("函式內：", score)
+
+change_score()
+print("函式外：", score)   # 100　←　外面的 score 完全沒被動到</code></pre>
+  </div>
+  <p>如果<strong>真的要在函式裡修改全域變數</strong>，要用 <code>global</code> 關鍵字明確宣告：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">score = 100
+
+def add_bonus():
+    global score      # 宣告：接下來的 score 指的是「外面那個全域變數」
+    score += 10
+
+add_bonus()
+print(score)   # 110　←　這次真的被改變了</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 別濫用 global</span>
+  <p style="margin-bottom:0">能不用 <code>global</code> 就盡量不用——用參數傳進去、用 <code>return</code> 傳回來，程式邏輯會更清楚，也比較不容易因為「函式偷偷改了全域變數」而產生難以追蹤的錯誤。<code>global</code> 是「規則要知道」，不代表要常常拿來用。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">06</span>互動追蹤：一步一步看函式怎麼呼叫</h2>
+  <p>下面用一個「先平方、再加一」的兩層函式呼叫，一步一步看參數怎麼傳進去、回傳值怎麼傳出來：</p>
+  <div class="varstep" id="fstep">
+    <div class="vs-stage">
+      <div class="vs-boxes">
+        <div class="vs-box empty" id="fs-x"><span class="vs-name">x</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="fs-n"><span class="vs-name">square(n)</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="fs-ret"><span class="vs-name">回傳值</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="fs-result"><span class="vs-name">result</span><span class="vs-val"></span></div>
+      </div>
+      <div class="vs-calc" id="fs-calc"></div>
+    </div>
+    <div class="vs-cc"><div class="vs-srccard">
+      <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">函式呼叫追蹤.py　—　目前執行的那一行會反白</span></div>
+      <div class="vs-src">
+        <div class="vs-ln" data-ln="0">def square(n):</div>
+        <div class="vs-ln" data-ln="1">    return n * n</div>
+        <div class="vs-ln" data-ln="2"></div>
+        <div class="vs-ln" data-ln="3">x = 4</div>
+        <div class="vs-ln" data-ln="4">result = square(x) + 1</div>
+        <div class="vs-ln" data-ln="5">print(result)</div>
+      </div>
+    </div>
+      <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body" id="fs-out"></div></div>
+    </div>
+    <div class="vs-cap" id="fs-cap">點「下一步 ▶」開始：看 square(x) 呼叫時，資料怎麼流進、流出函式。</div>
+    <div class="vs-controls">
+      <button type="button" class="vs-btn" id="fs-next">下一步 ▶</button>
+      <button type="button" class="vs-btn ghost" id="fs-reset">↺ 重來</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var root=document.getElementById("fstep"); if(!root) return;
+    var steps=[
+      {x:"",n:"",ret:"",result:"",ln:-1,calc:"",cap:"點「下一步 ▶」開始：看 square(x) 呼叫時，資料怎麼流進、流出函式。",hi:[],out:[]},
+      {x:"4",n:"",ret:"",result:"",ln:3,calc:"",cap:"執行 x = 4，把 4 存進全域變數 x。",hi:["x"],out:[]},
+      {x:"4",n:"4",ret:"",result:"",ln:4,calc:"呼叫 square(x) → 把 x 的值 4「複製」給參數 n",cap:"呼叫 square(x)：Python 跳進 square 函式，把 x 的值 4 傳給參數 n（n 是函式內的區域變數）。",hi:["n"],out:[]},
+      {x:"4",n:"4",ret:"16",result:"",ln:1,calc:"return n * n → return 4 * 4 → return 16",cap:"執行 return n * n：算出 16，函式立刻結束，把 16 這個值往外傳。",hi:["ret"],out:[]},
+      {x:"4",n:"4",ret:"16",result:"17",ln:4,calc:"result = square(x) + 1 → result = 16 + 1",cap:"回到呼叫的地方，square(x) 這裡就換成 16，再加 1，存進 result。",hi:["result"],out:[]},
+      {x:"4",n:"4",ret:"16",result:"17",ln:5,calc:"",cap:"執行 print(result)，印出 17。函式呼叫追蹤完成！",hi:[],out:["17"]}
+    ];
+    var i=0;
+    var xB=document.getElementById("fs-x"),nB=document.getElementById("fs-n"),retB=document.getElementById("fs-ret"),resB=document.getElementById("fs-result");
+    var xV=xB.querySelector(".vs-val"),nV=nB.querySelector(".vs-val"),retV=retB.querySelector(".vs-val"),resV=resB.querySelector(".vs-val");
+    var calc=document.getElementById("fs-calc"),cap=document.getElementById("fs-cap"),out=document.getElementById("fs-out");
+    var srclns=root.querySelectorAll(".vs-ln");
+    var next=document.getElementById("fs-next"),reset=document.getElementById("fs-reset");
+    function one(box,el,val,hi,prev){
+      el.textContent=val;
+      if(val===""){box.classList.add("empty");}else{box.classList.remove("empty");}
+      box.classList.toggle("hi",hi);
+      if(prev!==val){box.classList.remove("pop");void box.offsetWidth;box.classList.add("pop");}
+    }
+    function render(prev){
+      var s=steps[i],p=prev!=null?steps[prev]:{x:null,n:null,ret:null,result:null,out:[]};
+      one(xB,xV,s.x,s.hi.indexOf("x")>=0,p.x);
+      one(nB,nV,s.n,s.hi.indexOf("n")>=0,p.n);
+      one(retB,retV,s.ret,s.hi.indexOf("ret")>=0,p.ret);
+      one(resB,resV,s.result,s.hi.indexOf("result")>=0,p.result);
+      for(var q=0;q<srclns.length;q++){srclns[q].classList.toggle("hi",srclns[q].getAttribute("data-ln")===String(s.ln));}
+      calc.textContent=s.calc;calc.style.visibility=s.calc?"visible":"hidden";
+      cap.innerHTML=s.cap;
+      var prevLen=(p.out||[]).length; out.innerHTML="";
+      if(s.out.length===0){var ph=document.createElement("div");ph.className="vs-outph";ph.textContent="（還沒有 print 輸出）";out.appendChild(ph);}
+      else{for(var j=0;j<s.out.length;j++){var l=document.createElement("div");l.className="vs-outline"+(j>=prevLen?" fresh":"");l.textContent=s.out[j];out.appendChild(l);}}
+      next.textContent=(i>=steps.length-1)?"✓ 完成":"下一步 ▶"; next.disabled=(i>=steps.length-1);
+    }
+    next.addEventListener("click",function(){if(i<steps.length-1){var pv=i;i++;render(pv);}});
+    reset.addEventListener("click",function(){var pv=i;i=0;render(pv);});
+    render(null);
+  })();
+  </script>
+</section>
+
+<section class="block">
+  <h2><span class="num">07</span>搶先看：遞迴（recursion）長什麼樣子</h2>
+  <p>遞迴是「<strong>函式呼叫自己</strong>」，正式屬於下學期的中高級範圍，這裡先用階乘（factorial）搶先感受一下。每次呼叫都要有<strong>基準情況（base case）</strong>讓它停下來，否則會無限呼叫下去：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def factorial(n):
+    if n == 0:            # 基準情況（base case）：停下來的條件
+        return 1
+    return n * factorial(n - 1)   # 遞迴呼叫：呼叫自己，問題規模變小（n-1）
+
+print(factorial(4))   # 24　（4×3×2×1）</code></pre>
+  </div>
+  <div class="card">
+    <h3>🔍 factorial(4) 的呼叫過程</h3>
+    <ul>
+      <li><code>factorial(4)</code> 要等 <code>factorial(3)</code> 的結果，才能算 <code>4 * factorial(3)</code></li>
+      <li><code>factorial(3)</code> 要等 <code>factorial(2)</code>……一路往下，直到</li>
+      <li><code>factorial(0)</code> 直接回傳 <code>1</code>（base case，不用再往下呼叫）</li>
+      <li>接著<strong>一層一層往回算</strong>：<code>1×1=1</code> → <code>2×1=2</code> → <code>3×2=6</code> → <code>4×6=24</code></li>
+    </ul>
+  </div>
+  <div class="callout tip"><span class="t">📅 下學期會講得更深入</span>
+  <p style="margin-bottom:0">遞迴牽涉到「呼叫堆疊（call stack）」怎麼運作、什麼時候該用遞迴、遞迴和迴圈怎麼互相轉換，這些我們下學期會完整講解，搭配佇列、堆疊、樹狀結構一起練習。這裡只要先知道「函式可以呼叫自己」「一定要有 base case」就夠了。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">08</span>常見錯誤整理</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>錯誤</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>忘記寫 <code>return</code>，卻拿函式結果去用</td><td>函式回傳 <code>None</code>，後續用 <code>None</code> 做運算會出錯</td></tr>
+        <tr><td>以為在函式裡改參數，外面的值也會變</td><td>只有<strong>可變型態</strong>（list、dict）才會這樣；數字、字串不會</td></tr>
+        <tr><td>在函式裡直接對全域變數賦值，卻沒加 <code>global</code></td><td>Python 會當成建立一個新的區域變數，外面的全域變數不受影響</td></tr>
+        <tr><td>有預設值的參數放在沒預設值的參數前面</td><td><code>SyntaxError</code>：預設參數一定要放在後面</td></tr>
+        <tr><td>遞迴忘了寫 base case</td><td>函式無限呼叫自己，最後 <code>RecursionError</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li>寫函式 <code>bmi(weight, height=170)</code>：<code>height</code> 預設 170（公分），回傳 BMI。分別用「只傳體重」與「兩個都傳」呼叫一次。</li>
+    <li>寫函式 <code>stats(nums)</code>，一次回傳這個 list 的<strong>總和、最大值、最小值</strong>三個值。</li>
+    <li>追蹤下面程式，寫出最後 <code>print(y)</code> 會印出什麼：<br>
+      <code>y = 10</code><br>
+      <code>def f(y):</code><br>
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;y = y + 5</code><br>
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;return y</code><br>
+      <code>f(y)</code><br>
+      <code>print(y)</code>
+    </li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def bmi(weight, height=170):
+    h_m = height / 100
+    return weight / (h_m ** 2)
+
+print(bmi(60))         # 用預設身高 170
+print(bmi(60, 165))     # 自己指定身高 165</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def stats(nums):
+    total = sum(nums)
+    mx = max(nums)
+    mn = min(nums)
+    return total, mx, mn
+
+t, hi, lo = stats([4, 8, 1, 9, 3])
+print(t, hi, lo)   # 25 9 1</code></pre>
+</div>
+    <p><strong>第 3 題：</strong><code>print(y)</code> 印出 <strong>10</strong>。<code>f(y)</code> 裡的 <code>y</code> 是函式的<strong>參數（區域變數）</strong>，跟外面的全域變數 <code>y</code> 是不同的東西——<code>int</code> 是不可變型態，函式裡的 <code>y = y + 5</code> 只是改了區域變數，呼叫完之後也沒有用 <code>y = f(y)</code> 把回傳值存回去，所以外面的 <code>y</code> 完全沒變。</p>
+  </div>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit06.html"><div class="dir">← 上一單元</div><div class="ttl">字元與字串（String）</div></a>
+    <a class="next" href="unit08.html"><div class="dir">下一單元 →</div><div class="ttl">綜合實戰與下學期預告</div></a>
+  </nav>
+</main>
+
+<a class="compiler-cta cta-fixed" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener" title="開啟 Programiz 線上 Python 編譯器：把上面的程式碼複製過去就能執行（另開新分頁）">
+  <span class="ic">🐍</span>
+  <span class="tx">Programiz<br>線上執行</span>
+</a>
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

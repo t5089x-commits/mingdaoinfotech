@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 1：課程介紹＋2050 未來情境｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="1">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 1</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 1</span>
+  <h1>課程介紹＋2050 未來情境</h1>
+  <p>課程地圖預告、評量說明；從 2050 回推資訊安全</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識本學期的課程地圖與四大階段，知道專題（PBL）貫穿全學期</li>
+<li>了解資訊安全的基本需求：保密性、完整性、鑑別性、不可否認性</li>
+<li>透過「2050 年的一天」情境，感受資訊安全與每個人生活的關聯</li>
+<li>清楚評量方式與配分，並完成第一份反思作業</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>為什麼資訊安全現在最重要？</h2>
+  
+<p>想像一次很平常的網路購物：你在網路書店瀏覽、下單，訂單經過書店的網站伺服器、金流的往來銀行，最後書籍才送到你手上。這中間任何一個環節，都是可能被攻擊的破口。</p>
+<div class="diagram-card"><svg class="diagram" viewBox="0 0 688 128" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="bkar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="10" y="46" width="110" height="62" rx="9"/><text x="65.0" y="68" text-anchor="middle" style="font-size:18px">🧑</text><text x="65.0" y="84" text-anchor="middle" class="devt" style="font-size:13px">Jay</text><text x="65.0" y="98" text-anchor="middle" class="cap2" style="font-size:9.5px">瀏覽並送出訂單</text><rect class="dev" x="152" y="46" width="110" height="62" rx="9"/><text x="207.0" y="68" text-anchor="middle" style="font-size:18px">🌐</text><text x="207.0" y="84" text-anchor="middle" class="devt" style="font-size:13px">網路書店</text><text x="207.0" y="98" text-anchor="middle" class="cap2" style="font-size:9.5px">Web Server</text><rect class="dev" x="294" y="46" width="110" height="62" rx="9"/><text x="349.0" y="68" text-anchor="middle" style="font-size:18px">🏦</text><text x="349.0" y="84" text-anchor="middle" class="devt" style="font-size:13px">金流／銀行</text><text x="349.0" y="98" text-anchor="middle" class="cap2" style="font-size:9.5px">確認付款</text><rect class="dev" x="436" y="46" width="110" height="62" rx="9"/><text x="491.0" y="68" text-anchor="middle" style="font-size:18px">📦</text><text x="491.0" y="84" text-anchor="middle" class="devt" style="font-size:13px">書籍倉儲</text><text x="491.0" y="98" text-anchor="middle" class="cap2" style="font-size:9.5px">出貨</text><rect class="dev" x="578" y="46" width="110" height="62" rx="9"/><text x="633.0" y="68" text-anchor="middle" style="font-size:18px">📬</text><text x="633.0" y="84" text-anchor="middle" class="devt" style="font-size:13px">Jay</text><text x="633.0" y="98" text-anchor="middle" class="cap2" style="font-size:9.5px">收到書籍（2-3 天後）</text><line class="flow" x1="120" y1="77.0" x2="150" y2="77.0" marker-end="url(#bkar)"/><line class="flow" x1="262" y1="77.0" x2="292" y2="77.0" marker-end="url(#bkar)"/><line class="flow" x1="404" y1="77.0" x2="434" y2="77.0" marker-end="url(#bkar)"/><line class="flow" x1="546" y1="77.0" x2="576" y2="77.0" marker-end="url(#bkar)"/><g style="cursor:default"><title>① 連線可能被竊聽、竄改、偽造</title><circle cx="136.0" cy="51.0" r="12" style="fill:var(--danger)" /><text x="136.0" y="55.0" text-anchor="middle" style="fill:#fff;font-size:12px;font-weight:800">①</text></g><g style="cursor:default"><title>② 伺服器本身可能被入侵、植入病毒、DoS 攻擊</title><circle cx="256" cy="40" r="12" style="fill:var(--danger)" /><text x="256" y="44" text-anchor="middle" style="fill:#fff;font-size:12px;font-weight:800">②</text></g><g style="cursor:default"><title>③ 金流往來可能被盜用</title><circle cx="278.0" cy="51.0" r="12" style="fill:var(--danger)" /><text x="278.0" y="55.0" text-anchor="middle" style="fill:#fff;font-size:12px;font-weight:800">③</text></g><g style="cursor:default"><title>④ 轉交倉儲的訂單資料可能被竄改、偽造</title><circle cx="420.0" cy="51.0" r="12" style="fill:var(--danger)" /><text x="420.0" y="55.0" text-anchor="middle" style="fill:#fff;font-size:12px;font-weight:800">④</text></g><text x="344" y="16" text-anchor="middle" class="cap" style="font-size:11px">🔴 紅色徽章＝可能被攻擊的位置</text></svg><div class="cap" style="margin-top:8px;font-size:.84rem;color:var(--text-soft)">網路書店下訂單的流程，紅色徽章①②③④就是可能被攻擊的位置，對照下面的表格看說明。</div></div>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>位置</th><th>可能的攻擊</th></tr></thead>
+  <tbody><tr><td>① Jay ↔ 網路書店的連線</td><td>竊聽、竄改、偽造（資料在半路被攔截或改掉）</td></tr><tr><td>② 網路書店的 Web Server 本身</td><td>被入侵、植入病毒，或被大量請求癱瘓（DoS 阻斷服務攻擊）</td></tr><tr><td>③ 網路書店 ↔ 銀行的金流</td><td>盜用（冒用付款資訊）</td></tr><tr><td>④ 網路書店 ↔ 書籍倉儲的訂單資料</td><td>竄改、偽造（例如偷改收件地址）</td></tr></tbody>
+</table>
+</div>
+<div class="callout"><span class="t">🎯 資訊安全的四個基本需求</span>
+
+<div class="grid cols-2">
+  <div class="tile"><h4>🔒 保密性 Confidentiality</h4><p>防止機密資訊洩漏給未經授權的人。</p></div>
+  <div class="tile"><h4>🧩 完整性 Integrity</h4><p>資料只能被合法授權者更改，不能被偷改或偽造。</p></div>
+  <div class="tile"><h4>🪪 鑑別性 Authentication</h4><p>確認訊息來源、驗證使用者身分（是不是本人）。</p></div>
+  <div class="tile"><h4>✍️ 不可否認性 Non-repudiation</h4><p>簽署過的資料，事後不能否認自己沒簽過。</p></div>
+</div>
+</div>
+<p>這學期我們會不斷回到這四個需求 —— 密碼學、區塊鏈、數位簽章，其實都是「用數學方法」去實現這四件事。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>課程地圖：從 2050 回推到今天</h2>
+  
+<p>這學期分成四個階段，中間有一個貫穿全學期的「專題式學習（PBL）」：</p>
+<div class="grid cols-2">
+  <div class="card"><h3>Part 1 · 2050 未來與數位信任地圖</h3><p>單元 1–6：從未來情境拆解出資安主題，快速掃過數位身分、區塊鏈、比特幣、智能合約，建立全學期的地圖。</p></div>
+  <div class="card"><h3>Part 2 · 密碼學與信任技術</h3><p>單元 7–12：專題啟動後，並行學習 Hash、古典密碼、公開金鑰、數位簽章與憑證 —— 這些就是專題要用到的核心技術。</p></div>
+  <div class="card"><h3>Part 3 · 專題成果製作與發表</h3><p>單元 13–15：把學到的資安知識整理成專題（技術實作／議題研究／未來機制發想三種路線都可以），製作、排練、上台發表。</p></div>
+  <div class="card"><h3>Part 4 · 未來資安與數位社會</h3><p>單元 16–20：AI 詐騙、Web3 風險、零信任架構、未來數位社會，最後回到 2050 收束全學期。</p></div>
+</div>
+<div class="callout"><span class="t">🧭 導覽提示</span>
+<p>本學習網站已把全部單元都做成獨立頁面，隨時可以回到 <a href='index.html'>課程首頁</a> 切換到任何單元，方便課前預習與課後複習。</p>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>評量方式與配分</h2>
+  <div class="table-wrap">
+<table class="center">
+  <thead><tr><th>評量項目</th><th>次數</th><th>佔比</th></tr></thead>
+  <tbody><tr><td><strong>作業</strong></td><td>3 次</td><td>60%</td></tr><tr><td><strong>平時成績</strong></td><td>1 次</td><td>10%</td></tr><tr><td><strong>報告</strong></td><td>1 次</td><td>30%</td></tr></tbody>
+</table>
+</div>
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>第一堂作業：簡易問答</h2>
+  
+<p>請從以下題目中<strong>至少選一題</strong>作答，寫下你的想法。這些題目沒有標準答案，重點在於你對資訊安全的直覺、觀察和好奇心。</p>
+<div class="exercise">
+<h3>✏️ 選一題，寫下你的想法</h3>
+<ul class="tidy">
+<li><strong>如果沒有資訊安全，世界會變成什麼樣子？</strong><br>想想你的個人資訊、學校系統、甚至國家的網路系統，可能會出現什麼問題？嘗試用一個故事或例子來描述「資訊安全缺失」的後果。</li>
+<li><strong>虛擬世界中的金錢：資訊安全如何影響加密貨幣與線上支付？</strong><br>你知道虛擬貨幣被盜的新聞嗎？想像如果網路安全不存在，會發生什麼？討論資訊安全在你日常線上交易中的角色。</li>
+<li><strong>假如你是資安新手，你最想保護什麼？為什麼選擇這堂課？</strong><br>從個人經驗出發，例如社群帳號、手機、學校資料……思考你對資安的期待：想學什麼？想解決什麼問題？</li>
+</ul>
+<p><strong>最後請回答：為什麼你選這堂課？</strong></p>
+</div>
+
+</section>
+  <nav class="unit-nav">
+    <a class="prev disabled"><div class="dir">← 上一單元</div><div class="ttl">已是第一個</div></a>
+    <a class="next" href="unit02.html"><div class="dir">下一單元 →</div><div class="ttl">Web1.0 → 3.0 演進</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

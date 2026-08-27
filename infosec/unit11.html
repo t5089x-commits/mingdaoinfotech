@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 11：公開金鑰密碼學（非對稱）｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="11">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 11</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 11</span>
+  <h1>公開金鑰密碼學（非對稱）</h1>
+  <p>公私鑰加解密、回扣比特幣（專題並行）</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解非對稱加密（公開金鑰密碼學）與對稱加密的差異</li>
+<li>看懂 RSA 金鑰產生、簽章、驗證的完整流程與數學原理</li>
+<li>跟著數字範例親手算一次 RSA 簽章與驗證</li>
+<li>回扣比特幣：理解私鑰簽章與公鑰驗證，如何對應到比特幣的地址與交易</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>非對稱加密：兩把不一樣的鑰匙</h2>
+  
+<p>對稱式加密最大的痛點：雙方要先用安全管道交換同一把 key，而且每多一個通訊對象，就要多管理一把 key。<strong>公開金鑰加密系統（非對稱式加密）</strong>解決了這個問題：每個人有一對數學上相關、但不能互相推算的鑰匙 —— <strong>公開金鑰（公鑰）</strong>可以公開給所有人，<strong>私有金鑰（私鑰）</strong>則自己保密收好。</p>
+<div class="callout tip"><span class="t">🔁 回扣比特幣</span>
+<p>還記得單元 5 說「私鑰可以簽署交易、公鑰算出地址」嗎？這裡就是它背後的數學原理：<strong>用私鑰簽章、用公鑰驗證</strong>，正是非對稱加密最經典的應用之一。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>RSA：怎麼產生這兩把鑰匙</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">RSA 金鑰產生演算法</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">1. 選擇兩個大質數 p, q
+2. 計算 n = p × q
+3. 計算 φ(n) = (p-1) × (q-1)
+4. 找出一組 e、d，滿足 e × d ≡ 1 (mod φ(n))
+5. 公開 (e, n) 當作公鑰；(d, n) 保密當作私鑰</code></pre>
+</div>
+<div class="callout"><span class="t">🧮 動手跟著算一次（課本範例）</span>
+
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>步驟</th><th>數值</th></tr></thead>
+  <tbody><tr><td>選質數</td><td>p = 241，q = 311</td></tr><tr><td>計算 n</td><td>n = p × q = 74951</td></tr><tr><td>計算 φ(n)</td><td>φ(n) = 240 × 310 = 74400</td></tr><tr><td>選 e</td><td>e = 1033（需與 φ(n) 互質）</td></tr><tr><td>算出 d</td><td>d = 3097（e 的模反元素）</td></tr><tr><td>公鑰 / 私鑰</td><td>公鑰 (e, n) = (1033, 74951)　／　私鑰 (d, n) = (3097, 74951)</td></tr></tbody>
+</table>
+</div>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">RSA 簽章與驗證範例</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">簽章：對明文 m = 38（假設是某段訊息的編碼）
+  s = m^d mod n = 38^3097 mod 74951 = 12735
+
+驗證：用公鑰 (e, n) 檢查
+  m =? s^e mod n
+  38 =? 12735^1033 mod 74951　→ 成立，驗證通過！</code></pre>
+</div>
+<p>大數字的次方 mod 運算，可以用線上工具幫忙算：<a href="https://goodcalculators.com/big-number-calculator/" target="_blank" rel="noopener">大數計算機 ↗</a>、<a href="https://planetcalc.com/3311/" target="_blank" rel="noopener">模反元素計算工具 ↗</a>。</p>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>為什麼安全：反推 d 幾乎不可能</h2>
+  
+<p>公鑰 (e, n) 是公開的，任何人都知道。理論上如果能把 n 分解回 p × q，就能算出 φ(n)，進而算出私鑰 d —— 但當 p、q 是幾百位數的大質數時，<strong>大數質因數分解</strong>用現有電腦要花的時間長到不切實際。這正是 RSA 安全性的數學基礎。</p>
+<div class="tile"><h4><span class="ico">📄</span>RSA 數學原理教學（PDF）</h4><p>質數與模運算的補充教材，適合想深入理解 RSA 數學基礎的同學。</p><a class="video-link-btn" href="http://www.mathsgreat.com/prime_101/prime_101_018.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+
+</section><div class="callout tip"><span class="t">🧭 這個單元的兩種教學方案（先都放上來，之後再挑一種調整／混用）</span>
+<p>RSA 的數字範例比較硬，可以挑一種節奏：</p>
+<div class="grid cols-2">
+  <div class="card"><h3>🅰️ 老師帶算 + 線上工具驗證</h3><p>老師在台上帶著全班一步步算過 p、q → n → φ(n) → e、d，卡住的地方（大數次方 mod）直接用線上計算機驗證，重點放在「流程看得懂」而非手算能力。</p></div>
+  <div class="card"><h3>🅱️ 小組任務：換一組更小的質數自己算</h3><p>把全班分組，每組拿到一組更小的質數（例如 p=7, q=13），自己走一遍金鑰產生 → 簽章 → 驗證的流程，最後互相驗證別組的簽章，體會「公鑰誰都能驗證，但只有私鑰持有人能簽出正確簽章」。</p></div>
+</div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">小組任務版本更適合已經啟動 PBL 專題、想要更多動手體驗的班級；時間較緊的班級可用第一種方案。</p>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit10.html"><div class="dir">← 上一單元</div><div class="ttl">古典密碼學（傳統密碼）</div></a>
+    <a class="next" href="unit12.html"><div class="dir">下一單元 →</div><div class="ttl">電子簽章與數位憑證</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

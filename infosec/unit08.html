@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 8：專題啟動（PBL）｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="8">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 8</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 8</span>
+  <h1>專題啟動（PBL）</h1>
+  <p>題目發想、分組、定位為學習歷程成果</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解本學期專題式學習（PBL）的定位：作為學習歷程檔案的成果素材</li>
+<li>認識三種專題路線（技術實作／議題研究／未來機制發想），選一種適合自己的方式</li>
+<li>完成專題題目發想與分組</li>
+<li>清楚專題會與 Part 2（密碼學）單元並行進行</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>為什麼是專題式學習（PBL）？</h2>
+  
+<p>接下來 Part 2 的每個單元（Hash、古典密碼、公開金鑰、數位簽章）都會標註「專題並行」—— 意思是這些單元的內容，正是你的專題會用到的素材與知識。學完一個概念，就順手往專題裡加一塊磚。</p>
+<div class="callout tip"><span class="t">🎯 定位：學習歷程檔案</span>
+<p>這個專題的最終產出，可以直接放進<strong>學習歷程檔案</strong>，展現你在資訊安全這個主題上的探究過程與成果，而不只是「交一份作業」。</p>
+</div>
+<div class="callout tip"><span class="t">📚 給文組／社會組同學的話</span>
+<p>這門課不是程式課，專題也<strong>不強制要求寫程式或做技術展示</strong>。你可以選擇更貼近研究、社會觀察、政策設計的路線 —— 下面就是三種可以選的方向，選一種你有興趣、做得動的就好。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>題目怎麼發想？三種專題路線</h2>
+  
+<p>選一種路線當作主軸，也可以混搭（例如以研究為主、搭配一點技術示範）：</p>
+<div class="grid cols-1">
+  <div class="card"><h3>🛠️ 路線 A・技術實作型</h3><p>挑一個這學期學到的技術（例如 Hash、古典密碼、RSA），做成互動小工具、教學懶人包，或動手實作破解／加密的小專案。<span style='color:var(--text-faint);font-size:.85rem'>適合：對動手做、寫程式有興趣的同學。</span></p></div>
+  <div class="card"><h3>🔍 路線 B・議題研究型</h3><p>找一則資安／加密貨幣／個資外洩／詐騙的新聞或社會議題，深入研究「發生了什麼事」「攻擊者用了什麼手法」，並<strong>結合課堂學到的資安知識</strong>分析「懂了這些技術原理，這件事能不能避免、或至少提早發現」。呈現方式可以是研究報告、調查簡報、懶人包。<span style='color:var(--text-faint);font-size:.85rem'>適合：喜歡查資料、做分析、寫報告的同學。</span></p></div>
+  <div class="card"><h3>🔮 路線 C・未來機制發想型</h3><p>想像一個未來（不一定是 2050，也可以是 5-10 年後）的數位信任機制、服務或政策 —— 例如：新的數位身分驗證方式、校園版的數位皮夾、防詐騙機制……說明它「怎麼運作」，以及需要用到哪些這學期學過的資安概念來把關。呈現方式可以是企劃書、政策建議書、服務設計簡報，<strong>不一定要真的做出程式</strong>。<span style='color:var(--text-faint);font-size:.85rem'>適合：喜歡發想、設計、討論「未來會怎樣」的同學。</span></p></div>
+</div>
+<div class="callout warn"><span class="t">🤖 路線 C 的特別提醒：Vibe Coding 時代的機會與風險</span>
+<p>現在用 AI 輔助寫程式（也就是所謂的「vibe coding」）越來越普及，把一個想法做成一支可以跑的程式，<strong>成本正在快速趨近於零</strong> —— 這代表未來機制發想型的專題，理論上真的可以做出一個簡單的雛型（demo）來驗證想法。但反過來說，<strong>用這種方式快速生成的程式，資安設計反而更容易被忽略</strong>：權限有沒有控管好、資料有沒有加密、有沒有驗證使用者身分……這正是這門課想培養的判斷力，也可以是你們專題探討的重點之一：「做得快，不代表做得安全」。</p>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>分組與時程</h2>
+  <div class="table-wrap">
+<table class="center">
+  <thead><tr><th>階段</th><th>對應單元</th><th>要完成的事</th></tr></thead>
+  <tbody><tr><td>發想與分組</td><td>單元 8（本單元）</td><td>決定題目方向（路線 A／B／C）、組成 2-4 人小組</td></tr><tr><td>資料蒐集與知識學習</td><td>單元 9-12（Part 2 並行）</td><td>邊學 Hash／密碼學／簽章，邊蒐集專題需要的資料</td></tr><tr><td>架構設計與內容產出</td><td>單元 13-14</td><td>把資料整理成專題架構，產出簡報／報告／作品內容</td></tr><tr><td>完成與發表</td><td>單元 15</td><td>完成簡報、上台發表、多元評量</td></tr></tbody>
+</table>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 分組任務單</h3>
+  <p>本堂課結束前，每組請完成：（1）組員名單　（2）選擇的路線（A／B／C，可混搭）　（3）初步題目方向　（4）想解決或探討的一個具體問題。</p>
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit07.html"><div class="dir">← 上一單元</div><div class="ttl">定期評量</div></a>
+    <a class="next" href="unit09.html"><div class="dir">下一單元 →</div><div class="ttl">Hash 與資料完整性</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

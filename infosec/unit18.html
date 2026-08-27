@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 18：零信任與未來資安｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="18">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 18</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 4　單元 18</span>
+  <h1>零信任與未來資安</h1>
+  <p>Passkey、生物辨識、無密碼登入</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解零信任架構（Zero Trust）「永不信任、持續驗證」的核心精神</li>
+<li>認識 Passkey、生物辨識等無密碼登入技術</li>
+<li>反思傳統密碼設定方式的侷限</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>回顧：我們曾經很認真地「設密碼」</h2>
+  
+<p>還記得第一堂課提過的通行碼小技巧嗎？用注音輸入法按鍵當密碼、字母位移、取一句話的字首……這些技巧的共同目標，都是想在「好記」和「難猜」之間找到平衡。但密碼這個機制本身，其實有它結構性的問題。</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>密碼機制的老問題</th><th>說明</th></tr></thead>
+  <tbody><tr><td>容易被重複使用</td><td>同一組密碼用在很多網站，一個網站外洩，全部帳號都危險</td></tr><tr><td>容易被社交工程騙走</td><td>再複雜的密碼，只要使用者被騙輸入到假網站，照樣外洩</td></tr><tr><td>「記在腦裡」不易擴充</td><td>帳號越來越多，人腦記不住那麼多組高強度密碼</td></tr></tbody>
+</table>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>零信任架構：永不信任、持續驗證</h2>
+  
+<p>傳統的資安思維常常是「內網＝安全、外網＝危險」，只要驗證一次進了大門，裡面就暢行無阻。<strong>零信任（Zero Trust）</strong>則主張：不管在內網還是外網，<strong>每一次存取都要重新驗證</strong>，不假設任何裝置、任何使用者是天生可信任的。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🔑 Passkey</h4><p>用裝置內建的生物辨識（指紋／臉部）搭配公開金鑰密碼學，取代打字輸入密碼 —— 沒錯，又用到了單元 11 學過的非對稱加密！</p></div>
+  <div class="tile"><h4>👤 生物辨識</h4><p>指紋、臉部、虹膜等「你就是你」的生理特徵，難以被複製、也不用「記」。</p></div>
+</div>
+<div class="callout tip"><span class="t">🔁 回扣公開金鑰密碼學</span>
+<p>Passkey 的運作方式：裝置產生一對公私鑰，私鑰留在裝置裡（受生物辨識保護），公鑰交給網站。登入時裝置用私鑰簽章證明身分，網站用公鑰驗證 —— 私鑰從頭到尾不會離開你的裝置，就算網站被駭，外洩的也只有公鑰，攻擊者無法冒充你登入。</p>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 想一想</h3>
+  <p>如果所有網站都改用 Passkey 取代密碼，還會有什麼新的資安風險嗎？（提示：想想「裝置遺失」這件事。）</p>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer"><p>參考方向：Passkey 把風險從「密碼被猜到／外洩」轉移到「裝置本身的安全性」，例如手機遺失、裝置被解鎖等；因此通常會搭配多裝置同步、備援機制一起設計。</p></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit17.html"><div class="dir">← 上一單元</div><div class="ttl">Web3 資安風險</div></a>
+    <a class="next" href="unit19.html"><div class="dir">下一單元 →</div><div class="ttl">未來數位社會</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

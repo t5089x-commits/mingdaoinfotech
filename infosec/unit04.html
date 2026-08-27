@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 4：區塊鏈是什麼｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="4">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 4</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 4</span>
+  <h1>區塊鏈是什麼</h1>
+  <p>區塊、鏈結、不可竄改 —— 比特幣、交易所、Web3.0 背後的共同技術</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>知道區塊鏈技術目前實際應用在哪些地方</li>
+<li>理解區塊（block）、鏈結（chain）如何組成區塊鏈</li>
+<li>認識雜湊（hash）如何讓資料「不可竄改」</li>
+<li>透過 Merkle Tree 的概念，理解如何有效驗證大量資料的完整性</li>
+<li>認識雜湊在密碼儲存上的實際應用</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>區塊鏈技術，其實已經用在很多地方</h2>
+  
+<p>「區塊鏈」聽起來很技術，但它其實已經是很多你聽過、甚至用過的東西背後的共同基礎。在拆解技術細節之前，先看看它目前實際應用在哪些地方：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>應用領域</th><th>簡單說明</th></tr></thead>
+  <tbody><tr><td>虛擬貨幣（比特幣、以太幣…）</td><td>用區塊鏈記錄「誰的錢包裡有多少錢」，不需要銀行就能公開驗證每一筆交易（下一個單元會細講）。</td></tr><tr><td>虛擬貨幣交易所</td><td>讓使用者買賣、兌換虛擬貨幣的平台；交易所本身是中心化服務，但背後真正決定「誰擁有多少資產」的，仍然是區塊鏈上的公開帳本。</td></tr><tr><td>Web3.0 應用（DApp）</td><td>「使用者自己掌握資料與資產」的網路服務，就是架在區塊鏈這個底層帳本之上（回顧單元 2）。</td></tr><tr><td>智能合約／DeFi</td><td>把借貸、交易等金融行為直接寫成程式碼、放到區塊鏈上自動執行，不需要中介機構（單元 6 會細講）。</td></tr><tr><td>履歷／憑證存證</td><td>想證明某項資料「從某個時間點起沒有被偷改過」的場景，例如商品履歷溯源、學歷或證書驗證。</td></tr></tbody>
+</table>
+</div>
+<p>看完這個表格，這學期你只需要先記住一句話：<strong>區塊鏈的核心價值，是讓「一群互不信任的人」也能公開驗證同一份資料沒有被動過手腳</strong>。接下來就來看看它實際上是怎麼做到的。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>區塊鏈的基本組成</h2>
+  
+<p>區塊鏈（blockchain）是<strong>一系列經過驗證的區塊組成的列表</strong>，每個區塊都鏈接到它的前一個區塊，一直往前追溯到第一個區塊（<strong>創世區塊 genesis block</strong>）。</p>
+<div class="diagram-card"><svg class="diagram" viewBox="0 0 646 136" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="bcar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="10" y="14" width="178" height="108" rx="9"/><text x="99.0" y="38" text-anchor="middle" class="devt" style="font-size:13.5px">創世區塊 #0</text><line class="samp" x1="22" y1="48" x2="176" y2="48"/><text x="22" y="68" class="cap2" style="font-size:9.5px">前一區塊雜湊：－</text><text x="22" y="86" class="cap2" style="font-size:9.5px">資料：（初始化）</text><text x="22" y="108" class="cap2" style="font-size:9.5px;fill:var(--brand)">本區塊雜湊：0x4a7f…</text><line class="flow" x1="188" y1="68.0" x2="232" y2="68.0" marker-end="url(#bcar)"/><text x="211.0" y="60.0" text-anchor="middle" class="cap2" style="font-size:8.5px">帶著前一區塊的雜湊值</text><rect class="dev" x="234" y="14" width="178" height="108" rx="9"/><text x="323.0" y="38" text-anchor="middle" class="devt" style="font-size:13.5px">區塊 #1</text><line class="samp" x1="246" y1="48" x2="400" y2="48"/><text x="246" y="68" class="cap2" style="font-size:9.5px">前一區塊雜湊：0x4a7f…</text><text x="246" y="86" class="cap2" style="font-size:9.5px">資料：交易 A、B…</text><text x="246" y="108" class="cap2" style="font-size:9.5px;fill:var(--brand)">本區塊雜湊：0x9c21…</text><line class="flow" x1="412" y1="68.0" x2="456" y2="68.0" marker-end="url(#bcar)"/><text x="435.0" y="60.0" text-anchor="middle" class="cap2" style="font-size:8.5px">帶著前一區塊的雜湊值</text><rect class="dev" x="458" y="14" width="178" height="108" rx="9"/><text x="547.0" y="38" text-anchor="middle" class="devt" style="font-size:13.5px">區塊 #2</text><line class="samp" x1="470" y1="48" x2="624" y2="48"/><text x="470" y="68" class="cap2" style="font-size:9.5px">前一區塊雜湊：0x9c21…</text><text x="470" y="86" class="cap2" style="font-size:9.5px">資料：交易 C、D…</text><text x="470" y="108" class="cap2" style="font-size:9.5px;fill:var(--brand)">本區塊雜湊：0xe83b…</text></svg><div class="cap" style="margin-top:8px;font-size:.84rem;color:var(--text-soft)">每個區塊都在自己的區塊頭裡，記錄「前一個區塊的雜湊值」，一路串成一條鏈。</div></div>
+<div class="grid cols-2">
+  <div class="tile"><h4>🧱 區塊頭 Block Header</h4><p>記錄「上一個區塊的雜湊值」等中繼資料，就是這個「鏈」的接點。</p></div>
+  <div class="tile"><h4>📦 區塊體 Block Body</h4><p>放實際的資料（例如一批交易記錄），以 Merkle Tree 的形式組織。</p></div>
+</div>
+<div class="callout"><span class="t">🔗 為什麼「串起來」就不可竄改？</span>
+<p>因為每個區塊的區塊頭裡都放了「前一個區塊的雜湊值」。只要有人偷改了前面任何一個區塊的內容，它的雜湊值就會整個改變，後面所有區塊記錄的「前一個雜湊值」就對不上了 —— 就像骨牌一樣，一改就全部露餡。</p>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>Merkle Tree：怎麼快速驗證資料沒被動過手腳</h2>
+  
+<p>想像你要下載一個 8GB 的大檔案，要怎麼確認下載下來的檔案完全正確、沒有任何一個位元組被竄改？</p>
+<p>笨方法：把整個 8GB 從頭到尾重新雜湊一次比對 —— 慢，而且只要錯一個位元組，你完全不知道是哪裡錯。</p>
+<p>Merkle Tree 的做法：把檔案切成很多小區塊，每個小區塊各自算一個雜湊值，再兩兩配對、一層層往上算雜湊，最後得到一個「Merkle root」。</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>步驟</th><th>做法</th></tr></thead>
+  <tbody><tr><td>1</td><td>把檔案切成 A、B、C…等小區塊，分別算出 Hash(A)、Hash(B)……</td></tr><tr><td>2</td><td>相鄰兩個雜湊值再兩兩配對算雜湊：Hash(Hash(A),Hash(B))……一路往上</td></tr><tr><td>3</td><td>最後只剩一個值：Merkle root</td></tr><tr><td>4</td><td>只要任何一個小區塊被改，往上算出的 Merkle root 就會不一樣</td></tr></tbody>
+</table>
+</div>
+<p>比特幣的區塊裡，通常有成百上千筆交易，就是用 Merkle Tree 把它們的雜湊值層層彙整；要證明「某一筆交易確實在這個區塊裡」，只需要提供一小串（例如 4 個）雜湊值組成的「Merkle 路徑」，不用把整個區塊的資料都攤開來對。</p>
+<div class="callout"><span class="t">✋ 動手做：先感受雪崩效應，再填樹狀圖</span>
+
+<p>讓學生用線上 SHA-256 工具（<a href='https://emn178.github.io/online-tools/' target='_blank' rel='noopener'>emn178 線上工具 ↗</a>）自己輸入一段文字算出雜湊值，再故意改一個字元重算，親眼看到結果整個大不相同（雪崩效應），對雜湊「一改全變」有直覺以後，再回頭把這個直覺套進樹狀結構。</p>
+<div class="diagram-card">
+  <div class="merkle-widget" id="merkleWidget">
+    <svg class="mk-lines" id="mkLines"></svg>
+    <div class="mk-row mk-row-root">
+      <div class="mk-node mk-root" data-node="ROOT">
+        <div class="mk-label">Merkle Root</div>
+        <div class="mk-hash" id="mk-hash-ROOT">尚未就緒（下面欄位還沒填齊）</div>
+      </div>
+    </div>
+    <div class="mk-row mk-row-mid">
+      <div class="mk-node mk-mid" data-node="AB">
+        <div class="mk-label">H(A,B)</div>
+        <div class="mk-hash" id="mk-hash-AB">尚未就緒（下面欄位還沒填齊）</div>
+      </div>
+      <div class="mk-node mk-mid" data-node="CD">
+        <div class="mk-label">H(C,D)</div>
+        <div class="mk-hash" id="mk-hash-CD">尚未就緒（下面欄位還沒填齊）</div>
+      </div>
+    </div>
+    <div class="mk-row mk-row-leaf">
+      <div class="mk-node mk-leaf" data-node="A">
+        <div class="mk-label">資料 A</div>
+        <input type="text" class="mk-input" id="mk-in-A" placeholder="輸入內容…" oninput="merkleUpdate('A')" autocomplete="off">
+        <div class="mk-hash" id="mk-hash-A">Hash(A)：尚未輸入</div>
+      </div>
+      <div class="mk-node mk-leaf" data-node="B">
+        <div class="mk-label">資料 B</div>
+        <input type="text" class="mk-input" id="mk-in-B" placeholder="輸入內容…" oninput="merkleUpdate('B')" autocomplete="off">
+        <div class="mk-hash" id="mk-hash-B">Hash(B)：尚未輸入</div>
+      </div>
+      <div class="mk-node mk-leaf" data-node="C">
+        <div class="mk-label">資料 C</div>
+        <input type="text" class="mk-input" id="mk-in-C" placeholder="輸入內容…" oninput="merkleUpdate('C')" autocomplete="off">
+        <div class="mk-hash" id="mk-hash-C">Hash(C)：尚未輸入</div>
+      </div>
+      <div class="mk-node mk-leaf" data-node="D">
+        <div class="mk-label">資料 D</div>
+        <input type="text" class="mk-input" id="mk-in-D" placeholder="輸入內容…" oninput="merkleUpdate('D')" autocomplete="off">
+        <div class="mk-hash" id="mk-hash-D">Hash(D)：尚未輸入</div>
+      </div>
+    </div>
+  </div>
+  <div class="cap" style="margin-top:4px;font-size:.84rem;color:var(--text-soft)">這是一棵「活的」Merkle Tree：在下面四個資料欄位打字，上面的雜湊值會即時一層層算出來（滑鼠移到雜湊值上可以看完整的一串）。</div>
+  <div style="margin-top:14px;text-align:left">
+    <p style="font-weight:800;margin:0 0 6px;font-size:.92rem">操作步驟：</p>
+    <ol style="margin:0;padding-left:1.3em;font-size:.9rem;line-height:1.7">
+      <li>在最下面「資料 A」「資料 B」「資料 C」「資料 D」四個欄位，分別打入任意不同的文字（一句話、隨便打幾個字都可以）。</li>
+      <li>每打一個字，該欄位下方就會即時顯示這段內容算出來的 SHA-256 雜湊值 <code>Hash(A)</code>～<code>Hash(D)</code>。</li>
+      <li>上一層的 <code>H(A,B)</code> 會自動把 <code>Hash(A)</code> 和 <code>Hash(B)</code> 這兩串雜湊值接在一起、再雜湊一次；<code>H(C,D)</code> 同樣的方式把 <code>Hash(C)</code>、<code>Hash(D)</code> 接起來雜湊。</li>
+      <li>最上層的 <strong>Merkle Root</strong>，則是把 <code>H(A,B)</code> 和 <code>H(C,D)</code> 接起來再雜湊一次，變成代表整棵樹的唯一一個值。</li>
+      <li>四格都填好之後，回頭只改「資料 A」裡的<strong>一個字</strong>：你會看到 <code>Hash(A)</code>、<code>H(A,B)</code>、<code>Merkle Root</code> 這條路徑上的框框都亮起來、值也全部跟著變了（雪崩效應一路往上蔓延）——但完全沒被動到的「資料 C」「資料 D」和 <code>H(C,D)</code> 會保持不變、不會亮起來。</li>
+      <li>這正好呼應前面說的：Merkle Tree 只要一路往上比對「亮起來的那條路徑」，就能知道是哪一小塊資料被動過手腳，不用重新雜湊整份資料。</li>
+    </ol>
+  </div>
+</div>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>雜湊的實際應用：密碼是怎麼被存起來的？</h2>
+  
+<p>你登入網站輸入的密碼，資料庫裡通常<strong>不會直接存這串文字</strong>，而是存這段文字的<strong>雜湊值</strong>。你輸入密碼時，網站會即時把你輸入的內容算成雜湊值，拿去跟資料庫裡存的雜湊值比對，一樣就代表密碼正確 —— 全程都不需要把「明碼密碼」存在任何地方。</p>
+<div class="widget">
+  <div class="w-title">🔐 密碼雜湊小工具</div>
+  <div class="w-sub">輸入一個測試用的密碼文字，看看伺服器資料庫裡實際上會存下來的是什麼。</div>
+  <div class="field-row">
+    <div class="field">
+      <label for="pw-input">測試用密碼</label>
+      <input id="pw-input" type="text" placeholder="例如：iLoveSecurity123" oninput="hashPwDemo()" autocomplete="off">
+    </div>
+  </div>
+  <div class="conv-out" id="pw-out">
+    <div class="conv-cell" style="flex:1 1 100%">
+      <div class="k">伺服器資料庫實際存的（SHA-256 雜湊值）</div>
+      <div class="v" id="pw-hash-out" style="font-size:.8rem;word-break:break-all">—</div>
+    </div>
+  </div>
+</div>
+<div class="callout tip"><span class="t">🤔 為什麼這樣比較安全？</span>
+<p>就算資料庫真的被駭客整包偷走，駭客拿到的也只是一串雜湊值，而不是明碼密碼。因為雜湊「一改全變」（雪崩效應）又幾乎不可能反推回原文，駭客很難直接從雜湊值算回你的密碼 —— 真正上線的系統還會多加一道「加鹽（salt）」，這個我們會在單元 9 再深入討論。</p>
+</div>
+
+</section>
+  <nav class="unit-nav">
+    <a class="prev" href="unit03.html"><div class="dir">← 上一單元</div><div class="ttl">數位身分與數位錢包</div></a>
+    <a class="next" href="unit05.html"><div class="dir">下一單元 →</div><div class="ttl">虛擬貨幣與比特幣</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

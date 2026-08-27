@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 附：函式、串列與輸入技巧（高一補充）｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 附</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資訊教育篇　補充單元</span>
+  <h1>函式、串列與輸入技巧（高一補充）</h1>
+  <p>這是補充單元：這一屆高一還沒教到函式、串列進階用法，以及 APCS 常用的輸入讀取技巧，這裡一次補齊，後面每個演算法單元都會用到。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>會定義與呼叫自訂函式，理解參數與回傳值</li>
+<li>能用串列搭配 for／if 走訪與篩選資料</li>
+<li>會用 split() 與 map() 讀取一行多個數字（APCS 常用技巧）</li>
+<li>能整合變數、判斷、迴圈與函式完成綜合題</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>為什麼要用函式？</h2>
+  
+<p><b>函式</b>是一段「包裝好、可重複使用」的程式碼。把常用功能寫成函式，可以讓程式更簡潔、好維護——這是這個學期後面每一個單元都會大量用到的寫法（例如 <code>bubble_sort()</code>、<code>binary_search()</code> 都是函式）。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">定義與呼叫函式</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def say_hello():
+    print("哈囉！歡迎進入演算法的世界")
+
+# 呼叫函式（可重複呼叫）
+say_hello()
+say_hello()</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void sayHello(){
+    cout &lt;&lt; "哈囉！歡迎進入演算法的世界" &lt;&lt; endl;
+}
+
+int main(){
+    sayHello();
+    sayHello();
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>參數與回傳值</h2>
+  
+<p><b>參數</b>讓函式能接收外部資料；Python 用 <code>return</code>、C++ 也用 <code>return</code> 把結果傳回給呼叫者——差別是 C++ 要先宣告回傳值的型態（例如 <code>int</code>）。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">加法與乘法函式</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def add(a, b):        # a, b 是參數
+    return a + b       # 回傳（相加的結果）
+
+def multiply(a, b):   # 再定義一個「相乘」的函式
+    return a * b       # 回傳（相乘的結果）
+
+print("8 + 9 =", add(8, 9))        # 17
+print("7 × 4 =", multiply(7, 4))   # 28</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int add(int a, int b){        // a, b 是參數
+    return a + b;               // 回傳（相加的結果）
+}
+
+int multiply(int a, int b){   // 再定義一個「相乘」的函式
+    return a * b;                // 回傳（相乘的結果）
+}
+
+int main(){
+    cout &lt;&lt; "8 + 9 = " &lt;&lt; add(8, 9) &lt;&lt; endl;
+    cout &lt;&lt; "7 x 4 = " &lt;&lt; multiply(7, 4) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<h3>再看一個：判斷是否及格</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">is_pass 函式</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def is_pass(score):
+    if score &gt;= 60:
+        return "及格"
+    else:
+        return "不及格"
+
+print(is_pass(85))   # 及格
+print(is_pass(40))   # 不及格</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+string isPass(int score){
+    if (score &gt;= 60) return "及格";
+    else return "不及格";
+}
+
+int main(){
+    cout &lt;&lt; isPass(85) &lt;&lt; endl;
+    cout &lt;&lt; isPass(40) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">03</span>區域變數與全域變數</h2>
+  
+<p>函式<b>裡面</b>定義的是<b>區域變數</b>，只在函式內有效；函式<b>外面</b>定義的是<b>全域變數</b>。這個規則 Python 和 C++ 是一樣的。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">區域變數 vs 全域變數</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">total = 100          # 全域變數
+
+def show():
+    msg = "函式內部"    # 區域變數
+    print(msg, total)
+
+show()
+print(total)
+# print(msg)   # 這行會出錯，msg 只存在於函式內</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int total = 100;   // 全域變數
+
+void show(){
+    string msg = "函式內部";   // 區域變數
+    cout &lt;&lt; msg &lt;&lt; " " &lt;&lt; total &lt;&lt; endl;
+}
+
+int main(){
+    show();
+    cout &lt;&lt; total &lt;&lt; endl;
+    // msg 在這裡用不到，因為它只存在於 show() 函式內
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">04</span>串列 List：不只是存資料，還能配合 if／for 使用</h2>
+  
+<p>串列（list）除了單純存一堆資料，更常見的是搭配<b>迴圈</b>逐一處理、搭配<b>判斷</b>篩選符合條件的資料。這是高一比較少練到、但演算法課會一直用到的組合技。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">索引取值：正的從頭數，負的從尾數</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">arr = [10, 20, 30, 40, 50]
+print(arr[0])          # 不管 arr 有幾個元素，永遠只做這一步
+print(arr[-1])          # -1 代表「最後一個」，不用算長度</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    vector&lt;int&gt; arr = {10, 20, 30, 40, 50};
+    cout &lt;&lt; arr[0] &lt;&lt; endl;
+    cout &lt;&lt; arr[arr.size()-1] &lt;&lt; endl;   // C++ 沒有負索引，要自己算最後一個位置
+    return 0;
+}</code></pre>
+</div>
+<h3>搭配 for：逐一走訪處理每個元素</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">計算串列總和與平均</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">scores = [88, 92, 76, 65, 99]
+total = 0
+for s in scores:
+    total += s
+print("總分：", total)
+print("平均：", total / len(scores))</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    vector&lt;int&gt; scores = {88, 92, 76, 65, 99};
+    int total = 0;
+    for (int s : scores) total += s;
+    cout &lt;&lt; "總分：" &lt;&lt; total &lt;&lt; endl;
+    cout &lt;&lt; "平均：" &lt;&lt; (double)total / scores.size() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<h3>搭配 if：篩選符合條件的元素</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">找出及格與不及格的名單</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">scores = [88, 45, 76, 55, 99]
+pass_list = []
+fail_list = []
+for s in scores:
+    if s &gt;= 60:
+        pass_list.append(s)
+    else:
+        fail_list.append(s)
+print("及格：", pass_list)
+print("不及格：", fail_list)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    vector&lt;int&gt; scores = {88, 45, 76, 55, 99};
+    vector&lt;int&gt; passList, failList;
+    for (int s : scores){
+        if (s &gt;= 60) passList.push_back(s);
+        else failList.push_back(s);
+    }
+    for (int s : passList) cout &lt;&lt; s &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 這個「for + if」的組合會一直出現</span>
+<p>後面排序、搜尋、資料結構每個單元的程式碼，幾乎都是「迴圈走訪 + 條件判斷」這個組合的變化版——現在先熟悉這個寫法，後面會輕鬆很多。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">05</span>APCS 常用技巧：split() 與 map() 讀取一行多個數字</h2>
+  
+<p>APCS 實作題最常見的輸入方式，是「一行裡有好幾個數字，用空白隔開」，例如輸入 <code>3 5 7 9</code>。這種情況要用 <code>split()</code> 和 <code>map()</code> 這組技巧，高一還沒教過，但演算法課會一直用到：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">split()：把一行文字依空白切開</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">line = input()          # 假設使用者輸入：3 5 7 9
+parts = line.split()      # 依空白切開 → ['3', '5', '7', '9']
+print(parts)               # 注意：這些還是「字串」，不是數字！
+print(parts[0] + parts[1])  # '3' + '5' → '35'（字串相加是接在一起，不是數學運算）</code></pre>
+</div>
+<h3>map()：把切開的每一段文字都轉成數字</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">map(int, ...)：批次轉換型態</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">line = "3 5 7 9"
+parts = line.split()          # ['3', '5', '7', '9']（字串）
+nums = list(map(int, parts))    # 把每個字串都轉成 int → [3, 5, 7, 9]
+print(nums)
+print(sum(nums))                  # 21，這次是真的數學運算
+
+# APCS 最常見的寫法，直接一行搞定：
+nums = list(map(int, input().split()))
+print(nums)</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 忘記轉型態是很常見的錯誤</span>
+<p>如果忘記用 <code>map(int, ...)</code>，直接把 <code>split()</code> 的結果拿去做加法，Python 不會報錯，而是會把數字「接在一起」而不是「相加」（因為還是字串）——例如 <code>'3' + '5'</code> 的結果是 <code>'35'</code>，不是 <code>8</code>。這是初學者很容易忽略、但又不會報錯的陷阱，要特別小心檢查資料型態。</p></div>
+
+<h3>split(",")：依逗號切開（處理 CSV 這類資料時常用）</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">依指定符號切開</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">line = "小明,88,92,76"
+parts = line.split(",")     # 依逗號切開 → ['小明', '88', '92', '76']
+name = parts[0]
+scores = list(map(int, parts[1:]))   # 第 0 個是名字，其餘轉成數字
+print(name, scores, sum(scores))</code></pre>
+</div>
+
+<h3>這整個網站常用的內建函式對照表</h3>
+<p>下面這些函式，都是高一資訊科技的 Python 課<b>沒有教過</b>，但接下來每個演算法單元都會一直用到的——先在這裡認識一次，之後看到就不會陌生：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>函式</th><th>用途</th><th>範例</th></tr></thead>
+<tbody>
+<tr><td><code>len(x)</code></td><td>取得長度（字串、list 都可以用）</td><td><code>len([1,2,3])</code> → 3</td></tr>
+<tr><td><code>x.append(v)</code></td><td>在 list 尾端加入一個元素</td><td><code>a=[1,2]; a.append(3)</code> → [1,2,3]</td></tr>
+<tr><td><code>x.pop()</code></td><td>從 list 尾端取出並刪除一個元素</td><td><code>a=[1,2,3]; a.pop()</code> → 3</td></tr>
+<tr><td><code>deque.popleft()</code></td><td>從 deque 前端取出並刪除（佇列常用）</td><td>見第 3 單元佇列</td></tr>
+<tr><td><code>"..".split()</code></td><td>把字串依空白（或指定符號）切成 list</td><td><code>"3 5 7".split()</code> → ['3','5','7']</td></tr>
+<tr><td><code>"-".join(x)</code></td><td>把 list 的元素接成一個字串，中間插入指定符號</td><td><code>"-".join(['a','b'])</code> → 'a-b'</td></tr>
+<tr><td><code>map(f, x)</code></td><td>對 x 裡的每個元素都套用函式 f</td><td><code>list(map(int,['1','2']))</code> → [1, 2]</td></tr>
+<tr><td><code>set(x)</code></td><td>把 list 轉成集合（自動去除重複）</td><td><code>set([1,1,2])</code> → {1, 2}</td></tr>
+<tr><td><code>list(x)</code></td><td>把其他型態轉成 list</td><td><code>list(range(3))</code> → [0, 1, 2]</td></tr>
+<tr><td><code>sorted(x)</code></td><td>回傳排序好的「新」list（原本的不會被改變）</td><td><code>sorted([3,1,2])</code> → [1, 2, 3]</td></tr>
+<tr><td><code>x.sort()</code></td><td>直接把 list 原地排序（沒有回傳值）</td><td><code>a=[3,1,2]; a.sort()</code> → a 變 [1,2,3]</td></tr>
+<tr><td><code>sum(x)</code></td><td>加總 list（或其他可迭代物件）裡所有的值</td><td><code>sum([1,2,3])</code> → 6</td></tr>
+<tr><td><code>zip(a, b)</code></td><td>把兩個 list 一一配對起來</td><td><code>list(zip([1,2],['a','b']))</code> → [(1,'a'), (2,'b')]</td></tr>
+<tr><td><code>enumerate(x)</code></td><td>走訪的同時取得「索引」和「值」</td><td><code>for i, v in enumerate(['a','b']):</code></td></tr>
+<tr><td><code>round(x, n)</code></td><td>四捨五入到小數點第 n 位</td><td><code>round(3.14159, 2)</code> → 3.14</td></tr>
+<tr><td><code>"x".isalpha()</code></td><td>判斷字串是否全部是英文字母</td><td><code>"ABC".isalpha()</code> → True</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout tip"><span class="t">🖥️ C++ 對照：讀取一行多個數字</span>
+<details class="hint">
+  <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">展開查看</summary>
+  <div class="hint-body">
+    <p>C++ 沒有 <code>split()</code>／<code>map()</code> 這種寫法，通常直接用 <code>cin</code> 搭配迴圈讀取，效果是一樣的：</p>
+    <div class="code-card">
+      <div class="code-head">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="label">C++ 讀取多個整數</span>
+        <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+      </div>
+      <pre class="lang-pane lang-cpp show"><code data-lang="cpp">int n;
+cin &gt;&gt; n;                 // 先讀「有幾個數字」
+vector&lt;int&gt; nums(n);
+for (int i = 0; i &lt; n; i++){
+    cin &gt;&gt; nums[i];         // cin 會自動用空白/換行分隔
+}</code></pre>
+    </div>
+  </div>
+</details>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">06</span>綜合應用專題</h2>
+  
+<p>整合前面學過的<b>變數、輸入輸出、判斷、迴圈、函式</b>，做一個成績計算小工具，這也是往後每一個演算法單元的程式碼會長的樣子：</p>
+<div class="card"><h3>🧮 成績計算小工具</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">成績計算小工具</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def grade(score):
+    if score &gt;= 90: return "A"
+    elif score &gt;= 80: return "B"
+    elif score &gt;= 70: return "C"
+    elif score &gt;= 60: return "D"
+    else: return "F"
+
+scores = [92, 78, 55, 88, 63]
+total = 0
+for s in scores:
+    total += s
+    print(f"分數 {s} → 等第 {grade(s)}")
+
+avg = total / len(scores)
+print("-" * 20)
+print(f"平均分數：{avg:.1f}")
+print("平均等第：", grade(avg))</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+using namespace std;
+
+string grade(double score){
+    if (score &gt;= 90) return "A";
+    else if (score &gt;= 80) return "B";
+    else if (score &gt;= 70) return "C";
+    else if (score &gt;= 60) return "D";
+    else return "F";
+}
+
+int main(){
+    vector&lt;int&gt; scores = {92, 78, 55, 88, 63};
+    int total = 0;
+    for (int s : scores){
+        total += s;
+        cout &lt;&lt; "分數 " &lt;&lt; s &lt;&lt; " -&gt; 等第 " &lt;&lt; grade(s) &lt;&lt; endl;
+    }
+    double avg = (double)total / scores.size();
+    cout &lt;&lt; "--------------------" &lt;&lt; endl;
+    cout &lt;&lt; "平均分數：" &lt;&lt; avg &lt;&lt; endl;
+    cout &lt;&lt; "平均等第：" &lt;&lt; grade(avg) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="callout tip"><span class="t">💡 小技巧：只有一行的 if 可以寫在同一行</span>
+<p>如果 <code>if</code>／<code>elif</code>／<code>else</code> 裡<b>只有一行</b>程式碼，可以直接寫在冒號 <code>:</code> 後面，像上面 <code>grade()</code> 那樣 <code>if score >= 90: return "A"</code>，程式更精簡好讀。但如果 if 裡面有<b>好幾行</b>要做，就還是要換行、縮排寫，不能全部擠在同一行。（這個技巧是 Python 特有的，C++ 沒有這種寫法。）</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li>寫函式 <code>square(n)</code> 回傳 n 的平方，並印出 1~5 的平方。
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 顯示解答</p>
+      <div class="answer"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def square(n):
+    return n * n
+
+for i in range(1, 6):
+    print(i, "的平方是", square(i))
+# 1 的平方是 1
+# 2 的平方是 4
+# 3 的平方是 9
+# 4 的平方是 16
+# 5 的平方是 25</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int square(int n){
+    return n * n;
+}
+
+int main(){
+    for (int i = 1; i &lt;= 5; i++){
+        cout &lt;&lt; i &lt;&lt; " 的平方是 " &lt;&lt; square(i) &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+</div></div>
+    </li>
+    <li>寫函式 <code>bigger(a, b)</code> 回傳兩數中<b>較大</b>的那個。
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 顯示解答</p>
+      <div class="answer"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def bigger(a, b):
+    if a &gt; b:
+        return a
+    else:
+        return b
+
+print(bigger(3, 7))    # 7
+print(bigger(10, 2))   # 10</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int bigger(int a, int b){
+    if (a &gt; b) return a;
+    else return b;
+}
+
+int main(){
+    cout &lt;&lt; bigger(3, 7) &lt;&lt; endl;
+    cout &lt;&lt; bigger(10, 2) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div></div>
+    </li>
+    <li>綜合題：寫函式 <code>is_prime(n)</code> 判斷 n 是否為<b>質數</b>，並找出 2~30 之間所有質數。
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 顯示解答</p>
+      <div class="answer"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 3 題參考解</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def is_prime(n):
+    if n &lt; 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+for n in range(2, 31):
+    if is_prime(n):
+        print(n, end=" ")
+# 2 3 5 7 11 13 17 19 23 29</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+bool isPrime(int n){
+    if (n &lt; 2) return false;
+    for (int i = 2; i &lt; n; i++){
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+int main(){
+    for (int n = 2; n &lt;= 30; n++){
+        if (isPrime(n)) cout &lt;&lt; n &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div></div>
+    </li>
+  </ol>
+</div>
+<div class="unit-nav">
+  <a href="unit02.html"><span class="dir">← 上一單元</span>02 流程圖的表示方法</a>
+  <a class="next" href="unit03.html"><span class="dir">下一單元 →</span>03 資料結構(一) 陣列</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 附：函式、串列與輸入技巧（高一補充）</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

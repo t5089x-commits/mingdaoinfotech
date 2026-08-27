@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 2：數字系統｜明道中學 · 資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">IT</span>
+      <span>明道中學 · 資訊科技<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="2">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 2</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">理論篇　單元 2</span>
+  <h1>數字系統</h1>
+  <p>各種進位系統、進位轉換與二進位運算</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識生活中常見的各種進位系統及其應用</li>
+<li>熟悉 2 / 8 / 10 / 16 進位的可用數字與表示方式</li>
+<li>學會十進位與其他進位互相轉換的方法</li>
+<li>能進行二進位的加法與減法運算</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>生活中的進位系統</h2>
+  
+<p>世界上只有 10 進位嗎？其實生活中處處是不同的進位系統。<strong>先想想看，再點一下右邊欄位看答案</strong>（右上角可一鍵全開）：</p>
+<div class="reveal-table-wrap">
+  <div class="reveal-table-bar"><button class="reveal-all-btn" onclick="revealAll(this)">👁️ 一鍵全開</button></div>
+  <div class="table-wrap"><table class="reveal-table center">
+    <thead><tr><th>進位</th><th>生活應用</th></tr></thead>
+    <tbody><tr><td>2 進位</td><td class="hide-cell" onclick="revealCell(this)">電腦內部（0／1）、邏輯真假值（True／False）、電路開關（開／關）</td></tr><tr><td>8 進位</td><td class="hide-cell" onclick="revealCell(this)">Linux 檔案權限（chmod 755）、早期電腦與迷你電腦</td></tr><tr><td>16 進位</td><td class="hide-cell" onclick="revealCell(this)">記憶體位址、網頁色碼（#FF8800）、MAC 位址、Unicode 編碼（U+4E2D）</td></tr><tr><td>12 進位</td><td class="hide-cell" onclick="revealCell(this)">一年 12 個月、時鐘鐘面、一打＝12 個、1 英尺＝12 英寸</td></tr><tr><td>24 進位</td><td class="hide-cell" onclick="revealCell(this)">一天 24 小時、時區換算</td></tr><tr><td>60 進位</td><td class="hide-cell" onclick="revealCell(this)">時間的分與秒、角度（1 度＝60 分＝3600 秒）</td></tr></tbody>
+  </table></div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>各種數字系統的表示方式</h2>
+  
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>進位系統</th><th>英文</th><th>縮寫</th><th>可用的數字</th><th>逢幾進位</th></tr></thead>
+  <tbody>
+    <tr><td>十進位</td><td>decimal</td><td><code>dec</code></td><td>0 1 2 3 4 5 6 7 8 9</td><td>逢 10 進 1</td></tr>
+    <tr><td>二進位</td><td>binary</td><td><code>bin</code></td><td>0 1</td><td>逢 2 進 1</td></tr>
+    <tr><td>八進位</td><td>octal</td><td><code>oct</code></td><td>0 1 2 3 4 5 6 7</td><td>逢 8 進 1</td></tr>
+    <tr><td>十六進位</td><td>hexadecimal</td><td><code>hex</code></td><td>0 1 2 3 4 5 6 7 8 9 A B C D E F</td><td>逢 16 進 1</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="bitb" id="bitb-bases" data-val="0" data-bits="8"><div class="bitb-note">🔢 <b>從 0 一路數到 255</b>（8 顆燈泡＝8 位元，共 2⁸ = 256 種；一直按「＋1」或按「自動」）：同一個數字，四種進位怎麼寫，一次看清楚。</div><div class="bitb-row"><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div><div class="bitb-cell"><span class="bitb-bulb">💡</span><span class="bitb-d">0</span></div></div><div class="bitb-bases"><div><span class="bk">十進位 dec</span><span class="bv" data-b="dec">0</span></div><div><span class="bk">二進位 bin</span><span class="bv" data-b="bin">00000000</span></div><div><span class="bk">八進位 oct</span><span class="bv" data-b="oct">0</span></div><div><span class="bk">十六進位 hex</span><span class="bv" data-b="hex">0</span></div></div><div class="bitb-btns"><button type="button" onclick="bitStep('bitb-bases',-1)">－1</button><button type="button" class="primary" onclick="bitStep('bitb-bases',1)">＋1</button><button type="button" class="bitb-play" onclick="bitPlay('bitb-bases',this)">▶ 自動</button><button type="button" onclick="bitZero('bitb-bases')">歸零</button></div></div>
+<div class="callout"><span class="t">📺 延伸影片＆冷知識</span>
+<p style="margin:0 0 8px"><a class="vidlink" href="https://www.youtube.com/shorts/0jXjPgjJFXQ" target="_blank" rel="noopener">▶ 機關二進位（看二進位怎麼「數」）↗</a></p>
+<div class="reveal" onclick="toggleWork(this)"><span class="wk-arrow">▶</span> 💡 冷知識：八卦 與二進位，驚人的相似？</div>
+<div class="answer">
+<p>三千年前《易經》的<strong>八卦</strong>，用「陰爻 ⚋」和「陽爻 ⚊」兩種符號、每卦疊三層，剛好排出 2³ = <strong>8 種</strong>卦象——這其實就跟電腦用 <strong>0 和 1</strong> 兩種狀態組合資料的想法一模一樣。十七世紀的數學家<strong>萊布尼茲（Leibniz）</strong>看到八卦時大為驚訝，因為它和他正在研究的<strong>二進位</strong>不謀而合。</p>
+<p style="margin-bottom:0"><a class="vidlink" href="https://www.youtube.com/shorts/hTtUzqN7euQ" target="_blank" rel="noopener">▶ 看短片：八卦 與二進位 驚人的相似？↗</a></p>
+</div></div>
+<div class="callout"><span class="t">🔎 如何區辨不同進位？</span>
+<p>常用<strong>下標</strong>或<strong>英文簡寫</strong>來標示，例如：</p>
+<ul class="tidy">
+  <li>二進位　→　下標 <code>2</code>　或　<code>bin</code>　，例如 <code>1101₂</code></li>
+  <li>八進位　→　下標 <code>8</code>　或　<code>oct</code>　，例如 <code>17₈</code></li>
+  <li>十六進位　→　下標 <code>16</code>　或　<code>hex</code>　，例如 <code>3A₁₆</code></li>
+</ul>
+<p style="margin-bottom:0">這些縮寫也正是 Python 內建函式的名稱（<code>bin()</code>、<code>oct()</code>、<code>hex()</code>）。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>十進位 → 其他進位（除法取餘）</h2>
+  
+<p><strong>整數部份：</strong>將十進位整數<strong>連除以該進位</strong>，直到商數為 0，再<strong>從下往上</strong>依序取出餘數。</p>
+<p><strong>小數部份：</strong>將十進位小數<strong>連乘以該進位</strong>，直到適當位數為止，<strong>從上往下</strong>依序取整數部份。</p>
+<div class="grid cols-2">
+  <div class="card"><h3>例：92 → 二進位</h3>
+  <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">除法取餘</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">92 ÷ 2 = 46 ... 餘 0  ↑
+46 ÷ 2 = 23 ... 餘 0  |
+23 ÷ 2 = 11 ... 餘 1  | 由下
+11 ÷ 2 =  5 ... 餘 1  | 往上
+ 5 ÷ 2 =  2 ... 餘 1  | 讀取
+ 2 ÷ 2 =  1 ... 餘 0  |
+ 1 ÷ 2 =  0 ... 餘 1  |
+結果：92 = 1011100₂</code></pre>
+</div>
+  </div>
+  <div class="card"><h3>更多練習答案</h3>
+  <p style="color:var(--text-faint);font-size:.9rem">先自己算算看，再點一下答案格對答案（或按右上角「一鍵全開」）：</p>
+  <div class="reveal-table-wrap">
+  <div class="reveal-table-bar"><button class="reveal-all-btn" onclick="revealAll(this)">👁️ 一鍵全開</button></div>
+  <div class="table-wrap"><table class="reveal-table center">
+    <thead><tr><th>十進位</th><th>轉換目標</th><th>答案（點一下看）</th></tr></thead>
+    <tbody><tr><td>92</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1011100₂</td></tr><tr><td>108</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1101100₂</td></tr><tr><td>0.453125</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.011101₂</td></tr><tr><td>0.21875</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.00111₂</td></tr><tr><td>108</td><td>八進位</td><td class="hide-cell" onclick="revealCell(this)">134₈</td></tr><tr><td>108</td><td>十六進位</td><td class="hide-cell" onclick="revealCell(this)">6C₁₆</td></tr></tbody>
+  </table></div>
+</div>
+  </div>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>其他進位 → 十進位（位值展開）</h2>
+  
+<p>方法：將每一位數<strong>分別乘以其位值</strong>（基底的次方），再全部加起來。<br><span style="color:var(--text-faint);font-size:.9rem">👆 教學用：點一下算式會逐步高亮——先亮整個數字，再一位一位對到它的位值，最後全部亮起（預設不上色，可一直點循環）。</span></p>
+<div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="10"><div class="pv-line"><span data-lit="1 2 10">1</span><span data-lit="1 3 10">0</span><span data-lit="1 4 10">0</span><span data-lit="1 5 10">1</span><span data-lit="1 6 10">1</span><span data-lit="1 7 10">0</span><span data-lit="1 8 10">0</span><span data-lit="1 9 10">1</span>₂ = <span data-lit="2 10">1</span>×2⁷ + <span data-lit="3 10">0</span>×2⁶ + <span data-lit="4 10">0</span>×2⁵ + <span data-lit="5 10">1</span>×2⁴ + <span data-lit="6 10">1</span>×2³ + <span data-lit="7 10">0</span>×2² + <span data-lit="8 10">0</span>×2¹ + <span data-lit="9 10">1</span>×2⁰ = 128 + 16 + 8 + 1 = <b>153</b></div><div class="pv-hint">👆 點一下逐步講解</div></div>
+<div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="5"><div class="pv-line"><span data-lit="1 2 5">3</span><span data-lit="1 3 5">4</span><span data-lit="1 4 5">7</span>₈ = <span data-lit="2 5">3</span>×8² + <span data-lit="3 5">4</span>×8¹ + <span data-lit="4 5">7</span>×8⁰ = 192+32+7 = <b>231</b></div><div class="pv-hint">👆 點一下逐步講解</div></div>
+<div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="5"><div class="pv-line"><span data-lit="1 2 5">A</span><span data-lit="1 3 5">5</span><span data-lit="1 4 5">1</span>₁₆ = <span data-lit="2 5">10</span>×16² + <span data-lit="3 5">5</span>×16¹ + <span data-lit="4 5">1</span>×16⁰ = 2560+80+1 = <b>2641</b></div><div class="pv-hint">👆 點一下逐步講解</div></div>
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>2 / 8 / 16 進位互換</h2>
+  
+<div class="grid cols-2">
+  <div class="card"><h3>二進位 ↔ 八進位</h3>
+  <p>二進位由<strong>右向左每 3 位</strong>一組（3 位二進位＝1 位八進位）。</p>
+  <div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="5"><div class="pv-line"><span data-lit="1 2 5">1</span><span data-lit="1 2 5">0</span><span data-lit="1 3 5">0</span><span data-lit="1 3 5">1</span><span data-lit="1 3 5">1</span><span data-lit="1 4 5">0</span><span data-lit="1 4 5">0</span><span data-lit="1 4 5">1</span>₂
+→ <span data-lit="2 5">0</span><span data-lit="2 5">1</span><span data-lit="2 5">0</span> / <span data-lit="3 5">0</span><span data-lit="3 5">1</span><span data-lit="3 5">1</span> / <span data-lit="4 5">0</span><span data-lit="4 5">0</span><span data-lit="4 5">1</span>
+→  <span data-lit="2 5">2</span>  /  <span data-lit="3 5">3</span>  /  <span data-lit="4 5">1</span> 
+= <span data-lit="2 5">2</span><span data-lit="3 5">3</span><span data-lit="4 5">1</span>₈</div><div class="pv-hint">👆 點一下逐步講解</div></div>
+  </div>
+  <div class="card"><h3>二進位 ↔ 十六進位</h3>
+  <p>二進位由<strong>右向左每 4 位</strong>一組（4 位二進位＝1 位十六進位）。</p>
+  <div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="4"><div class="pv-line"><span data-lit="1 2 4">1</span><span data-lit="1 2 4">1</span><span data-lit="1 2 4">0</span><span data-lit="1 2 4">0</span><span data-lit="1 3 4">1</span><span data-lit="1 3 4">0</span><span data-lit="1 3 4">0</span><span data-lit="1 3 4">1</span>₂
+→ <span data-lit="2 4">1</span><span data-lit="2 4">1</span><span data-lit="2 4">0</span><span data-lit="2 4">0</span> / <span data-lit="3 4">1</span><span data-lit="3 4">0</span><span data-lit="3 4">0</span><span data-lit="3 4">1</span>
+→  <span data-lit="2 4">C</span>   /  <span data-lit="3 4">9</span>  
+= <span data-lit="2 4">C</span><span data-lit="3 4">9</span>₁₆</div><div class="pv-hint">👆 點一下逐步講解</div></div>
+  </div>
+</div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>二進位加減運算</h2>
+  
+<div class="grid cols-2">
+<div class="card"><h3>加法法則</h3>
+<div class="table-wrap"><table class="truth"><tbody>
+<tr><td>0 + 0 = 0</td></tr><tr><td>0 + 1 = 1</td></tr>
+<tr><td>1 + 0 = 1</td></tr><tr><td>1 + 1 = <strong>10</strong>（進位）</td></tr>
+</tbody></table></div>
+</div>
+<div class="card"><h3>減法法則</h3>
+<div class="table-wrap"><table class="truth"><tbody>
+<tr><td>0 − 0 = 0</td></tr><tr><td>1 − 0 = 1</td></tr>
+<tr><td>1 − 1 = 0</td></tr><tr><td>0 − 1 = 1（<strong>借位</strong>）</td></tr>
+</tbody></table></div>
+</div>
+</div>
+<div class="callout"><span class="t">✋ 「借位」是什麼意思？</span>
+<p>當某一位<strong>不夠減</strong>（例如 <code>0 − 1</code>）時，就要向<strong>左邊更高的一位「借 1」</strong>。</p>
+<ul class="tidy">
+  <li>在二進位裡，借來的這個 1 到了低位就相當於 <strong>2</strong>，所以 <code>0 − 1</code> 變成 <code>2 − 1 = 1</code>。</li>
+  <li>被借的那一位，記得要<strong>減掉 1</strong>。</li>
+</ul>
+<p style="margin-bottom:0">道理和十進位一樣：十進位 <code>10 − 1</code> 時，個位向十位借 1（借來的 1＝10），變成 <code>10 − 1 = 9</code>。</p></div>
+<div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start"><div style="flex:1;min-width:150px"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">二進位加法</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">  1010₂
++ 0011₂
+------
+  1101₂</code></pre>
+</div></div><div style="flex:1;min-width:150px"><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">二進位減法</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">  1101₂
+- 0011₂
+------
+  1010₂</code></pre>
+</div></div></div>
+<div class="callout tip"><span class="t">💡 提示</span><p>八進位、十六進位的加減同理，只是「逢 8 進 1」「逢 16 進 1」。</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<ol>
+  <li>將十進位 <strong>200</strong> 轉換成二進位、八進位與十六進位。</li>
+  <li>將 <strong>11010110₂</strong> 轉換成十進位與十六進位。</li>
+  <li>計算 <strong>1011₂ + 1101₂</strong>（結果以二進位表示）。</li>
+  <li>色碼 <code>#1E90FF</code> 中的 <strong>1E</strong>（十六進位）等於十進位多少？</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+<ol>
+<li>200 = 11001000₂ = 310₈ = C8₁₆</li>
+<li>11010110₂ = 214₁₀ = D6₁₆</li>
+<li>1011₂ + 1101₂ = 11000₂（＝24₁₀）</li>
+<li>1E₁₆ = 1×16 + 14 = 30₁₀</li>
+</ol>
+<p style="color:var(--text-faint)">算完後，可用頁面最下方「課堂互動工具」的進位轉換器對答案！</p></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit01.html"><div class="dir">← 上一單元</div><div class="ttl">課程介紹</div></a>
+    <a class="next" href="unit03.html"><div class="dir">下一單元 →</div><div class="ttl">資料運算與儲存</div></a>
+  </nav>
+</main>
+<section class="tools-zone">
+  <div class="wrap">
+    <h2>🧪 課堂互動工具</h2>
+    <p class="tz-note">先自己動手算算看／推推看，再用下面的工具對答案，學習效果最好。</p>
+    
+<div class="widget">
+  <div class="w-title">🧮 進位轉換器</div>
+  <div class="w-sub">輸入一個數字並選擇它目前的進位，立即看到 2 / 8 / 10 / 16 進位的結果。</div>
+  <div class="field-row">
+    <div class="field">
+      <label for="conv-input">數值</label>
+      <input id="conv-input" type="text" value="156" oninput="convertBase()" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>目前進位（點選）</label>
+      <div class="base-btns">
+        <button type="button" class="base-btn active" onclick="setConvBase(this,'10')">十進位 (0-9)</button>
+        <button type="button" class="base-btn" onclick="setConvBase(this,'2')">二進位 (0-1)</button>
+        <button type="button" class="base-btn" onclick="setConvBase(this,'8')">八進位 (0-7)</button>
+        <button type="button" class="base-btn" onclick="setConvBase(this,'16')">十六進位 (0-F)</button>
+      </div>
+      <input type="hidden" id="conv-base" value="10">
+    </div>
+  </div>
+  <div class="conv-err" id="conv-err"></div>
+  <div class="conv-out" id="conv-out">
+    <div class="conv-cell"><div class="k">二進位 BIN₂</div><div class="v" id="out-2">—</div></div>
+    <div class="conv-cell"><div class="k">八進位 OCT₈</div><div class="v" id="out-8">—</div></div>
+    <div class="conv-cell"><div class="k">十進位 DEC₁₀</div><div class="v" id="out-10">—</div></div>
+    <div class="conv-cell"><div class="k">十六進位 HEX₁₆</div><div class="v" id="out-16">—</div></div>
+  </div>
+</div>
+  </div>
+</section>
+
+<footer class="site">
+  明道中學 · 資訊科技　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

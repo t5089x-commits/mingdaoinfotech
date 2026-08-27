@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 12：電子簽章與數位憑證｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="12">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 12</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 12</span>
+  <h1>電子簽章與數位憑證</h1>
+  <p>CA、HTTPS、信任鏈（專題並行）</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解 RSA 簽章可能被偽造的原因（乘法代數性質），以及如何用雜湊函數修補</li>
+<li>認識數位憑證（Certificate）與憑證中心（CA）如何建立信任鏈</li>
+<li>看懂 HTTPS 連線的四個步驟，理解瀏覽器小鎖頭代表什麼</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>RSA 簽章的漏洞：乘法代數性質</h2>
+  
+<p>如果直接對明文 m 簽章（s = m^d mod n），會有一個數學上的漏洞：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">偽造攻擊的原理</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">已知：s1 = m1^d mod n，s2 = m2^d mod n
+相乘：s1 × s2 = (m1 × m2)^d mod n = s3
+
+若攻擊者找到一個「有意義」的明文 m3 = m1 × m2，
+那麼 s3 就會是 m3 的『正確』簽章 —— 即使從沒有人簽過 m3！</code></pre>
+</div>
+<div class="callout tip"><span class="t">🩹 解法：先做雜湊，再簽章</span>
+<p>簽章前先用雜湊函數對明文取摘要：<code>s = H(m)^d mod n</code>。因為雜湊函數<strong>沒有乘法代數性質</strong>（H(m1×m2) ≠ H(m1)×H(m2)），攻擊者再也無法用兩個舊簽章兜出一個新的合法簽章。這正是單元 9「Hash」在這裡派上用場的地方。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>數位憑證：由誰來說「這把公鑰真的是你的」？</h2>
+  
+<p>公開金鑰系統有個問題：你怎麼知道拿到的「某人的公鑰」真的是那個人的，而不是冒充者塞給你的？答案是靠一個大家都信任的第三方——<strong>憑證中心（Certificate Authority, CA）</strong>。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🏛️ 憑證中心 CA</h4><p>具公信力的機構，用自己的私鑰對「某人的身分資料 + 公鑰」做簽章，組成一張數位憑證 —— 就像電子身分證。</p></div>
+  <div class="tile"><h4>🔗 信任鏈</h4><p>任何人都可以用 CA 公開的公鑰驗證這張憑證是不是真的由 CA 簽發，一路往上追溯到大家都信任的「根憑證」。</p></div>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>HTTPS 連線的四個步驟</h2>
+  <div class="table-wrap">
+<table class="center">
+  <thead><tr><th>步驟</th><th>發生了什麼事</th></tr></thead>
+  <tbody><tr><td>1</td><td>使用者以 HTTPS 連線到安全的網頁伺服器</td></tr><tr><td>2</td><td>伺服器把自己的數位憑證傳給瀏覽器，瀏覽器用 CA 公鑰檢驗這張憑證是否為真</td></tr><tr><td>3</td><td>瀏覽器決定後續要用的對稱金鑰，並用伺服器憑證裡的公鑰加密後傳過去</td></tr><tr><td>4</td><td>伺服器用自己的私鑰解出這把對稱金鑰；接下來雙方就用這把共同的對稱金鑰，做效率較高的對稱式加密通訊</td></tr></tbody>
+</table>
+</div><div class="callout"><span class="t">💡 有趣的地方</span>
+<p>HTTPS 其實同時用到<strong>非對稱加密</strong>（一開始安全地交換金鑰）和<strong>對稱加密</strong>（後續大量資料的加解密效率較高）—— 這學期學到的兩種加密方式，在這裡合作無間。</p>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 觀察任務</h3>
+  <p>打開瀏覽器，點一下網址列的小鎖頭圖示，找找看「憑證資訊」，看看這個網站的憑證是由哪一家憑證中心（CA）簽發的、有效期限到什麼時候。</p>
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit11.html"><div class="dir">← 上一單元</div><div class="ttl">公開金鑰密碼學（非對稱）</div></a>
+    <a class="next" href="unit13.html"><div class="dir">下一單元 →</div><div class="ttl">成果製作（一）</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
