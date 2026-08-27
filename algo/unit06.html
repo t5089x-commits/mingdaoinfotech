@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 06：資料結構(四) 堆疊｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="6">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 06</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　週次 4</span>
+  <h1>資料結構(四) 堆疊</h1>
+  <p>堆疊是「後進先出」的資料結構，一疊盤子就是最好的比喻。這一單元會從 Push/Pop 基礎，一路帶到括號配對、中序/前序/後序轉換，最後用堆疊直接算出運算式的答案。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解 LIFO（後進先出）的概念</li>
+<li>能操作 Push／Pop，並知道 Python／C++ 對應語法</li>
+<li>能用堆疊解決括號配對問題，並說出為什麼堆疊適合這個任務</li>
+<li>能用加括號去除法手算中序轉前序／後序</li>
+<li>理解電腦用堆疊掃描處理運算式轉換的邏輯</li>
+<li>能用堆疊計算後序運算式的結果</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>什麼是堆疊？</h2>
+  
+<p>堆疊（Stack）就像一疊盤子：新盤子永遠疊在最上面，要拿盤子也只能從最上面拿——不可能抽底下那一個。這個「最上面」的位置，叫做 <b>Top</b>。</p>
+<div class="cup-frame"><div class="cup-inner"><div class="bf-step proc" style="border-color:var(--brand)">3　（最後放進去，最先拿出來）</div>
+<div class="bf-step proc" style="border-color:var(--brand)">2</div>
+<div class="bf-step proc" style="border-color:var(--brand)">1　（Bottom）</div></div></div>
+<p>從這個比喻可以直接看出堆疊唯一的核心規則：</p>
+<div class="callout tip" style="text-align:center">
+<span class="t" style="justify-content:center;font-size:1rem">🔑 LIFO：Last In First Out（後進先出）</span>
+<p style="margin-top:8px">最後放進去的東西，會最先被拿出來。</p>
+</div>
+<p class="bf-note">💡 那要怎麼在程式裡「放」跟「拿」呢？下一節就來看堆疊實際上有哪些操作。</p>
+
+</section><section class="block">
+  <h2><span class="num">02</span>堆疊怎麼操作？</h2>
+  
+<p>堆疊只有兩個核心動作：東西怎麼放進去、東西怎麼拿出來——但因為 LIFO 的規則，這兩個動作都只能發生在 Top：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>操作</th><th>Python</th><th>C++</th></tr></thead>
+<tbody>
+<tr><td>Push（放入 Top）</td><td><code><span class="var-muted">stack</span>.append(<span class="var-muted">x</span>)</code></td><td><code><span class="var-muted">st</span>.push(<span class="var-muted">x</span>)</code></td></tr>
+<tr><td>Pop（從 Top 取出）</td><td><code><span class="var-muted">stack</span>.pop()</code></td><td><code><span class="var-muted">st</span>.pop()  // 取出前呼叫 <span class="var-muted">st</span>.top() 拿值</code></td></tr>
+<tr><td>Peek / Top（查看頂端）</td><td><code>stack[-1]</code></td><td><code><span class="var-muted">st</span>.top()</code></td></tr>
+<tr><td>IsEmpty（是否為空）</td><td><code>len(<span class="var-muted">stack</span>) == 0</code></td><td><code><span class="var-muted">st</span>.empty()</code></td></tr>
+<tr><td>大小</td><td><code>len(<span class="var-muted">stack</span>)</code></td><td><code><span class="var-muted">st</span>.size()</code></td></tr>
+
+</tbody>
+</table>
+</div><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">堆疊基本操作</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">stack = []
+stack.append(1)   # push
+stack.append(2)
+stack.append(3)
+print(stack)        # [1, 2, 3]
+
+top = stack.pop()   # pop，取出最後放入的
+print("取出：", top, "剩下：", stack)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;stack&gt;
+using namespace std;
+int main(){
+    stack&lt;int&gt; st;
+    st.push(1);
+    st.push(2);
+    st.push(3);
+    cout &lt;&lt; "top: " &lt;&lt; st.top() &lt;&lt; endl;
+    st.pop();
+    cout &lt;&lt; "剩下的 top: " &lt;&lt; st.top() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<p class="bf-note">💡 這兩個動作看起來很簡單，但接下來不管是括號配對還是運算式轉換，用到的全部都是這裡的 Push 跟 Pop——先把這節記熟，後面會一直用到。</p>
+
+</section><section class="block">
+  <h2><span class="num">03</span>為什麼堆疊有用？先用括號配對理解</h2>
+  
+<p>學會 Push / Pop 之後，來看堆疊的第一個實際用途：檢查括號是否配對，例如 <code>((a+b)*c)</code> 是對的，但 <code>((a+b)*c</code> 少了一個右括號。</p>
+<div class="callout tip"><span class="t">💡 關鍵觀念</span>
+<p>堆疊不只是拿來存數字，它可以拿來<b>暫存「還沒處理完的東西」</b>。掃描括號的過程中，每個左括號都代表一個「還沒配對完成」的任務，堆疊剛好可以把這些未完成的任務一個一個疊起來，等右括號出現時再取出來核對。</p></div>
+<p><b>為什麼偏偏是堆疊？</b>因為括號的配對規則正好符合 LIFO：<b>最後出現的左括號，一定要最先被配對</b>——例如 <code>( [ ) ]</code> 是錯的，因為最後開的 <code>[</code> 應該要最先被配對，不能讓 <code>)</code> 插隊。這正是「後進先出」。</p>
+<p>做法：遇到左括號就 push，遇到右括號就 pop 並核對是否對應，如果最後堆疊剛好清空，就代表括號都配對成功。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">括號配對檢查</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def is_balanced(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+    for ch in s:
+        if ch in '([{':
+            stack.append(ch)
+        elif ch in ')]}':
+            if not stack or stack.pop() != pairs[ch]:
+                return False
+    return len(stack) == 0
+
+print(is_balanced("((a+b)*c)"))   # True
+print(is_balanced("((a+b)*c"))    # False</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool isBalanced(string s){
+    stack&lt;char&gt; st;
+    for (char ch : s){
+        if (ch=='(' || ch=='[' || ch=='{') st.push(ch);
+        else if (ch==')' || ch==']' || ch=='}'){
+            if (st.empty()) return false;
+            char top = st.top(); st.pop();
+            if ((ch==')' &amp;&amp; top!='(') || (ch==']' &amp;&amp; top!='[') || (ch=='}' &amp;&amp; top!='{'))
+                return false;
+        }
+    }
+    return st.empty();
+}
+
+int main(){
+    cout &lt;&lt; boolalpha &lt;&lt; isBalanced("((a+b)*c)") &lt;&lt; endl;
+    cout &lt;&lt; boolalpha &lt;&lt; isBalanced("((a+b)*c") &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<p class="bf-note">💡 括號配對只是堆疊的第一個應用。接下來要看一個更厲害的用法——堆疊還能處理完整的數學運算式。</p>
+
+</section><section class="block">
+  <h2><span class="num">04</span>堆疊如何處理運算式？中序／前序／後序</h2>
+  
+<p>括號配對讓我們看到堆疊能「暫存還沒處理完的東西」。運算式其實也一樣——像 <code>A+B*(C-D)</code> 這種式子，在還沒算完之前，運算子（<code>+</code>、<code>*</code>）都得先「等在旁邊」，直到輪到它們的時候才能真正計算，這正是堆疊擅長的事。</p>
+<p>在講堆疊怎麼處理運算式之前，要先認識三種表示法。中序 <code>A+B</code> 是人習慣的寫法，「前、中、後」指的其實是<b>運算子相對於運算元的位置</b>：</p>
+<div class="opd-opr-legend"><span class="opd">■ 運算元 Operand</span><span class="opr">■ 運算子 Operator</span></div>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>表示法</th><th>格式</th><th>範例</th></tr></thead>
+<tbody>
+<tr><td>中序 Infix</td><td>&lt;<span class="opd">運算元1</span>&gt; &lt;<span class="opr">運算子</span>&gt; &lt;<span class="opd">運算元2</span>&gt;</td><td><span class="opd">A</span> <span class="opr">+</span> <span class="opd">B</span></td></tr>
+<tr><td>前序 Prefix</td><td>&lt;<span class="opr">運算子</span>&gt; &lt;<span class="opd">運算元1</span>&gt; &lt;<span class="opd">運算元2</span>&gt;</td><td><span class="opr">+</span> <span class="opd">A</span> <span class="opd">B</span></td></tr>
+<tr><td>後序 Postfix</td><td>&lt;<span class="opd">運算元1</span>&gt; &lt;<span class="opd">運算元2</span>&gt; &lt;<span class="opr">運算子</span>&gt;</td><td><span class="opd">A</span> <span class="opd">B</span> <span class="opr">+</span></td></tr>
+</tbody>
+</table>
+</div>
+<p><b>為什麼要多學後序？</b>因為後序<b>完全不需要括號</b>就能表達運算順序，而且能直接搭配堆疊、由左到右掃描一次就算出答案（這件事會在第 7 節實際做一次）。這就是為什麼電腦處理運算式時，經常會先把中序轉成後序。</p>
+<p class="bf-note">💡 那要怎麼把我們習慣的中序，轉換成後序或前序呢？先來看人腦怎麼手算。</p>
+
+</section><section class="block">
+  <h2><span class="num">05</span>人怎麼做？用「加括號去除法」手算轉換</h2>
+  
+<div class="callout warn"><span class="t">✍️ 這是紙筆／考試上的手算方法</span>
+<p>接下來這個方法是給<b>人腦</b>用的捷徑，方便手算或考試——電腦實際上並不是這樣做的（電腦的做法在下一節）。</p></div>
+<p>重點是先用括號把優先順序標出來，再把運算子搬到括號的對應邊，最後拿掉括號。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>→ 轉前序 Prefix（運算子移到左括號右邊）</h4>
+    <p>例：<code>A+B*(C-D)</code></p>
+    <div class="table-wrap"><table class="center"><tbody>
+      <tr><td>① 加括號分優先權</td><td class="stk">(A+(B*(C-D)))</td></tr>
+      <tr><td>② 運算子移到左括號右邊</td><td class="stk">(A+(*B(-CD)))</td></tr>
+      <tr><td></td><td class="stk">(+A(*B(-CD)))</td></tr>
+      <tr><td>③ 拿掉括號</td><td class="stk">+A*B-CD</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tile"><h4>→ 轉後序 Postfix（運算子移到右括號左邊）</h4>
+    <p>例：<code>A+B*(C-D)</code></p>
+    <div class="table-wrap"><table class="center"><tbody>
+      <tr><td>① 加括號分優先權</td><td class="stk">(A+(B*(C-D)))</td></tr>
+      <tr><td>② 運算子移到右括號左邊</td><td class="stk">(A+(B(CD-)*))</td></tr>
+      <tr><td></td><td class="stk">(A(B(CD-)*)+)</td></tr>
+      <tr><td>③ 拿掉括號</td><td class="stk">ABCD-*+</td></tr>
+    </tbody></table></div>
+  </div>
+</div>
+<div class="callout warn"><span class="t">⚠ 易混淆點：兩個方向剛好相反</span>
+<p><b>轉前序</b>：運算子移到「左」括號右邊；<b>轉後序</b>：運算子移到「右」括號左邊——方向剛好相反，是手算時最容易搞混的地方。口訣：「前序靠左括號，後序靠右括號」。</p></div>
+<p class="bf-note">💡 人腦可以「用眼睛」一次看出優先權、直接加括號，但電腦沒辦法用看的——那電腦到底怎麼一步一步做到同樣的事？</p>
+
+</section><section class="block">
+  <h2><span class="num">06</span>電腦怎麼做？用 Stack 掃描、Push、Pop 進行中序轉後序</h2>
+  
+<p>加括號去除法是「人」的捷徑，電腦實際上是用堆疊、一個字一個字掃描來處理的——而且這裡用到的動作，其實就是<b>第 2 節學過的 Push 跟 Pop</b>，只是現在應用到運算式轉換上。這裡先完整講清楚「中序 → 後序」，前序轉換的邏輯類似但掃描方向相反，留在最後當作補充。</p>
+
+<div class="grid cols-2">
+  <div class="tile"><h4>電腦的操作規則（中序轉後序，由左而右掃描）</h4>
+    <ul class="tidy">
+      <li><b>遇到運算元（數字/字母）</b> → 直接輸出，不放入堆疊</li>
+      <li><b>遇到左括號 <code>(</code></b> → 直接 Push（見右方「括號的特殊規則」）</li>
+      <li><b>遇到右括號 <code>)</code></b> → 不斷 Pop 並輸出，直到 Pop 出左括號為止（左括號本身不輸出，直接丟棄）</li>
+      <li><b>遇到運算子</b>（如 <code>+ - * /</code>）→ 跟堆疊「頂端」比較優先權（優先權對照見右表）：
+        <ul class="tidy" style="margin-top:6px">
+          <li>如果比堆疊頂端<b>優先權高</b> → 直接 Push</li>
+          <li>如果<b>不比</b>堆疊頂端優先權高 → 先 Pop 堆疊頂端並輸出，再 Push 目前這個運算子</li>
+        </ul>
+      </li>
+      <li><b>掃描完畢後</b> → 堆疊裡如果還有剩下的運算子，依序全部 Pop 並輸出</li>
+    </ul>
+  </div>
+  <div class="tile"><h4>符號的優先順序</h4>
+    <div class="table-wrap">
+    <table class="center">
+    <thead><tr><th>符號</th><th>說明</th></tr></thead>
+    <tbody>
+    <tr><td><code>(</code>　<code>)</code></td><td><b>特殊規則，不算在一般優先權高低裡</b>：左括號一律直接 Push；只要還在堆疊裡「等待」，就視為優先權最低，這樣後面優先權更高的運算子才能疊在它上面；右括號一出現，就觸發「不斷 Pop 直到彈出左括號」，跟一般運算子的比較方式完全不同。</td></tr>
+    <tr><td><code>*</code>　<code>/</code>　（優先權 2，較高）</td><td>乘除法，比加減法優先</td></tr>
+    <tr><td><code>+</code>　<code>-</code>　（優先權 1，較低）</td><td>加減法</td></tr>
+    </tbody>
+    </table>
+    </div>
+    <p class="bf-note" style="margin-top:10px">💡 左邊規則裡「跟堆疊頂端比較優先權」，比的就是這張表——例如掃描到 <code>*</code>、堆疊頂端是 <code>+</code>，因為 <code>*</code>（優先權 2）比 <code>+</code>（優先權 1）高，所以直接 Push，不會先彈出 <code>+</code>。</p>
+  </div>
+</div>
+
+<p>以下用動畫呈現把 <code>A+B*(C-D)</code> 轉成後序的完整過程，掃描規則就是上面這幾條——目前讀到的字元會反白，右邊會即時顯示目前的輸出：</p>
+<div class="stackviz2" id="stackviz2-1">
+  <div class="sv2-input" id="sv2-input"></div>
+  <div class="sv2-body">
+    <div class="sv2-panel"><div class="sv2-label">運算子堆疊（Top 在上）</div><div class="sv2-stack" id="sv2-stack"></div></div>
+    <div class="sv2-panel"><div class="sv2-label">目前輸出</div><div class="sv2-output" id="sv2-output"></div></div>
+  </div>
+  <div class="sv-status"><span id="sv2-stepnum"></span></div>
+  <p class="vs-cap" id="sv2-cap" style="margin-top:4px"></p>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="sv2-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="sv2-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var payload = {"tokens": ["A", "+", "B", "*", "(", "C", "-", "D", ")"], "frames": [{"idx": -1, "stack": [], "output": "", "cap": "開始：由左而右掃描 A+B*(C-D)，堆疊與輸出都是空的。"}, {"idx": 0, "stack": [], "output": "A", "cap": "讀到「A」，是運算元 → 直接輸出。"}, {"idx": 1, "stack": ["+"], "output": "A", "cap": "讀到「+」，優先權高於堆疊頂端 → 直接放入堆疊。"}, {"idx": 2, "stack": ["+"], "output": "AB", "cap": "讀到「B」，是運算元 → 直接輸出。"}, {"idx": 3, "stack": ["+", "*"], "output": "AB", "cap": "讀到「*」，優先權高於堆疊頂端 → 直接放入堆疊。"}, {"idx": 4, "stack": ["+", "*", "("], "output": "AB", "cap": "讀到「(」→ 直接放入堆疊（視為優先權最低，等對應的 ) 出現才會被彈出）。"}, {"idx": 5, "stack": ["+", "*", "("], "output": "ABC", "cap": "讀到「C」，是運算元 → 直接輸出。"}, {"idx": 6, "stack": ["+", "*", "(", "-"], "output": "ABC", "cap": "讀到「-」，優先權高於堆疊頂端 → 直接放入堆疊。"}, {"idx": 7, "stack": ["+", "*", "(", "-"], "output": "ABCD", "cap": "讀到「D」，是運算元 → 直接輸出。"}, {"idx": 8, "stack": ["+", "*"], "output": "ABCD-", "cap": "讀到「)」→ 依序彈出堆疊中的運算子直到取出「(」為止（輸出：-），括號本身不輸出。"}, {"idx": 9, "stack": ["+"], "output": "ABCD-*", "cap": "掃描完畢，堆疊中還有運算子「*」→ 彈出輸出。"}, {"idx": 9, "stack": [], "output": "ABCD-*+", "cap": "掃描完畢，堆疊中還有運算子「+」→ 彈出輸出。"}, {"idx": 9, "stack": [], "output": "ABCD-*+", "cap": "完成！最終後序表示法：ABCD-*+"}]};
+  var tokens = payload.tokens, frames = payload.frames;
+  var root = document.getElementById("stackviz2-1");
+  if(!root) return;
+  var inputRow = document.getElementById("sv2-input");
+  var stackEl = document.getElementById("sv2-stack");
+  var outputEl = document.getElementById("sv2-output");
+  var cap = document.getElementById("sv2-cap");
+  var stepLabel = document.getElementById("sv2-stepnum");
+  var nextBtn = document.getElementById("sv2-next");
+  var resetBtn = document.getElementById("sv2-reset");
+  var i = 0;
+
+  tokens.forEach(function(ch, idx){
+    var d = document.createElement("div");
+    d.className = "sv2-char";
+    d.textContent = ch;
+    d.id = "sv2-char-" + idx;
+    inputRow.appendChild(d);
+  });
+
+  function render(){
+    var f = frames[i];
+    tokens.forEach(function(ch, idx){
+      var el = document.getElementById("sv2-char-" + idx);
+      el.classList.remove("current", "done");
+      if (idx < f.idx) el.classList.add("done");
+      if (idx === f.idx) el.classList.add("current");
+    });
+    stackEl.innerHTML = "";
+    f.stack.forEach(function(item, si){
+      var box = document.createElement("div");
+      box.className = "sv2-stackitem" + (si === f.stack.length-1 ? " top" : "");
+      box.textContent = item;
+      stackEl.appendChild(box);
+    });
+    outputEl.textContent = f.output || "（尚無輸出）";
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script>
+<p class="bf-note">💡 這個動畫其實就是一個「Push/Pop 追蹤表」——跟第 2 節的堆疊操作是同一件事，只是應用在算式轉換上。上課時可以按「下一步」帶學生一步一步對照講解上面的規則。</p>
+
+<div class="callout tip"><span class="t">📎 補充：前序轉換怎麼做？</span>
+<p>前序轉換的規則類似，但要<b>由右而左</b>掃描（跟後序的由左而右相反），運算元一樣直接輸出、運算子一樣跟堆疊頂端比較優先權，只是最後把輸出結果整個反過來才是答案。方向相反很容易搞混，建議先把後序的邏輯練熟，之後再挑戰前序。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">07</span>（延伸）用 Stack 計算後序運算式</h2>
+  
+<p>我們已經知道怎麼把中序轉成後序了。那如果拿到一個後序運算式，要怎麼用堆疊直接算出答案呢？這一節把整條路徑串起來：<b>Stack → 後序 → Push/Pop → 電腦算出結果</b>。</p>
+<p>規則比轉換還簡單：</p>
+<ul class="tidy">
+  <li><b>遇到運算元</b> → 直接 Push</li>
+  <li><b>遇到運算子</b> → Pop 兩個運算元、計算出結果，再把結果 Push 回堆疊</li>
+  <li><b>掃描完畢</b> → 堆疊裡剩下的唯一一個值，就是答案</li>
+</ul>
+<p>以 <code>3 4 + 2 *</code>（也就是中序的 <code>(3+4)*2</code>）為例，手動追蹤一次：</p>
+<div class="table-wrap">
+<table class="center stackstep-table">
+<thead><tr><th>讀到</th><th>動作</th><th>堆疊內容（由底到頂）</th></tr></thead>
+<tbody>
+<tr><td class="stk">3</td><td>運算元 → Push</td><td class="stk">3</td></tr>
+<tr><td class="stk">4</td><td>運算元 → Push</td><td class="stk">3, 4</td></tr>
+<tr><td class="stk">+</td><td>運算子 → Pop 4、Pop 3，計算 3+4=7，Push 7</td><td class="stk">7</td></tr>
+<tr><td class="stk">2</td><td>運算元 → Push</td><td class="stk">7, 2</td></tr>
+<tr><td class="stk">*</td><td>運算子 → Pop 2、Pop 7，計算 7*2=14，Push 14</td><td class="stk">14</td></tr>
+<tr><td class="stk">（讀完）</td><td>堆疊只剩一個值，就是答案</td><td class="stk">14 ✅</td></tr>
+</tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">計算後序運算式</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def eval_postfix(tokens):
+    stack = []
+    for t in tokens:
+        if t in "+-*/":
+            b = stack.pop()
+            a = stack.pop()
+            if t == "+": stack.append(a + b)
+            elif t == "-": stack.append(a - b)
+            elif t == "*": stack.append(a * b)
+            elif t == "/": stack.append(a / b)
+        else:
+            stack.append(int(t))
+    return stack.pop()
+
+expr = "3 4 + 2 *".split()
+print(eval_postfix(expr))   # 14</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int evalPostfix(string expr){
+    stack&lt;int&gt; st;
+    stringstream ss(expr);
+    string token;
+    while (ss &gt;&gt; token){
+        if (token=="+" || token=="-" || token=="*" || token=="/"){
+            int b = st.top(); st.pop();
+            int a = st.top(); st.pop();
+            if (token=="+") st.push(a+b);
+            else if (token=="-") st.push(a-b);
+            else if (token=="*") st.push(a*b);
+            else st.push(a/b);
+        } else {
+            st.push(stoi(token));
+        }
+    }
+    return st.top();
+}
+
+int main(){
+    cout &lt;&lt; evalPostfix("3 4 + 2 *") &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+<div class="callout tip" style="text-align:center">
+<span class="t" style="justify-content:center;font-size:1rem">🧠 這一單元的完整心智模型</span>
+<p style="margin-top:10px;line-height:2.2">
+Stack（LIFO：後進先出）<br>
+↓<br>
+Push / Pop<br>
+↓<br>
+可以暫存「還沒處理完的東西」<br>
+↓<br>
+<b>括號配對</b>：最後開的括號要最先配對　｜　<b>運算式處理</b>：暫存還不能輸出的運算子<br>
+↓<br>
+中序 → 後序<br>
+↓<br>
+用 Stack 直接算出後序運算式的答案
+</p>
+<p style="margin-top:10px">括號配對、中序/前序/後序轉換、後序運算——這三個應用的共同核心都是同一件事：<b>LIFO</b>，而不是三個互不相關的主題。</p>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit05.html"><span class="dir">← 上一單元</span>05 資料結構(三) 佇列</a>
+  <a class="next" href="unit06b.html"><span class="dir">下一單元 →</span>附 堆疊 vs 佇列 比較</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 06：資料結構(四) 堆疊</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 15：演算法(七) 循序搜尋法｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="15">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 15</span></nav>
+<section class="unit-hero">
+  <span class="kicker">搜尋演算法篇　週次 16</span>
+  <h1>演算法(七) 循序搜尋法</h1>
+  <p>最直覺的搜尋方式：從頭到尾逐一比對。不需要資料先排序，但資料量大時效率不好。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能自己用 Python／C++ 寫出循序搜尋</li>
+<li>理解循序搜尋 O(n) 的時間複雜度</li>
+<li>知道什麼情境適合用循序搜尋</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>循序搜尋法 Sequential Search</h2>
+  
+<p>最直覺的搜尋方式：從頭到尾一個一個比對，找到就回傳位置，找不到就回傳 -1。<b>不需要資料先排序</b>，任何順序的資料都能用。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">循序搜尋</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def sequential_search(a, key):
+    for i in range(len(a)):
+        if a[i] == key:
+            return i
+    return -1
+
+data = [7, 2, 9, 4, 1, 8]
+print(sequential_search(data, 4))   # 3
+print(sequential_search(data, 99))  # -1</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int sequentialSearch(int a[], int n, int key){
+    for (int i = 0; i &lt; n; i++){
+        if (a[i] == key) return i;
+    }
+    return -1;
+}
+
+int main(){
+    int data[6] = {7, 2, 9, 4, 1, 8};
+    cout &lt;&lt; sequentialSearch(data, 6, 4) &lt;&lt; endl;
+    cout &lt;&lt; sequentialSearch(data, 6, 99) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>時間複雜度</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>情況</th><th>時間複雜度</th></tr></thead>
+<tbody>
+<tr><td>最好情況（第一個就找到）</td><td>O(1)</td></tr>
+<tr><td>最壞情況（最後一個或找不到）</td><td>O(n)</td></tr>
+<tr><td>平均情況</td><td>O(n)</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">💡 什麼時候一定要用循序搜尋？</span>
+<p>當資料<b>沒有排序</b>、而且只搜尋一次的時候——因為為了搜尋而先排序（至少 O(n log n)）反而更浪費。但如果同一份資料要搜尋很多次，先排序一次、之後都用二分搜尋，總體會更划算。</p></div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit14.html"><span class="dir">← 上一單元</span>14 演算法(六) 排序效能分析</a>
+  <a class="next" href="unit16.html"><span class="dir">下一單元 →</span>16 演算法(八) 二元搜尋法</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 15：演算法(七) 循序搜尋法</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

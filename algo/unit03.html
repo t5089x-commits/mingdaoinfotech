@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 03：資料結構(一) 陣列｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="3">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 03</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　新增單元</span>
+  <h1>資料結構(一) 陣列</h1>
+  <p>陣列是最基礎、最常用的資料結構。這一單元會介紹陣列的宣告、種類、記憶體位置計算公式（這部分是 C／C++ 底層概念，會特別標註），以及基本操作的時間複雜度。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解陣列的定義與使用時機</li>
+<li>能用 Python／C++ 宣告一維、二維、多維陣列</li>
+<li>理解陣列位置計算公式，並知道這是 C／C++ 的底層概念</li>
+<li>能反推二維陣列是 Row-major 還是 Column-major</li>
+<li>能說出陣列基本操作的時間複雜度，並理解陣列的優缺點</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>什麼是陣列？</h2>
+  
+<p>陣列（Array）是「有限個相同類型的變數」組成的有序集合，陣列中的每一個變數稱為<b>元素</b>。陣列是最簡單、也最常用的資料結構。</p>
+<p><b>什麼時候要用陣列？</b>當你需要處理「一大堆同性質的資料」時——例如全班 40 位學生的成績，與其宣告 40 個變數（score1, score2, ... score40），不如宣告<b>一個</b>陣列，用索引（index）去區分每一筆資料。</p>
+<div class="callout warn"><span class="t">🖥️ 這是 C／C++ 的規則：陣列佔用「連續」記憶體空間</span>
+<p>在 C／C++ 裡，陣列裡的每個元素會被安排在<b>連續</b>的記憶體位址上，這也是後面「位置計算」整節的理論基礎。<b>Python 的 list 不是這樣運作的</b>——Python 的 list 存的其實是一串「指向物件的參照」，物件本身可能散落在記憶體各處，list 只是照順序記住「這些物件在哪裡」。這個差異平常寫程式感覺不出來，但如果要深入理解「陣列位置計算」那幾節公式，務必記得那是 C／C++ 的底層規則，不是 Python 的實際運作方式。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>陣列的宣告</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">陣列宣告（含初始值）</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">number = [1, 2, 3]                 # 宣告 3 個元素的整數陣列
+score = [80.5, 50.9, 51.2, 90.6]     # 宣告 4 個元素的浮點數陣列
+astring = ["abc", "aaa"]              # 宣告 2 個元素的字串陣列
+
+x = [1, 2, 3, 4, 5]                    # 宣告時直接給初始值
+z = [[1,2,3,4], [5,6,7,8], [0,1,2,3]]  # 二維陣列也是直接寫進去
+a = []                                   # 空陣列
+b = [0] * 6                             # 6 個元素，全部預設為 0</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">int number[10];      // 宣告 10 個元素的整數陣列
+double score[10];    // 宣告 10 個元素的浮點數陣列
+char ascii[10];      // 宣告 10 個元素的字元陣列
+
+int x[5] = {1, 2, 3, 4, 5};            // 宣告時直接給初始值
+int z[3][4] = {{1,2,3,4},{5,6,7,8},{0,1,2,3}}; // 二維陣列
+int a[4] = {};                          // 全部預設為 0
+int b[6] = {0};                          // 第一個是 0，其餘也自動補 0</code></pre>
+</div>
+<p>索引值都是從 <code>0</code> 開始，最大索引值是「陣列大小 − 1」。</p>
+<div class="callout warn"><span class="t">🖥️ C／C++ 的規則：宣告時要先講好「大小」與「型態」</span>
+<p>C／C++ 宣告陣列時必須先決定好元素型態與陣列大小（例如 <code>int number[10]</code> 就固定是 10 格整數，之後不能隨意增減）。<b>Python 呢？</b>Python 的 list 不用事先宣告型態或大小，甚至同一個 list 裡可以放不同型態的資料（雖然不建議這樣做），長度也能隨時用 <code>append()</code>、<code>insert()</code> 之類的方法動態增減——這是 Python list 跟 C／C++ 陣列最大的差異之一。</p>
+</div>
+
+<h3>從記憶體的角度看：這就是兩者最大的差異</h3>
+<p>光看程式碼可能感覺差不多，但如果把「變數名稱、儲存位址、實際內容」畫出來，會發現兩者的記憶體配置方式完全不同：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🐍 Python list：位址可能是散落的</h4>
+    <svg viewBox="0 0 500 201" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;height:auto;display:block;margin:10px auto" role="img" aria-label="Python list 記憶體示意圖"><defs><marker id="memArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="var(--warn)"/></marker></defs><text x="60.0" y="12" text-anchor="middle" font-size="12" font-style="italic" fill="var(--text-faint)" font-weight="700">name of</text><text x="60.0" y="26" text-anchor="middle" font-size="12" font-style="italic" fill="var(--text-faint)" font-weight="700">variable</text><text x="195.0" y="18" text-anchor="middle" font-size="13" font-style="italic" fill="var(--text-faint)" font-weight="700">storage address</text><text x="305.0" y="18" text-anchor="middle" font-size="13" font-style="italic" fill="var(--text-faint)" font-weight="700">content</text><text x="10" y="60" font-size="14" font-weight="800" fill="var(--brand)">my_list</text><line x1="70" y1="56" x2="144" y2="56" stroke="var(--brand)" stroke-width="2" marker-end="url(#llArrow)"/><rect x="150" y="40" width="90" height="30" fill="var(--brand-soft)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="60" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">3000</text><rect x="260" y="40" width="90" height="30" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/><text x="305.0" y="60" text-anchor="middle" font-size="12.5" fill="var(--warn)" font-family="var(--mono)" font-weight="700">→8001</text><rect x="150" y="70" width="90" height="30" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="90" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">3008</text><rect x="260" y="70" width="90" height="30" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/><text x="305.0" y="90" text-anchor="middle" font-size="12.5" fill="var(--warn)" font-family="var(--mono)" font-weight="700">→9002</text><rect x="150" y="100" width="90" height="30" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="120" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">3016</text><rect x="260" y="100" width="90" height="30" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/><text x="305.0" y="120" text-anchor="middle" font-size="12.5" fill="var(--warn)" font-family="var(--mono)" font-weight="700">→7003</text><line x1="350" y1="55" x2="394" y2="27" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#memArrow)"/><rect x="400" y="12" width="70" height="30" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="435" y="26" text-anchor="middle" font-size="10" fill="var(--text-faint)" font-family="var(--mono)">8001</text><text x="435" y="39" text-anchor="middle" font-size="13" fill="var(--text)" font-weight="800">10</text><line x1="350" y1="85" x2="394" y2="89" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#memArrow)"/><rect x="400" y="74" width="70" height="30" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="435" y="88" text-anchor="middle" font-size="10" fill="var(--text-faint)" font-family="var(--mono)">9002</text><text x="435" y="101" text-anchor="middle" font-size="13" fill="var(--text)" font-weight="800">20</text><line x1="350" y1="115" x2="394" y2="151" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#memArrow)"/><rect x="400" y="136" width="70" height="30" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="435" y="150" text-anchor="middle" font-size="10" fill="var(--text-faint)" font-family="var(--mono)">7003</text><text x="435" y="163" text-anchor="middle" font-size="13" fill="var(--text)" font-weight="800">30</text><text x="435" y="186" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">實際資料散落各處，位址不連續</text></svg>
+    <p style="font-size:.85rem;color:var(--text-faint);margin-top:6px">list 本身（存放參照的那排格子）是連續的，但每一格存的是「地址」，指向的實際資料可能散落在記憶體各處，彼此不相鄰。</p>
+  </div>
+  <div class="tile"><h4>⚙️ C++ array：宣告就固定一整條</h4>
+    <svg viewBox="0 0 400 196" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;height:auto;display:block;margin:10px auto" role="img" aria-label="C++ array 記憶體示意圖"><defs><marker id="memArrow2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="var(--brand)"/></marker></defs><text x="60.0" y="12" text-anchor="middle" font-size="12" font-style="italic" fill="var(--text-faint)" font-weight="700">name of</text><text x="60.0" y="26" text-anchor="middle" font-size="12" font-style="italic" fill="var(--text-faint)" font-weight="700">variable</text><text x="195.0" y="18" text-anchor="middle" font-size="13" font-style="italic" fill="var(--text-faint)" font-weight="700">storage address</text><text x="305.0" y="18" text-anchor="middle" font-size="13" font-style="italic" fill="var(--text-faint)" font-weight="700">content</text><text x="10" y="60" font-size="14" font-weight="800" fill="var(--brand)">arr</text><line x1="45" y1="56" x2="144" y2="56" stroke="var(--brand)" stroke-width="2" marker-end="url(#memArrow2)"/><rect x="150" y="40" width="90" height="30" fill="var(--brand-soft)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="60" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">2000</text><rect x="260" y="40" width="90" height="30" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="305.0" y="60" text-anchor="middle" font-size="13" fill="var(--brand-strong)" font-family="var(--mono)" font-weight="800">10</text><rect x="150" y="70" width="90" height="30" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="90" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">2004</text><rect x="260" y="70" width="90" height="30" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="305.0" y="90" text-anchor="middle" font-size="13" fill="var(--brand-strong)" font-family="var(--mono)" font-weight="800">20</text><rect x="150" y="100" width="90" height="30" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="120" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">2008</text><rect x="260" y="100" width="90" height="30" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="305.0" y="120" text-anchor="middle" font-size="13" fill="var(--brand-strong)" font-family="var(--mono)" font-weight="800">30</text><rect x="150" y="130" width="90" height="30" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="195.0" y="150" text-anchor="middle" font-size="12.5" fill="var(--text)" font-family="var(--mono)">2012</text><rect x="260" y="130" width="90" height="30" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="305.0" y="150" text-anchor="middle" font-size="13" fill="var(--brand-strong)" font-family="var(--mono)" font-weight="800">40</text><text x="305.0" y="182" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">位址連續（每格 +4 byte），資料直接存在原地</text></svg>
+    <p style="font-size:.85rem;color:var(--text-faint);margin-top:6px">宣告的當下就決定了一整塊連續記憶體，每個元素的值直接存在對應的位址裡，中間沒有任何「轉一手」的過程。</p>
+  </div>
+</div>
+
+<div class="callout tip"><span class="t">🔗 這跟後面要學的「鏈結串列」有什麼關係？</span>
+<p>你會發現 Python 的 list，其實已經有點「不是傳統陣列」的味道了——它靠的是<b>參照（也就是位址）</b>把資料串起來，而不是資料本身緊鄰在一起。</p>
+<p>鏈結串列（下一單元）把這個概念再往前推一步：既然反正都要透過位址去找資料，那乾脆連「順序排列的位址」都不要了，每一筆資料自己額外存一個「下一筆資料在哪裡」的指標，資料要放在記憶體的哪裡都無所謂。<b>Python list 是「排好順序的參照集合」，鏈結串列則是「每個節點自己記得下一個在哪裡」</b>——這是後面單元會直接感受到的差異。</p>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>陣列的種類：一維／二維／多維</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">一維、二維、多維陣列</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python"># 一維陣列
+arr1 = [1, 2, 3]
+
+# 二維陣列：list 裡面包 list
+arr2 = [[1, 2, 3], [4, 5, 6]]
+print(arr2[1][2])   # 6，先取第 1 個 list，再取裡面的第 2 個元素
+
+# 多維陣列：可以一直包下去
+arr3 = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">int arr1[3] = {1, 2, 3};                       // 一維
+int arr2[2][3] = {{1,2,3}, {4,5,6}};             // 二維
+int arr3[2][2][2] = {{{1,2},{3,4}}, {{5,6},{7,8}}}; // 三維（多維）</code></pre>
+</div>
+<div class="callout warn"><span class="t">🖥️ C／C++ 的規則：二維陣列是「固定大小的格子」</span>
+<p>C／C++ 宣告 <code>int arr2[2][3]</code> 之後，這就是一塊固定 2×3、共 6 格的連續記憶體——這正是下一節「位置計算」公式能夠成立的原因。Python 的二維陣列（list 包 list）則是「每一個 list 各自獨立存在記憶體某處」，並沒有真正連續排列在一起，所以 Python 並不會、也不需要用「位置計算公式」去找元素，直接用 <code>arr2[i][j]</code> 存取即可，底層幫你處理好了。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">04</span>陣列的位置計算：一維陣列（C／C++ 底層概念）</h2>
+  
+<div class="callout warn"><span class="t">🖥️ 這整節都是 C／C++（甚至更底層）的規則</span>
+<p>接下來這幾節「位置計算」，講的是陣列在記憶體裡「連續排列」時，怎麼用數學公式算出某個元素實際的記憶體位址。這是 C／C++ 或組合語言等級的底層概念，<b>Python 完全不需要你自己算</b>——寫 <code>arr[i]</code>，Python 就直接幫你找到那個元素了。不過這是計算機科學的基本功、也是 APCS 常考的題型，一樣要學會。</p></div>
+<div class="callout tip"><span class="t">🏠 一個比喻：班級名冊 vs 門牌地址</span>
+<p><b>Python 的 list</b> 比較像拿著一張<b>班級名冊</b>：<code>arr[41]</code> 是「查名冊上第 41 號」，查到的是「這位同學家住哪裡」這筆資訊，還要<b>再</b>照著這個地址去找到他家、找到人——中間多轉了一手。</p>
+<p><b>C／C++ 的陣列</b>比較像是<b>門牌地址本身</b>：陣列宣告的時候，就直接是「XX 路 1～42 號」這種連續門牌，<code>arr[41]</code> 本身就是地址，不用再查名冊——想找隔壁號碼的家，直接往旁邊走就到了。</p>
+<p style="margin-top:8px;color:var(--text-faint);font-size:.9rem">⚠️ 小提醒：這不代表 Python 的 <code>arr[41]</code> 變成「要找很久」——查名冊、查地址兩個動作都還是「一步到位」（都是 O(1)，不會因為陣列變大而變慢）。差別是 C／C++ 只要走一步（直接到地址），Python 要走兩步（先查名冊、再到地址），實際跑起來 C／C++ 通常會快一些，但兩者在「時間複雜度」這個分類上其實是同一個等級。</p>
+</div>
+<p>公式裡的符號意義：</p>
+<ul class="tidy">
+  <li><code>A[n]</code> 表示陣列裡有 n 格元素</li>
+  <li><code>l0</code> 表示陣列的起始位址</li>
+  <li><code>l1</code> 表示陣列的第一個索引值</li>
+  <li><code>d</code> 表示每個元素的大小（byte 數）</li>
+</ul>
+<div class="callout tip" style="text-align:center">
+<span class="t" style="justify-content:center;font-size:1rem">📐 一維陣列位置公式</span>
+<p style="margin-top:8px;font-size:1.1rem;font-family:var(--mono);font-weight:800">A[i] 的位址 = l0 + (i − l1) × d</p>
+</div>
+<div class="exercise">
+  <h3>✏️ 練習</h3>
+  <ol>
+    <li>假設有個陣列，起始位置 A[0] = 100，d = 2，求 A[16] = ?
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>代入公式：A[16] = 100 + (16 − 0) × 2 = <b>132</b></p></div>
+    </li>    <li>假設有個陣列，起始位置 A[-3] = 100，d = 1，求 A[5] = ?
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>這裡 l1 = −3（索引可以是負的，只是起始索引剛好是 −3），代入公式：A[5] = 100 + (5 − (−3)) × 1 = 100 + 8 = <b>108</b></p></div>
+    </li>
+  </ol>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">05</span>陣列的位置計算：二維陣列</h2>
+  
+<p>二維陣列有兩種常見的記憶體排列方式：</p>
+<ul class="tidy">
+  <li><b>Row-major（以列為主）</b>：由上而下，一列一列讀入一維陣列</li>
+  <li><b>Column-major（以行為主）</b>：由左而右，一行一行讀入一維陣列</li>
+</ul>
+
+<div class="fc-fig"><svg viewBox="0 0 614 358" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:14px auto" role="img" aria-label="Row-major 與 Column-major 記憶體排列示意圖"><rect x="90" y="30" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="118.0" y="57.0" text-anchor="middle" font-size="12" fill="var(--text)">A[0][0]</text><rect x="146" y="30" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="174.0" y="57.0" text-anchor="middle" font-size="12" fill="var(--text)">A[0][1]</text><rect x="202" y="30" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="230.0" y="57.0" text-anchor="middle" font-size="12" fill="var(--text)">A[0][2]</text><rect x="90" y="74" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="118.0" y="101.0" text-anchor="middle" font-size="12" fill="var(--text)">A[1][0]</text><rect x="146" y="74" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="174.0" y="101.0" text-anchor="middle" font-size="12" fill="var(--text)">A[1][1]</text><rect x="202" y="74" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="230.0" y="101.0" text-anchor="middle" font-size="12" fill="var(--text)">A[1][2]</text><rect x="90" y="118" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="118.0" y="145.0" text-anchor="middle" font-size="12" fill="var(--text)">A[2][0]</text><rect x="146" y="118" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="174.0" y="145.0" text-anchor="middle" font-size="12" fill="var(--text)">A[2][1]</text><rect x="202" y="118" width="56" height="44" fill="var(--surface-2)" stroke="var(--brand)" stroke-width="2"/><text x="230.0" y="145.0" text-anchor="middle" font-size="12" fill="var(--text)">A[2][2]</text><text x="90" y="196" font-size="13" fill="var(--brand)" font-weight="700">Row-major（以列為主）記憶體排列順序</text><rect x="90" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="118.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,0</text><rect x="146" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="174.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,1</text><rect x="202" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="230.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,2</text><rect x="258" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="286.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,0</text><rect x="314" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="342.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,1</text><rect x="370" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="398.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,2</text><rect x="426" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="454.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,0</text><rect x="482" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="510.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,1</text><rect x="538" y="208" width="56" height="44" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="566.0" y="235.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,2</text><text x="90" y="282" font-size="13" fill="var(--accent)" font-weight="700">Column-major（以行為主）記憶體排列順序</text><rect x="90" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="118.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,0</text><rect x="146" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="174.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,0</text><rect x="202" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="230.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,0</text><rect x="258" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="286.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,1</text><rect x="314" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="342.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,1</text><rect x="370" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="398.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,1</text><rect x="426" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="454.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">0,2</text><rect x="482" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="510.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">1,2</text><rect x="538" y="294" width="56" height="44" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="566.0" y="321.0" text-anchor="middle" font-size="11.5" fill="var(--text)">2,2</text></svg></div>
+<div class="grid cols-2">
+  <div class="tile"><h4>Row-major 公式</h4>
+    <p style="font-family:var(--mono);font-weight:800">A[i][j] = l0 + ((i−l1)×n + (j−l2)) × d</p>
+    <p style="font-size:.85rem;color:var(--text-faint)">n 為每一列的元素個數</p>
+  </div>
+  <div class="tile"><h4>Column-major 公式</h4>
+    <p style="font-family:var(--mono);font-weight:800">A[i][j] = l0 + ((i−l1) + (j−l2)×m) × d</p>
+    <p style="font-size:.85rem;color:var(--text-faint)">m 為每一行的元素個數</p>
+  </div>
+</div>
+<div class="exercise">
+  <h3>✏️ 練習：Row-major</h3>
+  <ol>
+    <li>陣列 A[5][4]（也就是 5 列 4 行），第一個元素是 A[0][0]，l0=1000，d=1，求 A[3][2] = ?（Row-major）
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>n（每列元素數）= 4。代入公式：A[3][2] = 1000 + (3×4 + 2) × 1 = <b>1014</b></p></div>
+    </li>    <li>C 語言宣告 <code>float A[7][8]</code>（<code>sizeof(float)</code> = 4），已知 A[3][4] 的位址是 100，求 A[5][6] 的位址（Row-major，n=8）
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>不用重新代整條公式，直接算「位移量」更快：位移 = ((5×8+6) − (3×8+4)) × 4 = (46−28) × 4 = 72。所以 A[5][6] = 100 + 72 = <b>172</b></p></div>
+    </li>
+  </ol>
+</div>
+<div class="exercise">
+  <h3>✏️ 練習：Column-major</h3>
+  <ol>
+    <li>同樣是 A[5][4]，第一個元素 A[0][0]，l0=1000，d=1，求 A[3][2] = ?（這次是 Column-major）
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>m（每行元素數）= 5。代入公式：A[3][2] = 1000 + (3 + 2×5) × 1 = <b>1013</b></p></div>
+    </li>
+  </ol>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">06</span>進階挑戰：反推是 Row-major 還是 Column-major</h2>
+  
+<p>有些題目不會直接告訴你是 Row-major 還是 Column-major，要自己從位址資訊反推。先記住這個快速判斷技巧：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>條件</th><th>結論</th></tr></thead>
+<tbody>
+<tr><td>列數較大的元素，位址也較大</td><td>Row-major</td></tr>
+<tr><td>行數較大的元素，位址也較大</td><td>Column-major</td></tr>
+</tbody>
+</table>
+</div>
+<div class="exercise">
+  <h3>✏️ 快速判斷練習</h3>
+  <ol>
+    <li>A[3][5] = 14，A[5][3] = 22，是 Row-major 還是 Column-major？
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>比較位址與列數：14 < 22，列數 3 < 5——位址跟著列數變大，是 <b>Row-major</b>。</p></div>
+    </li>    <li>A[3][5] = 14，A[5][3] = 10，是 Row-major 還是 Column-major？
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>比較位址與行數：14 > 10，行數 5 > 3——位址跟著行數變大，是 <b>Column-major</b>。</p></div>
+    </li>    <li>A[3][5] = 14，A[5][7] = 33，能判斷嗎？
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>列數 3→5 變大、行數 5→7 也變大，位址也變大——列跟行同時變大，<b>無法只靠這兩點判斷</b>，需要更多資訊（例如再給一個位址）才能確定。</p></div>
+    </li>
+  </ol>
+</div>
+
+<p>如果題目給兩個位址，且無法直接用上面技巧判斷，就要代公式解聯立方程式。這裡示範一題完整過程：</p>
+<div class="callout tip"><span class="t">📝 範例：A[1][1]=2，A[2][3]=18，A[3][2]=28，求 A[4][5]</span>
+<p>先判斷 Row-major 或 Column-major：2 < 3（列 1→2 變大，位址也變大）、18 < 28（列 2→3，位址也變大）——判斷是 <b>Row-major</b>。</p>
+<p>因為 A[1][1] = 2，所以 l0=2, l1=1, l2=1。代入公式 <code>A[i][j] = l0 + ((i−l1)×n + (j−l2))×d</code> 解 n、d：</p>
+<p style="font-family:var(--mono)">A[2][3] = 2 + (1×n + 2)×d = 18　⟹　nd + 2d = 16　……(1)<br>
+A[3][2] = 2 + (2×n + 1)×d = 28　⟹　2nd + d = 26　……(2)</p>
+<p>(1)×2 − (2)：3d = 6 ⟹ <b>d = 2, n = 6</b></p>
+<p>代入 A[4][5]：A[4][5] = 2 + [(4−1)×6 + (5−1)]×2 = 2 + [18+4]×2 = 2 + 44 = <b>46</b></p>
+</div>
+
+<div class="callout tip"><span class="t">📝 範例：A[3][3]=121，A[6][4]=159，元素大小 d=1，求 A[4][5]</span>
+<p><b>先試 Row-major</b>：代入兩式相減，解出 n = 37/3（不是整數）→ <b>不是 Row-major</b>。</p>
+<p><b>再試 Column-major</b>：代入公式 <code>A[i][j] = l0 + ((i−l1) + (j−l2)×m)×d</code>，解出 m = 35（是整數）→ <b>是 Column-major</b>，且 l0 = 49。</p>
+<p>代入 A[4][5]：A[4][5] = 49 + [(4−1) + (5−1)×35] = 49 + [3+140] = <b>192</b></p>
+</div>
+<div class="callout warn"><span class="t">⚠ 這幾題已經是 APCS 檢定等級的難度</span>
+<p>這種「反推 Row/Column-major」的題型計算量較大，考試常出，建議多練習幾次上面的解題流程，熟悉「先試 Row-major、算出來不是整數就改試 Column-major」這個標準流程。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">07</span>陣列的基本操作</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">讀取與更新</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">arr = [1, 2, 3, 4, 5]
+print(arr[3])    # 讀取索引 3 的元素 → 4
+arr[3] = 10       # 更新索引 3 的元素為 10
+print(arr)         # [1, 2, 3, 10, 5]</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">int arr[5] = {1, 2, 3, 4, 5};
+cout &lt;&lt; arr[3] &lt;&lt; endl;   // 讀取，4
+arr[3] = 10;                 // 更新
+cout &lt;&lt; arr[3] &lt;&lt; endl;   // 10</code></pre>
+</div>
+<h3>插入元素</h3>
+<div class="callout tip"><span class="t">🖥️ C／C++ 的規則：固定陣列沒辦法插入，要用 vector</span>
+<p>C／C++ 的固定大小陣列（<code>int arr[5]</code>）宣告之後大小就固定死了，<b>沒有「插入」這個操作</b>。要有跟 Python list 一樣「可以動態增減」的能力，C++ 要改用標準函式庫的 <code>vector</code>（動態陣列）。</p></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">插入元素</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">my_list = [1, 2, 4, 5]
+my_list.append(6)          # 尾部插入 → [1, 2, 4, 5, 6]
+my_list.insert(2, 3)        # 中間插入（位置 2）→ [1, 2, 3, 4, 5, 6]</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;vector&gt;
+using namespace std;
+vector&lt;int&gt; myList = {1, 2, 4, 5};
+myList.push_back(6);                  // 尾部插入 → {1,2,4,5,6}
+myList.insert(myList.begin()+2, 3);   // 中間插入（位置2）→ {1,2,3,4,5,6}</code></pre>
+</div>
+<h3>刪除元素</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">刪除元素</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">my_list = [1, 2, 3, 4, 5]
+my_list.remove(3)            # 依照「值」刪除（找到第一個 3 並移除）→ [1, 2, 4, 5]
+
+my_list2 = [1, 2, 4, 5]
+del my_list2[1]                # 依照「索引」刪除位置 1 的元素 → [1, 4, 5]</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+vector&lt;int&gt; myList = {1, 2, 3, 4, 5};
+myList.erase(remove(myList.begin(), myList.end(), 3), myList.end()); // 依照「值」刪除
+
+vector&lt;int&gt; myList2 = {1, 2, 4, 5};
+myList2.erase(myList2.begin() + 1);   // 依照「索引」刪除位置 1 的元素</code></pre>
+</div>
+<h3>時間複雜度總表</h3>
+<div class="callout tip" style="margin-bottom:0"><span class="t">💡 Python list 跟 C++ vector 的時間複雜度是「同一套」</span>
+<p>下面這張表，Python 的 list 和 C++ 的 <code>vector</code> 適用的是<b>同一套時間複雜度</b>——兩者都是「動態陣列」，背後的設計策略基本相同。真正不一樣的是 C 的<b>固定陣列</b>：因為大小固定死了，「插入」「刪除（改變長度）」這兩件事根本做不到，沒有時間複雜度可言，只能重新宣告一個更大／更小的陣列，把資料整個複製過去。</p></div>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>操作</th><th>時間複雜度</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td>讀取元素</td><td>O(1)</td><td>直接用索引定位</td></tr>
+<tr><td>更新元素</td><td>O(1)</td><td>直接用索引定位</td></tr>
+<tr><td>尾部插入</td><td>O(1)</td><td>不影響其他元素位置（Python list／C++ vector 都是攤銷 O(1)）</td></tr>
+<tr><td>中間插入</td><td>O(n)</td><td>後面元素都要往後搬一格</td></tr>
+<tr><td>刪除（無排序要求，可用最後一個元素補位）</td><td>O(1)</td><td>把最後一個元素搬到被刪除的位置就好，不用管順序</td></tr>
+<tr><td>刪除（要維持原本順序）</td><td>O(n)</td><td>後面元素都要往前補位</td></tr>
+</tbody>
+</table>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">08</span>陣列的優缺點</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>✅ 優點</h4><p>可以直接用索引「隨機存取」任何一個元素，時間複雜度 O(1)，效率非常高。</p></div>
+  <div class="tile"><h4>⚠️ 缺點</h4><p>插入與刪除元素（尤其是中間位置）會導致大量元素被移動，效率較差。</p></div>
+</div>
+<p class="bf-note">💡 結論：陣列適合用在「讀取操作多、寫入操作少」的資料。如果需要頻繁地在中間插入或刪除資料，下一單元的<b>鏈結串列</b>會是更好的選擇——這也是我們接下來要學的主題。</p>
+
+</section>
+<div class="unit-nav">
+  <a href="unit02b.html"><span class="dir">← 上一單元</span>附 函式、串列與輸入技巧（高一補充）</a>
+  <a class="next" href="unit04.html"><span class="dir">下一單元 →</span>04 資料結構(二) 鏈結串列</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 03：資料結構(一) 陣列</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

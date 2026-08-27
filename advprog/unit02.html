@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 2：Python 前導複習（一）變數與資料型態｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="2">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 2</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 2</span>
+  <h1>Python 前導複習（一）變數與資料型態</h1>
+  <p>變數、命名規則、資料型態、型別轉換、f-string</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能在 VS Code 建立並執行一支 .py 程式</li>
+<li>能正確宣告變數，並遵守變數命名規則</li>
+<li>認識 int／float／bool／str／list／dict 等基本資料型態，並用 type() 查詢</li>
+<li>能做型別轉換（casting），並用 f-string 做格式化輸出</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>先動手：VS Code 快速上手</h2>
+  
+<p>這三個單元是「複習」，節奏會比較快，重點放在動手寫、動手跑。先確認你能完成這個流程：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">📁</span>建立資料夾</h4><p>在桌面或文件夾建立一個 <code>python_review</code> 資料夾，之後的程式都存在這裡。</p></div>
+  <div class="tile"><h4><span class="ico">📄</span>新增 .py 檔</h4><p>在 VS Code 開啟這個資料夾，新增 <code>review01.py</code>。</p></div>
+  <div class="tile"><h4><span class="ico">▶️</span>執行程式</h4><p>存檔後按右上角 ▶，或在終端機輸入 <code>python review01.py</code>。</p></div>
+  <div class="tile"><h4><span class="ico">🔁</span>邊改邊跑</h4><p>改一行、存檔、再執行一次，養成「小步快跑」的習慣，比一次寫完整支程式再測試更容易抓到問題。</p></div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>變數 Variable</h2>
+  
+<p>變數用來<strong>存放資料</strong>，可以想成一個貼了名字的箱子：用指定運算子 <code>=</code> 把右邊的值放進左邊的箱子。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = 1
+print(x)          # 1
+
+a = b = c = 20    # 一次把 20 指定給 a、b、c
+age, name = 17, "小明"   # 同時指定不同的值
+
+a = 10
+a = a + 5         # 取出 a、加 5、再存回 a
+print(a)          # 15</code></pre>
+</div>
+<h3>命名規則</h3>
+<ul class="tidy">
+  <li>首字必須是字母、底線 <code>_</code> 或中文，其後可加數字。</li>
+  <li>區分大小寫：<code>age</code> 與 <code>Age</code> 是不同變數。</li>
+  <li>不能使用 Python 保留字（如 <code>if</code>、<code>for</code>）當變數名。</li>
+  <li>盡量避免用內建函式名稱當變數（如 <code>list</code>、<code>str</code>、<code>print</code>），否則會把它的原本功能蓋掉。</li>
+</ul>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>合法命名 ✅</th><th>不合法命名 ❌</th><th>為什麼不合法</th></tr></thead>
+  <tbody><tr><td><code>score</code></td><td><code>2score</code></td><td>首字不能是數字</td></tr><tr><td><code>total_price</code></td><td><code>total price</code></td><td>名稱中不能有空白</td></tr><tr><td><code>my_list</code></td><td><code>list</code></td><td>與內建函式同名，會蓋掉原本功能</td></tr></tbody>
+</table>
+</div>
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>資料型態 Data Type</h2>
+  
+<p>用 <code>type()</code> 可以查看某個值是什麼型別：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>分類</th><th>型別</th><th>說明</th><th>範例</th></tr></thead>
+  <tbody><tr><td>數值型</td><td><code>int</code> 整數</td><td>沒有小數點</td><td><code>1</code>、<code>-20</code></td></tr><tr><td>數值型</td><td><code>float</code> 浮點數</td><td>帶小數點</td><td><code>1.5</code>、<code>3.14</code></td></tr><tr><td>數值型</td><td><code>bool</code> 布林值</td><td>只有真／假兩種</td><td><code>True</code>、<code>False</code></td></tr><tr><td>字串型</td><td><code>str</code> 字串</td><td>用引號括住的文字</td><td><code>"Hello"</code></td></tr><tr><td>容器型</td><td><code>list</code> 串列</td><td>一串有順序的資料</td><td><code>[1, 2, 3]</code></td></tr><tr><td>容器型</td><td><code>dict</code> 字典</td><td>「鍵 → 值」對應的資料</td><td><code>{"name": "小明"}</code></td></tr></tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = 1
+print(x, type(x))          # int
+
+y = 1.5
+print(y, type(y))          # float
+
+flag = True
+print(flag, type(flag))    # bool
+
+name = "小明"
+print(name, type(name))    # str</code></pre>
+</div>
+<div class="callout tip"><span class="t">🔎 動態型別</span>
+<p>Python 是<strong>動態型別</strong>：型態由「指派的值」決定，同一個變數之後可以改放不同型態的值，不需要事先宣告。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">a = 10
+print(a, type(a))   # int
+a = 3.2
+print(a, type(a))   # float —— 同一個 a，型別跟著「值」改變
+a = "換成字串了"
+print(a, type(a))   # str</code></pre>
+</div></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>型別轉換 Casting</h2>
+  
+<p>把一個值從一種型態轉成另一種，稱為<strong>轉型（casting）</strong>：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>函式</th><th>作用</th><th>例子</th></tr></thead>
+  <tbody><tr><td><code>int(x)</code></td><td>轉成整數（小數<strong>直接捨去</strong>）</td><td><code>int(3.9)</code> → <code>3</code></td></tr><tr><td><code>float(x)</code></td><td>轉成浮點數</td><td><code>float(5)</code> → <code>5.0</code></td></tr><tr><td><code>bool(x)</code></td><td>轉成布林值</td><td><code>bool(0)</code> → <code>False</code></td></tr><tr><td><code>str(x)</code></td><td>轉成字串</td><td><code>str(100)</code> → <code>"100"</code></td></tr></tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = 54.87
+y = int(x)
+print(x)   # 54.87
+print(y)   # 54  （.87 被直接丟掉，不是四捨五入！）</code></pre>
+</div>
+<p>💭 <strong>先自己猜猜看：</strong>下面這幾行 <code>bool()</code> 會印出 <code>True</code> 還是 <code>False</code>？</p>
+<div class="quizrow"><code>print(bool(""))</code><button type="button" class="quiz-btn" onclick="var a=this.nextElementSibling;a.hidden=!a.hidden;this.textContent=a.hidden?'🤔 看答案':'🙈 收起'">🤔 看答案</button><span class="quiz-ans" hidden>→ <span class="F">False</span>：空字串（裡面完全沒有字）算 False。</span></div>
+<div class="quizrow"><code>print(bool(0))</code><button type="button" class="quiz-btn" onclick="var a=this.nextElementSibling;a.hidden=!a.hidden;this.textContent=a.hidden?'🤔 看答案':'🙈 收起'">🤔 看答案</button><span class="quiz-ans" hidden>→ <span class="F">False</span>：數字 0 算 False。</span></div>
+<div class="quizrow"><code>print(bool("False"))</code><button type="button" class="quiz-btn" onclick="var a=this.nextElementSibling;a.hidden=!a.hidden;this.textContent=a.hidden?'🤔 看答案':'🙈 收起'">🤔 看答案</button><span class="quiz-ans" hidden>→ <span class="T">True</span>：小心陷阱！<code>"False"</code> 是「非空字串」，只要字串裡有字就是 True，跟裡面寫的字是不是「False」無關。</span></div>
+<div class="callout"><span class="t">規則</span>
+<p>空字串、<code>0</code>、<code>None</code>（還有空的容器，如 <code>[]</code>、<code>{}</code>）會是 <code>False</code>；其餘全部都是 <code>True</code>。</p></div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>格式化輸出：f-string</h2>
+  
+<p>要把變數的值「排版」進一段文字裡，最方便的方式是 <strong>f-string</strong>：在字串前面加上 <code>f</code>，用 <code>{變數}</code> 把值嵌進去。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = "小明"
+age = 17
+score = 88.666
+
+print(f"我是{name}，今年{age}歲。")
+print(f"我的分數是{score:.1f}分")   # :.1f 保留小數點後 1 位 → 88.7分</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 小技巧：:.1f／:.2f</span>
+<p><code>{變數:.1f}</code> 表示四捨五入到小數點後 1 位，<code>.2f</code> 就是 2 位，畫圖表、算平均分數時非常常用。</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 小挑戰</h3>
+  
+<ol>
+  <li>用 <code>input()</code> 讀取使用者輸入的姓名與年齡（年齡記得轉成 <code>int</code>）。</li>
+  <li>用 f-string 印出一句自我介紹，例如「我是小明，今年 17 歲」。</li>
+  <li>算出「10 年後的年齡」並印出來。</li>
+</ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = input("你的名字是？")
+age = int(input("你的年齡是？"))
+
+print(f"我是{name}，今年{age}歲。")
+print(f"10 年後我 {age + 10} 歲。")</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit01.html"><div class="dir">← 上一單元</div><div class="ttl">課程總覽＋專題預告</div></a>
+    <a class="next" href="unit03.html"><div class="dir">下一單元 →</div><div class="ttl">Python 前導複習（二）運算子與判斷</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

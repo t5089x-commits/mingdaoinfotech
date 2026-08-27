@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 8：專題啟動——政府開放資料探索｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="8">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 8</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 6　單元 8</span>
+  <h1>專題啟動——政府開放資料探索</h1>
+  <p>認識開放資料平台、下載資料、選定專題主題</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識台灣常見的政府開放資料平台與用途</li>
+<li>能在平台上搜尋、篩選、下載 CSV 等格式的資料</li>
+<li>能用 pandas 讀取下載的資料並用 head() 初步檢視</li>
+<li>能依「時間趨勢／類別比較／地理分布」等角度發想專題主題</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>為什麼用「政府開放資料」？</h2>
+  <div class="callout"><span class="t">✅ 真實、公開、可信、免費</span>
+
+<p>政府開放資料平台上的資料，來自各政府機關的統計與調查，通常附有清楚的<strong>欄位說明文件</strong>，資料來源明確、品質有把關，很適合作為專題分析的素材——比自己隨便從網路上找一份不知道出處的資料可靠得多。</p>
+</div>
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>常用平台</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">🗂️</span>政府資料開放平臺</h4><p>全國性的資料入口，各部會的公開資料集大多可以在這裡找到，支援關鍵字搜尋與格式篩選（CSV／JSON／API⋯）。</p><a class="video-link-btn" href="https://data.gov.tw" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+  <div class="tile"><h4><span class="ico">🌤️</span>氣象資料開放平臺</h4><p>中央氣象署提供的氣象觀測、天氣預報、地震等資料，時間序列資料很適合拿來畫折線圖。</p><a class="video-link-btn" href="https://opendata.cwa.gov.tw" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+  <div class="tile"><h4><span class="ico">🏙️</span>臺北市資料大平臺</h4><p>台北市政府的開放資料平台，各縣市大多也有類似的平台，可以搜尋「縣市名 + 開放資料」找到。</p><a class="video-link-btn" href="https://data.taipei" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+  <div class="tile"><h4><span class="ico">🏛️</span>內政部資料開放平臺</h4><p>人口、土地、戶政等資料，適合做人口變化、地理分布類的專題。</p><a class="video-link-btn" href="https://data.moi.gov.tw" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>資料蒐集流程</h2>
+  
+<div class="grid cols-4">
+  <div class="tile"><h4><span class="ico">①</span>找主題</h4><p>先想一個你感興趣的問題（見單元 1 的暖身），再去想「哪個機關可能有這種資料」。</p></div>
+  <div class="tile"><h4><span class="ico">②</span>搜尋關鍵字</h4><p>到平台首頁用關鍵字搜尋（如「空氣品質」「電影票房」），篩選檔案格式為 CSV。</p></div>
+  <div class="tile"><h4><span class="ico">③</span>下載資料</h4><p>把 CSV 檔下載到你的專題資料夾，順手看一下平台附的欄位說明文件。</p></div>
+  <div class="tile"><h4><span class="ico">④</span>用 pandas 檢視</h4><p>讀進來後先用 <code>head()</code> 看看長什麼樣子，確認欄位、資料筆數符合預期。</p></div>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+df = pd.read_csv("你下載的檔案.csv")
+print(df.head())        # 看前 5 筆，確認欄位對不對
+print(df.shape)         # (列數, 欄數)
+print(df.columns)       # 有哪些欄位</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 常見小狀況</span>
+<p>政府資料的編碼有時不是 UTF-8（尤其舊資料），讀取時若出現亂碼，可以試試看 <code>pd.read_csv("檔名.csv", encoding="big5")</code> 或 <code>encoding="utf-8-sig"</code>。</p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>專題主題發想</h2>
+  
+<p>還沒想法的話，可以參考這些方向：</p>
+<div class="grid cols-3">
+  <div class="tile"><h4><span class="ico">🌫️</span>空氣品質</h4><p>各縣市 PM2.5 濃度隨時間的變化</p></div>
+  <div class="tile"><h4><span class="ico">🏪</span>超商分布</h4><p>各縣市超商家數比較，畫成柱狀圖</p></div>
+  <div class="tile"><h4><span class="ico">🎬</span>電影票房</h4><p>近期上映電影的票房排行</p></div>
+  <div class="tile"><h4><span class="ico">👪</span>人口變化</h4><p>縣市人口逐年增減的趨勢</p></div>
+  <div class="tile"><h4><span class="ico">🌡️</span>氣候變遷</h4><p>某地區近年均溫的長期走勢</p></div>
+  <div class="tile"><h4><span class="ico">🚲</span>交通觀察</h4><p>YouBike 各站點的借還車熱點</p></div>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>回顧範例作品</h2>
+  
+<p>回到單元 1 看過的範例：<strong>景氣指標綜合分析</strong>，它的資料來自政府公開的景氣指標統計，用折線圖呈現領先、同時、落後指標的長期走勢——這正是「時間趨勢型」專題的一個好示範。</p>
+<div class="grid cols-1">
+  <div class="tile"><h4><span class="ico">📄</span>再看一次範例作品</h4><p>留意它是怎麼說明資料來源、怎麼描述圖表看到的重點。</p><a class="video-link-btn" href="assets/examples/景氣指標綜合分析.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 專題檢核表</h3>
+  
+<p>在動手畫圖之前，先確認以下幾件事：</p>
+<ol>
+  <li>我的主題是什麼？我想回答什麼問題？</li>
+  <li>資料從哪個平台、哪個資料集下載？</li>
+  <li>用 <code>df.head()</code> 看過了嗎？欄位名稱、資料型態合理嗎？</li>
+  <li>這份資料有幾筆？涵蓋的時間範圍／類別範圍是什麼？</li>
+  <li>我打算用哪種圖表呈現？為什麼？（下一單元會有完整的選圖指南）</li>
+</ol>
+
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit07.html"><div class="dir">← 上一單元</div><div class="ttl">Matplotlib 基本使用</div></a>
+    <a class="next" href="unit09.html"><div class="dir">下一單元 →</div><div class="ttl">專題實作工作坊——pandas × Matplotlib 視覺化分析</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

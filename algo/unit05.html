@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 05：資料結構(三) 佇列｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="5">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 05</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　週次 3</span>
+  <h1>資料結構(三) 佇列</h1>
+  <p>佇列是「先進先出」的資料結構，排隊買東西、遊戲配對都是這個概念。這一單元會介紹基本操作、環狀佇列的原理，以及 Python 的兩種實作方式。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解 FIFO（先進先出）的概念，並能舉出生活中的例子</li>
+<li>能操作 Enqueue／Dequeue，並知道 Python／C++ 對應語法</li>
+<li>理解環狀佇列為什麼存在，以及它的容量陷阱</li>
+<li>能用手刻環狀陣列與 collections.deque 兩種方式實作佇列</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>佇列 Queue：先進先出 (FIFO)</h2>
+  
+<p>佇列就像排隊買飲料：先來的人先買到（先進先出，First In First Out）。資料從 <b>Rear（尾端）</b>加入，從 <b>Front（前端）</b>取出。</p>
+<div class="boxflow">
+  <div class="bf-step io"><span>Front → [1, 2, 3] ← Rear</span></div>
+</div>
+<div class="callout tip"><span class="t">🎮 生活中的例子：遊戲伺服器排隊</span>
+<p>玩線上遊戲時常看到「配對中…目前排隊人數 87 人」——這就是佇列！最早按下「開始配對」的玩家會最先被配對進遊戲（先進先出），伺服器內部通常就是用佇列在管理這個排隊名單。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>基本操作：Python 與 C++ 對照</h2>
+  <div class="table-wrap">
+<table class="center">
+<thead><tr><th>操作</th><th>Python</th><th>C++</th></tr></thead>
+<tbody>
+<tr><td>Enqueue（入列，加到 Rear）</td><td><code><span class="var-muted">q</span>.append(<span class="var-muted">x</span>)</code></td><td><code><span class="var-muted">q</span>.push(<span class="var-muted">x</span>)</code></td></tr>
+<tr><td>Dequeue（出列，從 Front 取出）</td><td><code><span class="var-muted">q</span>.popleft()</code></td><td><code><span class="var-muted">q</span>.pop()  // 取出前呼叫 <span class="var-muted">q</span>.front() 拿值</code></td></tr>
+<tr><td>查看 Front</td><td><code>q[0]</code></td><td><code><span class="var-muted">q</span>.front()</code></td></tr>
+<tr><td>查看 Rear</td><td><code>q[-1]</code></td><td><code><span class="var-muted">q</span>.back()</code></td></tr>
+<tr><td>IsEmpty（是否為空）</td><td><code>len(<span class="var-muted">q</span>) == 0</code></td><td><code><span class="var-muted">q</span>.empty()</code></td></tr>
+<tr><td>大小</td><td><code>len(<span class="var-muted">q</span>)</code></td><td><code><span class="var-muted">q</span>.size()</code></td></tr>
+
+</tbody>
+</table>
+</div><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">佇列基本操作</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">from collections import deque
+
+q = deque()
+q.append(1)          # enqueue
+q.append(2)
+q.append(3)
+print(q)              # deque([1, 2, 3])
+
+first = q.popleft()   # dequeue，取出 Front
+print("取出：", first, "剩下：", q)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+int main(){
+    queue&lt;int&gt; q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    cout &lt;&lt; "front: " &lt;&lt; q.front() &lt;&lt; endl;
+    q.pop();
+    cout &lt;&lt; "剩下的 front: " &lt;&lt; q.front() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">03</span>環狀佇列 Circular Queue</h2>
+  
+<p>如果用一般陣列實作佇列，Dequeue 之後前面會空出格子，但 Rear 只會一直往右移動，用著用著就會誤判「已滿」——即使前面明明有空位。解法是把陣列頭尾相接，變成環狀佇列，讓 Rear 可以繞回陣列開頭繼續使用。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>📊 為什麼只能真正用 n-1 格</h4><svg viewBox="0 0 260 260" style="width:100%;max-width:320px;height:auto;display:block;margin:14px auto"><circle cx="130" cy="130" r="90" fill="none" stroke="var(--text-faint)" stroke-width="2.5" stroke-dasharray="5 5"/><rect x="106.0" y="22.0" width="48" height="36" rx="6" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/><text x="130.0" y="45.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">A</text><rect x="183.94228634059948" y="67.0" width="48" height="36" rx="6" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/><text x="207.94228634059948" y="90.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">B</text><rect x="183.94228634059948" y="157.0" width="48" height="36" rx="6" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/><text x="207.94228634059948" y="180.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">C</text><rect x="106.0" y="202.0" width="48" height="36" rx="6" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/><text x="130.0" y="225.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">D</text><rect x="28.05771365940052" y="157.0" width="48" height="36" rx="6" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/><text x="52.05771365940052" y="180.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">E</text><rect x="28.05771365940052" y="67.0" width="48" height="36" rx="6" fill="var(--surface-2)" stroke="var(--warn)" stroke-width="2.5"/><text x="52.05771365940052" y="90.0" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">(空)</text><text x="130.0" y="10.0" text-anchor="middle" font-size="11" font-weight="800" fill="var(--brand-strong)">Front</text><text x="62.05771365940052" y="209.0" text-anchor="middle" font-size="11" font-weight="800" fill="var(--brand-strong)">Rear</text><text x="52.05771365940052" y="119.0" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--warn)">刻意留空</text></svg></div>
+  <div class="tile"><h4>⚠ 陷阱說明</h4>
+    <p>環狀佇列要留一格「刻意不用」，用來區分「全空」跟「全滿」——因為這兩種狀態下 Front 和 Rear 都可能指向同一格，如果不留空位，程式沒辦法分辨「這是空的還是滿的」。所以容量 6 的環狀佇列，實際上只能放 5 筆資料。</p>
+  </div>
+</div>
+<div class="callout tip"><span class="t">🎮 環狀佇列解決了什麼問題？</span>
+<p>手機遊戲的「連續技 / 招式候選清單」、音樂播放器的「循環播放清單」，都會用到環狀佇列的概念——固定大小的空間、用完了就繞回開頭繼續用，不需要無限增長的記憶體。例如節奏遊戲判定最近 N 個節拍的輸入，就常用固定大小的環狀緩衝區（circular buffer，跟環狀佇列是同樣的概念）不斷覆蓋最舊的資料。</p></div>
+
+<h3>🚶 先看基本概念：佇列怎麼排隊</h3>
+<p>在看記憶體細節之前，先用 A~G 七個人排隊，複習一次佇列最基本的規則——先排的人先離開：</p>
+<div class="qf-demo" id="qf-demo">
+  <div class="qf-lane" id="qf-lane"><span class="qf-empty-hint">（佇列是空的）</span></div>
+  <div class="qf-status" id="qf-status">按下播放，看 A~G 依序排隊、依序離開</div>
+  <div class="qf-controls">
+    <button type="button" class="vs-btn" id="qf-play">▶ 播放</button>
+    <button type="button" class="vs-btn ghost" id="qf-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"q": [], "note": "尚未開始——這是最基本的佇列概念：先進去的先出來"}, {"q": ["A"], "note": "A 進入佇列排隊　（Enqueue）"}, {"q": ["A", "B"], "note": "B 進入佇列排隊　（Enqueue）"}, {"q": ["A", "B", "C"], "note": "C 進入佇列排隊　（Enqueue）"}, {"q": ["B", "C"], "note": "A 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": ["B", "C", "D"], "note": "D 進入佇列排隊　（Enqueue）"}, {"q": ["C", "D"], "note": "B 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": ["C", "D", "E"], "note": "E 進入佇列排隊　（Enqueue）"}, {"q": ["D", "E"], "note": "C 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": ["D", "E", "F"], "note": "F 進入佇列排隊　（Enqueue）"}, {"q": ["D", "E", "F", "G"], "note": "G 進入佇列排隊　（Enqueue）"}, {"q": ["E", "F", "G"], "note": "D 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": ["F", "G"], "note": "E 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": ["G"], "note": "F 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}, {"q": [], "note": "G 排隊結束，離開佇列　（Dequeue，一定是最前面的先走）"}];
+  var root = document.getElementById("qf-demo");
+  if(!root) return;
+  var lane = document.getElementById("qf-lane");
+  var status = document.getElementById("qf-status");
+  var playBtn = document.getElementById("qf-play");
+  var resetBtn = document.getElementById("qf-reset");
+  var i = 0, timer = null;
+
+  function render(){
+    var f = frames[i];
+    if (f.q.length === 0) {
+      lane.innerHTML = '<span class="qf-empty-hint">（佇列是空的）</span>';
+    } else {
+      lane.innerHTML = '<span class="qf-tag">Front →</span>';
+      f.q.forEach(function(ch){
+        var el = document.createElement("div");
+        el.className = "qf-slot";
+        el.textContent = ch;
+        lane.appendChild(el);
+      });
+      lane.innerHTML += '<span class="qf-tag">← Rear</span>';
+    }
+    status.textContent = f.note;
+  }
+
+  function stop(){
+    if (timer) { clearInterval(timer); timer = null; }
+    playBtn.textContent = "▶ 播放";
+  }
+
+  function play(){
+    if (timer) { stop(); return; }
+    if (i >= frames.length - 1) i = 0;
+    playBtn.textContent = "⏸ 暫停";
+    timer = setInterval(function(){
+      i++;
+      render();
+      if (i >= frames.length - 1) stop();
+    }, 1100);
+  }
+
+  playBtn.addEventListener("click", play);
+  resetBtn.addEventListener("click", function(){ stop(); i = 0; render(); });
+  render();
+})();
+</script>
+
+<h3>🧪 實際看記憶體位置：有環狀 vs 沒有環狀</h3>
+<p>假設有 6 格記憶體空間，位址從 <code>0x1000</code> 開始，每格間隔 4 byte。依序 Enqueue A~F 把它填滿，再 Dequeue 兩次（釋放 A、B），接著繼續 Enqueue G、H——點「下一步」，看看「沒有環狀」跟「有環狀」的差別：</p>
+<div class="cq-compare" id="cq-compare">
+  <div class="cq-panel linear">
+    <h4>🚫 沒有環狀（線性佇列）</h4>
+    <div class="cq-row" id="cq-lin-row"></div>
+    <div class="cq-note" id="cq-lin-note"></div>
+    <div class="cq-qstatus" id="cq-lin-qstatus"></div>
+  </div>
+  <div class="cq-panel circular">
+    <h4>✅ 有環狀（環狀佇列）</h4>
+    <div class="cq-row" id="cq-cir-row"></div>
+    <div class="cq-note" id="cq-cir-note"></div>
+    <div class="cq-qstatus" id="cq-cir-qstatus"></div>
+  </div>
+</div>
+<div class="cq-stepnum" id="cq-stepnum"></div>
+<div class="cq-controls">
+  <button type="button" class="vs-btn" id="cq-next">下一步 ▶</button>
+  <button type="button" class="vs-btn ghost" id="cq-reset">↺ 重來</button>
+</div>
+<script>
+(function(){
+  var payload = {"addrs": ["0x1000", "0x1004", "0x1008", "0x100C", "0x1010", "0x1014"], "linear": [{"arr": [null, null, null, null, null, null], "front": 0, "rear": 0, "note": "初始狀態，全部未使用", "entered": [], "left": [], "failed": [], "not_yet": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", null, null, null, null, null], "front": 0, "rear": 1, "note": "Enqueue A → 放入 index 0（0x1000）", "entered": ["A"], "left": [], "failed": [], "not_yet": ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", null, null, null, null], "front": 0, "rear": 2, "note": "Enqueue B → 放入 index 1（0x1004）", "entered": ["A", "B"], "left": [], "failed": [], "not_yet": ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", null, null, null], "front": 0, "rear": 3, "note": "Enqueue C → 放入 index 2（0x1008）", "entered": ["A", "B", "C"], "left": [], "failed": [], "not_yet": ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", null, null], "front": 0, "rear": 4, "note": "Enqueue D → 放入 index 3（0x100C）", "entered": ["A", "B", "C", "D"], "left": [], "failed": [], "not_yet": ["E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", "E", null], "front": 0, "rear": 5, "note": "Enqueue E → 放入 index 4（0x1010）", "entered": ["A", "B", "C", "D", "E"], "left": [], "failed": [], "not_yet": ["F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", "E", "F"], "front": 0, "rear": null, "note": "Enqueue F → 放入 index 5（0x1014）", "entered": ["A", "B", "C", "D", "E", "F"], "left": [], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, "B", "C", "D", "E", "F"], "front": 1, "rear": null, "note": "Dequeue → 取出 A（0x1000 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A"], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, "C", "D", "E", "F"], "front": 2, "rear": null, "note": "Dequeue → 取出 B（0x1004 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B"], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, "C", "D", "E", "F"], "front": 2, "rear": null, "note": "❌ Enqueue G 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B"], "failed": ["G"], "not_yet": ["H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, "C", "D", "E", "F"], "front": 2, "rear": null, "note": "❌ Enqueue H 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B"], "failed": ["G", "H"], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, "D", "E", "F"], "front": 3, "rear": null, "note": "Dequeue → 取出 C（0x1008 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C"], "failed": ["G", "H"], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, "E", "F"], "front": 4, "rear": null, "note": "Dequeue → 取出 D（0x100C 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D"], "failed": ["G", "H"], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, "E", "F"], "front": 4, "rear": null, "note": "❌ Enqueue I 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D"], "failed": ["G", "H", "I"], "not_yet": ["J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, "E", "F"], "front": 4, "rear": null, "note": "❌ Enqueue J 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D"], "failed": ["G", "H", "I", "J"], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, "F"], "front": 5, "rear": null, "note": "Dequeue → 取出 E（0x1010 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E"], "failed": ["G", "H", "I", "J"], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "Dequeue → 取出 F（0x1014 釋放，但之後無法再被使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J"], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue K 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K"], "not_yet": ["L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue L 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L"], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L"], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L"], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue M 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M"], "not_yet": ["N", "O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue N 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N"], "not_yet": ["O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N"], "not_yet": ["O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N"], "not_yet": ["O", "P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue O 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O"], "not_yet": ["P", "Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue P 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "not_yet": ["Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "not_yet": ["Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Dequeue 失敗！佇列是空的", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "not_yet": ["Q", "R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue Q 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"], "not_yet": ["R"]}, {"arr": [null, null, null, null, null, null], "front": 6, "rear": null, "note": "❌ Enqueue R 失敗！rear 已超出陣列範圍，即使前面有空位也無法使用", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B", "C", "D", "E", "F"], "failed": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"], "not_yet": []}], "circular": [{"arr": [null, null, null, null, null, null], "front": 0, "rear": 0, "note": "初始狀態，全部未使用", "entered": [], "left": [], "failed": [], "not_yet": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", null, null, null, null, null], "front": 0, "rear": 1, "note": "Enqueue A → 放入 index 0（0x1000）", "entered": ["A"], "left": [], "failed": [], "not_yet": ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", null, null, null, null], "front": 0, "rear": 2, "note": "Enqueue B → 放入 index 1（0x1004）", "entered": ["A", "B"], "left": [], "failed": [], "not_yet": ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", null, null, null], "front": 0, "rear": 3, "note": "Enqueue C → 放入 index 2（0x1008）", "entered": ["A", "B", "C"], "left": [], "failed": [], "not_yet": ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", null, null], "front": 0, "rear": 4, "note": "Enqueue D → 放入 index 3（0x100C）", "entered": ["A", "B", "C", "D"], "left": [], "failed": [], "not_yet": ["E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", "E", null], "front": 0, "rear": 5, "note": "Enqueue E → 放入 index 4（0x1010）", "entered": ["A", "B", "C", "D", "E"], "left": [], "failed": [], "not_yet": ["F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["A", "B", "C", "D", "E", "F"], "front": 0, "rear": 0, "note": "Enqueue F → 放入 index 5（0x1014）", "entered": ["A", "B", "C", "D", "E", "F"], "left": [], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, "B", "C", "D", "E", "F"], "front": 1, "rear": 0, "note": "Dequeue → 取出 A（0x1000 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A"], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, "C", "D", "E", "F"], "front": 2, "rear": 0, "note": "Dequeue → 取出 B（0x1004 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F"], "left": ["A", "B"], "failed": [], "not_yet": ["G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", null, "C", "D", "E", "F"], "front": 2, "rear": 1, "note": "Enqueue G → 放入 index 0（0x1000）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G"], "left": ["A", "B"], "failed": [], "not_yet": ["H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "C", "D", "E", "F"], "front": 2, "rear": 2, "note": "Enqueue H → 放入 index 1（0x1004）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H"], "left": ["A", "B"], "failed": [], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", null, "D", "E", "F"], "front": 3, "rear": 2, "note": "Dequeue → 取出 C（0x1008 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H"], "left": ["A", "B", "C"], "failed": [], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", null, null, "E", "F"], "front": 4, "rear": 2, "note": "Dequeue → 取出 D（0x100C 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H"], "left": ["A", "B", "C", "D"], "failed": [], "not_yet": ["I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", null, "E", "F"], "front": 4, "rear": 3, "note": "Enqueue I → 放入 index 2（0x1008）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I"], "left": ["A", "B", "C", "D"], "failed": [], "not_yet": ["J", "K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", "J", "E", "F"], "front": 4, "rear": 4, "note": "Enqueue J → 放入 index 3（0x100C）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "left": ["A", "B", "C", "D"], "failed": [], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", "J", null, "F"], "front": 5, "rear": 4, "note": "Dequeue → 取出 E（0x1010 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "left": ["A", "B", "C", "D", "E"], "failed": [], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", "J", null, null], "front": 0, "rear": 4, "note": "Dequeue → 取出 F（0x1014 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "left": ["A", "B", "C", "D", "E", "F"], "failed": [], "not_yet": ["K", "L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", "J", "K", null], "front": 0, "rear": 5, "note": "Enqueue K → 放入 index 4（0x1010）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"], "left": ["A", "B", "C", "D", "E", "F"], "failed": [], "not_yet": ["L", "M", "N", "O", "P", "Q", "R"]}, {"arr": ["G", "H", "I", "J", "K", "L"], "front": 0, "rear": 0, "note": "Enqueue L → 放入 index 5（0x1014）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "left": ["A", "B", "C", "D", "E", "F"], "failed": [], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": [null, "H", "I", "J", "K", "L"], "front": 1, "rear": 0, "note": "Dequeue → 取出 G（0x1000 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "left": ["A", "B", "C", "D", "E", "F", "G"], "failed": [], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": [null, null, "I", "J", "K", "L"], "front": 2, "rear": 0, "note": "Dequeue → 取出 H（0x1004 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "left": ["A", "B", "C", "D", "E", "F", "G", "H"], "failed": [], "not_yet": ["M", "N", "O", "P", "Q", "R"]}, {"arr": ["M", null, "I", "J", "K", "L"], "front": 2, "rear": 1, "note": "Enqueue M → 放入 index 0（0x1000）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"], "left": ["A", "B", "C", "D", "E", "F", "G", "H"], "failed": [], "not_yet": ["N", "O", "P", "Q", "R"]}, {"arr": ["M", "N", "I", "J", "K", "L"], "front": 2, "rear": 2, "note": "Enqueue N → 放入 index 1（0x1004）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"], "left": ["A", "B", "C", "D", "E", "F", "G", "H"], "failed": [], "not_yet": ["O", "P", "Q", "R"]}, {"arr": ["M", "N", null, "J", "K", "L"], "front": 3, "rear": 2, "note": "Dequeue → 取出 I（0x1008 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I"], "failed": [], "not_yet": ["O", "P", "Q", "R"]}, {"arr": ["M", "N", null, null, "K", "L"], "front": 4, "rear": 2, "note": "Dequeue → 取出 J（0x100C 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "failed": [], "not_yet": ["O", "P", "Q", "R"]}, {"arr": ["M", "N", "O", null, "K", "L"], "front": 4, "rear": 3, "note": "Enqueue O → 放入 index 2（0x1008）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "failed": [], "not_yet": ["P", "Q", "R"]}, {"arr": ["M", "N", "O", "P", "K", "L"], "front": 4, "rear": 4, "note": "Enqueue P → 放入 index 3（0x100C）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "failed": [], "not_yet": ["Q", "R"]}, {"arr": ["M", "N", "O", "P", null, "L"], "front": 5, "rear": 4, "note": "Dequeue → 取出 K（0x1010 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"], "failed": [], "not_yet": ["Q", "R"]}, {"arr": ["M", "N", "O", "P", null, null], "front": 0, "rear": 4, "note": "Dequeue → 取出 L（0x1014 釋放，等一下會被繞回來重複使用）", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "failed": [], "not_yet": ["Q", "R"]}, {"arr": ["M", "N", "O", "P", "Q", null], "front": 0, "rear": 5, "note": "Enqueue Q → 放入 index 4（0x1010）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "failed": [], "not_yet": ["R"]}, {"arr": ["M", "N", "O", "P", "Q", "R"], "front": 0, "rear": 0, "note": "Enqueue R → 放入 index 5（0x1014）　🔁 繞回開頭，重複使用剛剛釋放過的位置！", "entered": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"], "left": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], "failed": [], "not_yet": []}]};
+  var root = document.getElementById("cq-compare");
+  if(!root) return;
+  var addrs = payload.addrs;
+  var linFrames = payload.linear, cirFrames = payload.circular;
+  var linRow = document.getElementById("cq-lin-row");
+  var cirRow = document.getElementById("cq-cir-row");
+  var linNote = document.getElementById("cq-lin-note");
+  var cirNote = document.getElementById("cq-cir-note");
+  var linQ = document.getElementById("cq-lin-qstatus");
+  var cirQ = document.getElementById("cq-cir-qstatus");
+  var stepLabel = document.getElementById("cq-stepnum");
+  var nextBtn = document.getElementById("cq-next");
+  var resetBtn = document.getElementById("cq-reset");
+  var i = 0;
+
+  function renderRow(row, frame){
+    row.innerHTML = "";
+    frame.arr.forEach(function(v, idx){
+      var cell = document.createElement("div"); cell.className = "cq-cell";
+      var tag = document.createElement("div"); tag.className = "cq-tag";
+      if (frame.front === idx) tag.textContent = tag.textContent ? tag.textContent : "F";
+      if (frame.rear === idx) tag.textContent = tag.textContent ? tag.textContent + "/R" : "R";
+      var box = document.createElement("div"); box.className = "cq-box";
+      if (v !== null) { box.classList.add("filled"); box.textContent = v; }
+      else { box.textContent = "-"; }
+      var addr = document.createElement("div"); addr.className = "cq-addr"; addr.textContent = addrs[idx];
+      cell.appendChild(tag); cell.appendChild(box); cell.appendChild(addr);
+      row.appendChild(cell);
+    });
+  }
+
+  function renderQStatus(el, frame){
+    var inQueue = frame.entered.slice(frame.left.length);
+    var parts = [];
+    parts.push('<div class="qline"><span class="qlabel wait">\ud83d\udd50 \u76ee\u524d\u6b63\u5728\u6392\u968a\uff1a</span>' + (inQueue.length ? inQueue.join(', ') : '\uff08\u7121\uff09') + '</div>');
+    parts.push('<div class="qline"><span class="qlabel done">\u2705 \u5df2\u7d93\u6392\u5b8c\u968a\u96e2\u958b\uff1a</span>' + (frame.left.length ? frame.left.join(', ') : '\uff08\u7121\uff09') + '</div>');
+    if (frame.failed && frame.failed.length) {
+      parts.push('<div class="qline"><span class="qlabel fail">\u274c \u6392\u968a\u5931\u6557\u88ab\u62d2\u7d55\uff1a</span>' + frame.failed.join(', ') + '</div>');
+    }
+    parts.push('<div class="qline"><span class="qlabel notyet">\u23f3 \u9084\u6c92\u6392\u968a\uff1a</span>' + (frame.not_yet.length ? frame.not_yet.join(', ') : '\uff08\u7121\uff09') + '</div>');
+    el.innerHTML = parts.join('');
+  }
+
+  function render(){
+    var lf = linFrames[Math.min(i, linFrames.length-1)];
+    var cf = cirFrames[Math.min(i, cirFrames.length-1)];
+    renderRow(linRow, lf);
+    renderRow(cirRow, cf);
+    linNote.textContent = lf.note;
+    cirNote.textContent = cf.note;
+    renderQStatus(linQ, lf);
+    renderQStatus(cirQ, cf);
+    stepLabel.textContent = "步驟 " + i + " / " + (linFrames.length-1);
+    nextBtn.disabled = (i >= linFrames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < linFrames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script>
+<div class="callout warn"><span class="t">⚠ 重點：Rear 是「數字一直往前跑」還是「會繞回去」</span>
+<p>左邊（沒有環狀）的 Rear 指標一路往右走，走到底之後就再也回不去了，即使前面 <code>0x1000</code>、<code>0x1004</code> 這兩格已經被 Dequeue 釋放出來，Rear 也不會知道要回去用——所以判定「已滿」而失敗。右邊（有環狀）的 Rear 用「除以容量取餘數」的方式繞回開頭，於是能重複利用那兩格已經釋放的記憶體，繼續 Enqueue 成功。</p></div>
+
+<h3>對照程式碼：動畫背後實際跑的邏輯</h3>
+<p>上面動畫的每一步，其實就是在跑下面這兩段程式碼——差別只在 <code>enqueue</code>／<code>dequeue</code> 裡面那一行索引怎麼算。這裡用「函式 + global」來寫（跟補充單元教過的區域變數／全域變數是同一件事），還不需要用到 class：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🚫 沒有環狀（線性）</h4>
+    <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">線性佇列</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">data = [None] * 6
+front = 0
+rear = 0
+
+def enqueue(v):
+    global rear
+    if rear &gt;= len(data):
+        print("已滿！")
+        return
+    data[rear] = v
+    rear += 1          # 只會一直增加，不會回頭
+
+def dequeue():
+    global front
+    if front &gt;= rear:
+        print("空的！")
+        return None
+    v = data[front]
+    data[front] = None
+    front += 1
+    return v
+
+
+# 對照動畫的操作順序：填滿 A~F，Dequeue 兩次，再 Enqueue G、H
+for ch in "ABCDEF":
+    enqueue(ch)
+dequeue()          # 取出 A
+dequeue()          # 取出 B
+enqueue("G")        # ❌ 已滿！（即使前面兩格是空的）
+enqueue("H")        # ❌ 已滿！</code></pre>
+</div>
+  </div>
+  <div class="tile"><h4>✅ 有環狀（環狀）</h4>
+    <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">環狀佇列</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">data = [None] * 6
+front = 0
+rear = 0
+count = 0
+
+def enqueue(v):
+    global rear, count
+    if count == len(data):
+        print("已滿！")
+        return
+    data[rear] = v
+    # 關鍵：取餘數，繞回開頭
+    rear = (rear + 1) % len(data)
+    count += 1
+
+def dequeue():
+    global front, count
+    if count == 0:
+        print("空的！")
+        return None
+    v = data[front]
+    data[front] = None
+    # 關鍵：取餘數，繞回開頭
+    front = (front + 1) % len(data)
+    count -= 1
+    return v
+
+
+# 對照動畫的操作順序：填滿 A~F，Dequeue 兩次，再 Enqueue G、H
+for ch in "ABCDEF":
+    enqueue(ch)
+dequeue()          # 取出 A，0x1000 釋放
+dequeue()          # 取出 B，0x1004 釋放
+enqueue("G")        # ✅ 繞回開頭，放入剛釋放的 0x1000
+enqueue("H")        # ✅ 繞回開頭，放入剛釋放的 0x1004</code></pre>
+</div>
+  </div>
+</div>
+<div class="callout tip"><span class="t">💡 兩段程式碼只差一個地方</span>
+<p>整段程式幾乎一模一樣，唯一的差別就是 <code>rear += 1</code> 對比 <code>rear = (rear + 1) % len(data)</code>——多了 <code>% len(data)</code>（取餘數）這幾個字，就是「會不會繞回開頭」的全部差異。這也是環狀佇列在實作上最關鍵、也最容易忘記寫的一行。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">04</span>Python 怎麼實作</h2>
+  <div class="card" style="border:1px dashed var(--brand);">
+<h3 style="color:var(--brand-strong)">🔀 手刻環狀陣列 vs 內建 deque</h3>
+<div class="grid cols-2">
+<div class="tile"><h4>手刻環狀陣列</h4><p>用固定大小的陣列 + front/rear 索引自己實作，能看到佇列底層真正在做什麼、為什麼會有 n-1 格的限制。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">環狀陣列版</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">data = [None] * 6
+front = 0
+rear = 0
+
+def is_empty():
+    return front == rear
+
+def is_full():
+    return (rear + 1) % len(data) == front
+
+def enqueue(v):
+    global rear
+    if is_full():
+        print("佇列已滿")
+        return
+    data[rear] = v
+    rear = (rear + 1) % len(data)
+
+def dequeue():
+    global front
+    if is_empty():
+        print("佇列是空的")
+        return None
+    v = data[front]
+    front = (front + 1) % len(data)
+    return v</code></pre>
+</div></div>
+<div class="tile"><h4>內建 collections.deque</h4><p>兩端操作都是 O(1)，程式碼最少、最不容易出錯，寫程式、比賽、APCS 都建議直接用這個。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">deque 版</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">from collections import deque
+q = deque()
+q.append(10); q.append(20)
+print(q.popleft())</code></pre>
+</div></div>
+</div>
+</div>
+</section>
+<div class="unit-nav">
+  <a href="unit04.html"><span class="dir">← 上一單元</span>04 資料結構(二) 鏈結串列</a>
+  <a class="next" href="unit06.html"><span class="dir">下一單元 →</span>06 資料結構(四) 堆疊</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 05：資料結構(三) 佇列</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

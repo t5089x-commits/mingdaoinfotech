@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 04：資料結構(二) 鏈結串列｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="4">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 04</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　週次 5</span>
+  <h1>資料結構(二) 鏈結串列</h1>
+  <p>陣列需要連續記憶體，鏈結串列則用「指標」把資料一個一個串起來，插入刪除更有效率。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解鏈結串列與陣列在記憶體配置上的差異</li>
+<li>認識單向、雙向、環狀三種鏈結串列</li>
+<li>能實作節點的建立、走訪、插入</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>鏈結串列 Linked List</h2>
+  
+<p>陣列的元素必須存在「連續」的記憶體空間，鏈結串列則不需要——每個節點（Node）除了存資料，還存了一個指標，指向下一個節點的位置，像一串珠鍊一樣串起來。</p>
+<ul class="tidy">
+  <li>每個 Node 都有 <code>data</code></li>
+  <li><code>next</code> 指向下一個 Node</li>
+  <li>最後一個 Node 的 <code>next</code> 是 <code>None</code></li>
+  <li>Node 不需要連續存在記憶體中</li>
+</ul>
+<div class="fc-fig"><svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;height:auto;display:block;margin:14px auto" role="img" aria-label="鏈結串列節點結構圖"><defs><marker id="llArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L8,3 z" fill="var(--text-faint)"/></marker></defs><rect x="40" y="60" width="140" height="54" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="103.0" y1="60" x2="103.0" y2="114" stroke="var(--brand)" stroke-width="2"/><text x="71.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="71.5" y="105" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">1</text><text x="141.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><text x="75" y="136" text-anchor="middle" font-size="14" fill="var(--text-faint)">Node 1</text><rect x="250" y="60" width="140" height="54" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="313.0" y1="60" x2="313.0" y2="114" stroke="var(--brand)" stroke-width="2"/><text x="281.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="281.5" y="105" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">2</text><text x="351.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><text x="285" y="136" text-anchor="middle" font-size="14" fill="var(--text-faint)">Node 2</text><rect x="460" y="60" width="140" height="54" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="523.0" y1="60" x2="523.0" y2="114" stroke="var(--brand)" stroke-width="2"/><text x="491.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="491.5" y="105" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">3</text><text x="561.5" y="83" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><text x="495" y="136" text-anchor="middle" font-size="14" fill="var(--text-faint)">Node 3</text><text x="75" y="26" text-anchor="middle" font-size="16" font-weight="800" fill="var(--brand-strong)">head</text><line x1="75" y1="36" x2="75" y2="56" stroke="var(--brand-strong)" stroke-width="2.5" marker-end="url(#llArrow)"/><line x1="180" y1="87" x2="250" y2="87" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#llArrow)"/><line x1="390" y1="87" x2="460" y2="87" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#llArrow)"/><line x1="600" y1="87" x2="670" y2="87" stroke="var(--text-faint)" stroke-width="2" marker-end="url(#llArrow)"/><text x="708" y="92" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text-faint)">None</text></svg></div>
+<p class="bf-note" style="font-size:1rem">💡 這張圖的資訊分四層：① head 從哪裡開始 → ② Node 長什麼樣（data + next 兩格） → ③ next 怎麼連到下一個 Node → ④ 最後一個 Node 的 next 指向 None，代表串列結束。</p>
+
+</section><section class="block">
+  <h2><span class="num">02</span>三種型態</h2>
+  
+<div class="grid" style="grid-template-columns:1fr">
+  <div class="tile"><h4 style="font-size:1.2rem">單向</h4><p style="font-size:1rem">每個節點只有一個指標，指向下一個節點。</p><svg viewBox="0 0 762 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:14px auto" role="img" aria-label="single linked list"><defs><marker id="llArrowsingle" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L8,3 z" fill="var(--text-faint)"/></marker></defs><rect x="60" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="118.5" y1="46" x2="118.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="89.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="89.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">1</text><text x="154.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><rect x="256" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="314.5" y1="46" x2="314.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="285.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="285.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">2</text><text x="350.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><rect x="452" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="510.5" y1="46" x2="510.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="481.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="481.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">3</text><text x="546.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><line x1="190" y1="75.0" x2="256" y2="75.0" stroke="var(--text-faint)" stroke-width="2.5" marker-end="url(#llArrowsingle)"/><line x1="386" y1="75.0" x2="452" y2="75.0" stroke="var(--text-faint)" stroke-width="2.5" marker-end="url(#llArrowsingle)"/><line x1="582" y1="75.0" x2="642" y2="75.0" stroke="var(--text-faint)" stroke-width="2.5" marker-end="url(#llArrowsingle)"/><text x="682" y="82.0" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text-faint)">None</text><text x="125.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 1</text><text x="321.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 2</text><text x="517.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 3</text></svg></div>
+  <div class="tile"><h4 style="font-size:1.2rem">雙向</h4><p style="font-size:1rem">每個節點有兩個指標：<code>prev</code> 指向上一個節點、<code>next</code> 指向下一個節點，可以往前也可以往後走。</p><svg viewBox="0 0 891 145" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;height:auto;display:block;margin:14px auto" role="img" aria-label="double linked list"><defs><marker id="llArrowdouble" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L8,3 z" fill="var(--text-faint)"/></marker></defs><rect x="70" y="46" width="195" height="62" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="135.0" y1="46" x2="135.0" y2="108" stroke="var(--brand)" stroke-width="2"/><line x1="200.0" y1="46" x2="200.0" y2="108" stroke="var(--brand)" stroke-width="2"/><rect x="70" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><rect x="200.0" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><text x="102.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">prev</text><text x="167.5" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="167.5" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">1</text><text x="232.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">next</text><rect x="343" y="46" width="195" height="62" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="408.0" y1="46" x2="408.0" y2="108" stroke="var(--brand)" stroke-width="2"/><line x1="473.0" y1="46" x2="473.0" y2="108" stroke="var(--brand)" stroke-width="2"/><rect x="343" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><rect x="473.0" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><text x="375.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">prev</text><text x="440.5" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="440.5" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">2</text><text x="505.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">next</text><rect x="616" y="46" width="195" height="62" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="681.0" y1="46" x2="681.0" y2="108" stroke="var(--brand)" stroke-width="2"/><line x1="746.0" y1="46" x2="746.0" y2="108" stroke="var(--brand)" stroke-width="2"/><rect x="616" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><rect x="746.0" y="46" width="65.0" height="62" fill="var(--accent-soft)" opacity=".5"/><text x="648.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">prev</text><text x="713.5" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="713.5" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">3</text><text x="778.5" y="69" text-anchor="middle" font-size="12.5" fill="var(--accent)" font-weight="700">next</text><line x1="232.5" y1="68.0" x2="440.5" y2="68.0" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#llArrowdouble)"/><line x1="505.5" y1="68.0" x2="713.5" y2="68.0" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#llArrowdouble)"/><line x1="375.5" y1="86.0" x2="167.5" y2="86.0" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#llArrowdouble)"/><line x1="648.5" y1="86.0" x2="440.5" y2="86.0" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#llArrowdouble)"/><text x="32" y="84.0" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text-faint)">None</text><text x="849" y="84.0" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text-faint)">None</text><text x="167.5" y="138" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 1</text><text x="440.5" y="138" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 2</text><text x="713.5" y="138" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 3</text></svg></div>
+  <div class="tile"><h4 style="font-size:1.2rem">環狀</h4><p style="font-size:1rem">最後一個節點的指標指回第一個節點，形成環狀。</p><svg viewBox="0 0 632 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:14px auto" role="img" aria-label="circular linked list"><defs><marker id="llArrowcircular" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L8,3 z" fill="var(--text-faint)"/></marker></defs><rect x="60" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="118.5" y1="46" x2="118.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="89.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="89.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">1</text><text x="154.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><rect x="256" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="314.5" y1="46" x2="314.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="285.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="285.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">2</text><text x="350.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><rect x="452" y="46" width="130" height="58" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><line x1="510.5" y1="46" x2="510.5" y2="104" stroke="var(--brand)" stroke-width="2"/><text x="481.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">data</text><text x="481.25" y="91" text-anchor="middle" font-size="20" font-weight="800" fill="var(--text)">3</text><text x="546.25" y="69" text-anchor="middle" font-size="14" fill="var(--text-faint)">next</text><line x1="190" y1="75.0" x2="256" y2="75.0" stroke="var(--text-faint)" stroke-width="2.5" marker-end="url(#llArrowcircular)"/><line x1="386" y1="75.0" x2="452" y2="75.0" stroke="var(--text-faint)" stroke-width="2.5" marker-end="url(#llArrowcircular)"/><polyline points="517.0,104 517.0,156 89.25,156 89.25,104" fill="none" stroke="var(--accent)" stroke-width="3" marker-end="url(#llArrowcircular)"/><text x="303.125" y="178" text-anchor="middle" font-size="14.5" fill="var(--accent)" font-weight="700">指回第一筆資料（Node 1 的 data 格）</text><text x="125.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 1</text><text x="321.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 2</text><text x="517.0" y="132" text-anchor="middle" font-size="15" fill="var(--text-faint)">Node 3</text></svg></div>
+</div>
+<div class="callout warn"><span class="t">⚠ 易混淆點：prev／next 格裡放的是「位址」，不是資料本身</span>
+<p>雙向圖裡的 <code>prev</code>、<code>next</code> 看起來像是跟 <code>data</code> 平起平坐的三個「一樣的格子」，很容易誤會成「prev 格裡存的是上一筆資料的複製、next 格裡存的是下一筆資料的複製」。<b>其實不是</b>——<code>prev</code> 和 <code>next</code> 存的都只是「指標（位址）」，指向另一個節點；只有中間的 <code>data</code> 格才是真正存放這個節點資料的地方。這也是為什麼圖上把 <code>prev</code>、<code>next</code> 用不同底色標出來，跟 <code>data</code> 做區分。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>建立與走訪</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">建立一個單向鏈結串列並走訪</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+# 建立 1 -&gt; 2 -&gt; 3
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+
+# 走訪
+node = head
+while node:
+    print(node.val)
+    node = node.next</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int val;
+    Node* next;
+};
+
+int main(){
+    Node* head = new Node{1, nullptr};
+    head-&gt;next = new Node{2, nullptr};
+    head-&gt;next-&gt;next = new Node{3, nullptr};
+
+    Node* n = head;
+    while (n != nullptr){
+        cout &lt;&lt; n-&gt;val &lt;&lt; endl;
+        n = n-&gt;next;
+    }
+    return 0;
+}</code></pre>
+</div>
+</section>
+<div class="callout tip"><span class="t">💡 這裡用到的 class 是什麼？</span>
+<p><code>class</code> 是 Python 用來定義「自訂資料型態」的寫法。<code>ListNode</code> 這個 class 把「一個節點該有的東西」定義好：一個存資料的 <code>val</code>，一個存指標的 <code>next</code>。每次呼叫 <code>ListNode(1)</code>、<code>ListNode(2)</code>，就是照著這個模板<b>各自獨立產生</b>一個新的節點物件——這些物件的資料互不相干，但都遵守同一套「格式」。</p>
+<p>鏈結串列是 class 派上用場的經典場景：因為每個節點都要「自己存自己的資料 + 自己記得下一個是誰」，用 class 把這兩件事包在一起，比用一堆各自獨立的變數乾淨很多。</p>
+<p>對<b>遊戲程式設計</b>方面有興趣的同學，之後可以再往這個方向精進：遊戲裡的角色、怪物，通常也都是用 class 定義的——例如「怪物」這個 class 可能會有生命值、攻擊力、技能清單等資料，每一隻怪物都是這個 class 產生出來的一個獨立物件，屬性可以各自不同（史萊姆生命值 10、王者史萊姆生命值 500，但兩者都是同一種「怪物」class）。這跟這裡「同一個 <code>ListNode</code> class，產生出資料各不相同的節點」是同一個概念。</p>
+</div>
+<section class="block">
+  <h2><span class="num">04</span>插入與刪除：只要改指標，不用搬資料</h2>
+  
+<p>陣列中間插入要搬移大量元素（O(n)），鏈結串列只需要改「指標的指向」，如果已經有指到插入點的指標，插入本身是 O(1)。這是鏈結串列相對陣列最大的優勢。</p>
+<div class="callout warn"><span class="t">⚠ 單向串列的限制</span>
+<p>如果只知道節點 P 的位置，要在 <b>P 之後</b>插入是 O(1)（改兩個指標就好）；但要在 <b>P 之前</b>插入，單向串列沒辦法「回頭」，必須從頭開始找 P 的前一個節點，變成 O(n)。這正是雙向鏈結串列存在的理由之一。</p></div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">在節點後方插入新節點</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def insert_after(node, val):
+    new_node = ListNode(val)
+    new_node.next = node.next
+    node.next = new_node
+
+# head: 1 -&gt; 2 -&gt; 3
+insert_after(head, 99)   # 在 head(值1) 後面插入 99
+# 結果變成 1 -&gt; 99 -&gt; 2 -&gt; 3</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">void insertAfter(Node* node, int val){
+    Node* newNode = new Node{val, node-&gt;next};
+    node-&gt;next = newNode;
+}</code></pre>
+</div>
+</section>
+<div class="unit-nav">
+  <a href="unit03.html"><span class="dir">← 上一單元</span>03 資料結構(一) 陣列</a>
+  <a class="next" href="unit05.html"><span class="dir">下一單元 →</span>05 資料結構(三) 佇列</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 04：資料結構(二) 鏈結串列</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 07：資料結構(五) 樹狀結構｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="7">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 07</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　週次 6</span>
+  <h1>資料結構(五) 樹狀結構</h1>
+  <p>樹狀結構是階層式的資料結構，二元搜尋樹更是讓搜尋效率大幅提升的關鍵設計。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識樹狀結構與二元樹的基本術語</li>
+<li>能寫出前序、中序、後序三種走訪</li>
+<li>理解二元搜尋樹 (BST) 的規則與搜尋效率</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>樹狀結構 Tree</h2>
+  
+<p>樹是一種階層式的資料結構：有一個根節點（Root），每個節點可以有多個子節點。二元樹（Binary Tree）是最常見的樹，規定每個節點最多只有兩個子節點（左子節點、右子節點）。</p>
+<div class="boxflow">
+  <div class="bf-step proc">11 (root)</div>
+</div>
+<div class="bf-branch">
+  <div class="bf-col"><div class="bf-step proc">7</div></div>
+  <div class="bf-col"><div class="bf-step proc">15</div></div>
+</div>
+<div class="bf-branch">
+  <div class="bf-col"><div class="bf-step proc">5</div></div>
+  <div class="bf-col"><div class="bf-step proc">9</div></div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>三種走訪方式</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>走訪方式</th><th>順序</th></tr></thead>
+<tbody>
+<tr><td>前序 Pre-order</td><td>根 → 左子樹 → 右子樹</td></tr>
+<tr><td>中序 In-order</td><td>左子樹 → 根 → 右子樹</td></tr>
+<tr><td>後序 Post-order</td><td>左子樹 → 右子樹 → 根</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warn"><span class="t">⚠ 易混淆點：哪兩種走訪能重建唯一的樹</span>
+<p>「中序＋前序」或「中序＋後序」<b>可以</b>決定唯一的二元樹；但「前序＋後序」<b>不行</b>。記憶方法：中序負責告訴我們「誰在左邊、誰在右邊」，前序或後序負責告訴我們「誰是目前的根」——少了中序，就無法切出左右子樹的邊界。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>二元搜尋樹 BST：建立、走訪、搜尋</h2>
+  
+<p>二元搜尋樹（Binary Search Tree）多一個規則：左子樹所有值都比根小，右子樹所有值都比根大。這個規則讓搜尋可以像二分搜尋一樣，每次排除一半的節點。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">BST 建立、走訪、搜尋</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">class BST:
+    def __init__(self, data=None):
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def insert(self, data):
+        if self.data is None:
+            self.data = data
+        elif data &lt; self.data:
+            if self.left: self.left.insert(data)
+            else: self.left = BST(data)
+        elif data &gt; self.data:
+            if self.right: self.right.insert(data)
+            else: self.right = BST(data)
+
+    def inorder(self):
+        res = []
+        if self.left: res += self.left.inorder()
+        res.append(self.data)
+        if self.right: res += self.right.inorder()
+        return res
+
+    def search(self, data):
+        if self.data is None: return False
+        if data == self.data: return True
+        if data &lt; self.data:
+            return self.left.search(data) if self.left else False
+        return self.right.search(data) if self.right else False
+
+tree = BST()
+for v in [11, 7, 15, 5, 3, 9]:
+    tree.insert(v)
+print(tree.inorder())    # [3, 5, 7, 9, 11, 15] 中序走訪一定是排序好的！
+print(tree.search(9))    # True</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+};
+
+Node* insert(Node* root, int val){
+    if (root == nullptr){
+        Node* n = new Node();
+        n-&gt;data = val; n-&gt;left = n-&gt;right = nullptr;
+        return n;
+    }
+    if (val &lt; root-&gt;data) root-&gt;left = insert(root-&gt;left, val);
+    else if (val &gt; root-&gt;data) root-&gt;right = insert(root-&gt;right, val);
+    return root;
+}
+
+void inorder(Node* root){
+    if (root == nullptr) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data &lt;&lt; " ";
+    inorder(root-&gt;right);
+}
+
+int main(){
+    Node* root = nullptr;
+    int values[] = {11, 7, 15, 5, 3, 9};
+    for (int v : values) root = insert(root, v);
+    inorder(root);
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">04</span>小觀察：BST 中序走訪 = 排序結果</h2>
+  
+<div class="callout tip"><span class="t">💡 為什麼中序走訪一定是排序好的？</span>
+<p>因為 BST 的規則本來就是「左子樹 &lt; 根 &lt; 右子樹」，而中序走訪的順序剛好是「左子樹 → 根 → 右子樹」——兩者的規則完全對應，所以中序走訪的結果必然由小到大排列。這也是 BST 常被拿來當作排序輔助結構的原因。</p></div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit06b.html"><span class="dir">← 上一單元</span>附 堆疊 vs 佇列 比較</a>
+  <a class="next" href="unit08.html"><span class="dir">下一單元 →</span>08 資料結構(六) 集合</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 07：資料結構(五) 樹狀結構</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

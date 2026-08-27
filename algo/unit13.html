@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 13：演算法(五) 合併排序｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="13">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 13</span></nav>
+<section class="unit-hero">
+  <span class="kicker">排序演算法篇　週次 13</span>
+  <h1>演算法(五) 合併排序</h1>
+  <p>合併排序：切到最小、分別排序、再合併。時間複雜度保證是 O(n log n)，是 Python 內建排序的底層概念。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解合併排序「切、遞迴、合併」的邏輯</li>
+<li>能自己用 Python／C++ 寫出合併排序</li>
+<li>能比較合併排序與快速排序的優缺點</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>合併排序 Merge Sort</h2>
+  
+<p>也是分治法：先把陣列切一半、切一半、再切一半……切到只剩一個元素（天生排好），再把兩個排好的小陣列「合併」成一個排好的大陣列。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">merge_sort.py／.cpp</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">list1 = [5, 3, 1, 4, 2]
+
+def merge(left, right):
+    result = []
+    while left and right:
+        if left[0] &lt; right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+    return result + left if left else result + right
+
+def merge_sort(a):
+    if len(a) &lt; 2:
+        return a
+    mid = len(a) // 2
+    return merge(merge_sort(a[:mid]), merge_sort(a[mid:]))
+
+print(merge_sort(list1))</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+vector&lt;int&gt; merge(vector&lt;int&gt; left, vector&lt;int&gt; right){
+    vector&lt;int&gt; result;
+    size_t i = 0, j = 0;
+    while (i &lt; left.size() &amp;&amp; j &lt; right.size())
+        result.push_back(left[i] &lt; right[j] ? left[i++] : right[j++]);
+    while (i &lt; left.size()) result.push_back(left[i++]);
+    while (j &lt; right.size()) result.push_back(right[j++]);
+    return result;
+}
+
+vector&lt;int&gt; mergeSort(vector&lt;int&gt; a){
+    if (a.size() &lt; 2) return a;
+    int mid = a.size() / 2;
+    vector&lt;int&gt; left(a.begin(), a.begin()+mid), right(a.begin()+mid, a.end());
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+int main(){
+    vector&lt;int&gt; arr = {5, 3, 1, 4, 2};
+    vector&lt;int&gt; sorted = mergeSort(arr);
+    for (int x : sorted) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>合併排序 vs 快速排序</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th></th><th>合併排序</th><th>快速排序</th></tr></thead>
+<tbody>
+<tr><td>最壞時間</td><td>O(n log n)（穩定保證）</td><td>O(n²)</td></tr>
+<tr><td>穩定性</td><td>穩定</td><td>不穩定</td></tr>
+<tr><td>額外記憶體</td><td>需要額外陣列存合併結果</td><td>原地排序，不太需要額外空間</td></tr>
+<tr><td>適合場景</td><td>需要「保證」不會變慢的場合、外部排序（資料太大放不進記憶體）</td><td>一般情況下平均更快</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">💡 這就是 Python sort() 的底層邏輯！</span>
+<p>Python 內建的 <code>sort()</code>／<code>sorted()</code> 用的是 <b>Timsort</b>，是合併排序的優化版本（結合了插入排序處理小區塊），兼顧了「保證不會太慢」跟「實務上很快」兩個優點。</p></div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit12.html"><span class="dir">← 上一單元</span>12 演算法(四) 快速排序</a>
+  <a class="next" href="unit14.html"><span class="dir">下一單元 →</span>14 演算法(六) 排序效能分析</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 13：演算法(五) 合併排序</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

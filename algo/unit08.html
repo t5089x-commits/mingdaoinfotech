@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 08：資料結構(六) 集合｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="8">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 08</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　週次 8</span>
+  <h1>資料結構(六) 集合</h1>
+  <p>集合是「元素不重複、沒有順序」的資料結構，查詢平均只要 O(1)，是去重複、判斷是否出現過最好用的工具。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解集合「不重複、無順序、平均 O(1) 查詢」的特性</li>
+<li>能操作聯集、交集、差集、對稱差集</li>
+<li>能用集合把 O(n²) 的暴力解法優化成 O(n)</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>集合 Set 是什麼？</h2>
+  
+<p>集合（Set）是一種「元素不重複、沒有順序」的資料結構，概念跟數學課的集合一模一樣。它最大的特色是：<b>檢查某個元素在不在集合裡，平均只要 O(1)</b>（陣列要逐一比對是 O(n)），因為底層是用雜湊表（Hash Table）實作的。</p>
+<div class="callout tip"><span class="t">💡 什麼時候該想到用集合？</span>
+<p>看到題目要「判斷某個值是否出現過」、「去除重複」、「兩群資料的交集/聯集」，就該想到集合——比逐一比對的陣列寫法快很多。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>Python 集合的基本操作</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">建立集合、新增、刪除、查詢</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">s = {1, 2, 3}          # 建立集合
+s.add(4)                # 新增元素
+s.remove(2)              # 刪除元素（不存在會報錯）
+s.discard(99)             # 刪除元素（不存在也不會報錯，比較安全）
+
+print(3 in s)             # True，查詢是否存在，平均 O(1)
+print(len(s))              # 集合大小
+
+nums = [5, 3, 9, 3, 5, 8]
+unique = set(nums)          # 一行去除重複！
+print(unique)                # {3, 5, 8, 9}（順序不保證）</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;unordered_set&gt;
+using namespace std;
+int main(){
+    unordered_set&lt;int&gt; s = {1, 2, 3};
+    s.insert(4);
+    s.erase(2);
+
+    cout &lt;&lt; (s.count(3) &gt; 0) &lt;&lt; endl;   // 查詢是否存在
+    cout &lt;&lt; s.size() &lt;&lt; endl;
+
+    // 去除重複
+    int nums[] = {5, 3, 9, 3, 5, 8};
+    unordered_set&lt;int&gt; unique(nums, nums+6);
+    for (int x : unique) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">03</span>集合運算：聯集、交集、差集</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>運算</th><th>符號</th><th>方法</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>聯集 Union</td><td>|</td><td>a.union(b)</td><td>兩邊全部的元素（不重複）</td></tr>
+<tr><td>交集 Intersection</td><td>&amp;</td><td>a.intersection(b)</td><td>兩邊都有的元素</td></tr>
+<tr><td>差集 Difference</td><td>-</td><td>a.difference(b)</td><td>在 a 但不在 b 的元素</td></tr>
+<tr><td>對稱差集 Symmetric Difference</td><td>^</td><td>a.symmetric_difference(b)</td><td>只在其中一邊出現的元素</td></tr>
+</tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">集合運算範例</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+print(a | b)   # 聯集 {1, 2, 3, 4, 5, 6}
+print(a &amp; b)   # 交集 {3, 4}
+print(a - b)   # 差集（a有b沒有）{1, 2}
+print(a ^ b)   # 對稱差集 {1, 2, 5, 6}
+
+# 子集合判斷
+print({1, 2} &lt;= a)   # True，{1,2} 是 a 的子集合</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;set&gt;
+#include &lt;algorithm&gt;
+#include &lt;iterator&gt;
+using namespace std;
+int main(){
+    set&lt;int&gt; a = {1, 2, 3, 4};
+    set&lt;int&gt; b = {3, 4, 5, 6};
+    set&lt;int&gt; result;
+
+    set_union(a.begin(), a.end(), b.begin(), b.end(), inserter(result, result.begin()));
+    for (int x : result) cout &lt;&lt; x &lt;&lt; " "; cout &lt;&lt; endl;   // 聯集
+
+    result.clear();
+    set_intersection(a.begin(), a.end(), b.begin(), b.end(), inserter(result, result.begin()));
+    for (int x : result) cout &lt;&lt; x &lt;&lt; " "; cout &lt;&lt; endl;   // 交集
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">04</span>APCS 實戰：用集合快速判斷是否出現過</h2>
+  
+<p>經典題型：給兩個整數陣列 A、B，判斷有多少對 (a, b) 滿足 a + b = K。如果用雙迴圈暴力比對是 O(n²)，用集合可以降到 O(n)。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">Two-Number Problem</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def count_pairs(a, b, k):
+    s = set(b)
+    count = 0
+    for x in a:
+        if k - x in s:      # O(1) 查詢
+            count += 1
+    return count
+
+a = [1, 6, -3]
+b = [5, 1, -1, -3]
+print(count_pairs(a, b, 2))   # 2</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;unordered_set&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int countPairs(vector&lt;int&gt;&amp; a, vector&lt;int&gt;&amp; b, int k){
+    unordered_set&lt;int&gt; s(b.begin(), b.end());
+    int count = 0;
+    for (int x : a){
+        if (s.count(k - x)) count++;
+    }
+    return count;
+}
+
+int main(){
+    vector&lt;int&gt; a = {1, 6, -3};
+    vector&lt;int&gt; b = {5, 1, -1, -3};
+    cout &lt;&lt; countPairs(a, b, 2) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">05</span>兩種不錯的去重複寫法</h2>
+  <div class="card" style="border:1px dashed var(--brand);">
+<h3 style="color:var(--brand-strong)">🔀 陣列去重複，保留原本順序 vs 不保留順序</h3>
+<div class="grid cols-2">
+<div class="tile"><h4>用 set()：最快但不保留順序</h4><p>適合「只在意結果有哪些值」的情境。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">set 去重複</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">nums = [5, 3, 9, 3, 5, 8]
+result = list(set(nums))
+print(result)   # 順序不保證，例如 [8, 9, 3, 5]</code></pre>
+</div></div>
+<div class="tile"><h4>先排序再逐一比對：保留由小到大順序</h4><p>適合題目要求「輸出時要由小到大排序」的情境（第 5 章 AP325 例題就是這種寫法）。</p><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">排序去重複</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">nums = [5, 3, 9, 3, 5, 8]
+result = sorted(set(nums))
+print(result)   # [3, 5, 8, 9] 保證由小到大</code></pre>
+</div></div>
+</div>
+<p style="margin-top:10px;color:var(--text-soft);font-size:.9rem">如果題目沒特別要求順序，用 set() 最簡單；如果要「由小到大」，就用 sorted(set(...))。</p>
+</div>
+</section>
+<div class="unit-nav">
+  <a href="unit07.html"><span class="dir">← 上一單元</span>07 資料結構(五) 樹狀結構</a>
+  <a class="next" href="unit09.html"><span class="dir">下一單元 →</span>09 演算法(一) 泡沫排序</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 08：資料結構(六) 集合</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

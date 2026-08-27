@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 3：Python 前導複習（二）運算子與判斷｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="3">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 3</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 2　單元 3</span>
+  <h1>Python 前導複習（二）運算子與判斷</h1>
+  <p>算術／比較／邏輯運算子、if／elif／else</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能正確使用算術、比較、邏輯與複合指定運算子</li>
+<li>能寫出 if、if-else、if-elif-else 條件判斷</li>
+<li>能用 and／or／not 組合多個條件</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>運算子 Operator</h2>
+  
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>類別</th><th>運算子</th><th>說明</th></tr></thead>
+  <tbody><tr><td>算術運算子</td><td><code>+ - * / // % **</code></td><td>加、減、乘、除、整數除、取餘數、次方</td></tr><tr><td>比較運算子</td><td><code>== != > < >= <=</code></td><td>回傳 <code>True</code>／<code>False</code></td></tr><tr><td>邏輯運算子</td><td><code>and or not</code></td><td>組合多個條件</td></tr><tr><td>複合指定運算子</td><td><code>+= -= *= /=</code></td><td>「先運算、再存回自己」的簡寫</td></tr></tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">a = 7
+print(a // 2)   # 3   整數除（無條件捨去）
+print(a % 2)    # 1   取餘數
+print(a ** 2)   # 49  7 的平方
+
+score = 88
+score += 2       # 等同 score = score + 2
+print(score)     # 90
+
+print(3 &gt; 2 and 5 &gt; 4)   # True：兩個條件都成立
+print(3 &gt; 2 or 1 &gt; 4)    # True：至少一個成立
+print(not (3 &gt; 2))       # False：把 True 反過來</code></pre>
+</div>
+<div class="quizrow"><code>print(10 % 3 == 1)</code><button type="button" class="quiz-btn" onclick="var a=this.nextElementSibling;a.hidden=!a.hidden;this.textContent=a.hidden?'🤔 看答案':'🙈 收起'">🤔 看答案</button><span class="quiz-ans" hidden>→ <span class="T">True</span>：10 除以 3 餘 1，1 == 1 為 True。</span></div>
+<div class="quizrow"><code>print(5 &gt; 3 and 2 &gt; 3)</code><button type="button" class="quiz-btn" onclick="var a=this.nextElementSibling;a.hidden=!a.hidden;this.textContent=a.hidden?'🤔 看答案':'🙈 收起'">🤔 看答案</button><span class="quiz-ans" hidden>→ <span class="F">False</span>：5 > 3 是 True，但 2 > 3 是 False，and 要兩個都 True 才成立。</span></div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>單向判斷 if</h2>
+  
+<p>條件成立（True）才執行縮排內的程式碼：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = 85
+if score &gt;= 60:
+    print("及格了！")
+print("程式繼續往下跑")</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 縮排很重要</span>
+<p>Python 用<strong>縮排</strong>（通常是 4 個空白）來表示「這行屬於 if 底下」，縮排錯了程式邏輯就會跑掉，甚至直接報錯。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>雙向判斷 if–else</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = 55
+if score &gt;= 60:
+    print("及格了！")
+else:
+    print("不及格，再加油！")</code></pre>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>多向判斷 if–elif–else</h2>
+  
+<p>有多個條件要依序檢查時，用 <code>elif</code>（else if 的縮寫）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = 76
+
+if score &gt;= 90:
+    grade = "A"
+elif score &gt;= 80:
+    grade = "B"
+elif score &gt;= 70:
+    grade = "C"
+elif score &gt;= 60:
+    grade = "D"
+else:
+    grade = "F"
+
+print(f"分數 {score} 分，等第是 {grade}")</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 由上往下、符合第一個就停</span>
+<p><code>elif</code> 會<strong>由上往下依序檢查</strong>，一旦符合某一條就執行該區塊、不再往下比對。所以條件通常要「由嚴格排到寬鬆」，順序寫反答案就會錯。</p></div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習：分數等第判斷</h3>
+  
+<p>寫一支程式：用 <code>input()</code> 讀入一個 0–100 的分數（記得轉成 <code>int</code>），依照下表印出等第與是否及格：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>分數範圍</th><th>等第</th></tr></thead>
+  <tbody><tr><td>90 以上</td><td>A</td></tr><tr><td>80–89</td><td>B</td></tr><tr><td>70–79</td><td>C</td></tr><tr><td>60–69</td><td>D</td></tr><tr><td>60 以下</td><td>F（不及格）</td></tr></tbody>
+</table>
+</div>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">score = int(input("請輸入分數："))
+
+if score &gt;= 90:
+    grade = "A"
+elif score &gt;= 80:
+    grade = "B"
+elif score &gt;= 70:
+    grade = "C"
+elif score &gt;= 60:
+    grade = "D"
+else:
+    grade = "F"
+
+result = "及格" if score &gt;= 60 else "不及格"
+print(f"等第：{grade}（{result}）")</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">Python 前導複習（一）變數與資料型態</div></a>
+    <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">Python 前導複習（三）迴圈與函式</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

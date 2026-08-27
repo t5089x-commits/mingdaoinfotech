@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 1：課程總覽＋專題預告｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="1">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 1</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 1</span>
+  <h1>課程總覽＋專題預告</h1>
+  <p>這學期的學習地圖：從 Python 複習到專題發表</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>認識這學期的學習地圖：Python 複習 → Vibe Coding 體驗 → pandas → Matplotlib → 專題實作 → 成果發表</li>
+<li>預先了解期末專題的樣子與評量方式，建立學習的目標感</li>
+<li>學會安裝與基本操作 VS Code，作為這學期所有課程的開發工具</li>
+<li>看過一份學長姐的專題範例，知道「做得好」大概是什麼樣子</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>這學期的學習地圖</h2>
+  
+<p>這門課是「進階程式設計」的其中一段旅程：我們會先花一點時間把 Python 基礎複習一輪，接著用一次很不一樣的方式體驗程式開發——Vibe Coding，最後把重心放在資料分析最實用的兩個工具：<strong>pandas</strong>（整理資料）與 <strong>Matplotlib</strong>（畫出資料）。整學期的內容，最終都會匯集成你自己的一份專題作品。</p>
+<div class="timeline"><div class="tl-row"><div class="tl-block a"><span class="tl-when">單元 2–4</span><span class="tl-what">Python 前導複習</span></div><span class="tl-arrow">→</span><div class="tl-block b"><span class="tl-when">單元 5</span><span class="tl-what">Vibe Coding 體驗：pygame 小遊戲</span></div><span class="tl-arrow">→</span><div class="tl-block c"><span class="tl-when">單元 6</span><span class="tl-what">pandas 基礎操作</span></div><span class="tl-arrow">→</span><div class="tl-block a"><span class="tl-when">單元 7</span><span class="tl-what">Matplotlib 基本使用</span></div><span class="tl-arrow">→</span><div class="tl-block b"><span class="tl-when">單元 8–10</span><span class="tl-what">專題實作與發表</span></div></div></div>
+<p style="margin-top:14px">前面單元學到的每一項技能，最後都會用在同一件事情上：<strong>做出一份你自己的資料分析專題</strong>。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>期末專題預告</h2>
+  
+<p>這學期最終的成果，會是一份<strong>你自己選題、自己動手做</strong>的資料視覺化專題，整個流程大致是這樣：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">1️⃣</span>到政府公開資料平台找資料</h4><p>選一個你有興趣的主題（例如空氣品質、超商分布、電影票房、人口變化⋯），到政府公開資料平台下載相關的原始資料。</p></div>
+  <div class="tile"><h4><span class="ico">2️⃣</span>用 pandas 整理資料</h4><p>讀取資料、檢視欄位、篩選與清理，把原始資料整理成可以分析的表格。</p></div>
+  <div class="tile"><h4><span class="ico">3️⃣</span>用 Matplotlib 做視覺化分析</h4><p>依資料的特性選擇合適的圖表（折線／長條／圓餅⋯），畫出至少兩種圖表，並寫下你的觀察與解讀。</p></div>
+  <div class="tile"><h4><span class="ico">4️⃣</span>整理成一份 PDF 專題報告</h4><p>把「資料來源、分析過程、圖表、結論」整理成一份 PDF，並上台做簡短發表。</p></div>
+</div>
+<div class="callout tip"><span class="t">💡 現在還不用會，先有個印象就好</span>
+<p>接下來的每個單元，都是在為這份專題累積能力——現在你可能還看不懂圖表怎麼畫、資料怎麼抓，但走到單元 8 的時候，你會發現自己其實已經準備好了。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>專題範例參觀</h2>
+  
+<p>先看一份範例，讓你對「做得好的專題」有一點畫面。這是用政府公開的景氣指標資料，畫出領先、同時、落後指標長期走勢的折線圖分析：</p>
+<div class="grid cols-1">
+  <div class="tile"><h4><span class="ico">📄</span>範例作品：景氣指標綜合分析</h4><p>用政府公開的景氣指標資料，畫出領先／同時／落後指標的長期趨勢折線圖，並搭配文字說明資料的走勢與意義——資料來源、程式碼、圖表、解讀一應俱全，是很好的格式參考。</p><a class="video-link-btn" href="assets/examples/景氣指標綜合分析.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+<p style="margin-top:18px">下面這四份，是學長姐這學期實際繳交的專題成果，主題各不相同，可以看看他們怎麼選題、怎麼設計圖表、遇到問題怎麼解決。</p>
+<div class="callout tip"><span class="t">🌟 老師特別推薦：中油太陽能案場分析</span>
+<p>這份是目前看過完成度最高的一份——用「玫瑰圖」呈現各案場的發電效率、用地圖畫出案場的地理分布與發電量、用長條圖比較各縣市的發電量，還進一步用「等效發電效率」的概念，找出效率好但產出少的案場，以及可能需要維護的異常案場。從圖表設計的思考過程到挑戰反思，寫得非常完整，很值得參考。</p>
+<p style="margin-top:10px">特別是「挑戰反思與學習」的部分，把整個專題過程中卡關的地方講得很具體，不是隨便帶過：</p>
+<ul class="tidy">
+  <li><strong>問題意識的缺乏</strong>——一開始是為了學畫圖表而做，不是真的從資料分析出發；後來調整思路，才發現這組資料真正需要的是玫瑰圖而不是圓餅圖，也因此學到「目標導向思考」與「數據轉譯與洞察」的能力。</li>
+  <li><strong>程式可複製性缺乏</strong>——一開始每個人畫圖的方式、資料匯入方式都不一樣，很難互相套用；後來把解決問題的程式模組分享到群組讓大家直接套用，體會到「低耦合、高內聚」的模組化設計精神。</li>
+  <li><strong>團隊溝通的缺乏</strong>——一開始各自研究、缺乏進度共享，導致重複做工、浪費時間；後來改成同步在群組反映問題並動態分工，學到即時溝通、彈性調整分工的敏捷開發習慣。</li>
+  <li><strong>技術面的小坑</strong>——例如日發電量與月發電量的數值差距太大，畫在同一張圖上完全看不出日發電量的變化，後來查到要用 <code>twinx()</code> 另外建立第二條 Y 軸；地圖一開始會把整個台灣都畫出來，後來用 <code>plt.xlim()</code> / <code>plt.ylim()</code> 限制經緯度範圍，才聚焦到南部三個案場所在的縣市。</li>
+</ul>
+</div>
+<div class="grid cols-1">
+  <div class="tile"><h4><span class="ico">📄</span>範例作品：中油太陽能案場分析</h4><p>以政府公開資料分析南部三縣市加油站太陽能案場的發電量，結合玫瑰圖、地理散點圖、長條圖等多種視覺化方式，並用「等效發電效率」找出表現異常的案場。</p><a class="video-link-btn" href="assets/examples/中油太陽能案場分析.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+<p style="margin-top:18px">另外三份主題也各有特色，同樣值得一看：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">📄</span>台中市充電槍座標與統計資料</h4><p>用政府開放資料畫出台中市充電樁的座標分布圖與各行政區數量統計，過程中遇到座標系統、字體、套件版本等問題，除錯過程記錄得很真實。</p><a class="video-link-btn" href="assets/examples/台中市充電槍座標與統計資料.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+  <div class="tile"><h4><span class="ico">📄</span>2024台灣PM2.5濃度數據分析與地理視覺化</h4><p>用一整年、逐月的空氣品質測站資料，畫出 PM2.5 濃度的地理分布散點圖，並討論季節變化背後可能的成因。</p><a class="video-link-btn" href="assets/examples/2024台灣PM2.5濃度數據分析與地理視覺化.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+  <div class="tile"><h4><span class="ico">📄</span>勞工職業災害保險投保人數分析</h4><p>比較各地區、各薪資級距的職災保險投保人數趨勢，並誠實反思了圖表在呈現極端值時的不足之處。</p><a class="video-link-btn" href="assets/examples/勞工職業災害保險投保人數分析.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+<div class="callout"><span class="t">🙈 關於範例中的姓名</span>
+<p>為保護學生隱私，以上範例作品中出現的學生姓名，都已依照「王O翔」的方式處理過（保留姓氏與名字最後一字，中間字改為 O），不影響閱讀報告內容。</p></div>
+
+<div class="callout tip"><span class="t">🔎 想找自己的專題資料？從這裡挖</span>
+<p>政府公開資料平台 <a href="https://data.gov.tw/" target="_blank" rel="noopener">data.gov.tw</a> 上有非常多不同領域的資料集，想分析什麼資料，就去這邊挖！<strong>建議可以找和你未來想念的科系相關的資料來做分析</strong>——例如想念資工的可以找科技相關資料、想念護理的可以找公衛或醫療資源資料、想念財金的可以找景氣或金融相關資料，這樣專題做完，也順便更了解那個領域一點。</p>
+<p style="margin-top:10px">PS　我們這堂課主軸教學的是<strong>程式碼</strong>的部分；資料統整以及資料解讀，需要額外請教老師，或是自主學習喔。</p>
+</div>
+
+<div class="callout"><span class="t">📬 範例持續更新中</span>
+<p>之後只要看到不錯的專題成果，老師都會陸續整理、補充在這一頁，讓大家有更多不同主題的參考。</p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>開發工具：VS Code</h2>
+  
+<p>這學期我們統一使用 <strong>VS Code</strong>（Visual Studio Code）當作開發工具，它是目前業界與教學都最常用的免費程式編輯器。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">⬇️</span>安裝 VS Code</h4><p>到 code.visualstudio.com 下載安裝，並確認電腦已安裝 Python（可從 python.org 下載）。</p></div>
+  <div class="tile"><h4><span class="ico">🧩</span>安裝 Python 延伸套件</h4><p>在 VS Code 左側「Extensions」搜尋 <code>Python</code>（Microsoft 出的），安裝後才有語法提示與執行按鈕。</p></div>
+  <div class="tile"><h4><span class="ico">⌨️</span>打開終端機</h4><p>功能表「Terminal → New Terminal」，或快捷鍵 <code>Ctrl</code>+<code>`</code>，之後安裝套件（如 pandas）都在這裡輸入指令。</p></div>
+  <div class="tile"><h4><span class="ico">▶️</span>建立並執行 .py 檔</h4><p>新增一個 <code>xxx.py</code> 檔案，寫完程式後按右上角的 ▶ 執行鈕，或在終端機輸入 <code>python xxx.py</code>。</p></div>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">print("Hello, 進階程式設計！")
+print("這是我用 VS Code 執行的第一支程式。")</code></pre>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>評量方式</h2>
+  
+<p>這門課的評量方式很單純：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>項目</th><th>次數</th><th>配分</th></tr></thead>
+  <tbody><tr><td>平時成績</td><td>1 次</td><td>20%</td></tr><tr><td>作業</td><td>1 次</td><td>80%</td></tr></tbody>
+</table>
+</div>
+<p style="margin-top:14px"><strong>作業，就是專題。</strong>沒有另外的小考或隨堂測驗，你這學期最主要的產出，就是一份你自己做出來的專題。</p>
+
+<div class="callout tip"><span class="t">🗓️ 上學期 vs 下學期，節奏不一樣</span>
+<p><strong>上學期</strong>的「作業」是複習 Python 的程式碼——最終要手打出一份作業，再加上 Vibe Coding 的 pygame 小遊戲。</p>
+<p style="margin-top:6px"><strong>下學期</strong>大家考完學測之後，才會正式開始製作期末專題（也就是單元 8–10 教的：找資料、用 pandas + Matplotlib 分析、整理成 PDF 報告）。</p>
+</div>
+
+<div class="callout"><span class="t">📌 這學期比較特別的地方</span>
+<p>上學期同時會有兩門課：老師這邊的「進階程式設計」，還有<strong>順陞工程師</strong>教的 SQL。上面這張評量表，只占你上學期總成績的 <strong>50%</strong>，另外 50% 來自 SQL 那門課，兩邊的成績會合併計算。</p>
+</div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>課堂約定</h2>
+  <div class="callout"><span class="t">🤝 一起把這堂課上好</span>
+
+<ul class="tidy">
+  <li>遇到紅字錯誤訊息不要慌——那是電腦在告訴你「哪裡怪怪的」，把錯誤訊息完整看完，通常答案就在裡面。</li>
+  <li>可以善用 AI 工具協助除錯與學習，但要看得懂自己貼上去的程式碼在做什麼。</li>
+  <li>作業與練習誠實完成，卡關時主動提問，比自己硬憋更快進步。</li>
+  <li>專題主題盡早想、資料盡早找，越早開始遇到的坑越有時間解決。</li>
+</ul>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 課前小暖身</h3>
+  
+<p>先不用寫程式，動動腦就好：想想看，有沒有什麼你平常就很好奇的「數據類」問題？例如「我們縣市的空氣品質是不是越來越差？」「最近哪些電影賣最好？」「超商到底哪一家開最多間？」把 2–3 個你感興趣的題目寫下來，之後找專題主題時會用得上。</p>
+
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev disabled"><div class="dir">← 上一單元</div><div class="ttl">已是第一個</div></a>
+    <a class="next" href="unit02.html"><div class="dir">下一單元 →</div><div class="ttl">Python 前導複習（一）變數與資料型態</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

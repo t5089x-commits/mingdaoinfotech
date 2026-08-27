@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 9：專題實作工作坊——pandas × Matplotlib 視覺化分析｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="9">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 9</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 6　單元 9</span>
+  <h1>專題實作工作坊——pandas × Matplotlib 視覺化分析</h1>
+  <p>資料清理、分析、選圖與實作</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能用 pandas 檢查缺失值、篩選與清理資料</li>
+<li>能依資料特性選擇合適的圖表類型</li>
+<li>能用 pandas + Matplotlib 完成至少兩種圖表的視覺化分析</li>
+<li>能寫出簡短、扣題的圖表解讀文字</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>資料清理基本功</h2>
+  
+<p>下載下來的原始資料，通常不能直接拿來畫圖，要先做基本的檢查與清理：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+df = pd.read_csv("你的資料.csv")
+
+print(df.isnull().sum())     # 每一欄有幾個缺失值（NaN）
+
+df = df.dropna()             # 直接刪除有缺失值的列
+# 或者：df["欄位"] = df["欄位"].fillna(0)   # 用 0 補上缺失值
+
+df = df.rename(columns={"原欄名": "新欄名"})   # 欄位改名，方便後續使用
+
+df = df[df["數值欄位"] &gt; 0]   # 篩選：只留下數值大於 0 的資料列</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 延伸：groupby 與 sort_values</span>
+<p>想依類別分組統計（例如「各縣市的總數」），可以用 <code>df.groupby("縣市")["數值"].sum()</code>；想依大小排序，用 <code>df.sort_values("數值", ascending=False)</code>。這兩個是專題階段很常用到的延伸技巧，用到時再查文件慢慢熟悉即可。</p></div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>選圖指南</h2>
+  
+<p>依照你的資料想呈現的重點，選擇合適的圖表：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>想呈現什麼？</th><th>適合的圖表</th><th>範例</th></tr></thead>
+  <tbody><tr><td>隨時間變化的趨勢</td><td>折線圖 <code>plt.plot()</code></td><td>空氣品質逐月變化、景氣指標走勢</td></tr><tr><td>類別之間的比較</td><td>柱狀圖 <code>plt.bar()</code></td><td>各縣市超商家數、各電影票房</td></tr><tr><td>整體中各部分的占比</td><td>圓餅圖 <code>plt.pie()</code></td><td>各類別占總數的百分比</td></tr><tr><td>資料的分布狀況</td><td>直方圖 <code>plt.hist()</code></td><td>分數分布、年齡分布</td></tr></tbody>
+</table>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>實作：從資料到圖表</h2>
+  
+<p>一個完整的小範例，把清理過的資料畫成柱狀圖並加上解讀：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("超商家數.csv")
+df = df.dropna()
+df = df.sort_values("家數", ascending=False)
+
+plt.figure(figsize=(8, 5))
+plt.title("各縣市超商家數比較")
+plt.xlabel("縣市")
+plt.ylabel("家數")
+plt.bar(df["縣市"], df["家數"])
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig("超商家數比較.png")
+plt.show()
+
+print(f"家數最多的是{df.iloc[0]['縣市']}，共{df.iloc[0]['家數']}家。")</code></pre>
+</div>
+<div class="callout"><span class="t">✍️ 別忘了寫解讀</span>
+<p>圖畫出來只是一半，專題真正有價值的地方是<strong>你從圖表看出了什麼</strong>：最高／最低是誰？有沒有明顯的成長或下降？跟你原本的猜測一不一樣？這些觀察都要用文字寫下來。</p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>VS Code 操作站</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">📓</span>用 Interactive Window 邊看邊調</h4><p>改一行程式碼就重跑一次太慢了，用 Jupyter 延伸套件的互動視窗，可以只重跑改動的那一段，很適合調圖表樣式。</p></div>
+  <div class="tile"><h4><span class="ico">🖼️</span>同時輸出多張圖</h4><p>每張圖用不同檔名 <code>savefig("圖1.png")</code>、<code>savefig("圖2.png")</code>，記得在 <code>plt.show()</code> 之後要重新 <code>plt.figure()</code> 才會開新的一張。</p></div>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 實作任務</h3>
+  
+<p>用你在單元 8 找到的專題資料，完成：</p>
+<ol>
+  <li>用 pandas 檢查並處理缺失值。</li>
+  <li>依照選圖指南，畫出<strong>至少兩種</strong>不同類型的圖表。</li>
+  <li>每張圖搭配 2–3 句話的文字解讀。</li>
+</ol>
+
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit08.html"><div class="dir">← 上一單元</div><div class="ttl">專題啟動——政府開放資料探索</div></a>
+    <a class="next" href="unit10.html"><div class="dir">下一單元 →</div><div class="ttl">專題成果整理與發表</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

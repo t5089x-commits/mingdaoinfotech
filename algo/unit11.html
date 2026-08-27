@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 11：演算法(三) 插入排序｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="11">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 11</span></nav>
+<section class="unit-hero">
+  <span class="kicker">排序演算法篇　週次 11</span>
+  <h1>演算法(三) 插入排序</h1>
+  <p>插入排序：把每個新元素插入到已排序部分的正確位置，資料本來就快排好時效率特別好。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解插入排序「往前找位置插入」的邏輯</li>
+<li>能自己用 Python／C++ 寫出插入排序</li>
+<li>知道插入排序在「資料接近排序好」時的效率優勢</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>插入排序 Insertion Sort</h2>
+  
+<p>把每個新元素，往前插入到「已經排好的部分」中正確的位置——很像整理撲克牌時的手法：左手拿著已經排好的牌，每拿到一張新牌，就找到對的位置插進去。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">insertion_sort.py／.cpp</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">list1 = [5, 3, 1, 4, 2]
+for i in range(1, len(list1)):
+    key = list1[i]
+    j = i - 1
+    while j &gt;= 0 and list1[j] &gt; key:
+        list1[j + 1] = list1[j]
+        j -= 1
+    list1[j + 1] = key
+print(list1)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int arr[5] = {5, 3, 1, 4, 2};
+    for (int i = 1; i &lt; 5; i++){
+        int key = arr[i];
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; arr[j] &gt; key){
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = key;
+    }
+    for (int j = 0; j &lt; 5; j++) cout &lt;&lt; arr[j] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>為什麼插入排序在「快排好的資料」特別快</h2>
+  
+<p>如果資料本來就幾乎排好了，每個新元素只需要往前移動很少的距離（甚至不用移動），內層 while 迴圈幾乎不會執行，實際比較次數會非常接近 O(n)。這跟氣泡/選擇排序不管資料原本排得多好、比較次數都差不多的特性完全不同。</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>情況</th><th>時間複雜度</th></tr></thead>
+<tbody>
+<tr><td>最壞（完全反著排）</td><td>O(n²)</td></tr>
+<tr><td>最好（已經排好）</td><td>O(n)</td></tr>
+</tbody>
+</table>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>練習：選對排序法</h2>
+  
+<div class="exercise">
+  <h3>✏️ 練習</h3>
+  <ol>
+    <li>一份有 10,000 筆資料的清單，已經有 9,999 筆是排好的，只有最後一筆放錯位置。用哪一種排序法效率最好？
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>插入排序。因為資料本來就快排好了，插入排序的實際比較次數會非常接近 O(n)，遠比重新排一次的 O(n²) 快。</p></div>
+    </li>
+  </ol>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit10.html"><span class="dir">← 上一單元</span>10 演算法(二) 選擇排序</a>
+  <a class="next" href="unit12.html"><span class="dir">下一單元 →</span>12 演算法(四) 快速排序</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 11：演算法(三) 插入排序</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

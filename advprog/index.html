@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>進階程式設計｜課程首頁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="logo">進階</span>
+      <span>進階程式設計</span></a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="badge">陳楷翔 老師</span>
+  <h1>進階程式設計　<span class="grad">學習網站</span></h1>
+  <p>這學期我們從 Python 語法複習出發，體驗一次「Vibe Coding」用 AI 協作開發 pygame 小遊戲，接着學會 pandas 資料整理與 Matplotlib 視覺化，最後到政府開放資料平台找一份自己感興趣的資料，做出一份圖文並茂的專題 PDF 報告。點選下方單元開始學習，每個單元都是獨立頁面。</p>
+  <div class="meta">
+    <span>📘 10 個教學單元</span>
+    <span>🐍 Python 複習＋Vibe Coding</span>
+    <span>🐼 pandas＋Matplotlib</span>
+    <span>📊 開放資料專題</span>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 1 · 課程總覽</h2>
+    <span class="cnt">單元 1</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit01.html" data-unit="1">
+      <span class="arrow">→</span>
+      <div class="n">01</div>
+      <h3>課程總覽＋專題預告</h3>
+      <p>認識整學期的學習地圖與評量方式，預告期末專題（政府開放資料 × pandas × Matplotlib），並認識 VS Code 開發環境。</p>
+      <div class="tags"><span>課程地圖</span><span>專題預告</span><span>VS Code</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 2 · Python 前導複習</h2>
+    <span class="cnt">單元 2–4</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit02.html" data-unit="2">
+      <span class="arrow">→</span>
+      <div class="n">02</div>
+      <h3>Python 前導複習（一）變數與資料型態</h3>
+      <p>快速複習變數、四種基本資料型態、type() 查型別、型別轉換（casting），以及 f-string 格式化輸出。</p>
+      <div class="tags"><span>變數</span><span>資料型態</span><span>f-string</span></div>
+    </a>
+    <a class="ucard" href="unit03.html" data-unit="3">
+      <span class="arrow">→</span>
+      <div class="n">03</div>
+      <h3>Python 前導複習（二）運算子與判斷</h3>
+      <p>複習算術、比較、邏輯與複合指定運算子，並複習 if、if-else、if-elif-else 條件判斷結構。</p>
+      <div class="tags"><span>運算子</span><span>if判斷</span><span>條件式</span></div>
+    </a>
+    <a class="ucard" href="unit04.html" data-unit="4">
+      <span class="arrow">→</span>
+      <div class="n">04</div>
+      <h3>Python 前導複習（三）迴圈與函式</h3>
+      <p>複習 for 迴圈、while 迴圈、break／continue，以及函式的定義、參數與回傳值，銜接後面的資料分析程式。</p>
+      <div class="tags"><span>迴圈</span><span>函式</span><span>綜合複習</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 3 · Vibe Coding 體驗</h2>
+    <span class="cnt">單元 5</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit05.html" data-unit="5">
+      <span class="arrow">→</span>
+      <div class="n">05</div>
+      <h3>Vibe Coding 體驗——用 AI 打造你的 pygame 小遊戲</h3>
+      <p>體驗「用自然語言描述需求、讓 AI 生成程式碼、執行測試、再用對話除錯與加功能」的 Vibe Coding 開發模式，用 pygame 做出一款小遊戲。</p>
+      <div class="tags"><span>Vibe Coding</span><span>pygame</span><span>AI協作</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 4 · pandas 應用</h2>
+    <span class="cnt">單元 6</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit06.html" data-unit="6">
+      <span class="arrow">→</span>
+      <div class="n">06</div>
+      <h3>pandas 基礎操作</h3>
+      <p>學會安裝 pandas，操作單維度的 Series（建立、運算、增刪、字串處理）與雙維度的 DataFrame（建立、取欄取列、索引）。</p>
+      <div class="tags"><span>Series</span><span>DataFrame</span><span>pandas</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 5 · Matplotlib 基本使用</h2>
+    <span class="cnt">單元 7</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit07.html" data-unit="7">
+      <span class="arrow">→</span>
+      <div class="n">07</div>
+      <h3>Matplotlib 基本使用</h3>
+      <p>學會用 Matplotlib 畫折線圖、直方圖、柱狀圖、圓餅圖，調整標題／刻度／樣式，並將圖表存檔。</p>
+      <div class="tags"><span>折線圖</span><span>圓餅圖</span><span>savefig</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 6 · 專題實作與發表</h2>
+    <span class="cnt">單元 8–10</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit08.html" data-unit="8">
+      <span class="arrow">→</span>
+      <div class="n">08</div>
+      <h3>專題啟動——政府開放資料探索</h3>
+      <p>認識政府公開資料平台，學會搜尋、下載並用 pandas 初步檢視資料，發想並選定自己的專題主題。</p>
+      <div class="tags"><span>開放資料</span><span>data.gov.tw</span><span>主題發想</span></div>
+    </a>
+    <a class="ucard" href="unit09.html" data-unit="9">
+      <span class="arrow">→</span>
+      <div class="n">09</div>
+      <h3>專題實作工作坊——pandas × Matplotlib 視覺化分析</h3>
+      <p>動手清理與篩選自己的專題資料，依資料特性選擇合適的圖表類型，用 pandas＋Matplotlib 完成視覺化分析。</p>
+      <div class="tags"><span>資料清理</span><span>視覺化</span><span>實作工作坊</span></div>
+    </a>
+    <a class="ucard" href="unit10.html" data-unit="10">
+      <span class="arrow">→</span>
+      <div class="n">10</div>
+      <h3>專題成果整理與發表</h3>
+      <p>把程式、圖表與文字解讀整合成一份 PDF 專題報告，練習簡短發表與同儕互評。</p>
+      <div class="tags"><span>PDF報告</span><span>發表</span><span>總結</span></div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site">
+  進階程式設計　陳楷翔 老師　·　教材網站（基本版草稿）
+</footer>
+<a class="teacher-fab" href="../shared/video/video-access.html" title="教師專區：需密鑰才能進入影片資源庫（五科共用）">🔒 教師專區<small>影片資源庫</small></a>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

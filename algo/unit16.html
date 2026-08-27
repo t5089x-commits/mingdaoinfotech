@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 16：演算法(八) 二元搜尋法｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="16">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 16</span></nav>
+<section class="unit-hero">
+  <span class="kicker">搜尋演算法篇　週次 17</span>
+  <h1>演算法(八) 二元搜尋法</h1>
+  <p>資料先排序好之後，搜尋可以用二分法，每比較一次就排除一半的資料，效率大幅提升。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解二分搜尋「砍半」的原理，並看懂逐步動畫</li>
+<li>能自己用 Python／C++ 寫出二分搜尋（迭代與遞迴）</li>
+<li>理解為什麼二分搜尋是 O(log n)</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>二元搜尋法 Binary Search</h2>
+  
+<p>前提：<b>資料必須先排序好</b>。每次都跟「中間的值」比較，如果目標比較大就丟掉左半邊、比較小就丟掉右半邊——每比較一次，範圍就少一半。點下面的「下一步」，看看電腦怎麼在 10 筆資料中，只比較 3 次就找到 13。</p>
+<div class="bsviz" id="bsviz1">
+  <div class="bs-row" id="bs-row"></div>
+  <div class="sv-status"><span id="bs-stepnum">步驟 0 / 4</span></div>
+  <p class="vs-cap" id="bs-cap" style="margin-top:6px"></p>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="bs-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="bs-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var payload = {"data": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], "frames": [{"left": 0, "right": 9, "mid": null, "found": false, "cap": "目標：在已排序陣列中搜尋 13。初始範圍是整個陣列（index 0 ~ 9）。"}, {"left": 0, "right": 9, "mid": 4, "found": false, "cap": "mid = 4，值是 9 &lt; 13，目標比較大 → 捨棄左半邊，left 移到 5"}, {"left": 5, "right": 9, "mid": 7, "found": false, "cap": "mid = 7，值是 15 &gt; 13，目標比較小 → 捨棄右半邊，right 移到 6"}, {"left": 5, "right": 6, "mid": 5, "found": false, "cap": "mid = 5，值是 11 &lt; 13，目標比較大 → 捨棄左半邊，left 移到 6"}, {"left": 6, "right": 6, "mid": 6, "found": true, "cap": "mid = 6，值是 13，剛好等於目標 13！找到了！"}]};
+  var data = payload.data, frames = payload.frames;
+  var root = document.getElementById("bsviz1");
+  if(!root) return;
+  var row = document.getElementById("bs-row");
+  var cap = document.getElementById("bs-cap");
+  var stepLabel = document.getElementById("bs-stepnum");
+  var nextBtn = document.getElementById("bs-next");
+  var resetBtn = document.getElementById("bs-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    row.innerHTML = "";
+    data.forEach(function(v, idx){
+      var cell = document.createElement("div"); cell.className = "bs-cell";
+      var tag = document.createElement("div"); tag.className = "bs-tag";
+      var box = document.createElement("div"); box.className = "bs-box";
+      if (idx >= f.left && idx <= f.right) box.classList.add("active");
+      if (f.mid === idx) box.classList.add(f.found ? "found" : "mid");
+      if (idx === f.left) tag.textContent = "L";
+      if (idx === f.right) tag.textContent = (tag.textContent ? tag.textContent+"/R" : "R");
+      if (f.mid === idx) tag.textContent = "M";
+      box.textContent = v;
+      var ix = document.createElement("div"); ix.className = "bs-idx"; ix.textContent = idx;
+      cell.appendChild(tag); cell.appendChild(box); cell.appendChild(ix);
+      row.appendChild(cell);
+    });
+    cap.innerHTML = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">二分搜尋</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def binary_search(a, key):
+    left, right = 0, len(a) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if a[mid] == key:
+            return mid
+        elif a[mid] &lt; key:
+            left = mid + 1     # 目標較大，丟掉左半邊
+        else:
+            right = mid - 1     # 目標較小，丟掉右半邊
+    return -1
+
+data = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+print(binary_search(data, 13))   # 6
+print(binary_search(data, 4))    # -1</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int binarySearch(int a[], int n, int key){
+    int left = 0, right = n - 1;
+    while (left &lt;= right){
+        int mid = (left + right) / 2;
+        if (a[mid] == key) return mid;
+        else if (a[mid] &lt; key) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+
+int main(){
+    int data[10] = {1,3,5,7,9,11,13,15,17,19};
+    cout &lt;&lt; binarySearch(data, 10, 13) &lt;&lt; endl;
+    cout &lt;&lt; binarySearch(data, 10, 4) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>時間複雜度：為什麼是 O(log n)</h2>
+  
+<p>每比較一次，範圍就砍半：n → n/2 → n/4 → … → 1，總共要砍 log₂(n) 次。100 萬筆資料，循序搜尋最壞要比對 100 萬次，二分搜尋最多只要 20 次！</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">二分搜尋：遞迴版寫法</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def binary_search_recursive(a, key, left, right):
+    if left &gt; right:
+        return -1
+    mid = (left + right) // 2
+    if a[mid] == key:
+        return mid
+    elif a[mid] &lt; key:
+        return binary_search_recursive(a, key, mid + 1, right)
+    else:
+        return binary_search_recursive(a, key, left, mid - 1)
+
+data = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+print(binary_search_recursive(data, 13, 0, len(data)-1))</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">03</span>兩種寫法：迭代 vs 遞迴</h2>
+  <div class="card" style="border:1px dashed var(--brand);">
+<h3 style="color:var(--brand-strong)">🔀 二分搜尋要用迴圈寫還是遞迴寫</h3>
+<div class="grid cols-2">
+<div class="tile"><h4>迭代（while 迴圈）</h4><p>不會有遞迴太深的問題，效率也稍微好一點點（沒有函式呼叫的額外開銷），是 APCS／競賽比較推薦的寫法。</p></div>
+<div class="tile"><h4>遞迴（呼叫自己）</h4><p>程式碼結構更貼近「二分搜尋」的數學定義，比較好理解與說明，但要注意 Python 遞迴深度限制（預設約 1000 層，不過 log n 通常遠遠用不到那麼深，二分搜尋很少會踩到這個限制）。</p></div>
+</div>
+<p style="margin-top:10px;color:var(--text-soft);font-size:.9rem">兩種寫法效率差異不大，教學時建議都示範，讓學生自己選熟悉的方式寫。</p>
+</div>
+</section>
+<div class="unit-nav">
+  <a href="unit15.html"><span class="dir">← 上一單元</span>15 演算法(七) 循序搜尋法</a>
+  <a class="next" href="unit17.html"><span class="dir">下一單元 →</span>17 演算法(九) 搜尋演算法分析</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 16：演算法(八) 二元搜尋法</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 附：堆疊 vs 佇列 比較｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 附</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資料結構篇　補充單元</span>
+  <h1>堆疊 vs 佇列 比較</h1>
+  <p>學過堆疊和佇列之後，這一頁把兩者放在一起比較——重點不是「怎麼放進去」，而是「怎麼拿出來」。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解 append() 不是分辨 Stack／Queue 的關鍵</li>
+<li>能用「取出的位置」正確分辨 Stack 與 Queue</li>
+<li>記住口訣：Stack → append()+pop()，Queue → append()+popleft()</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>第一階段：概念</h2>
+  
+<p>不看程式碼，先建立最單純的概念：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th></th><th>🟠 Stack 堆疊</th><th>🔵 Queue 佇列</th></tr></thead>
+<tbody>
+<tr><td>原則</td><td><b>LIFO</b>：後進先出</td><td><b>FIFO</b>：先進先出</td></tr>
+<tr><td>白話</td><td>最後放進去的，最先出來</td><td>最先放進去的，最先出來</td></tr>
+</tbody>
+</table>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>第二階段：畫圖</h2>
+  
+<p>Stack 用「同一端」進出畫，Queue 用「兩端分開」畫：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🟠 Stack：從同一邊進、同一邊出</h4>
+    <div class="cup-frame"><div class="cup-inner"><div class="bf-step proc" style="border-color:var(--brand)">3</div>
+<div class="bf-step proc" style="border-color:var(--brand)">2</div>
+<div class="bf-step proc" style="border-color:var(--brand)">1　（Bottom）</div></div></div>
+    <p style="text-align:center;font-size:.85rem;color:var(--text-faint);margin-top:4px">append() 放入、pop() 取出——兩個動作都發生在同一端（Top）</p>
+  </div>
+  <div class="tile"><h4>🔵 Queue：後面進、前面出</h4>
+    <div class="boxflow" style="gap:6px">
+      <div class="bf-step io" style="max-width:260px"><span>popleft() ← [1, 2, 3] ← append</span></div>
+    </div>
+    <p style="text-align:center;font-size:.85rem;color:var(--text-faint);margin-top:4px">append() 放入 Rear、popleft() 取出 Front——兩個動作發生在不同端</p>
+  </div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>第三階段：Python 與 C++ 實作</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4>🟠 Stack</h4>
+    <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">Stack</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">stack = []
+stack.append(1)  # 放入
+stack.append(2)
+stack.append(3)
+stack.pop()       # 從最後面拿出（跟放入同一邊）</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;stack&gt;
+using namespace std;
+int main(){
+    stack&lt;int&gt; st;
+    st.push(1);
+    st.push(2);
+    st.push(3);
+    st.pop();       // 從最後面拿出（跟放入同一邊）
+    return 0;
+}</code></pre>
+</div>
+    <p style="margin-top:8px"><b>Stack = append() + pop()</b></p>
+  </div>
+  <div class="tile"><h4>🔵 Queue</h4>
+    <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">Queue</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">from collections import deque
+q = deque()
+q.append(1)       # 從 Rear 放入
+q.append(2)
+q.append(3)
+q.popleft()         # 從 Front 拿出（跟放入不同邊）</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+int main(){
+    queue&lt;int&gt; q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.pop();        // 從最前面拿出（跟放入不同邊）
+    return 0;
+}</code></pre>
+</div>
+    <details class="hint" style="margin-top:8px">
+      <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.76rem;font-weight:700">💡 為什麼要 import deque？</summary>
+      <div class="hint-body">
+        <p>Python 的 list 也有 <code>pop(0)</code> 可以從最前面取出，但那個動作是 <b>O(n)</b>——因為 list 在記憶體裡是連續排列的，拿掉第一個之後，後面所有元素都要往前搬一格。</p>
+        <p><code>collections.deque</code>（雙向佇列）底層設計不同，不管從前面還是後面加入/取出都是 <b>O(1)</b>。佇列會一直從前面取資料，如果用一般 list，資料量一大效率會變得很差，所以佇列一律建議用 <code>deque</code>，不要用 list 的 <code>pop(0)</code>。</p>
+      </div>
+    </details>
+    <p style="margin-top:8px"><b>Queue = append() + popleft()</b></p>
+  </div>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">04</span>最後才提醒：兩邊其實都有 append()</h2>
+  
+<p>你們可能會發現，Stack 和 Queue <b>兩邊都有 append()</b>：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">兩個都有 append()</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">stack.append(x)   # 堆疊：從右邊加入
+q.append(x)        # 佇列：也是從右邊加入（Rear）</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ append() 不能拿來判斷是 Stack 還是 Queue</span>
+<p>沒關係，這是正常的——<b>append() 不是區分 Stack 和 Queue 的關鍵，取出的方法才是</b>。真正該問的問題不是「東西從哪裡放進去」，而是：<b>「東西從哪裡拿出來？」</b></p></div>
+
+<div class="callout tip" style="text-align:center">
+<span class="t" style="justify-content:center;font-size:1rem">🔑 不要看怎麼放，要看怎麼拿。</span>
+<p style="font-size:1.05rem;margin-top:10px">
+<span class="opd" style="font-size:1.1rem">Stack</span> → append() + pop()　　　　
+<span class="opr" style="font-size:1.1rem">Queue</span> → append() + popleft()
+</p>
+</div>
+
+<h3>生活比喻</h3>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th></th><th>🍽️ Stack</th><th>🚶 Queue</th></tr></thead>
+<tbody>
+<tr><td>想像</td><td>疊盤子</td><td>排隊</td></tr>
+<tr><td>加入</td><td>最上面放</td><td>後面排</td></tr>
+<tr><td>取出</td><td>最上面拿</td><td>最前面走</td></tr>
+<tr><td>原則</td><td>LIFO（後進先出）</td><td>FIFO（先進先出）</td></tr>
+<tr><td>Python</td><td><code>append()</code> → <code>pop()</code></td><td><code>append()</code> → <code>popleft()</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="bf-note">💡 Stack 像疊盤子：最後放的盤子最先拿。Queue 像排隊：最先來的人最先離開。</p>
+
+</section>
+<div class="unit-nav">
+  <a href="unit06.html"><span class="dir">← 上一單元</span>06 資料結構(四) 堆疊</a>
+  <a class="next" href="unit07.html"><span class="dir">下一單元 →</span>07 資料結構(五) 樹狀結構</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 附：堆疊 vs 佇列 比較</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

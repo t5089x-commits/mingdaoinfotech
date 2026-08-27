@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 09：演算法(一) 泡沫排序｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="9">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 09</span></nav>
+<section class="unit-hero">
+  <span class="kicker">排序演算法篇　週次 9</span>
+  <h1>演算法(一) 泡沫排序</h1>
+  <p>六種排序法中最直覺的一種：一直比較相鄰兩個元素，較大的往後移。這一單元用逐步動畫帶你看懂它實際上在做什麼。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>看懂氣泡排序每一步「比較、交換」的過程</li>
+<li>能自己用 Python／C++ 寫出氣泡排序</li>
+<li>理解為什麼氣泡排序是 O(n²)</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>氣泡排序 Bubble Sort</h2>
+  
+<p>規則很單純：<b>從頭開始，一直比較「相鄰的兩個」元素，如果左邊比右邊大就交換</b>，跑完一輪之後，最大的值就會像泡泡一樣「浮」到最右邊。點下面的「下一步」，看看電腦實際上是怎麼一步一步排序 [5, 3, 1, 4, 2] 的。</p>
+<div class="sortviz" id="sortviz-bubble">
+  <div class="sv-bars"></div>
+  <div class="sv-status"><span id="sv-stepnum">步驟 0 / 11</span></div>
+  <p class="vs-cap" id="sv-cap" style="margin-top:6px"></p>
+  <div class="sv-legend">
+    <span><i class="c1"></i>尚未確定</span>
+    <span><i class="c2"></i>正在比較</span>
+    <span><i class="c3"></i>剛交換</span>
+    <span><i class="c4"></i>已排定位置</span>
+  </div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="sv-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="sv-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"arr": [5, 3, 1, 4, 2], "compare": null, "swap": false, "sortedFrom": 5, "cap": "初始陣列：[5, 3, 1, 4, 2]。氣泡排序會從頭到尾，一直比較「相鄰兩個」元素，較大的往右邊移。"}, {"arr": [3, 5, 1, 4, 2], "compare": [0, 1], "swap": true, "sortedFrom": 4, "cap": "比較 index 0 與 1：5 和 3，5 > 3，順序不對 → 交換！"}, {"arr": [3, 1, 5, 4, 2], "compare": [1, 2], "swap": true, "sortedFrom": 4, "cap": "比較 index 1 與 2：5 和 1，5 > 1，順序不對 → 交換！"}, {"arr": [3, 1, 4, 5, 2], "compare": [2, 3], "swap": true, "sortedFrom": 4, "cap": "比較 index 2 與 3：5 和 4，5 > 4，順序不對 → 交換！"}, {"arr": [3, 1, 4, 2, 5], "compare": [3, 4], "swap": true, "sortedFrom": 4, "cap": "比較 index 3 與 4：5 和 2，5 > 2，順序不對 → 交換！　這一輪跑完，最大的值已經「沉到」最右邊，index 4 之後都排好了。"}, {"arr": [1, 3, 4, 2, 5], "compare": [0, 1], "swap": true, "sortedFrom": 3, "cap": "比較 index 0 與 1：3 和 1，3 > 1，順序不對 → 交換！"}, {"arr": [1, 3, 4, 2, 5], "compare": [1, 2], "swap": false, "sortedFrom": 3, "cap": "比較 index 1 與 2：3 和 4，3 ≤ 4，順序正確，不用交換。"}, {"arr": [1, 3, 2, 4, 5], "compare": [2, 3], "swap": true, "sortedFrom": 3, "cap": "比較 index 2 與 3：4 和 2，4 > 2，順序不對 → 交換！　這一輪跑完，最大的值已經「沉到」最右邊，index 3 之後都排好了。"}, {"arr": [1, 3, 2, 4, 5], "compare": [0, 1], "swap": false, "sortedFrom": 2, "cap": "比較 index 0 與 1：1 和 3，1 ≤ 3，順序正確，不用交換。"}, {"arr": [1, 2, 3, 4, 5], "compare": [1, 2], "swap": true, "sortedFrom": 2, "cap": "比較 index 1 與 2：3 和 2，3 > 2，順序不對 → 交換！　這一輪跑完，最大的值已經「沉到」最右邊，index 2 之後都排好了。"}, {"arr": [1, 2, 3, 4, 5], "compare": [0, 1], "swap": false, "sortedFrom": 1, "cap": "比較 index 0 與 1：1 和 2，1 ≤ 2，順序正確，不用交換。　這一輪跑完，最大的值已經「沉到」最右邊，index 1 之後都排好了。"}, {"arr": [1, 2, 3, 4, 5], "compare": null, "swap": false, "sortedFrom": 0, "cap": "全部排序完成！[1, 2, 3, 4, 5]"}];
+  var root = document.getElementById("sortviz-bubble");
+  if(!root) return;
+  var barsWrap = root.querySelector(".sv-bars");
+  var cap = document.getElementById("sv-cap");
+  var stepLabel = document.getElementById("sv-stepnum");
+  var nextBtn = document.getElementById("sv-next");
+  var resetBtn = document.getElementById("sv-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    barsWrap.innerHTML = "";
+    var maxV = Math.max.apply(null, f.arr);
+    f.arr.forEach(function(v, idx){
+      var wrap = document.createElement("div"); wrap.className = "sv-bar-wrap";
+      var bar = document.createElement("div"); bar.className = "sv-bar";
+      bar.style.height = Math.round(v/maxV*140) + "px";
+      if (f.compare && (idx === f.compare[0] || idx === f.compare[1])) {
+        bar.classList.add(f.swap ? "swap" : "compare");
+      }
+      if (idx >= f.sortedFrom) bar.classList.add("sorted");
+      var val = document.createElement("div"); val.className = "sv-val"; val.textContent = v;
+      var ix = document.createElement("div"); ix.className = "sv-idx"; ix.textContent = idx;
+      wrap.appendChild(bar); wrap.appendChild(val); wrap.appendChild(ix);
+      barsWrap.appendChild(wrap);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">bubble_sort.py／.cpp</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">list1 = [5, 3, 1, 4, 2]
+for i in range(1, len(list1)):
+    for j in range(0, len(list1) - i):
+        if list1[j] &gt; list1[j + 1]:
+            list1[j], list1[j + 1] = list1[j + 1], list1[j]
+print(list1)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int arr[5] = {5, 3, 1, 4, 2};
+    for (int i = 1; i &lt; 5; i++){
+        for (int j = 0; j &lt; 5 - i; j++){
+            if (arr[j] &gt; arr[j+1]){
+                int tmp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = tmp;
+            }
+        }
+    }
+    for (int j = 0; j &lt; 5; j++) cout &lt;&lt; arr[j] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>時間複雜度</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>情況</th><th>時間複雜度</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td>最壞情況</td><td>O(n²)</td><td>資料完全反著排，每一輪都要一直交換</td></tr>
+<tr><td>最好情況</td><td>O(n)</td><td>資料本來就排好了（如果程式有加「這輪都沒交換就提早結束」的優化）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">加上提早結束優化</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def bubble_sort(a):
+    n = len(a)
+    for i in range(1, n):
+        swapped = False
+        for j in range(0, n - i):
+            if a[j] &gt; a[j+1]:
+                a[j], a[j+1] = a[j+1], a[j]
+                swapped = True
+        if not swapped:      # 這一輪完全沒交換，代表已經排好了
+            break
+    return a</code></pre>
+</div>
+</section>
+<div class="unit-nav">
+  <a href="unit08.html"><span class="dir">← 上一單元</span>08 資料結構(六) 集合</a>
+  <a class="next" href="unit10.html"><span class="dir">下一單元 →</span>10 演算法(二) 選擇排序</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 09：演算法(一) 泡沫排序</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

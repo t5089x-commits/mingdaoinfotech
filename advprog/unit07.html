@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 7：Matplotlib 基本使用｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="7">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 7</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 5　單元 7</span>
+  <h1>Matplotlib 基本使用</h1>
+  <p>折線圖、直方圖、柱狀圖、圓餅圖與存檔</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能匯入 matplotlib.pyplot 並繪製基本圖表（標題／軸標題／格線／刻度）</li>
+<li>能畫出折線圖、直方圖、柱狀圖、圓餅圖</li>
+<li>能用 savefig() 將圖表存成圖檔</li>
+<li>能依資料特性選擇合適的圖表類型，為專題做準備</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>匯入 Matplotlib</h2>
+  
+<p>就像之前用 <code>pd</code> 作為 pandas 的簡寫，Matplotlib 也習慣用簡寫匯入：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import matplotlib.pyplot as plt
+
+plt.plot()
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>標題、軸標題、格線與刻度</h2>
+  
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">plt.title("uniform accelerated motion")  # 表格標題
+plt.xlabel("Time")                        # x 軸標題
+plt.ylabel("Velocity")                    # y 軸標題
+plt.grid(True)                            # 格線
+plt.plot()
+plt.show()</code></pre>
+</div>
+<p>調整刻度可以用 <code>xticks</code>／<code>yticks</code>，或是用 <code>axis</code> 一次設定 x、y 軸的顯示範圍：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">plt.xticks([0, 1, 2, 3, 4])
+plt.yticks([0, 0.8, 1.0, 1.3, 1.7])
+plt.show()
+
+plt.axis([0, 4, 0, 2])   # [xmin, xmax, ymin, ymax]
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>折線圖</h2>
+  
+<p>只給 Y 值時，X 會自動被設成 0, 1, 2, ⋯：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">plt.plot([0, 1, 4, 9, 16])
+plt.show()</code></pre>
+</div>
+<p>也可以同時給 X 值和 Y 值：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = [0, 0.2, 0.4, 0.6, 0.8]
+y = [i ** 2 for i in x]
+plt.plot(x, y)
+plt.show()</code></pre>
+</div>
+<p>修改樣式（顏色、線條種類、線寬）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">x = [0, 0.2, 0.4, 0.6, 0.8]
+y = [i ** 2 for i in x]
+plt.plot(x, y, 'r:', linewidth=5)   # 紅色、虛線、線寬 5
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>直方圖 Histogram</h2>
+  
+<p>直方圖描述的是<strong>連續型</strong>資料（例如年齡、金額、身高），X 軸上的區間彼此有順序性。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.randint(100, size=10)
+plt.hist(x, bins=10)
+plt.show()</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import matplotlib.pyplot as plt
+import numpy as np
+
+z = np.random.randn(10000)
+plt.hist(z, bins='auto')
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>柱狀圖 Bar Chart</h2>
+  
+<p>柱狀圖（長條圖）描述的是<strong>確切的類別</strong>，類別之間沒有順序關係，可以依需要調整排列順序：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.randint(1000, size=10)
+y = np.random.randint(1000, size=10)
+plt.bar(x, y)
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>圓餅圖 Pie Chart</h2>
+  
+<p>圓餅圖利用<strong>百分比</strong>呈現每個資料的比例：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame([
+    ['Czech Republic', 10228744], ['France', 61083916],
+    ['Germany', 82400996], ['Greece', 10706290]],
+    columns=['country', 'pop'])
+
+separated = [0, 0, 0, 0.3]
+plt.pie(df['pop'], labels=df['country'], autopct='%1.2f%%',
+        pctdistance=0.7, explode=separated)
+plt.title('Population')
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec7">
+  <h2><span class="num">07</span>儲存檔案</h2>
+  
+<p>用 <code>savefig()</code> 可以把圖表直接存成圖檔（記得放在 <code>plt.show()</code> 之前）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame([
+    ['Czech Republic', 10228744], ['France', 61083916],
+    ['Germany', 82400996], ['Greece', 10706290]],
+    columns=['country', 'pop'])
+
+separated = [0, 0.1, 0, 0.3]
+plt.pie(df['pop'], labels=df['country'], autopct='%.3f%%',
+        pctdistance=0.5, explode=separated)
+plt.title('Population')
+plt.savefig('plot.png')
+plt.show()</code></pre>
+</div>
+
+</section><section class="block" id="sec8">
+  <h2><span class="num">08</span>VS Code 操作站</h2>
+  
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">🖼️</span>圖表視窗跳出來了？</h4><p>一般直接執行 .py 檔，<code>plt.show()</code> 會另外跳出一個圖表視窗，關掉視窗程式才會繼續往下跑。</p></div>
+  <div class="tile"><h4><span class="ico">📓</span>想在編輯器裡直接看圖？</h4><p>安裝 VS Code 的 <strong>Jupyter</strong> 延伸套件，用 Interactive Window（互動視窗）執行，圖表會直接顯示在編輯器右側，很適合一邊調整一邊看結果。</p></div>
+  <div class="tile"><h4><span class="ico">💾</span>存檔在哪裡？</h4><p><code>savefig("plot.png")</code> 預設會存在你目前 .py 檔案所在的資料夾，可以打開檔案總管確認。</p></div>
+  <div class="tile"><h4><span class="ico">🎨</span>中文字變成方框？</h4><p>圖表標題若用中文出現亂碼，可以加上 <code>matplotlib.rcParams["font.family"] = ["Microsoft JhengHei"]</code>（Windows）指定中文字型。</p></div>
+</div>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<p>想像一組資料：一週五個上課天（一～五），某飲料店每天的來客數分別是 <code>[42, 35, 58, 61, 77]</code>。畫出柱狀圖呈現這組資料，並存成 <code>drink_sales.png</code>。</p>
+
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import matplotlib.pyplot as plt
+
+days = ["一", "二", "三", "四", "五"]
+customers = [42, 35, 58, 61, 77]
+
+plt.title("本週每日來客數")
+plt.xlabel("星期")
+plt.ylabel("來客數")
+plt.bar(days, customers)
+plt.savefig("drink_sales.png")
+plt.show()</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit06.html"><div class="dir">← 上一單元</div><div class="ttl">pandas 基礎操作</div></a>
+    <a class="next" href="unit08.html"><div class="dir">下一單元 →</div><div class="ttl">專題啟動——政府開放資料探索</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

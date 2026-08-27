@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 6：pandas 基礎操作｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="6">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 6</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 4　單元 6</span>
+  <h1>pandas 基礎操作</h1>
+  <p>Series 與 DataFrame：資料的直向欄位與表格操作</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能安裝 pandas 並在 VS Code 執行含 pandas 的程式</li>
+<li>能建立與操作 Series（單維度資料）：運算、觀察、存取、增刪</li>
+<li>能建立與操作 DataFrame（雙維度資料）：取欄、取列、取值</li>
+<li>能分辨 Series 與 DataFrame 的差異，為專題資料分析做準備</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>安裝 pandas</h2>
+  
+<p>在 VS Code 的終端機（<code>Ctrl</code>+<code>`</code>）輸入：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">終端機</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">pip install pandas</code></pre>
+</div>
+<p>安裝完成後，就可以在程式最上面用 <code>import pandas as pd</code> 載入它了。</p>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>Series：單維度的資料</h2>
+  
+<p>Series 就像 Excel 中<strong>直向的一欄資料</strong>。</p>
+<h3>建立 Series</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.Series([10, 20, 30])
+print(data)</code></pre>
+</div>
+<h3>使用 Series</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.Series([10, 20, 30])
+print(data.max())      # 找到最大值 → 30
+print(data.median())   # 計算中位數 → 20
+data = data * 2         # 放大兩倍
+print(data)             # 0:20  1:40  2:60</code></pre>
+</div>
+<h3>觀察資料</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.Series([10, 20, 30])
+print(data.dtype)   # 資料型態
+print(data.size)    # 資料筆數
+print(data.index)   # 資料的索引</code></pre>
+</div>
+<h3>取得資料</h3>
+<p>可以依「順序」或依「索引」取值：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.Series([10, 20, 30], index=["a", "b", "c"])
+print(data[0])     # 依順序：10
+print(data["c"])   # 依索引：30</code></pre>
+</div>
+<h3>資料增刪</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data1 = pd.Series([10, 20, 30])
+data2 = pd.Series([40, 50])
+
+data1 = pd.concat([data1, data2])                     # 新增資料（索引值不連續）
+data1 = pd.concat([data1, data2], ignore_index=True)  # 新增資料（索引值重新排列，連續）
+
+data1.drop([5], inplace=True)          # 刪除索引為 5 的資料
+data1 = data1.reset_index(drop=True)   # 重新整理索引
+print(data1)</code></pre>
+</div>
+<h3>數字運算</h3>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>方法</th><th>說明</th></tr></thead>
+  <tbody><tr><td><code>data.sum()</code></td><td>總和</td></tr><tr><td><code>data.max()</code> / <code>data.min()</code></td><td>最大值／最小值</td></tr><tr><td><code>data.prod()</code></td><td>乘法總和</td></tr><tr><td><code>data.mean()</code> / <code>data.median()</code></td><td>平均／中位數</td></tr><tr><td><code>data.std()</code></td><td>標準差</td></tr><tr><td><code>data.nlargest(n)</code> / <code>data.nsmallest(m)</code></td><td>取前 n 大／前 m 小的數字</td></tr></tbody>
+</table>
+</div>
+<h3>字串運算</h3>
+<p>字串相關操作都定義在 <code>.str</code> 底下：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>方法</th><th>說明</th></tr></thead>
+  <tbody><tr><td><code>data.str.lower()</code> / <code>.upper()</code></td><td>全部轉小寫／大寫</td></tr><tr><td><code>data.str.len()</code></td><td>每個字串的長度</td></tr><tr><td><code>data.str.cat(sep=",")</code></td><td>把每個字串用逗號串起來</td></tr><tr><td><code>data.str.contains("P")</code></td><td>判斷字串是否包含 P</td></tr><tr><td><code>data.str.replace("你好", "Hello")</code></td><td>用 Hello 取代「你好」</td></tr></tbody>
+</table>
+</div>
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>DataFrame：雙維度的資料</h2>
+  
+<p>DataFrame 就像一個<strong>表格</strong>，有「欄」與「列」的概念。</p>
+<h3>建立 DataFrame</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.DataFrame({"name": ["jeff", "emma"], "age": [10, 15]})
+print(data)</code></pre>
+</div>
+<h3>取得前後筆資料</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">data.head(3)   # 取得最前面 3 筆資料
+data.tail(3)   # 取得最後面 3 筆資料</code></pre>
+</div>
+<h3>取得特定欄（直向）</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">data["name"]   # 取得「name」這一欄</code></pre>
+</div>
+<h3>取得特定列（橫向）</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">data.iloc[0]   # 根據「順序」取一整列（第 1 列）
+data.loc[0]    # 根據「索引」取一整列</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 iloc 跟 loc 差在哪？</span>
+<p><code>iloc</code> 看的是「第幾個」（永遠是 0, 1, 2 ⋯的順序），<code>loc</code> 看的是「索引標籤」本身——如果資料的索引被重新排過或不是預設的 0,1,2⋯，兩者取到的結果可能不一樣，要特別小心。</p></div>
+<h3>取得單一值</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">data.at[0, "name"]    # 根據列索引與欄位名稱，取得單一值
+data.iat[0, 0]        # 根據列與欄的「順序」，取得單一值</code></pre>
+</div>
+<h3>資料的索引</h3>
+<p>索引（Index）就像 Excel 最左邊那一排編號，每一列資料都對應一個索引值，可以用它來精準定位一列資料。</p>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>小結</h2>
+  
+<div class="grid cols-1">
+  <div class="tile"><h4><span class="ico">📚</span>pandas 官方文件</h4><p>遇到沒教過的功能，第一個查詢的地方。</p><a class="video-link-btn" href="https://pandas.pydata.org/" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+<p style="margin-top:10px">Series 是「一直欄」，DataFrame 是「一整張表」——你下載下來的政府開放資料，通常一讀進來就是 DataFrame，而 DataFrame 裡的每一欄，其實就是一個 Series。</p>
+
+</section><div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  
+<p>用 <code>pd.DataFrame</code> 建立一個含有 3 位同學姓名與分數的表格，印出「平均分數」與「最高分同學的姓名」。</p>
+
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答／參考方向</div>
+    <div class="answer">
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">import pandas as pd
+
+data = pd.DataFrame({
+    "name": ["小明", "小華", "小美"],
+    "score": [88, 95, 76],
+})
+
+print("平均分數：", data["score"].mean())
+
+top_row = data.loc[data["score"].idxmax()]
+print("最高分同學：", top_row["name"])</code></pre>
+</div></div>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit05.html"><div class="dir">← 上一單元</div><div class="ttl">Vibe Coding 體驗——用 AI 打造你的 pygame 小遊戲</div></a>
+    <a class="next" href="unit07.html"><div class="dir">下一單元 →</div><div class="ttl">Matplotlib 基本使用</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

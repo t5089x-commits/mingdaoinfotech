@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 10：專題成果整理與發表｜進階程式設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">進階</span>
+      <span>進階程式設計</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="10">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 10</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 6　單元 10</span>
+  <h1>專題成果整理與發表</h1>
+  <p>彙整分析結果、匯出 PDF 成果、口頭發表</p>
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能將分析過程、圖表與文字整合成一份 PDF 專題報告</li>
+<li>認識幾種在 VS Code 產出 PDF 的方法</li>
+<li>能上台做簡短發表，並具備欣賞、回饋同儕作品的能力</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>PDF 報告的基本架構</h2>
+  
+<p>參考單元 1 的範例作品，一份完整的專題報告大致包含：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">📌</span>封面</h4><p>專題名稱、姓名（或組員）、資料來源</p></div>
+  <div class="tile"><h4><span class="ico">💡</span>動機與問題意識</h4><p>為什麼選這個主題？想回答什麼問題？</p></div>
+  <div class="tile"><h4><span class="ico">🧹</span>資料處理過程</h4><p>資料筆數、欄位、怎麼清理／篩選的（附關鍵程式碼）</p></div>
+  <div class="tile"><h4><span class="ico">📊</span>圖表與解讀</h4><p>至少兩種圖表，每張搭配文字說明</p></div>
+  <div class="tile"><h4><span class="ico">🧾</span>結論</h4><p>整體發現、跟原本猜測的異同、還可以怎麼延伸</p></div>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>在 VS Code 產出 PDF：三種方法</h2>
+  
+<div class="grid cols-1">
+  <div class="tile"><h4>A. Jupyter Notebook 匯出</h4><p>在 VS Code 用 <code>.ipynb</code> 筆記本邊寫程式、邊寫說明文字（Markdown 儲存格），完成後用右上角「Export」→「PDF」直接匯出，最適合已經熟悉 Notebook 的同學。</p></div>
+  <div class="tile"><h4>B. 用 Python 套件組合成 PDF</h4><p>把圖表存成 png 之後，用 <code>fpdf2</code> 套件把文字與圖片組進同一份 PDF，適合想要完全用程式自動化產出報告的同學。</p></div>
+  <div class="tile"><h4>C. Word／PowerPoint 排版後另存 PDF</h4><p>把程式碼截圖、圖表 png、文字整理進 Word 或 PowerPoint，用「另存新檔→PDF」匯出，最直覺、最適合排版新手。</p></div>
+</div>
+<h3>方法 B 範例：用 fpdf2 組出簡單報告</h3>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">終端機</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="text">pip install fpdf2</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">from fpdf import FPDF
+
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Helvetica", "B", 18)
+pdf.cell(0, 12, "My Project Report", ln=True)
+
+pdf.set_font("Helvetica", "", 12)
+pdf.multi_cell(0, 8, "Data source: data.gov.tw\nThis report analyzes ...")
+
+pdf.image("chart1.png", w=160)   # 放入單元 9 存好的圖表
+
+pdf.output("my_project_report.pdf")</code></pre>
+</div>
+<div class="callout tip"><span class="t">💡 中文字型提醒</span>
+<p><code>fpdf2</code> 預設字型不支援中文，若報告要放中文內文，需要另外用 <code>pdf.add_font()</code> 載入一套中文字型（如思源黑體），這部分老師會在課堂上示範。若不想處理字型問題，方法 A、C 是更省事的選擇。</p></div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>再看一次範例作品</h2>
+  
+<div class="grid cols-1">
+  <div class="tile"><h4><span class="ico">📄</span>景氣指標綜合分析</h4><p>留意它的篇幅不長，但「圖表＋一段文字解讀」的組合把重點都說清楚了——你的報告不需要很長，但要扣題、有觀察。</p><a class="video-link-btn" href="assets/examples/景氣指標綜合分析.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
+</div>
+<div class="callout"><span class="t">📬 更多範例陸續加入</span>
+<p>老師之後整理好其他優秀範例，會補充回單元 1 的「專題範例參觀」，大家可以隨時回去參考。</p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>發表與互評</h2>
+  
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>評核項目</th><th>說明</th></tr></thead>
+  <tbody><tr><td>主題與動機</td><td>有沒有清楚說明為什麼選這個題目</td></tr><tr><td>資料處理</td><td>資料來源明確、有做基本的清理</td></tr><tr><td>圖表選擇</td><td>圖表類型是否符合想呈現的重點</td></tr><tr><td>解讀與結論</td><td>有沒有從圖表提出具體觀察，而不只是「圖表如上」</td></tr><tr><td>口頭表達</td><td>3–5 分鐘內講清楚重點，能回答同學的提問</td></tr></tbody>
+</table>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>課程總結</h2>
+  <div class="callout"><span class="t">🎉 從語法複習到獨立完成一份專題</span>
+
+<p>回頭看看這學期走過的路：從最基礎的變數、迴圈開始複習，中間體驗了用 AI 協作開發遊戲的 Vibe Coding，學會了 pandas 整理資料、Matplotlib 畫圖，最後獨立完成一份從「找資料」到「做出結論」的完整專題。這一整套「資料蒐集 → 整理 → 分析 → 視覺化 → 表達」的能力，不只在這門課用得到，未來不管做什麼主題的探究，都會是很扎實的基本功。</p>
+</div>
+</section><div class="exercise">
+  <h3>✏️ 最後一哩路</h3>
+  
+<p>把你的專題整理成 PDF，並準備一份 3–5 分鐘的口頭發表大綱：主題與動機、資料來源、圖表與發現、結論。發表當天別忘了認真聽同學的分享，準備至少一個問題或一句回饋。</p>
+
+  
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit09.html"><div class="dir">← 上一單元</div><div class="ttl">專題實作工作坊——pandas × Matplotlib 視覺化分析</div></a>
+    <a class="next disabled"><div class="dir">下一單元 →</div><div class="ttl">已是最後一個</div></a>
+  </nav>
+</main>
+<footer class="site">
+  進階程式設計　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t81710@gmail.com">t81710@gmail.com</a>
+</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

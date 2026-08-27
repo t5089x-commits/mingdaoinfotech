@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 14：演算法(六) 排序效能分析｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="14">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 14</span></nav>
+<section class="unit-hero">
+  <span class="kicker">排序演算法篇　週次 15</span>
+  <h1>演算法(六) 排序效能分析</h1>
+  <p>把前面五種排序法放在一起比較，並且看看時間複雜度在資料量變大時，實際上代表多大的差異。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>能完整比較五種排序法的時間複雜度與穩定性</li>
+<li>理解 O(n²) 與 O(n log n) 在大資料量下的實際差距</li>
+<li>能依照情境判斷該用哪一種排序法（或直接用內建函式）</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>五種排序法总整理</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>排序法</th><th>最壞時間</th><th>平均時間</th><th>穩定？</th><th>核心概念</th></tr></thead>
+<tbody>
+<tr><td>氣泡排序</td><td>O(n²)</td><td>O(n²)</td><td>穩定</td><td>相鄰交換</td></tr>
+<tr><td>選擇排序</td><td>O(n²)</td><td>O(n²)</td><td>不穩定</td><td>每輪找最小值</td></tr>
+<tr><td>插入排序</td><td>O(n²)</td><td>O(n²)</td><td>穩定</td><td>往前插入到對的位置</td></tr>
+<tr><td>快速排序</td><td>O(n²)</td><td>O(n log n)</td><td>不穩定</td><td>分治法：選基準切割</td></tr>
+<tr><td>合併排序</td><td>O(n log n)</td><td>O(n log n)</td><td>穩定</td><td>分治法：切到底再合併</td></tr>
+</tbody>
+</table>
+</div>
+<p class="bf-note">💡 補充：還有一種常見的排序法叫「堆積排序 Heap Sort」（O(n log n)，不穩定），這門課沒有排進度，但如果對它有興趣、或考試考到觀念題，可以另外找資料了解，原理是先把陣列蓋成一個 Heap（樹狀結構），每次取出最大值。</p>
+
+</section><section class="block">
+  <h2><span class="num">02</span>O(n²) vs O(n log n)：資料量變大時差多少？</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>n（資料筆數）</th><th>n²（氣泡/選擇/插入）</th><th>n log n（快速/合併）</th><th>快幾倍</th></tr></thead>
+<tbody>
+<tr><td>100</td><td>10,000</td><td>約 664</td><td>約 15 倍</td></tr>
+<tr><td>1,000</td><td>1,000,000</td><td>約 9,966</td><td>約 100 倍</td></tr>
+<tr><td>100,000</td><td>10,000,000,000</td><td>約 1,660,964</td><td>約 6,000 倍</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warn"><span class="t">⚠ 這就是為什麼 APCS／競賽這麼在意時間複雜度</span>
+<p>資料量小的時候，O(n²) 排序法跑起來感覺不出差異；但資料量一大，O(n²) 會慢到「明明邏輯是對的，卻超過時間限制而拿不到分數」。這也是為什麼比賽和 APCS 都建議直接呼叫內建的 <code>sort()</code>——它保證是 O(n log n)。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>怎麼選排序法？</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>情境</th><th>建議</th></tr></thead>
+<tbody>
+<tr><td>寫題目、正式專案</td><td>直接呼叫內建 <code>sort()</code>／<code>sorted()</code>，不要自己刻</td></tr>
+<tr><td>資料量很小（幾十筆以內）</td><td>用什麼排序法幾乎沒差，簡單好懂最重要</td></tr>
+<tr><td>資料本來就快排序好了</td><td>插入排序特別有優勢，接近 O(n)</td></tr>
+<tr><td>需要保證「不會有最壞情況」</td><td>合併排序（O(n log n) 是保證的，不會退化）</td></tr>
+<tr><td>交換成本很高（例如交換的是大檔案）</td><td>選擇排序，因為交換次數最少</td></tr>
+</tbody>
+</table>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit13.html"><span class="dir">← 上一單元</span>13 演算法(五) 合併排序</a>
+  <a class="next" href="unit15.html"><span class="dir">下一單元 →</span>15 演算法(七) 循序搜尋法</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 14：演算法(六) 排序效能分析</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

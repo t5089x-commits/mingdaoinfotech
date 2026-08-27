@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 12：演算法(四) 快速排序｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="12">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 12</span></nav>
+<section class="unit-hero">
+  <span class="kicker">排序演算法篇　週次 12</span>
+  <h1>演算法(四) 快速排序</h1>
+  <p>快速排序：選基準值分成兩半、分別遞迴排序，平均是六種排序法中最快的之一。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>理解快速排序「選基準值、分割、遞迴」的邏輯</li>
+<li>能自己用 Python／C++ 寫出快速排序</li>
+<li>知道快速排序平均 O(n log n)、最壞 O(n²) 的原因</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<section class="block">
+  <h2><span class="num">01</span>快速排序 Quick Sort</h2>
+  
+<p>選一個基準值（pivot），把比它小的丟左邊、比它大的丟右邊，再對左右兩邊分別遞迴排序。這是「分治法」（切一半、分別解決、再合併）的經典應用。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">quick_sort.py／.cpp</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">list1 = [5, 3, 1, 4, 2]
+
+def quicksort(a, left, right):
+    if left &gt;= right:
+        return
+    i, j, key = left, right, a[left]     # 以最左邊的值當基準點
+    while i != j:
+        while a[j] &gt; key and i &lt; j:       # 從右邊找比 key 小的
+            j -= 1
+        while a[i] &lt;= key and i &lt; j:       # 從左邊找比 key 大的
+            i += 1
+        if i &lt; j:
+            a[i], a[j] = a[j], a[i]
+    a[left] = a[i]
+    a[i] = key
+    quicksort(a, left, i - 1)      # 遞迴處理左半邊
+    quicksort(a, i + 1, right)      # 遞迴處理右半邊
+
+quicksort(list1, 0, len(list1) - 1)
+print(list1)</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void quicksort(int a[], int left, int right){
+    if (left &gt;= right) return;
+    int i = left, j = right, key = a[left];
+    while (i != j){
+        while (a[j] &gt; key &amp;&amp; i &lt; j) j--;
+        while (a[i] &lt;= key &amp;&amp; i &lt; j) i++;
+        if (i &lt; j) swap(a[i], a[j]);
+    }
+    a[left] = a[i];
+    a[i] = key;
+    quicksort(a, left, i-1);
+    quicksort(a, i+1, right);
+}
+
+int main(){
+    int arr[5] = {5, 3, 1, 4, 2};
+    quicksort(arr, 0, 4);
+    for (int j = 0; j &lt; 5; j++) cout &lt;&lt; arr[j] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+</div>
+</section><section class="block">
+  <h2><span class="num">02</span>為什麼快速排序平均很快，最壞卻是 O(n²)？</h2>
+  
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>情況</th><th>時間複雜度</th><th>原因</th></tr></thead>
+<tbody>
+<tr><td>平均情況</td><td>O(n log n)</td><td>基準值大致能把陣列切成差不多大的兩半</td></tr>
+<tr><td>最壞情況</td><td>O(n²)</td><td>每次都選到「最大或最小值」當基準，切出來一邊是空的，等於完全沒切</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warn"><span class="t">⚠ 什麼時候會踩到最壞情況</span>
+<p>如果每次都固定選「最左邊」當基準值，而資料剛好本來就是排序好的，就會一直踩到最壞情況。實務上常用的解法是「隨機選基準值」或「三數取中」，降低踩到最壞情況的機率。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>分治法的三個步驟</h2>
+  
+<ul class="tidy">
+  <li><b>分割 Divide</b>：用基準值把陣列切成兩半</li>
+  <li><b>解決 Conquer</b>：對左右兩半分別遞迴排序</li>
+  <li><b>合併 Combine</b>：快速排序不太需要額外合併，因為切割時已經確保左邊都比右邊小</li>
+</ul>
+<p class="bf-note">💡 合併排序也是分治法的應用，但它的「合併」步驟比較重——下一單元會看到。</p>
+
+</section>
+<div class="unit-nav">
+  <a href="unit11.html"><span class="dir">← 上一單元</span>11 演算法(三) 插入排序</a>
+  <a class="next" href="unit13.html"><span class="dir">下一單元 →</span>13 演算法(五) 合併排序</a>
+</div>
+</main>
+<div class="compiler-fab">
+  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">🐍</span> Python 線上編譯器
+  </a>
+  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
+    <span class="ic">⚙️</span> C++ 線上編譯器
+  </a>
+</div>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 12：演算法(四) 快速排序</footer>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
