@@ -1,18 +1,17 @@
 /* ===========================================================
-   課程進度設定 —— 老師每週只要改這裡！
+   課程進度設定 —— 這一份已經改成從共用總表讀取！
    ===========================================================
-   unlockedUpTo : 「已經開放到第幾單元」。
-                  0  = 全部鎖住
-                  1  = 只開放單元 1
-                  10 = 全部開放（本課程共 10 個單元）
-                  每週上完一個單元，把這個數字 +1 即可。
+   真正的數字現在統一寫在 ../shared/core/progress.js（五科同一份），
+   老師要調整進度，直接改那個檔案裡「advprog」後面的數字就好，
+   這裡不用再手動改。
 
-   目前這份是「基本版」草稿，先把 unlockedUpTo 設為 10（全部開放），
-   方便老師自己整份瀏覽、調整內容。之後正式上課要鎖單元進度時，
-   把下面的數字改小即可；要預覽全部單元，在網址後加上
-   ?key=你的密鑰（例如 index.html?key=t5089x）。
+   如果你只想讓「這一科」自己控制進度、不要跟著共用總表一起變動，
+   把下面 unlockedUpTo 那一行改成直接寫死的數字（例如 unlockedUpTo: 5,），
+   這一科就會脫鉤，不再受 shared/core/progress.js 影響。
+
+   要預覽全部單元，在網址後加上 ?key=你的密鑰（例如 index.html?key=ji32k7au4a83）。
    =========================================================== */
 window.COURSE_PROGRESS = {
-  unlockedUpTo: 10,
-  teacherKey: "t5089x"
+  unlockedUpTo: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS["advprog"]) || 0,
+  teacherKey: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS.teacherKey) || "ji32k7au4a83"
 };
