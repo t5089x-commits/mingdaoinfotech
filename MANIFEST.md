@@ -12,6 +12,8 @@
 ├── shared/                  ← 五科共用的檔案，任何一科的對話都「不要」單獨修改，
 │                               要改請先確認會不會影響其他科
 │   ├── core/
+│   │   ├── progress.js      ← ★ 五科進度總表，老師改這一個檔案就能調整全部科目
+│   │   │                       （見第 3 節）
 │   │   └── README.md        ← 共用底層樣式／腳本的現況與後續規劃（見第 4 節）
 │   └── video/                  ← 影片資源庫（五科共用同一頁，見第 5 節）
 │       ├── video-library.html  ← 唯一一份影片資源庫頁面，目前收錄四科（不含 APCS）的內容
@@ -74,26 +76,47 @@
 - **apcs**：`unit01.html` ~ `unit08.html`（新增第五科，一開始就用這個格式建立，
   沒有歷史包袱）。
 
-## 3. 共用的單元鎖定機制
+## 3. 共用的單元鎖定機制 —— 進度總表已經合併成一份
 
-五科都用同一套機制（`assets/progress.js` + `assets/script.js` 裡的鎖定邏輯）：
+五科都用同一套機制（`shared/core/progress.js` + 各科 `assets/progress.js` +
+`assets/script.js` 裡的鎖定邏輯）：
 
-- 每科 `assets/progress.js` 只需要設定兩個值：
-  - `unlockedUpTo`：目前開放到第幾單元，每上完一單元 +1。
-  - `teacherKey`：老師預覽密鑰 —— **五科統一為 `t5089x`**（原本 it-tech 就是
-    `t5089x`，advprog／infosec 原本是 `chen2026`，algo 原本完全沒有設定，
-    這次統一都改成 `t5089x`；apcs 建立時就直接用同一把。老師在任何頁面網址
-    後面加 `?key=t5089x` 就能解鎖預覽全部單元，五科通用同一把）。
-    `shared/video/teacher-key.js` 裡也是同一把，兩邊要保持一致，之後要換
-    密鑰記得五科 + 這裡一起改。
-- 頁面要吃到這套鎖定，需要兩個標記（algo 這次已經照這個規則補上）：
+- **★ 老師平常只需要改一個檔案：`shared/core/progress.js`。** 裡面是一個物件，
+  五科各一行：
+  ```js
+  window.ALL_COURSE_PROGRESS = {
+    "it-tech": 2,
+    "algo": 2,
+    "infosec": 2,
+    "advprog": 2,
+    "apcs": 2,
+    teacherKey: "ji32k7au4a83"
+  };
+  ```
+  每上完一科的一個單元，把那一科後面的數字 +1，存檔、push 上 GitHub 就生效，
+  不用再一科一科找 `assets/progress.js` 改。
+- 運作原理：每個頁面的 `<script>` 現在是**先**載入
+  `<script src="../shared/core/progress.js">`（設定上面那個共用總表），
+  **再**載入 `<script src="assets/progress.js">`（該科自己的檔案，讀
+  `ALL_COURSE_PROGRESS["科目名"]` 組成 `window.COURSE_PROGRESS`），最後才是
+  `assets/script.js`（實際做鎖定判斷）。三個 `<script>` 標籤的順序不能打亂。
+  這個設計在 `file://`（老師雙擊 `index.html` 開啟）情境下也實測正常，因為
+  用的是 `<script src>` 標籤而不是 `fetch()`——後者在本機檔案模式下會被瀏覽器
+  的 CORS 規則擋掉，前者不會。
+- 如果某一科想要「脫鉤」、不想再跟著總表一起變動（例如想手動保留某科的進度、
+  不受集體調整影響），把該科 `assets/progress.js` 裡 `unlockedUpTo` 那一行
+  改成寫死的數字即可，檔案裡也寫了這段說明；改完之後那一科就不會再讀
+  `shared/core/progress.js` 的值。
+- `teacherKey`：解鎖單元用的老師密鑰，**五科統一為 `ji32k7au4a83`**，設定
+  在 `shared/core/progress.js` 裡；`shared/video/teacher-key.js` 裡是
+  另外獨立的一把（影片資源庫用的，目前是 `t5089x`）——**這兩把密鑰現在刻意
+  設成不同的值、互不相通**，要換密鑰只要改對應那一個檔案就好，不用保持
+  一致。在任何頁面網址後面加 `?key=ji32k7au4a83` 就能解鎖預覽全部單元，
+  五科通用同一把。
+- 頁面要吃到這套鎖定，需要兩個標記：
   - 首頁的單元卡片：`<a class="ucard" data-unit="3" href="unit03.html">`
   - 該單元內頁的 `<main>`：`<main class="wrap" data-unit="3">`
   - 沒有 `data-unit` 的頁面（例如補充單元）永遠不會被鎖。
-- **這次順便修好一個 bug**：algo（高二演算法）原本完全沒有接上這套鎖定機制
-  （`assets/progress.js` 不存在，頁面也沒有 `data-unit`），等於不管進度設多少，
-  全部單元對所有人都是打開的。現在已經補上，`unlockedUpTo` 先設為 18（全部開放），
-  跟其他科目「基本版草稿」的慣例一致。
 
 ## 4. 共用樣式／腳本（`shared/core/`）—— 目前還沒合併，原因見 `shared/core/README.md`
 
@@ -141,9 +164,10 @@
 一段「本資料夾是『資訊科技教學網』的一部分」的說明。丟回原本那個對話時，建議這樣做：
 
 1. 只丟該科的資料夾（例如整個 `it-tech/`），不用整個 repo。
-2. 附上一句話提醒：「這個資料夾現在是明道資訊科技教學網的一部分，`assets/progress.js`
-   的 `teacherKey` 統一是 `t5089x`，影片資源庫的版型已經搬到 `shared/video/`，
-   請看資料夾裡的 README.txt。」
+2. 附上一句話提醒：「這個資料夾現在是明道資訊科技教學網的一部分，解鎖單元用的
+   `teacherKey` 統一是 `ji32k7au4a83`（跟影片資源庫的密鑰是兩把不同的，互不
+   相通），影片資源庫的版型已經搬到 `shared/video/`，請看資料夾裡的
+   README.txt。」
 3. 如果那次要改的東西完全在單元內容本身（像文字、例題、圖片），不涉及檔名或共用機制，
    基本上不太會出事；如果會動到檔名、鎖定機制、或影片資源庫，記得回來這邊或跟我確認
    一下會不會影響其他科。

@@ -1,23 +1,20 @@
 /* ===========================================================
-   課程進度設定  ——  老師每週只要改這裡！
+   課程進度設定  ——  這一份已經改成從共用總表讀取！
    ===========================================================
-   unlockedUpTo : 「已經開放到第幾單元」。
-                  0  = 全部鎖住
-                  1  = 只開放單元 1
-                  4  = 開放單元 1~4，其餘鎖住
-                  8  = 全部開放
-                  每週上完一個單元，把這個數字 +1 即可。
+   真正的數字現在統一寫在 ../shared/core/progress.js（五科同一份），
+   老師要調整進度，直接改那個檔案裡「apcs」後面的數字就好，
+   這裡不用再手動改。
+
+   如果你只想讓「這一科」自己控制進度、不要跟著共用總表一起變動，
+   把下面 unlockedUpTo 那一行改成直接寫死的數字（例如 unlockedUpTo: 5,），
+   這一科就會脫鉤，不再受 shared/core/progress.js 影響。
 
    teacherKey   : 老師預覽用的密鑰。在任何頁面網址後面加上
-                  ?key=你的密鑰   （例如 index.html?key=t5089x）
+                  ?key=你的密鑰   （例如 index.html?key=ji32k7au4a83）
                   就能解鎖並預覽全部單元，方便自己備課；
                   學生沒有這個密鑰，看到的仍是鎖住的狀態。
-                  請改成只有你知道的字串。
-
-   目前這份是「基本版」草稿，先把 unlockedUpTo 設為 8（全部開放），
-   之後正式依照上課進度調整即可。
    =========================================================== */
 window.COURSE_PROGRESS = {
-  unlockedUpTo: 8,
-  teacherKey: "t5089x"   // 🎉 恭喜你獲得密碼！請務必親自來找老師。
+  unlockedUpTo: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS["apcs"]) || 0,
+  teacherKey: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS.teacherKey) || "ji32k7au4a83"   // 🎉 恭喜你獲得密碼！請務必親自來找老師。
 };
