@@ -79,6 +79,12 @@
 </tbody>
 </table>
 </div>
+<div class="callout tip"><span class="t">📈 由快到慢排一排：時間複雜度的大小關係</span>
+<p>把上面表格裡的幾種等級，依照「資料量變大時，實際跑起來的快慢」由快到慢排成一列：</p>
+<p style="text-align:center;font-size:1.15rem;font-weight:800;letter-spacing:.02em;margin:10px 0">
+O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²)
+</p>
+<p>這裡的「&lt;&lt;」唸作「遠遠小於」（不是程式裡的位移運算子），表示左邊遠比右邊快。n 越大，前後等級之間的差距就被拉得越開；n 很小的時候，這幾種等級的實際執行時間可能看不太出差別——這也是為什麼後面要用「效能基準測試」實際跑給你看。</p></div>
 <div class="callout tip"><span class="t">🎬 經典例子：租片店 vs 網路下載</span>
 <p><b>租片店</b>：不管店裡有幾萬部片，走路過去單程都是 25 分鐘、來回 50 分鐘——這是 <b>O(1)</b>，跟資料量（片庫大小）完全無關。<br>
 <b>網路一部一部下載</b>：每部片下載要 3 分鐘（現在的網路速度），這是 <b>O(n)</b>，資料量變大，時間就跟著等比例變大。</p></div>
@@ -238,7 +244,7 @@
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">arr = [10, 20, 30, 40, 50]
+  <pre class="lang-pane lang-py show"><code data-lang="python">arr = list(range(10000))   # 特意跟其他範例一樣用 n = 10000，但 O(1) 完全不在乎 n 有多大
 print(arr[0])          # 不管 arr 有幾個元素，永遠只做這一步
 print(arr[-1])</code></pre>
 </div><h4 style="margin:18px 0 6px">O(n) 線性時間：單層迴圈跑 n 次</h4><div class="code-card">
@@ -248,7 +254,7 @@ print(arr[-1])</code></pre>
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">n = 1000000
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 10000    # 跟這一單元其他範例統一用 n = 10000
 total = 0
 for i in range(n):      # 單層迴圈跑 n 次 → O(n)
     total += i
@@ -260,12 +266,12 @@ print(total)</code></pre>
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">n = 1000
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 10000    # 跟這一單元其他範例統一用 n = 10000
 count = 0
 for i in range(n):          # 外層跑 n 次
     for j in range(n):        # 內層也跑 n 次
         count += 1
-print(count)                  # 總共執行 n × n 次</code></pre>
+print(count)                  # 總共執行 n × n 次 = 一億次，線上編譯器可能要跑個幾秒到幾十秒</code></pre>
 </div><h4 style="margin:18px 0 6px">O(log n) 對數時間：二分搜尋，每次砍半</h4>
 <details class="hint">
   <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
@@ -286,7 +292,11 @@ print(count)                  # 總共執行 n × n 次</code></pre>
             left = mid + 1
         else:
             right = mid - 1
-    return -1</code></pre>
+    return -1
+
+# 範例：跟這一單元其他範例統一用 n = 10000 筆已排序資料
+a = list(range(10000))
+print(binary_search(a, 8888))</code></pre>
 </div></div>
 </details><h4 style="margin:18px 0 6px">O(n log n)：合併排序（切一半、分別排序、再合併）</h4>
 <details class="hint">
@@ -310,9 +320,47 @@ def merge(left, right):
     result = []
     while left and right:
         result.append(left.pop(0) if left[0] &lt; right[0] else right.pop(0))
-    return result + left + right</code></pre>
+    return result + left + right
+
+# 範例：跟這一單元其他範例統一用 n = 10000 筆資料（先打亂再排序）
+import random
+a = list(range(10000))
+random.shuffle(a)
+sorted_a = merge_sort(a)
+print(sorted_a[:5], sorted_a[-5:])</code></pre>
 </div></div>
 </details>
+
+<h3>⏱️ 效能基準測試 (Benchmark)：自己跑跑看，實際差多少</h3>
+<p>光看大 O 符號比較「理論上的成長速度」有點抽象。這裡示範一段最簡單的「碼表」寫法，讓你可以把任何一段程式碼包起來，直接量出它在你自己電腦上實際跑了幾秒。試著把中間換成上面 O(n) 或 O(n²) 的範例（n 都統一設 10000），感受一下同樣是 n = 10000，兩者實際跑起來差多少：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">效能基準測試 (Benchmark) 範本</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">import time
+# 此程式可利用前後的紀錄時間，來測試程式總共跑的秒數
+# 同一支程式在不同的電腦（CPU/記憶體）上，跑出來的絕對秒數都不同。
+
+# 1. 紀錄開始時間
+start_time = time.time()
+
+# --------- 這裡放您的程式碼（例如 n=10000 的雙層迴圈） ---------
+n = 10000
+sum_val = 0
+for i in range(n):
+    for j in range(n):
+        sum_val += 1
+# ----------------------------------------------------------------
+
+# 2. 紀錄結束時間並計算差值
+end_time = time.time()
+print(f"這隻程式總共跑了: {end_time - start_time:.6f} 秒")</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 小提醒</span>
+<p>比較「不同演算法」的速度時，n 要設成一樣（這一單元統一用 n = 10000），這樣比較才公平；比較「同一支程式在不同電腦」的速度時，反而是秒數本身沒有意義，因為每台電腦硬體不同——這也是為什麼我們平常討論效能都用 O(...) 而不是說「幾秒」。</p></div>
 
 <div class="exercise">
   <h3>✏️ 練習：判斷時間複雜度（依速度由快到慢排列）</h3>
