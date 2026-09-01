@@ -16,5 +16,5 @@
    =========================================================== */
 window.COURSE_PROGRESS = {
   unlockedUpTo: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS["apcs"]) || 0,
-  teacherKey: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS.teacherKey) || "ji32k7au4a83"   // 🎉 恭喜你獲得密碼！請務必親自來找老師。
+  teacherKey: (window.ALL_COURSE_PROGRESS && window.ALL_COURSE_PROGRESS.teacherKey) || "ji32k7au4a83"   // 🎉 恭喜你獲得密碼！寄信到 t5089x@ms.mingdao.edu.tw 告訴老師。
 };
