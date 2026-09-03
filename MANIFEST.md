@@ -28,7 +28,7 @@
 │   ├── assets/ (style.css, script.js, progress.js), images/, build/
 │   └── README.txt
 ├── algo/                    ← 高二演算法（原「algo-site-full」）
-│   ├── index.html, unit01~unit18.html, unit02b.html, unit06b.html（補充單元）
+│   ├── index.html, unit01~unit18.html, unit01b.html, unit02b.html, unit06b.html（補充單元）
 │   ├── assets/ (style.css, script.js, progress.js ← 本次新增)
 │   └── （沒有 build/，是手刻的靜態 HTML，不是 Python 生成）
 ├── infosec/                 ← 高三資訊安全導論
@@ -67,10 +67,11 @@
   不影響功能，但之後如果要規則化重新命名，記得這個檔案本身也要跟著調整，
   且要連動修改 `build/content.py` 這個生成來源，不能只改輸出的 html。
 - **algo**：原本是 `01-overview.html`、`02b-function.html` 這種描述性命名，**這次已經
-  重新命名成 `unit01.html` ~ `unit18.html`**，另外兩個「附」補充單元命名為
-  `unit02b.html`、`unit06b.html`（函式補充、堆疊 vs 佇列比較）——這兩個補充單元
-  **不計入單元鎖定的進度序號**，永遠開放瀏覽。所有內部連結（首頁卡片、上一/下一單元、
-  總複習頁）都已經同步改好。
+  重新命名成 `unit01.html` ~ `unit18.html`**，另外三個「附」補充單元命名為
+  `unit01b.html`（IDLE 操作入門）、`unit02b.html`（函式補充）、`unit06b.html`
+  （堆疊 vs 佇列比較）——這三個補充單元分別跟著單元 01／02／06 一起鎖／解鎖
+  （早期版本曾讓 unit02b／unit06b 不計入鎖定序號、永遠開放，後來已修正為跟主線
+  單元同步）。所有內部連結（首頁卡片、上一/下一單元、總複習頁）都已經同步改好。
 - **infosec**：`unit01.html` ~ `unit20.html`（原本就是這個格式，沒有動）。
 - **advprog**：`unit01.html` ~ `unit10.html`（原本就是這個格式，沒有動）。
 - **apcs**：`unit01.html` ~ `unit08.html`（新增第五科，一開始就用這個格式建立，
@@ -117,7 +118,10 @@
 - 頁面要吃到這套鎖定，需要兩個標記：
   - 首頁的單元卡片：`<a class="ucard" data-unit="3" href="unit03.html">`
   - 該單元內頁的 `<main>`：`<main class="wrap" data-unit="3">`
-  - 沒有 `data-unit` 的頁面（例如補充單元）永遠不會被鎖。
+  - 沒有 `data-unit` 的頁面永遠不會被鎖——早期版本 algo 科的 unit02b／unit06b
+    就是因為漏了這個屬性才變成「永遠開放」，後來已經補上 `data-unit`
+    （分別對應單元 02、06）修正。新增頁面時要記得補上這個屬性，才會跟著
+    進度一起鎖／解鎖。
 
 ## 4. 共用樣式／腳本（`shared/core/`）—— 目前還沒合併，原因見 `shared/core/README.md`
 
