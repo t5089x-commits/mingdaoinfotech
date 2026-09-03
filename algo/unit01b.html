@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 01b：IDLE 操作入門｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="1">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 01b</span></nav>
+<section class="unit-hero">
+  <span class="kicker">資訊教育篇　操作入門</span>
+  <h1>IDLE 操作入門</h1>
+  <p>這學期的程式範例，統一用 <strong>IDLE</strong>（Python 內建的編輯器）來執行，不需要額外安裝軟體、也不需要連網。這是一個很小的單元，帶你快速認識 IDLE 的兩個視窗、怎麼新增檔案、怎麼執行程式。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>知道 IDLE 是什麼、怎麼打開它</li>
+<li>分清楚「Shell 視窗」跟「編輯器視窗」的差別</li>
+<li>會新增一個 .py 檔案、輸入程式碼並存檔</li>
+<li>會用 Run → Run Module（或按 F5）執行程式，並在 Shell 看到結果</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>什麼是 IDLE？</h2>
+<p>IDLE 是安裝 Python 的時候<strong>會自動一起裝好</strong>的編輯器，全名是 <em>Integrated Development and Learning Environment</em>。不用額外下載、不用註冊帳號、也不用連上網路——這學期上課、寫作業、練習範例程式，都用它就好。</p>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">IDLE 圖示 / 開始畫面示意</span>
+</div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>怎麼打開 IDLE？</h2>
+<p>在 Windows 上，從開始選單找到 <strong>IDLE (Python 3.x)</strong> 點開即可（用開始選單搜尋「IDLE」三個字最快）。第一次打開時會看到一個標題寫著 <code>Python 3.x.x Shell</code> 的視窗，這就是 IDLE 的主畫面。</p>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">從開始選單找到並開啟 IDLE 的畫面</span>
+</div>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>Shell 視窗：先玩玩看</h2>
+<p>剛打開的這個視窗叫 <strong>Interactive Shell（互動模式）</strong>，看到 <code>&gt;&gt;&gt;</code> 這個提示符號，就代表它在等你輸入一行程式碼。輸入完按 <kbd>Enter</kbd>，馬上就會看到結果——很適合用來快速測試一小段程式碼。</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">在 Shell 裡直接輸入試試看</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">&gt;&gt;&gt; print("Hello, IDLE!")
+Hello, IDLE!
+&gt;&gt;&gt; 3 + 5
+8</code></pre>
+</div>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">Shell 視窗輸入程式碼與結果的畫面</span>
+</div>
+<div class="callout tip"><span class="t">💡 Shell 適合「玩」，不適合「寫完整程式」</span>
+<p>Shell 裡打的東西不會存檔，關掉視窗就沒了。真正要寫作業、寫範例程式的時候，要用下一段介紹的「編輯器視窗」。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">04</span>新增檔案並執行程式</h2>
+<p>這是接下來每一堂課都會用到的流程：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>步驟</th><th>操作</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>在 Shell 視窗選單列點 <strong>File → New File</strong>（快捷鍵 <kbd>Ctrl</kbd>+<kbd>N</kbd>），會開啟一個空白的編輯器視窗</td></tr>
+<tr><td>2</td><td>在編輯器裡輸入（或貼上）這一課要練習的程式碼</td></tr>
+<tr><td>3</td><td>按 <kbd>Ctrl</kbd>+<kbd>S</kbd> 存檔，檔名用<strong>英文與數字</strong>命名，例如 <code>unit01.py</code></td></tr>
+<tr><td>4</td><td>選單列點 <strong>Run → Run Module</strong>，或直接按 <kbd>F5</kbd> 執行程式</td></tr>
+<tr><td>5</td><td>切回 Shell 視窗，就會看到程式的執行結果</td></tr>
+</tbody>
+</table>
+</div>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">File → New File 開啟編輯器視窗的畫面</span>
+</div>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">編輯器裡寫好程式碼，準備存檔的畫面</span>
+</div>
+<div class="img-placeholder">
+  <span class="ip-ico">🖼️</span>
+  <span class="ip-t">圖片待補</span>
+  <span class="ip-d">按 F5（Run Module）後，Shell 顯示執行結果的畫面</span>
+</div>
+</section>
+
+<section class="block">
+  <h2><span class="num">05</span>幾個小提醒</h2>
+<div class="callout warn"><span class="t">⚠ 存檔前要注意這幾件事</span>
+<p>檔名<strong>不要用中文、空白或特殊符號</strong>，用英文、數字、底線就好（例如 <code>unit01.py</code>，不要用 <code>單元01.py</code>）；存檔位置建議固定放在一個容易找到的資料夾（例如桌面新增一個「演算法」資料夾），方便之後找檔案、交作業。</p></div>
+<div class="callout tip"><span class="t">💡 執行前記得先存檔</span>
+<p>如果程式碼改過還沒存檔就按 F5，IDLE 通常會自動跳出存檔視窗——看到就直接存檔即可，不用緊張。之後每次改完程式碼，養成先按 <kbd>Ctrl</kbd>+<kbd>S</kbd> 再執行的習慣。</p></div>
+</section>
+
+<div class="unit-nav">
+  <a href="unit01.html"><span class="dir">← 上一單元</span>01 演算法概念</a>
+  <a class="next" href="unit02.html"><span class="dir">下一單元 →</span>02 流程圖的表示方法</a>
+</div>
+</main>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 01b：IDLE 操作入門</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -36,7 +36,7 @@
   </ul>
 </div>
 <div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
-<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼。左下角一直固定在畫面上的兩個按鈕，可以分別開啟 <strong>Programiz 的 Python／C++ 線上編譯器</strong>（免安裝、開瀏覽器就能跑），把程式碼貼過去即可看到執行結果。</p></div>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼，貼到你電腦上的 <strong>IDLE</strong>（Python 內建的編輯器）就能執行看看結果。還不熟悉 IDLE 怎麼開、怎麼操作的話，可以先看<a href="unit01b.html">單元 01b：IDLE 操作入門</a>。</p></div>
 <section class="block">
   <h2><span class="num">01</span>資料、資訊與演算法</h2>
   
@@ -237,16 +237,14 @@ O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²)
 </script>
 
 <h3>五種時間複雜度，各自的程式範例</h3>
-<h4 style="margin:18px 0 6px">O(1) 常數時間：直接用索引取值</h4><div class="code-card">
+<h4 style="margin:18px 0 6px">O(1) 常數時間：固定動作，跟 n 無關</h4><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-    <span class="label">O(1) 常數時間：直接用索引取值</span>
+    <span class="label">O(1) 常數時間：固定動作，跟 n 無關</span>
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">arr = list(range(10000))   # 特意跟其他範例一樣用 n = 10000，但 O(1) 完全不在乎 n 有多大
-print(arr[0])          # 不管 arr 有幾個元素，永遠只做這一步
-print(arr[-1])</code></pre>
+  <pre class="lang-pane lang-py show"><code data-lang="python">print(5487)   # 不管資料量再大、跑幾次程式，這裡永遠只做「印出一個數字」這件事，跟 n 完全無關</code></pre>
 </div><h4 style="margin:18px 0 6px">O(n) 線性時間：單層迴圈跑 n 次</h4><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -254,7 +252,7 @@ print(arr[-1])</code></pre>
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">n = 10000    # 跟這一單元其他範例統一用 n = 10000
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 20000    # 跟這一單元其他範例統一用 n = 20000
 total = 0
 for i in range(n):      # 單層迴圈跑 n 次 → O(n)
     total += i
@@ -266,12 +264,12 @@ print(total)</code></pre>
     <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
-  <pre class="lang-pane lang-py show"><code data-lang="python">n = 10000    # 跟這一單元其他範例統一用 n = 10000
+  <pre class="lang-pane lang-py show"><code data-lang="python">n = 20000    # 跟這一單元其他範例統一用 n = 20000
 count = 0
 for i in range(n):          # 外層跑 n 次
     for j in range(n):        # 內層也跑 n 次
         count += 1
-print(count)                  # 總共執行 n × n 次 = 一億次，線上編譯器可能要跑個幾秒到幾十秒</code></pre>
+print(count)                  # 總共執行 n × n 次 = 4 億次，在 IDLE 執行大約要跑半分鐘左右</code></pre>
 </div><h4 style="margin:18px 0 6px">O(log n) 對數時間：二分搜尋，每次砍半</h4>
 <details class="hint">
   <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
@@ -294,8 +292,8 @@ print(count)                  # 總共執行 n × n 次 = 一億次，線上編�
             right = mid - 1
     return -1
 
-# 範例：跟這一單元其他範例統一用 n = 10000 筆已排序資料
-a = list(range(10000))
+# 範例：跟這一單元其他範例統一用 n = 20000 筆已排序資料
+a = list(range(20000))
 print(binary_search(a, 8888))</code></pre>
 </div></div>
 </details><h4 style="margin:18px 0 6px">O(n log n)：合併排序（切一半、分別排序、再合併）</h4>
@@ -322,9 +320,9 @@ def merge(left, right):
         result.append(left.pop(0) if left[0] &lt; right[0] else right.pop(0))
     return result + left + right
 
-# 範例：跟這一單元其他範例統一用 n = 10000 筆資料（先打亂再排序）
+# 範例：跟這一單元其他範例統一用 n = 20000 筆資料（先打亂再排序）
 import random
-a = list(range(10000))
+a = list(range(20000))
 random.shuffle(a)
 sorted_a = merge_sort(a)
 print(sorted_a[:5], sorted_a[-5:])</code></pre>
@@ -332,7 +330,7 @@ print(sorted_a[:5], sorted_a[-5:])</code></pre>
 </details>
 
 <h3>⏱️ 效能基準測試 (Benchmark)：自己跑跑看，實際差多少</h3>
-<p>光看大 O 符號比較「理論上的成長速度」有點抽象。這裡示範一段最簡單的「碼表」寫法，讓你可以把任何一段程式碼包起來，直接量出它在你自己電腦上實際跑了幾秒。試著把中間換成上面 O(n) 或 O(n²) 的範例（n 都統一設 10000），感受一下同樣是 n = 10000，兩者實際跑起來差多少：</p>
+<p>光看大 O 符號比較「理論上的成長速度」有點抽象。這裡示範一段最簡單的「碼表」寫法，讓你可以把任何一段程式碼包起來，直接量出它在你自己電腦上實際跑了幾秒。試著把中間換成上面 O(n) 或 O(n²) 的範例（n 都統一設 20000），感受一下同樣是 n = 20000，兩者實際跑起來差多少：在學校電腦上，O(n) 大約 0.04 秒左右——比 O(1) 的幾乎瞬間完成明顯慢了一截；O(n²) 則大約要跑 30~40 秒，兩者差距一眼就能看出來。</p>
 <div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -347,8 +345,8 @@ print(sorted_a[:5], sorted_a[-5:])</code></pre>
 # 1. 紀錄開始時間
 start_time = time.time()
 
-# --------- 這裡放您的程式碼（例如 n=10000 的雙層迴圈） ---------
-n = 10000
+# --------- 這裡放您的程式碼（例如 n=20000 的雙層迴圈） ---------
+n = 20000
 sum_val = 0
 for i in range(n):
     for j in range(n):
@@ -360,7 +358,7 @@ end_time = time.time()
 print(f"這隻程式總共跑了: {end_time - start_time:.6f} 秒")</code></pre>
 </div>
 <div class="callout warn"><span class="t">⚠ 小提醒</span>
-<p>比較「不同演算法」的速度時，n 要設成一樣（這一單元統一用 n = 10000），這樣比較才公平；比較「同一支程式在不同電腦」的速度時，反而是秒數本身沒有意義，因為每台電腦硬體不同——這也是為什麼我們平常討論效能都用 O(...) 而不是說「幾秒」。</p></div>
+<p>比較「不同演算法」的速度時，n 要設成一樣（這一單元統一用 n = 20000），這樣比較才公平；比較「同一支程式在不同電腦」的速度時，反而是秒數本身沒有意義，因為每台電腦硬體不同——這也是為什麼我們平常討論效能都用 O(...) 而不是說「幾秒」。</p></div>
 
 <div class="exercise">
   <h3>✏️ 練習：判斷時間複雜度（依速度由快到慢排列）</h3>
@@ -387,17 +385,9 @@ print(scores[-1])</code></pre></div>
 </section>
 <div class="unit-nav">
   <a class="disabled" href="#"><span class="dir">← 上一單元</span>（已是第一單元）</a>
-  <a class="next" href="unit02.html"><span class="dir">下一單元 →</span>02 流程圖的表示方法</a>
+  <a class="next" href="unit01b.html"><span class="dir">下一單元 →</span>01b IDLE 操作入門</a>
 </div>
 </main>
-<div class="compiler-fab">
-  <a class="cf-btn py" href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener">
-    <span class="ic">🐍</span> Python 線上編譯器
-  </a>
-  <a class="cf-btn cpp" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">
-    <span class="ic">⚙️</span> C++ 線上編譯器
-  </a>
-</div>
 <footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 01：演算法概念</footer>
 <script src="../shared/core/progress.js"></script>
 <script src="assets/progress.js"></script>

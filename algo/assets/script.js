@@ -392,7 +392,7 @@
     var qs = "?key=" + encodeURIComponent(progress().teacherKey);
     document.querySelectorAll('a[href$=".html"]').forEach(function (a) {
       var href = a.getAttribute("href");
-      if (href && href.indexOf("?") < 0 && /unit\d+\.html$|index\.html$/.test(href))
+      if (href && href.indexOf("?") < 0 && /unit\d+[a-z]?\.html$|index\.html$/.test(href))
         a.setAttribute("href", href + qs);
     });
   }
