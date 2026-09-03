@@ -40,21 +40,15 @@
 <section class="block">
   <h2><span class="num">01</span>什麼是 IDLE？</h2>
 <p>IDLE 是安裝 Python 的時候<strong>會自動一起裝好</strong>的編輯器，全名是 <em>Integrated Development and Learning Environment</em>。不用額外下載、不用註冊帳號、也不用連上網路——這學期上課、寫作業、練習範例程式，都用它就好。</p>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">IDLE 圖示 / 開始畫面示意</span>
-</div>
 </section>
 
 <section class="block">
   <h2><span class="num">02</span>怎麼打開 IDLE？</h2>
 <p>在 Windows 上，從開始選單找到 <strong>IDLE (Python 3.x)</strong> 點開即可（用開始選單搜尋「IDLE」三個字最快）。第一次打開時會看到一個標題寫著 <code>Python 3.x.x Shell</code> 的視窗，這就是 IDLE 的主畫面。</p>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">從開始選單找到並開啟 IDLE 的畫面</span>
-</div>
+<figure class="fig">
+  <img src="images/idle-01-find-in-start-menu.png" alt="在 Windows 開始選單搜尋 IDLE，搜尋結果顯示「IDLE (Python 3.13 64-bit)」應用程式" loading="lazy" style="background:#fff">
+  <figcaption>在開始選單搜尋「IDLE」，點選搜尋結果裡的 IDLE 應用程式即可開啟。</figcaption>
+</figure>
 </section>
 
 <section class="block">
@@ -71,11 +65,14 @@ Hello, IDLE!
 &gt;&gt;&gt; 3 + 5
 8</code></pre>
 </div>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">Shell 視窗輸入程式碼與結果的畫面</span>
-</div>
+<figure class="fig">
+  <img src="images/idle-02-shell-empty.png" alt="剛打開的 IDLE Shell 3.13.7 視窗，顯示 Python 版本資訊與 &gt;&gt;&gt; 提示符號" loading="lazy" style="background:#fff">
+  <figcaption>剛打開的 Shell 視窗，看到 <code>&gt;&gt;&gt;</code> 就代表可以開始輸入了。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-03-shell-print-5487.png" alt="在 IDLE Shell 輸入 print(5487) 按下 Enter 後，畫面顯示執行結果 5487" loading="lazy" style="background:#fff">
+  <figcaption>實際輸入 <code>print(5487)</code> 按 <kbd>Enter</kbd> 後，馬上顯示結果 <code>5487</code>。</figcaption>
+</figure>
 <div class="callout tip"><span class="t">💡 Shell 適合「玩」，不適合「寫完整程式」</span>
 <p>Shell 裡打的東西不會存檔，關掉視窗就沒了。真正要寫作業、寫範例程式的時候，要用下一段介紹的「編輯器視窗」。</p></div>
 </section>
@@ -95,21 +92,30 @@ Hello, IDLE!
 </tbody>
 </table>
 </div>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">File → New File 開啟編輯器視窗的畫面</span>
-</div>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">編輯器裡寫好程式碼，準備存檔的畫面</span>
-</div>
-<div class="img-placeholder">
-  <span class="ip-ico">🖼️</span>
-  <span class="ip-t">圖片待補</span>
-  <span class="ip-d">按 F5（Run Module）後，Shell 顯示執行結果的畫面</span>
-</div>
+<figure class="fig">
+  <img src="images/idle-04-file-menu.png" alt="IDLE Shell 選單列，File 選單被紅框標示出來" loading="lazy" style="background:#fff">
+  <figcaption>步驟 1：點選 Shell 視窗左上角的 <strong>File</strong>。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-05-new-file.png" alt="File 選單展開，New File（Ctrl+N）選項被紅框標示出來" loading="lazy" style="background:#fff">
+  <figcaption>選單裡點選 <strong>New File</strong>（快捷鍵 Ctrl+N）。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-06-editor-window.png" alt="點選 New File 後，出現第二個標題為 untitled 的空白視窗，這是可以打程式碼的編輯器" loading="lazy" style="background:#fff">
+  <figcaption>步驟 2：會另外開啟一個 <code>untitled</code> 的空白視窗，這裡就是可以打程式碼的<strong>編輯器</strong>，跟 Shell 是不同的視窗。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-07-run-module-f5.png" alt="編輯器裡已經寫好程式碼，選單列 Run 展開，Run Module（F5）選項被紅框標示" loading="lazy" style="background:#fff">
+  <figcaption>步驟 3~4：程式碼打好之後，點編輯器選單的 <strong>Run → Run Module</strong>，或直接按 <kbd>F5</kbd> 執行。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-08-save-prompt.png" alt="按下執行後跳出「Save Before Run or Check」的存檔確認視窗，詢問是否要儲存原始碼" loading="lazy" style="background:#fff">
+  <figcaption>如果程式碼還沒存檔就執行，會先跳出這個存檔提示，按<strong>確定</strong>即可（跟前面提醒的一樣，不用緊張）。</figcaption>
+</figure>
+<figure class="fig">
+  <img src="images/idle-09-shell-result.png" alt="切回 Shell 視窗，顯示 RESTART 訊息與程式的執行結果：這支程式總共跑了 30.28 秒" loading="lazy" style="background:#fff">
+  <figcaption>步驟 5：切回 <strong>Shell 視窗</strong>，就會看到程式的執行結果（這張是拿單元 01 的 benchmark 範例實測，n=20000 的雙層迴圈在這台電腦上跑了約 30 秒，跟課本預估的 30~40 秒吻合）。</figcaption>
+</figure>
 </section>
 
 <section class="block">

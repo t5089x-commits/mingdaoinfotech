@@ -60,7 +60,7 @@
 </section><section class="block">
   <h2><span class="num">03</span>時間複雜度 Time Complexity</h2>
   
-<p>時間複雜度是用大 O 符號描述「演算法執行次數」隨資料量成長的速度，跟電腦實際跑多快（硬體、程式語言）沒有直接關係，重點是「成長趨勢」。</p>
+<p>時間複雜度是用大 O 符號描述「演算法執行次數」隨資料量成長的速度，跟電腦實際跑多快（硬體、程式語言）沒有直接關係，重點是「成長趨勢」。這門課會遇到的時間複雜度，由快到慢主要有六種：O(1)、O(log n)、O(n)、O(n log n)、O(n²)、O(2ⁿ)——下面先看整體對照表，再一個一個拆開來看。</p>
 <div class="table-wrap">
 <table class="center">
 <thead><tr><th>記法</th><th>唸法</th><th>意義</th><th>例子</th></tr></thead>
@@ -76,15 +76,17 @@
   </details>
 </td><td>目前已知排序最好的等級</td><td>合併排序、快速排序（平均）</td></tr>
 <tr><td>O(n²)</td><td>平方時間</td><td>資料量變 2 倍，時間變 4 倍</td><td>氣泡排序、選擇排序</td></tr>
+<tr><td>O(2ⁿ)</td><td>指數時間</td><td>資料量每 +1，時間直接翻倍</td><td>費波那契數列（遞迴解法）</td></tr>
 </tbody>
 </table>
 </div>
 <div class="callout tip"><span class="t">📈 由快到慢排一排：時間複雜度的大小關係</span>
 <p>把上面表格裡的幾種等級，依照「資料量變大時，實際跑起來的快慢」由快到慢排成一列：</p>
 <p style="text-align:center;font-size:1.15rem;font-weight:800;letter-spacing:.02em;margin:10px 0">
-O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²)
+O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²) &lt;&lt; O(2ⁿ)
 </p>
 <p>這裡的「&lt;&lt;」唸作「遠遠小於」（不是程式裡的位移運算子），表示左邊遠比右邊快。n 越大，前後等級之間的差距就被拉得越開；n 很小的時候，這幾種等級的實際執行時間可能看不太出差別——這也是為什麼後面要用「效能基準測試」實際跑給你看。</p></div>
+
 <div class="callout tip"><span class="t">🎬 經典例子：租片店 vs 網路下載</span>
 <p><b>租片店</b>：不管店裡有幾萬部片，走路過去單程都是 25 分鐘、來回 50 分鐘——這是 <b>O(1)</b>，跟資料量（片庫大小）完全無關。<br>
 <b>網路一部一部下載</b>：每部片下載要 3 分鐘（現在的網路速度），這是 <b>O(n)</b>，資料量變大，時間就跟著等比例變大。</p></div>
@@ -236,8 +238,12 @@ O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²)
 })();
 </script>
 
-<h3>五種時間複雜度，各自的程式範例</h3>
-<h4 style="margin:18px 0 6px">O(1) 常數時間：固定動作，跟 n 無關</h4><div class="code-card">
+<h3>六種時間複雜度，各自的程式範例</h3>
+<h4 style="margin:18px 0 6px">O(1) 常數時間：固定動作，跟 n 無關</h4>
+<p>換個角度理解：假設有 7 個數字放進一排編號好的櫃子裡（<code>nums = [12, 45, 3, 59, 27, 38, 72]</code>）。如果我們已經知道答案放在哪個位置——例如「陣列裡索引 3 的值是多少」（<code>nums[3]</code>）——電腦完全不用管這排櫃子裡到底放了 7 個還是 7 萬個數字，永遠只需要「跳到那個位置、開門、拿出來」，固定 <b>1 個步驟</b>：</p>
+<div class="fig" style="padding:14px"><svg viewBox="0 0 548 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:548px;height:auto;display:block;margin:14px auto" role="img" aria-label="陣列示意圖"><defs><marker id="boxArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="var(--brand)"/></marker></defs><text x="274.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 1</text><line x1="274.0" y1="22" x2="274.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><rect x="14" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="46.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">12</text><text x="46.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 0</text><rect x="90" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="122.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">45</text><text x="122.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 1</text><rect x="166" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="198.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">3</text><text x="198.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 2</text><rect x="242" y="56" width="64" height="48" rx="8" fill="var(--ok)" stroke="var(--ok)" stroke-width="2"/><text x="274.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="#fff">59</text><text x="274.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 3</text><rect x="318" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="350.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">27</text><text x="350.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 4</text><rect x="394" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="426.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">38</text><text x="426.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 5</text><rect x="470" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="502.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">72</text><text x="502.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 6</text></svg></div>
+<p>這就是 O(1)：不管資料量再大，步驟數都不會變。下面的程式範例更進一步：連陣列都不用，直接印出一個固定數字，徹底排除任何可能跟 n 扯上關係的動作：</p>
+<div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">O(1) 常數時間：固定動作，跟 n 無關</span>
@@ -245,7 +251,11 @@ O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²)
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
   </div>
   <pre class="lang-pane lang-py show"><code data-lang="python">print(5487)   # 不管資料量再大、跑幾次程式，這裡永遠只做「印出一個數字」這件事，跟 n 完全無關</code></pre>
-</div><h4 style="margin:18px 0 6px">O(n) 線性時間：單層迴圈跑 n 次</h4><div class="code-card">
+</div><h4 style="margin:18px 0 6px">O(n) 線性時間：單層迴圈跑 n 次</h4>
+<p>如果不知道要找的數字放在哪一格（同樣這 7 個數字，但沒排序過，我們想找出 72 藏在哪裡），最直覺的做法就是從第 1 格開始，一格一格打開來檢查，直到找到為止。運氣好第一格就中；但計算時間複雜度時要看「最壞情況」——萬一要找的數字剛好在最後一格，7 個數字就得開滿 7 次門：</p>
+<div class="fig" style="padding:14px"><svg viewBox="0 0 548 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:548px;height:auto;display:block;margin:14px auto" role="img" aria-label="陣列示意圖"><defs><marker id="boxArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="var(--brand)"/></marker></defs><text x="46.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 1</text><line x1="46.0" y1="22" x2="46.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="122.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 2</text><line x1="122.0" y1="22" x2="122.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="198.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 3</text><line x1="198.0" y1="22" x2="198.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="274.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 4</text><line x1="274.0" y1="22" x2="274.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="350.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 5</text><line x1="350.0" y1="22" x2="350.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="426.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 6</text><line x1="426.0" y1="22" x2="426.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="502.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 7</text><line x1="502.0" y1="22" x2="502.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><rect x="14" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="46.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">12</text><text x="46.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 0</text><rect x="90" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="122.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">45</text><text x="122.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 1</text><rect x="166" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="198.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">3</text><text x="198.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 2</text><rect x="242" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="274.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">59</text><text x="274.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 3</text><rect x="318" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="350.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">27</text><text x="350.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 4</text><rect x="394" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="426.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">38</text><text x="426.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 5</text><rect x="470" y="56" width="64" height="48" rx="8" fill="var(--ok)" stroke="var(--ok)" stroke-width="2"/><text x="502.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="#fff">72</text><text x="502.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 6</text></svg></div>
+<p>資料量如果變成 2 倍（14 個數字），最壞情況要開的門數也會跟著變成 2 倍（14 次）——步驟數跟著 n 等比例成長，這就是 O(n)。程式範例則是用迴圈跑 n 次做同一件事，跟上面「一格一格開門」的邏輯完全一樣：</p>
+<div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">O(n) 線性時間：單層迴圈跑 n 次</span>
@@ -271,6 +281,14 @@ for i in range(n):          # 外層跑 n 次
         count += 1
 print(count)                  # 總共執行 n × n 次 = 4 億次，在 IDLE 執行大約要跑半分鐘左右</code></pre>
 </div><h4 style="margin:18px 0 6px">O(log n) 對數時間：二分搜尋，每次砍半</h4>
+<p>如果這排數字<b>事先排序好</b>，就可以用更聰明的方法：不從第一格找起，而是先開「正中間」那一格，用大小關係一次刪掉一半的可能性——比中間的數字大，答案一定在右半邊；比中間的數字小，答案一定在左半邊。重複這個動作，範圍每次都砍半，這就是<b>二分搜尋法</b>。同樣 7 個數字（這次先排好序），找 72 只需要 3 步：</p>
+<div class="fig" style="padding:14px"><svg viewBox="0 0 548 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:548px;height:auto;display:block;margin:14px auto" role="img" aria-label="陣列示意圖"><defs><marker id="boxArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="var(--brand)"/></marker></defs><text x="274.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 1</text><line x1="274.0" y1="22" x2="274.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="426.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 2</text><line x1="426.0" y1="22" x2="426.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><text x="502.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 3</text><line x1="502.0" y1="22" x2="502.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><rect x="14" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="46.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">3</text><text x="46.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 0</text><rect x="90" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="122.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">12</text><text x="122.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 1</text><rect x="166" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="198.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">27</text><text x="198.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 2</text><rect x="242" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="274.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">38</text><text x="274.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 3</text><rect x="318" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="350.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">45</text><text x="350.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 4</text><rect x="394" y="56" width="64" height="48" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/><text x="426.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">59</text><text x="426.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 5</text><rect x="470" y="56" width="64" height="48" rx="8" fill="var(--ok)" stroke="var(--ok)" stroke-width="2"/><text x="502.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="#fff">72</text><text x="502.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 6</text></svg></div>
+<div class="table-wrap"><table class="center">
+<thead><tr><th>要找的數字</th><th>3</th><th>12</th><th>27</th><th>38</th><th>45</th><th>59</th><th>72</th></tr></thead>
+<tbody><tr><td>需要步驟數</td><td>3</td><td>2</td><td>3</td><td>1</td><td>3</td><td>2</td><td>3</td></tr></tbody>
+</table></div>
+<div class="callout tip"><span class="t">💡 為什麼是 log n 步？</span>
+<p>推廣到 n 個數字：因為二分搜尋法每一步都能刪掉一半的可能性，最多重複 <b>log₂n</b> 次就會只剩 1 個——這就是「log n 步驟」的由來（複習一下：log₂n = x 的意思是 n = 2ˣ）。這也是為什麼 O(log n) 這麼被稱讚：n 從 7 一路長到 700 萬，需要的步驟數也才從 3 步變成 23 步左右，成長速度非常慢。</p></div>
 <details class="hint">
   <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
   <div class="hint-body" style="background:transparent;padding:0"><p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「二分搜尋」會在後面的單元才正式教，這裡只是先讓大家知道 O(log n) 長什麼樣子，看不懂沒關係。</p><div class="code-card">
@@ -327,7 +345,27 @@ random.shuffle(a)
 sorted_a = merge_sort(a)
 print(sorted_a[:5], sorted_a[-5:])</code></pre>
 </div></div>
-</details>
+</details><h4 style="margin:18px 0 6px">O(2ⁿ) 指數時間：遞迴費波那契，每次呼叫變兩次</h4>
+<p>費波那契數列（Fibonacci）的規則很簡單：每一項都是前兩項的和（0, 1, 1, 2, 3, 5, 8, 13, 21…），第 0、1 項直接定義是 0 跟 1。如果照定義直接寫成「遞迴」（函式呼叫自己），程式碼會非常短：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">O(2ⁿ) 指數時間：遞迴費波那契，每次呼叫變兩次</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def fib(n):
+    if n &lt;= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)   # 一次呼叫，變成兩次呼叫
+
+print(fib(10))   # 55，順著數列數下去：0,1,1,2,3,5,8,13,21,34,55</code></pre>
+</div>
+<p>程式碼雖然短，執行起來卻很沒效率。原因是：每呼叫一次 <code>fib(n)</code>（n 不是 0 或 1 時），內部都會再呼叫兩次自己——<code>fib(n-1)</code> 跟 <code>fib(n-2)</code>；這兩次呼叫又各自再呼叫兩次……呼叫次數像細胞分裂一樣一路翻倍。以 <code>fib(4)</code> 為例，完整展開後總共呼叫了 9 次自己：</p>
+<div class="fig" style="padding:14px"><svg viewBox="0 0 444 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;height:auto;display:block;margin:14px auto" role="img" aria-label="fib(4) 遞迴呼叫樹狀圖"><line x1="77.0" y1="188.0" x2="32.0" y2="216.0" stroke="var(--border)" stroke-width="1.5"/><line x1="77.0" y1="188.0" x2="122.0" y2="216.0" stroke="var(--border)" stroke-width="1.5"/><line x1="144.5" y1="126.0" x2="77.0" y2="154.0" stroke="var(--border)" stroke-width="1.5"/><line x1="144.5" y1="126.0" x2="212.0" y2="154.0" stroke="var(--border)" stroke-width="1.5"/><line x1="347.0" y1="126.0" x2="302.0" y2="154.0" stroke="var(--border)" stroke-width="1.5"/><line x1="347.0" y1="126.0" x2="392.0" y2="154.0" stroke="var(--border)" stroke-width="1.5"/><line x1="245.8" y1="64.0" x2="144.5" y2="92.0" stroke="var(--border)" stroke-width="1.5"/><line x1="245.8" y1="64.0" x2="347.0" y2="92.0" stroke="var(--border)" stroke-width="1.5"/><rect x="0.0" y="216.0" width="64" height="34" rx="7" fill="var(--ok)" stroke="var(--ok)" stroke-width="1.5"/><text x="32.0" y="238.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="#fff">fib(1)</text><rect x="90.0" y="216.0" width="64" height="34" rx="7" fill="var(--ok)" stroke="var(--ok)" stroke-width="1.5"/><text x="122.0" y="238.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="#fff">fib(0)</text><rect x="45.0" y="154.0" width="64" height="34" rx="7" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="77.0" y="176.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="var(--brand-strong)">fib(2)</text><rect x="180.0" y="154.0" width="64" height="34" rx="7" fill="var(--ok)" stroke="var(--ok)" stroke-width="1.5"/><text x="212.0" y="176.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="#fff">fib(1)</text><rect x="112.5" y="92.0" width="64" height="34" rx="7" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="144.5" y="114.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="var(--brand-strong)">fib(3)</text><rect x="270.0" y="154.0" width="64" height="34" rx="7" fill="var(--ok)" stroke="var(--ok)" stroke-width="1.5"/><text x="302.0" y="176.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="#fff">fib(1)</text><rect x="360.0" y="154.0" width="64" height="34" rx="7" fill="var(--ok)" stroke="var(--ok)" stroke-width="1.5"/><text x="392.0" y="176.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="#fff">fib(0)</text><rect x="315.0" y="92.0" width="64" height="34" rx="7" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="347.0" y="114.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="var(--brand-strong)">fib(2)</text><rect x="213.8" y="30.0" width="64" height="34" rx="7" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/><text x="245.8" y="52.0" text-anchor="middle" font-size="12.5" font-family="var(--mono)" font-weight="800" fill="var(--brand-strong)">fib(4)</text></svg></div>
+<p>n 每增加 1，呼叫次數大約再乘以 2 倍——這就是 O(2ⁿ) 的由來。跟前面的 O(n²) 比起來，O(2ⁿ) 恐怖的地方在於根本不用等 n 變大：n 從 30 增加到 40，呼叫次數就會從大約 269 萬次暴增到 3.3 億次以上，電腦馬上就會明顯卡住。</p>
+<div class="callout warn"><span class="t">⚠ 遞迴寫法不等於好演算法</span>
+<p>這也是為什麼「程式碼短」不代表「效能好」——費波那契數列其實可以只用一層迴圈（O(n)）就算出來，這裡的遞迴版本只是拿來示範「重複呼叫造成指數爆炸」長什麼樣子。如果之後有機會接觸「動態規劃（Dynamic Programming）」，就會看到怎麼把這種重複計算省下來。</p></div>
 
 <h3>⏱️ 效能基準測試 (Benchmark)：自己跑跑看，實際差多少</h3>
 <p>光看大 O 符號比較「理論上的成長速度」有點抽象。這裡示範一段最簡單的「碼表」寫法，讓你可以把任何一段程式碼包起來，直接量出它在你自己電腦上實際跑了幾秒。試著把中間換成上面 O(n) 或 O(n²) 的範例（n 都統一設 20000），感受一下同樣是 n = 20000，兩者實際跑起來差多少：在學校電腦上，O(n) 大約 0.04 秒左右——比 O(1) 的幾乎瞬間完成明顯慢了一截；O(n²) 則大約要跑 30~40 秒，兩者差距一眼就能看出來。</p>
@@ -359,6 +397,8 @@ print(f"這隻程式總共跑了: {end_time - start_time:.6f} 秒")</code></pre>
 </div>
 <div class="callout warn"><span class="t">⚠ 小提醒</span>
 <p>比較「不同演算法」的速度時，n 要設成一樣（這一單元統一用 n = 20000），這樣比較才公平；比較「同一支程式在不同電腦」的速度時，反而是秒數本身沒有意義，因為每台電腦硬體不同——這也是為什麼我們平常討論效能都用 O(...) 而不是說「幾秒」。</p></div>
+<div class="callout tip"><span class="t">🚀 想感受 O(2ⁿ) 有多誇張？把 benchmark 換成遞迴費波那契試試看</span>
+<p>把上面碼表中間的程式碼，換成前面 O(2ⁿ) 那段的 <code>fib()</code> 函式定義加上 <code>print(fib(32))</code>，實際跑跑看。在這份教材測試用的電腦上，<code>fib(32)</code> 大約跑了 0.3 秒左右——注意這裡的 n 只有 <b>32</b>，跟前面 O(n)／O(n²) 動不動就 n = 20000 完全不能比，光是這麼「小」的 n，O(2ⁿ) 就已經明顯感覺得到延遲了。學校電腦實際跑出來的秒數可能不太一樣（更快更慢都正常），如果手癢想試更大的 n，建議從 33、34 開始一次加 1 就好，因為每 +1，時間大約會變成 1.6 倍，n 隨便設到 40 以上可能就要等上好一段時間了。</p></div>
 
 <div class="exercise">
   <h3>✏️ 練習：判斷時間複雜度（依速度由快到慢排列）</h3>
@@ -378,6 +418,12 @@ print(scores[-1])</code></pre></div>
         print(a, b)</code></pre></div>
       <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
       <div class="answer"><p>O(k²)。雖然內層迴圈執行次數不是每次都固定是 k（第 a 輪只跑 a 次：0+1+2+…+(k-1)），但把這些次數全部加起來大約是 k²/2——省略係數跟低次項之後，時間複雜度仍然算 O(k²)，跟寫成 range(k) 是同一個等級。這是很多人會誤判成 O(k) 的地方，要特別小心（雖然跟上一題同樣是平方等級，但這題的迴圈次數不是一眼就能看出來的，要特別留意）。</p></div>
+    </li>    <li>這段程式的時間複雜度是多少？<div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">python</span></div><pre class="lang-pane lang-py show"><code data-lang="python">def f(n):
+    if n &lt;= 1:
+        return 1
+    return f(n - 1) + f(n - 1)</code></pre></div>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>O(2ⁿ)。這裡兩次呼叫都是 <code>f(n-1)</code>（不是費波那契的 <code>f(n-1) + f(n-2)</code>），但道理一樣：只要「一次呼叫會再產生兩次呼叫」，呼叫次數就會隨著 n 每 +1 而翻倍成長，屬於指數時間——判斷 O(2ⁿ) 的關鍵不是「算的是不是費波那契」，而是「一次呼叫變兩次呼叫」這個分岔的形狀。</p></div>
     </li>
   </ol>
 </div>
