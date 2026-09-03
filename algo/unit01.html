@@ -238,7 +238,8 @@ O(1) &lt;&lt; O(log n) &lt;&lt; O(n) &lt;&lt; O(n log n) &lt;&lt; O(n²) &lt;&lt
 })();
 </script>
 
-<h3>六種時間複雜度，各自的程式範例</h3>
+<h3>📖 六種時間複雜度，各自的程式範例（講解區）</h3>
+<p style="color:var(--text-faint);font-size:.9rem;margin:-6px 0 18px">接下來六個小節，每一種複雜度都先看圖解、搞懂「為什麼是這個速度」，再看對應的程式碼——這部分用看的、用理解的就好，還不用動手跑。</p>
 <h4 style="margin:18px 0 6px">O(1) 常數時間：固定動作，跟 n 無關</h4>
 <p>換個角度理解：假設有 7 個數字放進一排編號好的櫃子裡（<code>nums = [12, 45, 3, 59, 27, 38, 72]</code>）。如果我們已經知道答案放在哪個位置——例如「陣列裡索引 3 的值是多少」（<code>nums[3]</code>）——電腦完全不用管這排櫃子裡到底放了 7 個還是 7 萬個數字，永遠只需要「跳到那個位置、開門、拿出來」，固定 <b>1 個步驟</b>：</p>
 <div class="fig" style="padding:14px"><svg viewBox="0 0 548 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:548px;height:auto;display:block;margin:14px auto" role="img" aria-label="陣列示意圖"><defs><marker id="boxArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="var(--brand)"/></marker></defs><text x="274.0" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brand)">步驟 1</text><line x1="274.0" y1="22" x2="274.0" y2="52" stroke="var(--brand)" stroke-width="2" marker-end="url(#boxArrow)"/><rect x="14" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="46.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">12</text><text x="46.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 0</text><rect x="90" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="122.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">45</text><text x="122.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 1</text><rect x="166" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="198.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">3</text><text x="198.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 2</text><rect x="242" y="56" width="64" height="48" rx="8" fill="var(--ok)" stroke="var(--ok)" stroke-width="2"/><text x="274.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="#fff">59</text><text x="274.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 3</text><rect x="318" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="350.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">27</text><text x="350.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 4</text><rect x="394" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="426.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">38</text><text x="426.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 5</text><rect x="470" y="56" width="64" height="48" rx="8" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5"/><text x="502.0" y="86.0" text-anchor="middle" font-size="16" font-family="var(--mono)" font-weight="800" fill="var(--text)">72</text><text x="502.0" y="122.0" text-anchor="middle" font-size="11.5" fill="var(--text-faint)">索引 6</text></svg></div>
@@ -289,9 +290,8 @@ print(count)                  # 總共執行 n × n 次 = 4 億次，在 IDLE �
 </table></div>
 <div class="callout tip"><span class="t">💡 為什麼是 log n 步？</span>
 <p>推廣到 n 個數字：因為二分搜尋法每一步都能刪掉一半的可能性，最多重複 <b>log₂n</b> 次就會只剩 1 個——這就是「log n 步驟」的由來（複習一下：log₂n = x 的意思是 n = 2ˣ）。這也是為什麼 O(log n) 這麼被稱讚：n 從 7 一路長到 700 萬，需要的步驟數也才從 3 步變成 23 步左右，成長速度非常慢。</p></div>
-<details class="hint">
-  <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
-  <div class="hint-body" style="background:transparent;padding:0"><p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「二分搜尋」會在後面的單元才正式教，這裡只是先讓大家知道 O(log n) 長什麼樣子，看不懂沒關係。</p><div class="code-card">
+<p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「二分搜尋」完整寫法會在後面的單元才正式教，這裡先讓大家看看程式碼長什麼樣子、對照著圖片理解就好，看不懂細節沒關係。</p>
+<div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">O(log n) 對數時間：二分搜尋，每次砍半</span>
@@ -313,8 +313,8 @@ print(count)                  # 總共執行 n × n 次 = 4 億次，在 IDLE �
 # 範例：跟這一單元其他範例統一用 n = 20000 筆已排序資料
 a = list(range(20000))
 print(binary_search(a, 8888))</code></pre>
-</div></div>
-</details><h4 style="margin:18px 0 6px">O(n log n)：合併排序（切一半、分別排序、再合併）</h4>
+</div>
+<h4 style="margin:18px 0 6px">O(n log n)：合併排序（切一半、分別排序、再合併）</h4>
 <details class="hint">
   <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 先偷看一下程式碼</summary>
   <div class="hint-body" style="background:transparent;padding:0"><p style="margin:0 0 8px;color:var(--text-faint);font-size:.85rem">這裡的「合併排序」也是後面排序單元才會教的演算法，先看過一次眼熟就好。</p><div class="code-card">
@@ -346,6 +346,9 @@ sorted_a = merge_sort(a)
 print(sorted_a[:5], sorted_a[-5:])</code></pre>
 </div></div>
 </details><h4 style="margin:18px 0 6px">O(2ⁿ) 指數時間：遞迴費波那契，每次呼叫變兩次</h4>
+<details class="hint">
+  <summary style="width:auto;height:auto;padding:5px 12px;border-radius:999px;gap:6px;font-size:.78rem;font-weight:700">👀 展開看完整說明（含程式碼與遞迴呼叫樹）</summary>
+  <div class="hint-body" style="background:transparent;padding:0">
 <p>費波那契數列（Fibonacci）的規則很簡單：每一項都是前兩項的和（0, 1, 1, 2, 3, 5, 8, 13, 21…），第 0、1 項直接定義是 0 跟 1。如果照定義直接寫成「遞迴」（函式呼叫自己），程式碼會非常短：</p>
 <div class="code-card">
   <div class="code-head">
@@ -366,8 +369,16 @@ print(fib(10))   # 55，順著數列數下去：0,1,1,2,3,5,8,13,21,34,55</code>
 <p>n 每增加 1，呼叫次數大約再乘以 2 倍——這就是 O(2ⁿ) 的由來。跟前面的 O(n²) 比起來，O(2ⁿ) 恐怖的地方在於根本不用等 n 變大：n 從 30 增加到 40，呼叫次數就會從大約 269 萬次暴增到 3.3 億次以上，電腦馬上就會明顯卡住。</p>
 <div class="callout warn"><span class="t">⚠ 遞迴寫法不等於好演算法</span>
 <p>這也是為什麼「程式碼短」不代表「效能好」——費波那契數列其實可以只用一層迴圈（O(n)）就算出來，這裡的遞迴版本只是拿來示範「重複呼叫造成指數爆炸」長什麼樣子。如果之後有機會接觸「動態規劃（Dynamic Programming）」，就會看到怎麼把這種重複計算省下來。</p></div>
+  </div>
+</details>
 
-<h3>⏱️ 效能基準測試 (Benchmark)：自己跑跑看，實際差多少</h3>
+<div style="display:flex;align-items:center;gap:14px;margin:36px 0 24px" role="separator" aria-label="講解區結束，體驗區開始">
+  <div style="flex:1;height:1px;background:var(--border)"></div>
+  <span style="font-size:.82rem;font-weight:800;color:var(--brand);white-space:nowrap;letter-spacing:.02em">📖 講解看完了 →　⏱️ 換你動手體驗</span>
+  <div style="flex:1;height:1px;background:var(--border)"></div>
+</div>
+
+<h3>⏱️ 效能基準測試 (Benchmark)：自己跑跑看，實際差多少（體驗區）</h3>
 <p>光看大 O 符號比較「理論上的成長速度」有點抽象。這裡示範一段最簡單的「碼表」寫法，讓你可以把任何一段程式碼包起來，直接量出它在你自己電腦上實際跑了幾秒。試著把中間換成上面 O(n) 或 O(n²) 的範例（n 都統一設 20000），感受一下同樣是 n = 20000，兩者實際跑起來差多少：在學校電腦上，O(n) 大約 0.04 秒左右——比 O(1) 的幾乎瞬間完成明顯慢了一截；O(n²) 則大約要跑 30~40 秒，兩者差距一眼就能看出來。</p>
 <div class="code-card">
   <div class="code-head">
