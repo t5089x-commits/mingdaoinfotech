@@ -69,9 +69,9 @@
 
 ■ 影片資源庫（教師專區，五科共用一頁）
   首頁右下角有「🔒 教師專區」按鈕 → 點了進入 ../shared/video/video-access.html
-  （五科共用的上鎖頁）→ 輸入密鑰（實際數值故意不寫在這份文件裡，只放在
-  shared/video/teacher-key.js 這個檔案裡，需要的話直接去那邊看／改）
-  → 跳轉到 ../shared/video/video-library.html
+  （五科共用的上鎖頁）→ 輸入密鑰（實際數值跟存放的檔名都故意不寫在這份
+  文件裡，只有 shared/video/ 資料夾裡的程式碼知道，需要的話直接去資料夾
+  裡找）→ 跳轉到 ../shared/video/video-library.html
   （目前收錄四科的影片對照表，裡面有「演算法」分類，收錄跟這科相關的推薦影片）。
   這個資料夾本身沒有 video-library.html，影片資料統一放在 shared/video/。
 
