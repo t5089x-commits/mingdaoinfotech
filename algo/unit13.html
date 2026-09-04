@@ -40,8 +40,70 @@
 <section class="block">
   <h2><span class="num">01</span>合併排序 Merge Sort</h2>
   
-<p>也是分治法：先把陣列切一半、切一半、再切一半……切到只剩一個元素（天生排好），再把兩個排好的小陣列「合併」成一個排好的大陣列。</p>
-<div class="code-card">
+<p>也是分治法：先把陣列切一半、切一半、再切一半……切到只剩一個元素（天生排好），再把兩個排好的小陣列「合併」成一個排好的大陣列。點下面的「下一步」，看看電腦實際上是怎麼一步一步排序 [5, 3, 1, 4, 2] 的。</p>
+<div class="sortviz" id="sortviz-merge">
+  <div class="sv-bars"></div>
+  <div class="sv-status"><span id="ms-stepnum">步驟 0 / 21</span></div>
+  <p class="vs-cap" id="ms-cap" style="margin-top:6px"></p>
+  <div class="sv-legend">
+    <span><i class="c6"></i>左半邊</span>
+    <span><i class="c7"></i>右半邊</span>
+    <span><i class="c4"></i>剛寫入／已合併好</span>
+    <span><i class="c1" style="opacity:.4"></i>還沒輪到</span>
+  </div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="ms-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="ms-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"arr":[5,3,1,4,2],"range":[0,4],"left":null,"right":null,"write":null,"done_ranges":[],"cap":"初始陣列：[5, 3, 1, 4, 2]。合併排序先一路「切一半」切到剩 1 個元素，再兩兩「合併」回排序好的結果。"},{"arr":[5,3,1,4,2],"range":[0,1],"left":[0,0],"right":[1,1],"write":null,"done_ranges":[],"cap":"開始合併：左半 index 0~0（[5]）＋右半 index 1~1（[3]），兩邊各自都已經排序好了。"},{"arr":[3,3,1,4,2],"range":[0,1],"left":[0,0],"right":[1,1],"write":0,"done_ranges":[],"cap":"比較左邊 5 與右邊 3：右邊比較小（或相等），寫入 index 0。"},{"arr":[3,5,1,4,2],"range":[0,1],"left":[0,0],"right":[1,1],"write":1,"done_ranges":[],"cap":"右半已經用完了，把左邊剩下的 5 直接寫入 index 1。"},{"arr":[3,5,1,4,2],"range":[0,1],"left":null,"right":null,"write":null,"done_ranges":[[0,1]],"cap":"index 0~1 合併完成，這段範圍已經排序好：[3, 5]。"},{"arr":[3,5,1,4,2],"range":[3,4],"left":[3,3],"right":[4,4],"write":null,"done_ranges":[[0,1]],"cap":"開始合併：左半 index 3~3（[4]）＋右半 index 4~4（[2]），兩邊各自都已經排序好了。"},{"arr":[3,5,1,2,2],"range":[3,4],"left":[3,3],"right":[4,4],"write":3,"done_ranges":[[0,1]],"cap":"比較左邊 4 與右邊 2：右邊比較小（或相等），寫入 index 3。"},{"arr":[3,5,1,2,4],"range":[3,4],"left":[3,3],"right":[4,4],"write":4,"done_ranges":[[0,1]],"cap":"右半已經用完了，把左邊剩下的 4 直接寫入 index 4。"},{"arr":[3,5,1,2,4],"range":[3,4],"left":null,"right":null,"write":null,"done_ranges":[[0,1],[3,4]],"cap":"index 3~4 合併完成，這段範圍已經排序好：[2, 4]。"},{"arr":[3,5,1,2,4],"range":[2,4],"left":[2,2],"right":[3,4],"write":null,"done_ranges":[[0,1],[3,4]],"cap":"開始合併：左半 index 2~2（[1]）＋右半 index 3~4（[2, 4]），兩邊各自都已經排序好了。"},{"arr":[3,5,1,2,4],"range":[2,4],"left":[2,2],"right":[3,4],"write":2,"done_ranges":[[0,1],[3,4]],"cap":"比較左邊 1 與右邊 2：左邊比較小，寫入 index 2。"},{"arr":[3,5,1,2,4],"range":[2,4],"left":[2,2],"right":[3,4],"write":3,"done_ranges":[[0,1],[3,4]],"cap":"左半已經用完了，把右邊剩下的 2 直接寫入 index 3。"},{"arr":[3,5,1,2,4],"range":[2,4],"left":[2,2],"right":[3,4],"write":4,"done_ranges":[[0,1],[3,4]],"cap":"左半已經用完了，把右邊剩下的 4 直接寫入 index 4。"},{"arr":[3,5,1,2,4],"range":[2,4],"left":null,"right":null,"write":null,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"index 2~4 合併完成，這段範圍已經排序好：[1, 2, 4]。"},{"arr":[3,5,1,2,4],"range":[0,4],"left":[0,1],"right":[2,4],"write":null,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"開始合併：左半 index 0~1（[3, 5]）＋右半 index 2~4（[1, 2, 4]），兩邊各自都已經排序好了。"},{"arr":[1,5,1,2,4],"range":[0,4],"left":[0,1],"right":[2,4],"write":0,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"比較左邊 3 與右邊 1：右邊比較小（或相等），寫入 index 0。"},{"arr":[1,2,1,2,4],"range":[0,4],"left":[0,1],"right":[2,4],"write":1,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"比較左邊 3 與右邊 2：右邊比較小（或相等），寫入 index 1。"},{"arr":[1,2,3,2,4],"range":[0,4],"left":[0,1],"right":[2,4],"write":2,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"比較左邊 3 與右邊 4：左邊比較小，寫入 index 2。"},{"arr":[1,2,3,4,4],"range":[0,4],"left":[0,1],"right":[2,4],"write":3,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"比較左邊 5 與右邊 4：右邊比較小（或相等），寫入 index 3。"},{"arr":[1,2,3,4,5],"range":[0,4],"left":[0,1],"right":[2,4],"write":4,"done_ranges":[[0,1],[3,4],[2,4]],"cap":"右半已經用完了，把左邊剩下的 5 直接寫入 index 4。"},{"arr":[1,2,3,4,5],"range":[0,4],"left":null,"right":null,"write":null,"done_ranges":[[0,1],[3,4],[2,4],[0,4]],"cap":"index 0~4 合併完成，這段範圍已經排序好：[1, 2, 3, 4, 5]。"},{"arr":[1,2,3,4,5],"range":[0,4],"left":null,"right":null,"write":null,"done_ranges":[[0,4]],"cap":"全部排序完成！[1, 2, 3, 4, 5]"}];
+  var root = document.getElementById("sortviz-merge");
+  if(!root) return;
+  var barsWrap = root.querySelector(".sv-bars");
+  var cap = document.getElementById("ms-cap");
+  var stepLabel = document.getElementById("ms-stepnum");
+  var nextBtn = document.getElementById("ms-next");
+  var resetBtn = document.getElementById("ms-reset");
+  var i = 0;
+  function inRange(idx, r){ return r && idx >= r[0] && idx <= r[1]; }
+  function render(){
+    var f = frames[i];
+    barsWrap.innerHTML = "";
+    var maxV = Math.max.apply(null, f.arr);
+    f.arr.forEach(function(v, idx){
+      var wrap = document.createElement("div"); wrap.className = "sv-bar-wrap";
+      var bar = document.createElement("div"); bar.className = "sv-bar";
+      bar.style.height = Math.round(v/maxV*140) + "px";
+      var doneHere = f.done_ranges.some(function(r){ return inRange(idx, r); });
+      if (f.write !== null && idx === f.write) {
+        bar.classList.add("write");
+      } else if (inRange(idx, f.left)) {
+        bar.classList.add("left");
+      } else if (inRange(idx, f.right)) {
+        bar.classList.add("right");
+      } else if (doneHere) {
+        bar.classList.add("sorted");
+      } else if (inRange(idx, f.range)) {
+        // 目前這段合併範圍內，還沒被寫入的格子，維持預設顏色
+      } else {
+        bar.classList.add("dim");
+      }
+      var val = document.createElement("div"); val.className = "sv-val"; val.textContent = v;
+      var ix = document.createElement("div"); ix.className = "sv-idx"; ix.textContent = idx;
+      wrap.appendChild(bar); wrap.appendChild(val); wrap.appendChild(ix);
+      barsWrap.appendChild(wrap);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">merge_sort.py／.cpp</span>

@@ -40,8 +40,51 @@
 <section class="block">
   <h2><span class="num">01</span>循序搜尋法 Sequential Search</h2>
   
-<p>最直覺的搜尋方式：從頭到尾一個一個比對，找到就回傳位置，找不到就回傳 -1。<b>不需要資料先排序</b>，任何順序的資料都能用。</p>
-<div class="code-card">
+<p>最直覺的搜尋方式：從頭到尾一個一個比對，找到就回傳位置，找不到就回傳 -1。<b>不需要資料先排序</b>，任何順序的資料都能用。點下面的「下一步」，看看電腦怎麼在 <code>[7, 2, 9, 4, 1, 8]</code> 中，一格一格找到 4。</p>
+<div class="bsviz" id="lsviz1">
+  <div class="bs-row" id="ls-row"></div>
+  <div class="sv-status"><span id="ls-stepnum">步驟 0 / 4</span></div>
+  <p class="vs-cap" id="ls-cap" style="margin-top:6px"></p>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="ls-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="ls-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var payload = {"data":[7,2,9,4,1,8],"frames":[{"cur":null,"found":false,"checked":[],"cap":"目標：在 [7, 2, 9, 4, 1, 8] 中依序尋找 4。循序搜尋從 index 0 開始，一格一格往後找。"},{"cur":0,"found":false,"checked":[],"cap":"檢查 index 0（值 7）：不是 4，繼續往下一格找。"},{"cur":1,"found":false,"checked":[0],"cap":"檢查 index 1（值 2）：不是 4，繼續往下一格找。"},{"cur":2,"found":false,"checked":[0,1],"cap":"檢查 index 2（值 9）：不是 4，繼續往下一格找。"},{"cur":3,"found":true,"checked":[0,1,2],"cap":"檢查 index 3（值 4）：剛好等於 4！找到了，回傳 index 3。"}]};
+  var data = payload.data, frames = payload.frames;
+  var root = document.getElementById("lsviz1");
+  if(!root) return;
+  var row = document.getElementById("ls-row");
+  var cap = document.getElementById("ls-cap");
+  var stepLabel = document.getElementById("ls-stepnum");
+  var nextBtn = document.getElementById("ls-next");
+  var resetBtn = document.getElementById("ls-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    row.innerHTML = "";
+    data.forEach(function(v, idx){
+      var cell = document.createElement("div"); cell.className = "bs-cell";
+      var tag = document.createElement("div"); tag.className = "bs-tag";
+      var box = document.createElement("div"); box.className = "bs-box";
+      if (f.checked.indexOf(idx) !== -1) box.classList.add("checked");
+      if (f.cur === idx) { box.classList.add(f.found ? "found" : "mid"); tag.textContent = "目前"; }
+      box.textContent = v;
+      var ix = document.createElement("div"); ix.className = "bs-idx"; ix.textContent = idx;
+      cell.appendChild(tag); cell.appendChild(box); cell.appendChild(ix);
+      row.appendChild(cell);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">循序搜尋</span>

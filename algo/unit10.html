@@ -40,8 +40,60 @@
 <section class="block">
   <h2><span class="num">01</span>選擇排序 Selection Sort</h2>
   
-<p>規則：每一輪都從「還沒排好」的範圍裡，找出最小值，換到最前面。跟氣泡排序不同的地方是——選擇排序每一輪「只交換一次」，氣泡排序每一輪可能交換很多次。</p>
-<div class="code-card">
+<p>規則：每一輪都從「還沒排好」的範圍裡，找出最小值，換到最前面。跟氣泡排序不同的地方是——選擇排序每一輪「只交換一次」，氣泡排序每一輪可能交換很多次。點下面的「下一步」，看看電腦實際上是怎麼一步一步排序 [5, 3, 1, 4, 2] 的。</p>
+<div class="sortviz" id="sortviz-selection">
+  <div class="sv-bars"></div>
+  <div class="sv-status"><span id="sel-stepnum">步驟 0 / 19</span></div>
+  <p class="vs-cap" id="sel-cap" style="margin-top:6px"></p>
+  <div class="sv-legend">
+    <span><i class="c1"></i>尚未確定</span>
+    <span><i class="c2"></i>正在比較</span>
+    <span><i class="c3"></i>剛交換</span>
+    <span><i class="c4"></i>已排定位置</span>
+  </div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="sel-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="sel-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"arr":[5,3,1,4,2],"compare":null,"minIdx":null,"swap":false,"sortedPrefix":0,"cap":"初始陣列：[5, 3, 1, 4, 2]。選擇排序每一輪都從「還沒排序的部分」找出最小值，放到最前面。"},{"arr":[5,3,1,4,2],"compare":null,"minIdx":0,"swap":false,"sortedPrefix":0,"cap":"第 1 輪開始：先假設 index 0（值 5）是還沒排序範圍裡最小的。"},{"arr":[5,3,1,4,2],"compare":[1,0],"minIdx":1,"swap":false,"sortedPrefix":0,"cap":"比較 index 1（值 3）跟目前最小值 index 0（值 5）：更小！更新最小值候選為 index 1。"},{"arr":[5,3,1,4,2],"compare":[2,1],"minIdx":2,"swap":false,"sortedPrefix":0,"cap":"比較 index 2（值 1）跟目前最小值 index 1（值 3）：更小！更新最小值候選為 index 2。"},{"arr":[5,3,1,4,2],"compare":[3,2],"minIdx":2,"swap":false,"sortedPrefix":0,"cap":"比較 index 3（值 4）跟目前最小值 index 2（值 1）：沒有更小，最小值候選不變。"},{"arr":[5,3,1,4,2],"compare":[4,2],"minIdx":2,"swap":false,"sortedPrefix":0,"cap":"比較 index 4（值 2）跟目前最小值 index 2（值 1）：沒有更小，最小值候選不變。"},{"arr":[1,3,5,4,2],"compare":[0,2],"minIdx":null,"swap":true,"sortedPrefix":1,"cap":"這輪最小值在 index 2，跟 index 0 交換！index 0 正式定位。"},{"arr":[1,3,5,4,2],"compare":null,"minIdx":1,"swap":false,"sortedPrefix":1,"cap":"第 2 輪開始：先假設 index 1（值 3）是還沒排序範圍裡最小的。"},{"arr":[1,3,5,4,2],"compare":[2,1],"minIdx":1,"swap":false,"sortedPrefix":1,"cap":"比較 index 2（值 5）跟目前最小值 index 1（值 3）：沒有更小，最小值候選不變。"},{"arr":[1,3,5,4,2],"compare":[3,1],"minIdx":1,"swap":false,"sortedPrefix":1,"cap":"比較 index 3（值 4）跟目前最小值 index 1（值 3）：沒有更小，最小值候選不變。"},{"arr":[1,3,5,4,2],"compare":[4,1],"minIdx":4,"swap":false,"sortedPrefix":1,"cap":"比較 index 4（值 2）跟目前最小值 index 1（值 3）：更小！更新最小值候選為 index 4。"},{"arr":[1,2,5,4,3],"compare":[1,4],"minIdx":null,"swap":true,"sortedPrefix":2,"cap":"這輪最小值在 index 4，跟 index 1 交換！index 1 正式定位。"},{"arr":[1,2,5,4,3],"compare":null,"minIdx":2,"swap":false,"sortedPrefix":2,"cap":"第 3 輪開始：先假設 index 2（值 5）是還沒排序範圍裡最小的。"},{"arr":[1,2,5,4,3],"compare":[3,2],"minIdx":3,"swap":false,"sortedPrefix":2,"cap":"比較 index 3（值 4）跟目前最小值 index 2（值 5）：更小！更新最小值候選為 index 3。"},{"arr":[1,2,5,4,3],"compare":[4,3],"minIdx":4,"swap":false,"sortedPrefix":2,"cap":"比較 index 4（值 3）跟目前最小值 index 3（值 4）：更小！更新最小值候選為 index 4。"},{"arr":[1,2,3,4,5],"compare":[2,4],"minIdx":null,"swap":true,"sortedPrefix":3,"cap":"這輪最小值在 index 4，跟 index 2 交換！index 2 正式定位。"},{"arr":[1,2,3,4,5],"compare":null,"minIdx":3,"swap":false,"sortedPrefix":3,"cap":"第 4 輪開始：先假設 index 3（值 4）是還沒排序範圍裡最小的。"},{"arr":[1,2,3,4,5],"compare":[4,3],"minIdx":3,"swap":false,"sortedPrefix":3,"cap":"比較 index 4（值 5）跟目前最小值 index 3（值 4）：沒有更小，最小值候選不變。"},{"arr":[1,2,3,4,5],"compare":null,"minIdx":null,"swap":false,"sortedPrefix":4,"cap":"index 3 本來就是最小值，不用交換，直接定位。"},{"arr":[1,2,3,4,5],"compare":null,"minIdx":null,"swap":false,"sortedPrefix":5,"cap":"全部排序完成！[1, 2, 3, 4, 5]"}]
+;
+  var root = document.getElementById("sortviz-selection");
+  if(!root) return;
+  var barsWrap = root.querySelector(".sv-bars");
+  var cap = document.getElementById("sel-cap");
+  var stepLabel = document.getElementById("sel-stepnum");
+  var nextBtn = document.getElementById("sel-next");
+  var resetBtn = document.getElementById("sel-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    barsWrap.innerHTML = "";
+    var maxV = Math.max.apply(null, f.arr);
+    f.arr.forEach(function(v, idx){
+      var wrap = document.createElement("div"); wrap.className = "sv-bar-wrap";
+      var bar = document.createElement("div"); bar.className = "sv-bar";
+      bar.style.height = Math.round(v/maxV*140) + "px";
+      if (f.compare && (idx === f.compare[0] || idx === f.compare[1])) {
+        bar.classList.add(f.swap ? "swap" : "compare");
+      }
+      if (idx < f.sortedPrefix) bar.classList.add("sorted");
+      var val = document.createElement("div"); val.className = "sv-val"; val.textContent = v;
+      var ix = document.createElement("div"); ix.className = "sv-idx"; ix.textContent = idx;
+      wrap.appendChild(bar); wrap.appendChild(val); wrap.appendChild(ix);
+      barsWrap.appendChild(wrap);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">selection_sort.py／.cpp</span>

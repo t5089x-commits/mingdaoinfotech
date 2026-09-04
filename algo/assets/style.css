@@ -1284,6 +1284,11 @@ pre::-webkit-scrollbar-thumb,.table-wrap::-webkit-scrollbar-thumb{background:rgb
 .sv-bar.compare { background: var(--warn-soft); border-color: var(--warn); transform: translateY(-4px); }
 .sv-bar.swap { background: var(--accent-soft); border-color: var(--accent); }
 .sv-bar.sorted { background: var(--ok); border-color: var(--ok); opacity: .85; }
+.sv-bar.pivot { background: var(--brand); border-color: var(--brand-strong); transform: translateY(-4px); }
+.sv-bar.dim { opacity: .3; }
+.sv-bar.left { background: var(--brand-soft); border-color: var(--brand); }
+.sv-bar.right { background: var(--accent-soft); border-color: var(--accent); }
+.sv-bar.write { background: var(--ok); border-color: var(--ok); transform: translateY(-4px); }
 .sv-val { margin-top: 6px; font-family: var(--mono); font-weight: 800; font-size: .82rem; color: var(--text-soft); }
 .sv-idx { font-family: var(--mono); font-size: .68rem; color: var(--text-faint); margin-top: 1px; }
 .sv-status {
@@ -1297,6 +1302,9 @@ pre::-webkit-scrollbar-thumb,.table-wrap::-webkit-scrollbar-thumb{background:rgb
 .sv-legend i.c2 { background:var(--warn-soft); border:2px solid var(--warn); }
 .sv-legend i.c3 { background:var(--accent-soft); border:2px solid var(--accent); }
 .sv-legend i.c4 { background:var(--ok); border:2px solid var(--ok); }
+.sv-legend i.c5 { background:var(--brand); border:2px solid var(--brand-strong); }
+.sv-legend i.c6 { background:var(--brand-soft); border:2px solid var(--brand); }
+.sv-legend i.c7 { background:var(--accent-soft); border:2px solid var(--accent); }
 @media (prefers-reduced-motion: reduce){ .sv-bar { transition: none; } }
 
 /* ---------- 流程圖符號／簡易流程盒（非連線版，用於符號解說與範例） ---------- */
@@ -1346,6 +1354,7 @@ pre::-webkit-scrollbar-thumb,.table-wrap::-webkit-scrollbar-thumb{background:rgb
 .bs-box.active { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-strong); }
 .bs-box.mid { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); transform: scale(1.1); }
 .bs-box.found { border-color: var(--ok); background: var(--ok); color: #fff; }
+.bs-box.checked { opacity: .35; }
 .bs-idx { font-size: .68rem; color: var(--text-faint); margin-top: 3px; font-family: var(--mono); }
 .bs-tag { font-size: .62rem; font-weight: 800; color: var(--brand-strong); height: 14px; margin-top: 1px; }
 

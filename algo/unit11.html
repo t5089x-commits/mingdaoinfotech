@@ -40,8 +40,60 @@
 <section class="block">
   <h2><span class="num">01</span>插入排序 Insertion Sort</h2>
   
-<p>把每個新元素，往前插入到「已經排好的部分」中正確的位置——很像整理撲克牌時的手法：左手拿著已經排好的牌，每拿到一張新牌，就找到對的位置插進去。</p>
-<div class="code-card">
+<p>把每個新元素，往前插入到「已經排好的部分」中正確的位置——很像整理撲克牌時的手法：左手拿著已經排好的牌，每拿到一張新牌，就找到對的位置插進去。點下面的「下一步」，看看電腦實際上是怎麼一步一步排序 [5, 3, 1, 4, 2] 的。</p>
+<div class="sortviz" id="sortviz-insertion">
+  <div class="sv-bars"></div>
+  <div class="sv-status"><span id="ins-stepnum">步驟 0 / 21</span></div>
+  <p class="vs-cap" id="ins-cap" style="margin-top:6px"></p>
+  <div class="sv-legend">
+    <span><i class="c1"></i>尚未確定</span>
+    <span><i class="c2"></i>正在比較</span>
+    <span><i class="c3"></i>剛交換</span>
+    <span><i class="c4"></i>已排定位置</span>
+  </div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="ins-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="ins-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"arr":[5,3,1,4,2],"compare":null,"swap":false,"sortedPrefix":1,"cap":"初始陣列：[5, 3, 1, 4, 2]。插入排序把第 1 個元素當作「已排序區」，之後每個元素依序往前插入到對的位置。"},{"arr":[5,3,1,4,2],"compare":[0,1],"swap":false,"sortedPrefix":1,"cap":"取出 index 1（值 3），準備跟前面已排序的部分比較，找到該插入的位置。"},{"arr":[3,5,1,4,2],"compare":[0,1],"swap":true,"sortedPrefix":1,"cap":"index 1 比前面（index 0）小，往前交換一格。"},{"arr":[3,5,1,4,2],"compare":null,"swap":false,"sortedPrefix":2,"cap":"不用再往前移了，index 1 這個位置的元素定位完成。已排序範圍擴大到前 2 個。"},{"arr":[3,5,1,4,2],"compare":[1,2],"swap":false,"sortedPrefix":2,"cap":"取出 index 2（值 1），準備跟前面已排序的部分比較，找到該插入的位置。"},{"arr":[3,1,5,4,2],"compare":[1,2],"swap":true,"sortedPrefix":2,"cap":"index 2 比前面（index 1）小，往前交換一格。"},{"arr":[3,1,5,4,2],"compare":[0,1],"swap":false,"sortedPrefix":2,"cap":"繼續比較 index 1（值 1）跟 index 0（值 3）。"},{"arr":[1,3,5,4,2],"compare":[0,1],"swap":true,"sortedPrefix":2,"cap":"index 1 比前面（index 0）小，往前交換一格。"},{"arr":[1,3,5,4,2],"compare":null,"swap":false,"sortedPrefix":3,"cap":"不用再往前移了，index 2 這個位置的元素定位完成。已排序範圍擴大到前 3 個。"},{"arr":[1,3,5,4,2],"compare":[2,3],"swap":false,"sortedPrefix":3,"cap":"取出 index 3（值 4），準備跟前面已排序的部分比較，找到該插入的位置。"},{"arr":[1,3,4,5,2],"compare":[2,3],"swap":true,"sortedPrefix":3,"cap":"index 3 比前面（index 2）小，往前交換一格。"},{"arr":[1,3,4,5,2],"compare":[1,2],"swap":false,"sortedPrefix":3,"cap":"繼續比較 index 2（值 4）跟 index 1（值 3）。"},{"arr":[1,3,4,5,2],"compare":null,"swap":false,"sortedPrefix":4,"cap":"不用再往前移了，index 3 這個位置的元素定位完成。已排序範圍擴大到前 4 個。"},{"arr":[1,3,4,5,2],"compare":[3,4],"swap":false,"sortedPrefix":4,"cap":"取出 index 4（值 2），準備跟前面已排序的部分比較，找到該插入的位置。"},{"arr":[1,3,4,2,5],"compare":[3,4],"swap":true,"sortedPrefix":4,"cap":"index 4 比前面（index 3）小，往前交換一格。"},{"arr":[1,3,4,2,5],"compare":[2,3],"swap":false,"sortedPrefix":4,"cap":"繼續比較 index 3（值 2）跟 index 2（值 4）。"},{"arr":[1,3,2,4,5],"compare":[2,3],"swap":true,"sortedPrefix":4,"cap":"index 3 比前面（index 2）小，往前交換一格。"},{"arr":[1,3,2,4,5],"compare":[1,2],"swap":false,"sortedPrefix":4,"cap":"繼續比較 index 2（值 2）跟 index 1（值 3）。"},{"arr":[1,2,3,4,5],"compare":[1,2],"swap":true,"sortedPrefix":4,"cap":"index 2 比前面（index 1）小，往前交換一格。"},{"arr":[1,2,3,4,5],"compare":[0,1],"swap":false,"sortedPrefix":4,"cap":"繼續比較 index 1（值 2）跟 index 0（值 1）。"},{"arr":[1,2,3,4,5],"compare":null,"swap":false,"sortedPrefix":5,"cap":"不用再往前移了，index 4 這個位置的元素定位完成。已排序範圍擴大到前 5 個。"},{"arr":[1,2,3,4,5],"compare":null,"swap":false,"sortedPrefix":5,"cap":"全部排序完成！[1, 2, 3, 4, 5]"}]
+;
+  var root = document.getElementById("sortviz-insertion");
+  if(!root) return;
+  var barsWrap = root.querySelector(".sv-bars");
+  var cap = document.getElementById("ins-cap");
+  var stepLabel = document.getElementById("ins-stepnum");
+  var nextBtn = document.getElementById("ins-next");
+  var resetBtn = document.getElementById("ins-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    barsWrap.innerHTML = "";
+    var maxV = Math.max.apply(null, f.arr);
+    f.arr.forEach(function(v, idx){
+      var wrap = document.createElement("div"); wrap.className = "sv-bar-wrap";
+      var bar = document.createElement("div"); bar.className = "sv-bar";
+      bar.style.height = Math.round(v/maxV*140) + "px";
+      if (f.compare && (idx === f.compare[0] || idx === f.compare[1])) {
+        bar.classList.add(f.swap ? "swap" : "compare");
+      }
+      if (idx < f.sortedPrefix) bar.classList.add("sorted");
+      var val = document.createElement("div"); val.className = "sv-val"; val.textContent = v;
+      var ix = document.createElement("div"); ix.className = "sv-idx"; ix.textContent = idx;
+      wrap.appendChild(bar); wrap.appendChild(val); wrap.appendChild(ix);
+      barsWrap.appendChild(wrap);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">insertion_sort.py／.cpp</span>

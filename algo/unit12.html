@@ -40,8 +40,66 @@
 <section class="block">
   <h2><span class="num">01</span>快速排序 Quick Sort</h2>
   
-<p>選一個基準值（pivot），把比它小的丟左邊、比它大的丟右邊，再對左右兩邊分別遞迴排序。這是「分治法」（切一半、分別解決、再合併）的經典應用。</p>
-<div class="code-card">
+<p>選一個基準值（pivot），把比它小的丟左邊、比它大的丟右邊，再對左右兩邊分別遞迴排序。這是「分治法」（切一半、分別解決、再合併）的經典應用。點下面的「下一步」，看看電腦實際上是怎麼一步一步排序 [5, 3, 1, 4, 2] 的（淡出的長條代表目前不在處理範圍內）。</p>
+<div class="sortviz" id="sortviz-quick">
+  <div class="sv-bars"></div>
+  <div class="sv-status"><span id="qs-stepnum">步驟 0 / 23</span></div>
+  <p class="vs-cap" id="qs-cap" style="margin-top:6px"></p>
+  <div class="sv-legend">
+    <span><i class="c1"></i>尚未確定</span>
+    <span><i class="c5"></i>基準值 pivot</span>
+    <span><i class="c2"></i>指標移動中</span>
+    <span><i class="c3"></i>剛交換</span>
+    <span><i class="c4"></i>已排定位置</span>
+  </div>
+  <div class="vs-controls">
+    <button type="button" class="vs-btn" id="qs-next">下一步 ▶</button>
+    <button type="button" class="vs-btn ghost" id="qs-reset">↺ 重來</button>
+  </div>
+</div>
+<script>
+(function(){
+  var frames = [{"arr":[5,3,1,4,2],"range":[0,4],"pivot":null,"compare":null,"swap":false,"sorted":[],"cap":"初始陣列：[5, 3, 1, 4, 2]。快速排序選一個基準值 pivot，用左右兩個指標從兩端往中間逼近，把比 pivot 小的換到左邊。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":null,"swap":false,"sorted":[],"cap":"在範圍 index 0~4 中，選最左邊 index 0（值 5）當基準值 pivot。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":[4,0],"swap":false,"sorted":[],"cap":"從右邊找到 index 4（值 2）≤ pivot（5），停下來，換左邊指標行動。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":[0,0],"swap":false,"sorted":[],"cap":"從左邊看 index 0（值 5）≤ pivot（5），留在左邊，指標 i 往右移一格。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":[1,0],"swap":false,"sorted":[],"cap":"從左邊看 index 1（值 3）≤ pivot（5），留在左邊，指標 i 往右移一格。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":[2,0],"swap":false,"sorted":[],"cap":"從左邊看 index 2（值 1）≤ pivot（5），留在左邊，指標 i 往右移一格。"},{"arr":[5,3,1,4,2],"range":[0,4],"pivot":0,"compare":[3,0],"swap":false,"sorted":[],"cap":"從左邊看 index 3（值 4）≤ pivot（5），留在左邊，指標 i 往右移一格。"},{"arr":[2,3,1,4,5],"range":[0,4],"pivot":null,"compare":[0,4],"swap":true,"sorted":[4],"cap":"左右指標會合在 index 4，把 pivot（5）放到這裡——這個位置從此定案：左邊都比它小、右邊都比它大。"},{"arr":[2,3,1,4,5],"range":[0,3],"pivot":0,"compare":null,"swap":false,"sorted":[4],"cap":"在範圍 index 0~3 中，選最左邊 index 0（值 2）當基準值 pivot。"},{"arr":[2,3,1,4,5],"range":[0,3],"pivot":0,"compare":[3,0],"swap":false,"sorted":[4],"cap":"從右邊看 index 3（值 4）＞ pivot（2），留在右邊，指標 j 往左移一格。"},{"arr":[2,3,1,4,5],"range":[0,3],"pivot":0,"compare":[2,0],"swap":false,"sorted":[4],"cap":"從右邊找到 index 2（值 1）≤ pivot（2），停下來，換左邊指標行動。"},{"arr":[2,3,1,4,5],"range":[0,3],"pivot":0,"compare":[0,0],"swap":false,"sorted":[4],"cap":"從左邊看 index 0（值 2）≤ pivot（2），留在左邊，指標 i 往右移一格。"},{"arr":[2,3,1,4,5],"range":[0,3],"pivot":0,"compare":[1,0],"swap":false,"sorted":[4],"cap":"從左邊找到 index 1（值 3）＞ pivot（2），停下來，跟右邊指標 j 交換。"},{"arr":[2,1,3,4,5],"range":[0,3],"pivot":0,"compare":[1,2],"swap":true,"sorted":[4],"cap":"交換 index 1 與 index 2，讓比 pivot 小的持續往左邊集中。"},{"arr":[2,1,3,4,5],"range":[0,3],"pivot":0,"compare":[2,0],"swap":false,"sorted":[4],"cap":"從右邊看 index 2（值 3）＞ pivot（2），留在右邊，指標 j 往左移一格。"},{"arr":[2,1,3,4,5],"range":[0,3],"pivot":0,"compare":[1,0],"swap":false,"sorted":[4],"cap":"從右邊找到 index 1（值 1）≤ pivot（2），停下來，換左邊指標行動。"},{"arr":[1,2,3,4,5],"range":[0,3],"pivot":null,"compare":[0,1],"swap":true,"sorted":[1,4],"cap":"左右指標會合在 index 1，把 pivot（2）放到這裡——這個位置從此定案：左邊都比它小、右邊都比它大。"},{"arr":[1,2,3,4,5],"range":[0,0],"pivot":null,"compare":null,"swap":false,"sorted":[0,1,4],"cap":"index 0 只剩自己一個，已經在正確位置。"},{"arr":[1,2,3,4,5],"range":[2,3],"pivot":2,"compare":null,"swap":false,"sorted":[0,1,4],"cap":"在範圍 index 2~3 中，選最左邊 index 2（值 3）當基準值 pivot。"},{"arr":[1,2,3,4,5],"range":[2,3],"pivot":2,"compare":[3,2],"swap":false,"sorted":[0,1,4],"cap":"從右邊看 index 3（值 4）＞ pivot（3），留在右邊，指標 j 往左移一格。"},{"arr":[1,2,3,4,5],"range":[2,3],"pivot":2,"compare":[2,2],"swap":false,"sorted":[0,1,4],"cap":"從右邊找到 index 2（值 3）≤ pivot（3），停下來，換左邊指標行動。"},{"arr":[1,2,3,4,5],"range":[2,3],"pivot":null,"compare":[2,2],"swap":true,"sorted":[0,1,2,4],"cap":"左右指標會合在 index 2，把 pivot（3）放到這裡——這個位置從此定案：左邊都比它小、右邊都比它大。"},{"arr":[1,2,3,4,5],"range":[3,3],"pivot":null,"compare":null,"swap":false,"sorted":[0,1,2,3,4],"cap":"index 3 只剩自己一個，已經在正確位置。"},{"arr":[1,2,3,4,5],"range":[0,4],"pivot":null,"compare":null,"swap":false,"sorted":[0,1,2,3,4],"cap":"全部排序完成！[1, 2, 3, 4, 5]"}];
+  var root = document.getElementById("sortviz-quick");
+  if(!root) return;
+  var barsWrap = root.querySelector(".sv-bars");
+  var cap = document.getElementById("qs-cap");
+  var stepLabel = document.getElementById("qs-stepnum");
+  var nextBtn = document.getElementById("qs-next");
+  var resetBtn = document.getElementById("qs-reset");
+  var i = 0;
+  function render(){
+    var f = frames[i];
+    barsWrap.innerHTML = "";
+    var maxV = Math.max.apply(null, f.arr);
+    f.arr.forEach(function(v, idx){
+      var wrap = document.createElement("div"); wrap.className = "sv-bar-wrap";
+      var bar = document.createElement("div"); bar.className = "sv-bar";
+      bar.style.height = Math.round(v/maxV*140) + "px";
+      var outside = f.range && (idx < f.range[0] || idx > f.range[1]) && f.sorted.indexOf(idx) === -1;
+      if (f.sorted.indexOf(idx) !== -1) {
+        bar.classList.add("sorted");
+      } else if (f.pivot !== null && idx === f.pivot) {
+        bar.classList.add("pivot");
+      } else if (f.compare && (idx === f.compare[0] || idx === f.compare[1])) {
+        bar.classList.add(f.swap ? "swap" : "compare");
+      } else if (outside) {
+        bar.classList.add("dim");
+      }
+      var val = document.createElement("div"); val.className = "sv-val"; val.textContent = v;
+      var ix = document.createElement("div"); ix.className = "sv-idx"; ix.textContent = idx;
+      wrap.appendChild(bar); wrap.appendChild(val); wrap.appendChild(ix);
+      barsWrap.appendChild(wrap);
+    });
+    cap.textContent = f.cap;
+    stepLabel.textContent = "步驟 " + i + " / " + (frames.length-1);
+    nextBtn.disabled = (i === frames.length-1);
+  }
+  nextBtn.addEventListener("click", function(){ if(i < frames.length-1){ i++; render(); } });
+  resetBtn.addEventListener("click", function(){ i = 0; render(); });
+  render();
+})();
+</script><div class="code-card">
   <div class="code-head">
     <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">quick_sort.py／.cpp</span>
