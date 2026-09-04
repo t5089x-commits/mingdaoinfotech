@@ -46,14 +46,13 @@
           <!--
             接下來使用 Base64 即可破解：
 
-            6Kej6ZaL5LqG77yM5YGa5b6X5aW977yB5o6l5LiL5L6G6KaB5omT6ZaL6YCZ5Lu95YWx55So6LOH5paZ5aS+6KOh55qEIHRlYWNoZXIta2V5LmpzIOaqlOahiO+8jOWFqeWAi+aWueazleaTh+S4gO+8migxKSDmiornj77lnKjntrLlnYDliJfmnIDlvoznmoQgdmlkZW8tYWNjZXNzLmh0bWwg5pS55oiQIHRlYWNoZXIta2V5LmpzIOWGjeaMiSBFbnRlcu+8mygyKSDmjIkgRjEyIOmBuOOAjOS+hua6kCBTb3VyY2Vz44CN5YiG6aCB77yM5Zyo6YCZ5YCL6LOH5paZ5aS+6KOh6bue6ZaLIHRlYWNoZXIta2V5Lmpz44CC5a+G56K85ZKM6ICB5bir5oOz6Lef5L2g6Kqq55qE6Kmx6YO95Zyo6YCZ6KOh6Z2i44CC
+            6Kej6ZaL5LqG77yM5YGa5b6X5aW977yB5o6l5LiL5L6G6KaB5omT6ZaL6YCZ5Lu95YWx55So6LOH5paZ5aS+6KOh55qEIHNlc3Npb24uanMg5qqU5qGI77yM5YWp5YCL5pa55rOV5pOH5LiA77yaKDEpIOaKiuePvuWcqOe2suWdgOWIl+acgOW+jOeahCB2aWRlby1hY2Nlc3MuaHRtbCDmlLnmiJAgc2Vzc2lvbi5qcyDlho3mjIkgRW50ZXLvvJsoMikg5oyJIEYxMiDpgbjjgIzkvobmupAgU291cmNlc+OAjeWIhumgge+8jOWcqOmAmeWAi+izh+aWmeWkvuijoem7numWiyBzZXNzaW9uLmpz44CC5omT6ZaL5b6M5L2g5pyD55yL5Yiw5LiA5q6155SoIEJhc2U2NCDljIXotbfkvobnmoTlr4bpkbDvvIzot5/kvaDliZvliZvop6PplovpgJnmrrXmj5DnpLrnmoTmlrnms5XkuIDmqKPvvIzlho0gYXRvYigpIOino+S4gOasoe+8jOWwseaYr+WvhueivO+8jOiAgeW4q+aDs+i3n+S9oOiqqueahOipseS5n+WcqOijoemdouOAgg==
           -->
         </div>
       </div>
     </div>
   </div>
 </div>
-<script src="teacher-key.js"></script>
 <script>
 function toggleTheme(){
   var html=document.documentElement;
@@ -63,23 +62,37 @@ function toggleTheme(){
   var btn=document.querySelector(".theme-toggle");
   if(btn) btn.textContent = next==="dark"?"☀️":"🌙";
 }
-function tkey(){ return (window.COURSE_PROGRESS && COURSE_PROGRESS.teacherKey) || ""; }
+function tkey(){
+  // 正確密鑰是怎麼來的？這裡讀的是 COURSE_PROGRESS.teacherKeyEnc，
+  // 追追看那個變數是誰給的、又是從哪個檔案來的 :)
+  try{
+    return (window.COURSE_PROGRESS && COURSE_PROGRESS.teacherKeyEnc) ? atob(COURSE_PROGRESS.teacherKeyEnc) : "";
+  }catch(e){ return ""; }
+}
 function param(n){ var m=new RegExp("[?&]"+n+"=([^&#]*)").exec(location.search); return m?decodeURIComponent(m[1]):null; }
 function enter(){ location.href="video-library.html"; }
 function tryEnter(){
   var v=(document.getElementById("pw").value||"").trim();
   // 這個比對是在「你的瀏覽器」裡做的（前端）——這正是它擋不住高手的地方。
-  //     正確密鑰是怎麼來的？順著 tkey() 追追看它讀的是哪個變數、那個變數又是誰給的 :)
   if(v && v===tkey()){ enter(); }
   else{ document.getElementById("err").textContent="✗ 密鑰錯誤，請再試一次。"; }
 }
-// 網址已帶正確 key 就直接放行
-if(tkey() && param("key")===tkey()){ enter(); }
 document.addEventListener("DOMContentLoaded", function(){
   var i=document.getElementById("pw");
   i.focus();
   i.addEventListener("keydown", function(e){ if(e.key==="Enter") tryEnter(); });
 });
+(function(){
+  // 存密鑰的那個檔案不再用明文的 <script src> 直接寫在原始碼裡，
+  // 路徑本身也包了一層 Base64——想找到它，得先解開上面藏起來的提示。
+  var s = document.createElement("script");
+  s.src = atob("c2Vzc2lvbi5qcw==");
+  s.onload = function(){
+    // 網址已帶正確 key 就直接放行
+    if(tkey() && param("key")===tkey()){ enter(); }
+  };
+  document.head.appendChild(s);
+})();
 </script>
 </body>
 </html>

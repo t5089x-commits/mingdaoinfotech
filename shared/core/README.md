@@ -19,8 +19,9 @@ name: shared/core
 - 這個檔案已經用 Playwright 在 `file://` 通訊協定下實測過（老師平常用滑鼠雙擊
   `index.html` 開啟的情境），改總表一個數字，對應科目會立刻反映、其他科目不受影響；
   單元鎖定畫面與 `?key=ji32k7au4a83` 預覽模式也都正常運作（這把解鎖單元用的
-  密鑰，跟 `shared/video/teacher-key.js` 裡影片資源庫用的密鑰現在是兩把
-  互相獨立的，故意設成不同值）。
+  密鑰，跟影片資源庫另外用的那把密鑰現在是兩把互相獨立的，故意設成不同值；
+  影片資源庫那把密鑰放在哪個檔案，故意不寫在這份文件裡，詳見
+  `shared/video/access-mechanism.html`）。
 
 `style.css`、`script.js` 目前**還沒有**做這件事，原因見下面。
 

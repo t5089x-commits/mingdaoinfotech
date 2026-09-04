@@ -36,7 +36,7 @@
     <div style="text-align:center;color:var(--brand);font-size:1.4rem;line-height:1;margin:6px 0">▼</div>
     <div style="display:block;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;max-width:560px;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,.06)"><span style="display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;background:var(--brand);color:#fff;border-radius:50%;font-weight:800;font-size:.85rem;margin-right:10px">2</span>網頁裡的 JavaScript 函式 <code>tryEnter()</code> 讀出你打的那串字。</div>
     <div style="text-align:center;color:var(--brand);font-size:1.4rem;line-height:1;margin:6px 0">▼</div>
-    <div style="display:block;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;max-width:560px;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,.06)"><span style="display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;background:var(--brand);color:#fff;border-radius:50%;font-weight:800;font-size:.85rem;margin-right:10px">3</span>程式再從 <code>teacher-key.js</code> 讀出正確密鑰 <code>teacherKey</code>（老師事先設定好、<strong>明碼</strong>存著，五科共用同一把）。</div>
+    <div style="display:block;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;max-width:560px;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,.06)"><span style="display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;background:var(--brand);color:#fff;border-radius:50%;font-weight:800;font-size:.85rem;margin-right:10px">3</span>程式再從共用資料夾裡的一個小檔案讀出正確密鑰 <code>teacherKeyEnc</code>，用 <code>atob()</code> 解開 Base64 拿到真正的 <code>teacherKey</code>（老師事先設定好，五科共用同一把——多包一層編碼只是墊高門檻，本質上還是<strong>沒有加密</strong>）。</div>
     <div style="text-align:center;color:var(--brand);font-size:1.4rem;line-height:1;margin:6px 0">▼</div>
     <div style="text-align:center;margin:2px 0">
       <div style="display:inline-block;background:var(--warn-soft);border:1.5px solid var(--warn);color:var(--warn);
@@ -66,7 +66,7 @@
   <thead><tr><th style="width:20%"></th><th>前端密碼<br><span style="font-weight:400;font-size:.85rem">（就是這一頁現在用的方式）</span></th><th>後端密碼<br><span style="font-weight:400;font-size:.85rem">（真正安全的做法）</span></th></tr></thead>
   <tbody>
   <tr><td><strong>比對在哪裡做</strong></td><td>在<strong>你的瀏覽器</strong>裡（前端 JavaScript）。</td><td>在<strong>伺服器</strong>裡（你碰不到的另一台電腦）。</td></tr>
-  <tr><td><strong>正確密碼存在哪</strong></td><td>就寫在 <code>teacher-key.js</code> 裡，<strong>打開原始碼就看得到</strong>。</td><td>存在伺服器資料庫，而且通常存的是<strong>雜湊值 (hash)</strong> 不是明碼。</td></tr>
+  <tr><td><strong>正確密碼存在哪</strong></td><td>就寫在共用資料夾裡的一個 JS 檔案裡，雖然多包了一層 Base64，但<strong>解開只要一行 <code>atob()</code></strong>，本質上還是攤在原始碼裡。</td><td>存在伺服器資料庫，而且通常存的是<strong>雜湊值 (hash)</strong> 不是明碼。</td></tr>
   <tr><td><strong>受保護的內容</strong></td><td><code>video-library.html</code> 是獨立網頁，<strong>知道網址直接開就看得到</strong>，根本不需要密碼。</td><td>驗證通過前，內容<strong>根本不會送到</strong>你的瀏覽器，繞不過去。</td></tr>
   <tr><td><strong>能不能被繞過</strong></td><td>可以。看原始碼、改 JavaScript、或直接打網址都能繞過。</td><td>很難。因為關鍵判斷不在使用者手上。</td></tr>
   <tr><td><strong>優點</strong></td><td>不用伺服器、做起來超簡單。</td><td>真正擋得住人。</td></tr>
@@ -75,8 +75,8 @@
 
   <div class="callout" style="border-left:4px solid var(--warn)">
     <span class="t">🧩 那「我現在這種方式」屬於哪一種？</span>
-    <p>老實說：<strong>就是「前端密碼」</strong>。密鑰 <code>……</code> 明碼放在 <code>teacher-key.js</code>，比對在你的瀏覽器裡跑，而影片頁又是一個直接打網址就能開的獨立網頁。所以它比較像是「在門上貼一張紙寫『非教師請勿進入』」——擋得住願意守規矩的人，但擋不住真的想進去、又懂一點技術的人。</p>
-    <p>老師<strong>故意</strong>用這種簡單方式，一來影片庫本來就只是教學規劃用、不是什麼機密；二來，它剛好是最好的資安教材：讓你親眼看到「看起來有上鎖，其實鎖在自己手上」是什麼意思。這一把密鑰現在是五科課程共用的一把，放在網站的共用資料夾裡，不屬於任何一科，跟每一科自己單元鎖定用的密鑰是同一個值。</p>
+    <p>老實說：<strong>就是「前端密碼」</strong>。密鑰包了一層 Base64 放在共用資料夾裡的一個小檔案裡，但 <code>atob()</code> 一行就解開，比對還是在你的瀏覽器裡跑，而影片頁又是一個直接打網址就能開的獨立網頁。所以它比較像是「在門上貼一張紙寫『非教師請勿進入』，紙上的字還用密文寫」——擋得住願意守規矩的人，也稍微擋一下隨手亂翻的人，但擋不住真的想進去、又懂一點技術的人。</p>
+    <p>老師<strong>故意</strong>用這種簡單方式，一來影片庫本來就只是教學規劃用、不是什麼機密；二來，它剛好是最好的資安教材：讓你親眼看到「看起來有上鎖，其實鎖在自己手上」是什麼意思。這一把密鑰現在是五科課程共用的一把，放在網站的共用資料夾裡，不屬於任何一科，<strong>跟每一科自己單元鎖定用的密鑰是彼此獨立、故意設成不同值的兩把</strong>，不是同一把。</p>
   </div>
 
   <div class="callout">

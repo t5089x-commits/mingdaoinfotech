@@ -19,7 +19,7 @@
 │       ├── video-library.html  ← 唯一一份影片資源庫頁面，目前收錄四科（不含 APCS）的內容
 │       ├── video-access.html   ← 密鑰關卡頁（五科首頁的「🔒 教師專區」都連到這）
 │       ├── access-mechanism.html ← 給學生的「前端密碼」教學彩蛋頁
-│       ├── teacher-key.js      ← 共用教師密鑰設定
+│       ├── (一個小型 .js 檔案) ← 共用教師密鑰設定，檔名故意不寫在文件裡（見 access-mechanism.html）
 │       ├── video-library.css／video-library.js ← 影片資源庫的版型與篩選引擎
 │       ├── gate.css            ← 密鑰關卡頁／彩蛋頁的樣式
 │       └── README.md           ← 影片資源庫的資料結構與分類規則
@@ -109,9 +109,10 @@
   改成寫死的數字即可，檔案裡也寫了這段說明；改完之後那一科就不會再讀
   `shared/core/progress.js` 的值。
 - `teacherKey`：解鎖單元用的老師密鑰，**五科統一為 `ji32k7au4a83`**，設定
-  在 `shared/core/progress.js` 裡；`shared/video/teacher-key.js` 裡是
-  另外獨立的一把（影片資源庫用的，實際數值故意不寫在這份文件裡，只放在
-  `shared/video/teacher-key.js` 這個檔案裡，需要的話直接去那邊看／改）
+  在 `shared/core/progress.js` 裡；影片資源庫另外用一把獨立的密鑰，放在
+  `shared/video/` 資料夾裡（實際檔名跟數值都故意不寫在這份文件裡，避免
+  公開 repo 被直接搜尋到就找到答案——理由跟找法見
+  `shared/video/access-mechanism.html`）
   ——**這兩把密鑰現在刻意設成不同的值、互不相通**，要換密鑰只要改對應
   那一個檔案就好，不用保持一致。在任何頁面網址後面加 `?key=ji32k7au4a83`
   就能解鎖預覽全部單元，五科通用同一把。
@@ -154,8 +155,9 @@
   AI 通識、社會經濟、創客這類原本就是高一資訊科技單元／補充主題的，留在高一資訊
   科技這一類底下依單元呈現。
 - 密鑰關卡（`video-access.html`）跟教學彩蛋頁（`access-mechanism.html`）也搬到
-  `shared/video/`，密鑰讀的是同資料夾裡的 `teacher-key.js`（不再是某一科的
-  `assets/progress.js`），彩蛋頁裡的說明文字跟藏起來的提示都已同步更新成新路徑。
+  `shared/video/`，密鑰讀的是同資料夾裡另一個小檔案（不再是某一科的
+  `assets/progress.js`，實際檔名故意不寫在這份文件裡），彩蛋頁裡的說明文字
+  跟藏起來的提示都已同步更新成新路徑。
 - 分類與影片資料現在都直接寫在 `shared/video/video-library.html` 這一份檔案裡
   （四大類混在同一個檔案的不同 section 裡，不是分成四個檔案），要新增或調整某科的
   影片，就是編輯這一個檔案裡對應那個分類的區塊。詳細的資料格式規則看

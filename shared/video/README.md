@@ -20,8 +20,10 @@ name: shared/video
   按鈕都連到這一頁。
 - `access-mechanism.html` —— 給學生的「前端密碼」教學彩蛋頁（藏在
   `video-access.html` 角落的 `· ? ·` 連結點進去可以找到）。
-- `teacher-key.js` —— 共用教師密鑰設定，`video-access.html` 讀的是這裡，
-  不是任何一科自己的 `assets/progress.js`。
+- （一個小型 `.js` 檔案，檔名故意不寫在這份文件裡）—— 共用教師密鑰設定，
+  `video-access.html` 讀的是這一個檔案，不是任何一科自己的
+  `assets/progress.js`；不寫檔名是刻意的，理由跟找法見
+  `access-mechanism.html`，別把答案直接寫進公開文件裡。
 - `video-library.css` / `video-library.js` —— 影片資源庫的版型（外觀）與
   篩選／搜尋引擎，不含任何影片內容，五科通用。
 - `gate.css` —— `video-access.html`、`access-mechanism.html` 這兩頁自己的
@@ -65,16 +67,17 @@ name: shared/video
 
 ## 密鑰與存取流程
 
-密鑰只有一把、五科通用，實際數值故意不寫在這份文件裡，只放在
-`teacher-key.js` 這一個檔案裡，需要的話直接去那邊看／改（跟每一科
-單元鎖定用的 `teacherKey` 現在是兩把互相獨立的密鑰，故意設成不同值、
-互不相通，各自要換密鑰都可以；原本的密鑰因為跟老師的 GitHub 帳號同名
-太好猜，已經換掉了）：課程首頁的「🔒 教師專區」→ `video-access.html`
-輸入密鑰 → 正確就跳轉到同資料夾的 `video-library.html`。網址帶對的
-`?key=...` 也能直接跳過輸入直接放行。這一把密鑰刻意用「前端明碼比對」
-這種不安全的做法（`access-mechanism.html` 裡有完整教學說明），是特意設計
-的資安教材，不是漏洞。要換這把密鑰，只要改 `teacher-key.js` 這一個檔案
-就好，不會影響單元鎖定用的那一把。
+密鑰只有一把、五科通用，實際數值跟存放的檔名都故意不寫在這份文件裡，
+只有 `shared/video/` 資料夾裡的程式碼知道，需要的話直接去資料夾裡找
+（跟每一科單元鎖定用的 `teacherKey` 現在是兩把互相獨立的密鑰，故意設成
+不同值、互不相通，各自要換密鑰都可以；原本的密鑰因為跟老師的 GitHub
+帳號同名太好猜，已經換掉了）：課程首頁的「🔒 教師專區」→
+`video-access.html` 輸入密鑰 → 正確就跳轉到同資料夾的 `video-library.html`。
+網址帶對的 `?key=...` 也能直接跳過輸入直接放行。這一把密鑰刻意用「前端
+比對」這種不安全的做法、密鑰本身也只是多包一層 Base64（`access-mechanism.html`
+裡有完整教學說明），是特意設計的資安教材，不是漏洞——**不要把檔名或密鑰
+寫回這份文件或任何公開文件**，這樣才留得住解謎的樂趣。要換這把密鑰，去
+`shared/video/` 資料夾裡找到那個檔案改掉就好，不會影響單元鎖定用的那一把。
 
 ## 現況
 
