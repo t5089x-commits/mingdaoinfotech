@@ -211,27 +211,102 @@
     return lines.join("\n").trim();
   }
 
-  /* ---------- 進位轉換器 ---------- */
+  /* ---------- 進位轉換器（支援小數點，用 BigInt 分數精確運算） ---------- */
+  var CONV_MAX_FRAC_DIGITS = 40;   // 小數部分最多算幾位，超過還沒除盡就視為「過長」
+  var CONV_MAX_OUT_LEN = 44;       // 顯示字串超過這個長度就視為「過長無法顯示」
+
   window.convertBase = function () {
-    var val = document.getElementById("conv-input").value.trim();
+    var raw = document.getElementById("conv-input").value.trim();
     var base = parseInt(document.getElementById("conv-base").value, 10);
     var err = document.getElementById("conv-err");
     var box = document.getElementById("conv-out");
     err.textContent = "";
-    if (val === "") { box.style.visibility = "hidden"; return; }
-    var valid = { 2: /^[01]+$/, 8: /^[0-7]+$/, 10: /^[0-9]+$/, 16: /^[0-9a-fA-F]+$/ };
-    if (!valid[base].test(val)) {
-      err.textContent = "⚠ 「" + val + "」不是合法的 " + baseName(base) + "數字。";
+    if (raw === "") { box.style.visibility = "hidden"; return; }
+
+    var neg = false, val = raw;
+    if (val[0] === "-") { neg = true; val = val.slice(1); }
+
+    var segs = val.split(".");
+    if (segs.length > 2) {
+      err.textContent = "⚠ 「" + raw + "」最多只能有一個小數點。";
       box.style.visibility = "hidden";
       return;
     }
-    var dec = parseInt(val, base);
+    var intPart = segs[0] || "";
+    var fracPart = segs[1] || "";
+    if (intPart === "" && fracPart === "") {
+      err.textContent = "⚠ 請輸入數字。";
+      box.style.visibility = "hidden";
+      return;
+    }
+
+    var digitOk = { 2: /^[01]*$/, 8: /^[0-7]*$/, 10: /^[0-9]*$/, 16: /^[0-9a-fA-F]*$/ };
+    if (!digitOk[base].test(intPart) || !digitOk[base].test(fracPart)) {
+      err.textContent = "⚠ 「" + raw + "」不是合法的 " + baseName(base) + "數字。";
+      box.style.visibility = "hidden";
+      return;
+    }
+
+    // 用「分數」(fracNum / fracDen) 精確表示小數部分，避免用浮點數運算誤差
+    var B = BigInt(base);
+    var intBig = intPart === "" ? 0n : digitsToBig(intPart, base);
+    var fracNum = fracPart === "" ? 0n : digitsToBig(fracPart, base);
+    var fracDen = fracPart === "" ? 1n : pow(B, fracPart.length);
+
     box.style.visibility = "visible";
-    document.getElementById("out-2").textContent = dec.toString(2);
-    document.getElementById("out-8").textContent = dec.toString(8);
-    document.getElementById("out-10").textContent = dec.toString(10);
-    document.getElementById("out-16").textContent = dec.toString(16).toUpperCase();
+    [2, 8, 10, 16].forEach(function (b) {
+      document.getElementById("out-" + b).textContent = formatInBase(neg, intBig, fracNum, fracDen, b);
+    });
   };
+
+  function pow(base, exp) { var r = 1n; for (var i = 0; i < exp; i++) r *= base; return r; }
+  function gcdBig(a, b) {
+    if (a < 0n) a = -a;
+    if (b < 0n) b = -b;
+    while (b) { var t = a % b; a = b; b = t; }
+    return a;
+  }
+  function digitsToBig(str, base) {
+    var v = 0n, B = BigInt(base);
+    for (var i = 0; i < str.length; i++) v = v * B + BigInt(parseInt(str[i], base));
+    return v;
+  }
+
+  function formatInBase(neg, intBig, fracNum, fracDen, base) {
+    var B = BigInt(base);
+    var intStr = intBig.toString(base);
+    if (base === 16) intStr = intStr.toUpperCase();
+    if (intStr.length > CONV_MAX_OUT_LEN) return "過長無法顯示";
+
+    var fracStr = "";
+    if (fracNum > 0n) {
+      var g = gcdBig(fracNum, fracDen);
+      var num = fracNum / g, den = fracDen / g;
+      // 判斷這個分數在目標進位底下會不會「除得盡」：不斷把 den 除以 gcd(den, base)，
+      // 除到剩 1 就代表除得盡；除到除不動又還大於 1，就代表是無窮小數。
+      var d = den, terminates = true;
+      while (d > 1n) {
+        var gg = gcdBig(d, B);
+        if (gg === 1n) { terminates = false; break; }
+        d = d / gg;
+      }
+      if (!terminates) return "過長無法顯示";
+      var digits = [];
+      var n = num;
+      while (n > 0n) {
+        n = n * B;
+        var dg = n / den;
+        n = n % den;
+        digits.push(dg.toString(base).toUpperCase());
+        if (digits.length > CONV_MAX_FRAC_DIGITS) return "過長無法顯示";
+      }
+      fracStr = digits.join("");
+    }
+
+    var result = (neg ? "-" : "") + intStr + (fracStr ? "." + fracStr : "");
+    if (result.length > CONV_MAX_OUT_LEN) return "過長無法顯示";
+    return result;
+  }
   function baseName(b){ return {2:"二進位",8:"八進位",10:"十進位",16:"十六進位"}[b]; }
 
   /* ---------- 邏輯閘互動 ---------- */

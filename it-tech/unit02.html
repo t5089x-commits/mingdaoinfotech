@@ -102,21 +102,44 @@
 結果：92 = 1011100₂</code></pre>
 </div>
   </div>
-  <div class="card"><h3>更多練習答案</h3>
+  <div class="card"><h3>例：0.453125 → 二進位</h3>
+  <div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">乘法取整</span>
+    <span class="actions"></span>
+  </div>
+  <pre><code data-lang="text">0.453125 × 2 = 0.90625 ... 取整 0  |
+0.90625  × 2 = 1.8125  ... 取整 1  | 由上
+0.8125   × 2 = 1.625   ... 取整 1  | 往下
+0.625    × 2 = 1.25    ... 取整 1  | 讀取
+0.25     × 2 = 0.5     ... 取整 0  |
+0.5      × 2 = 1.0     ... 取整 1  ↓
+結果：0.453125 = 0.011101₂</code></pre>
+</div>
+  <p style="color:var(--text-faint);font-size:.9rem;margin-bottom:0">💡 每一步只留小數部分繼續乘：例如第 2 步是 <code>0.90625</code> 的小數部分（不是整個 <code>1.8125</code>）繼續乘以 2。乘到小數部分變成 <strong>0</strong>（像最後一步的 <code>1.0</code>）就可以停止。</p>
+  </div>
+</div>
+
+<div class="card"><h3>更多練習答案</h3>
   <p style="color:var(--text-faint);font-size:.9rem">先自己算算看，再點一下答案格對答案（或按右上角「一鍵全開」）：</p>
   <div class="reveal-table-wrap">
   <div class="reveal-table-bar"><button class="reveal-all-btn" onclick="revealAll(this)">👁️ 一鍵全開</button></div>
   <div class="table-wrap"><table class="reveal-table center">
     <thead><tr><th>十進位</th><th>轉換目標</th><th>答案（點一下看）</th></tr></thead>
-    <tbody><tr><td>92</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1011100₂</td></tr><tr><td>108</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1101100₂</td></tr><tr><td>0.453125</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.011101₂</td></tr><tr><td>0.21875</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.00111₂</td></tr><tr><td>108</td><td>八進位</td><td class="hide-cell" onclick="revealCell(this)">134₈</td></tr><tr><td>108</td><td>十六進位</td><td class="hide-cell" onclick="revealCell(this)">6C₁₆</td></tr></tbody>
+    <tbody><tr><td>92</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1011100₂</td></tr><tr><td>108</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">1101100₂</td></tr><tr><td>0.453125</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.011101₂</td></tr><tr><td>0.21875</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.00111₂</td></tr><tr><td>108</td><td>八進位</td><td class="hide-cell" onclick="revealCell(this)">154₈</td></tr><tr><td>108</td><td>十六進位</td><td class="hide-cell" onclick="revealCell(this)">6C₁₆</td></tr><tr><td>200</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">11001000₂</td></tr><tr><td>200</td><td>八進位</td><td class="hide-cell" onclick="revealCell(this)">310₈</td></tr><tr><td>200</td><td>十六進位</td><td class="hide-cell" onclick="revealCell(this)">C8₁₆</td></tr><tr><td>77</td><td>八進位</td><td class="hide-cell" onclick="revealCell(this)">115₈</td></tr><tr><td>0.625</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.101₂</td></tr><tr><td>0.3125</td><td>二進位</td><td class="hide-cell" onclick="revealCell(this)">0.0101₂</td></tr></tbody>
   </table></div>
 </div>
   </div>
-</div>
 
 </section><section class="block" id="sec4">
   <h2><span class="num">04</span>其他進位 → 十進位（位值展開）</h2>
-  
+
+<div class="callout tip"><span class="t">💡 先想想：十進位其實也是「位值展開」</span>
+<p>我們每天在用的十進位，其實骨子裡就是「位值展開」——只是底數是 10 而已：</p>
+<p style="text-align:center;font-size:1.05rem;margin:10px 0"><b>9487</b> = 9×1000<span style="color:var(--text-faint)">(10³)</span> + 4×100<span style="color:var(--text-faint)">(10²)</span> + 8×10<span style="color:var(--text-faint)">(10¹)</span> + 7×1<span style="color:var(--text-faint)">(10⁰)</span></p>
+<p style="margin-bottom:0">每一位數字，都是「這個數字 × 它所在位置的位值（底數的次方）」，再全部加起來。把底數從 10 換成 2、8、16，就是二進位、八進位、十六進位的位值展開——邏輯完全一樣，只差每一位能用的數字範圍（0~1、0~7、0~9 與 A~F）跟位值不同：</p>
+</div>
 <p>方法：將每一位數<strong>分別乘以其位值</strong>（基底的次方），再全部加起來。<br><span style="color:var(--text-faint);font-size:.9rem">👆 教學用：點一下算式會逐步高亮——先亮整個數字，再一位一位對到它的位值，最後全部亮起（預設不上色，可一直點循環）。</span></p>
 <div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="10"><div class="pv-line"><span data-lit="1 2 10">1</span><span data-lit="1 3 10">0</span><span data-lit="1 4 10">0</span><span data-lit="1 5 10">1</span><span data-lit="1 6 10">1</span><span data-lit="1 7 10">0</span><span data-lit="1 8 10">0</span><span data-lit="1 9 10">1</span>₂ = <span data-lit="2 10">1</span>×2⁷ + <span data-lit="3 10">0</span>×2⁶ + <span data-lit="4 10">0</span>×2⁵ + <span data-lit="5 10">1</span>×2⁴ + <span data-lit="6 10">1</span>×2³ + <span data-lit="7 10">0</span>×2² + <span data-lit="8 10">0</span>×2¹ + <span data-lit="9 10">1</span>×2⁰ = 128 + 16 + 8 + 1 = <b>153</b></div><div class="pv-hint">👆 點一下逐步講解</div></div>
 <div class="pv-exp" onclick="pvStep(this)" data-step="0" data-max="5"><div class="pv-line"><span data-lit="1 2 5">3</span><span data-lit="1 3 5">4</span><span data-lit="1 4 5">7</span>₈ = <span data-lit="2 5">3</span>×8² + <span data-lit="3 5">4</span>×8¹ + <span data-lit="4 5">7</span>×8⁰ = 192+32+7 = <b>231</b></div><div class="pv-hint">👆 點一下逐步講解</div></div>
@@ -219,7 +242,7 @@
     
 <div class="widget">
   <div class="w-title">🧮 進位轉換器</div>
-  <div class="w-sub">輸入一個數字並選擇它目前的進位，立即看到 2 / 8 / 10 / 16 進位的結果。</div>
+  <div class="w-sub">輸入一個數字並選擇它目前的進位，立即看到 2 / 8 / 10 / 16 進位的結果——支援小數點，例如 <code>156.75</code> 或 <code>1010.11</code>。有些小數換到別的進位會除不盡、位數過長，這時候該格會直接顯示「過長無法顯示」。</div>
   <div class="field-row">
     <div class="field">
       <label for="conv-input">數值</label>
