@@ -5,7 +5,7 @@ import html as _html
 
 COURSE = "進階程式設計"
 TEACHER = "陳楷翔 老師"
-CONTACT = "t81710@gmail.com"
+CONTACT = "t5089x@ms.mingdao.edu.tw"
 
 # (檔名, 標題, 副標, 分類代碼, 卡片描述, 標籤list)
 # 分類代碼對應下面 PARTS 的 key，用來分組＋算「單元 x／y」
