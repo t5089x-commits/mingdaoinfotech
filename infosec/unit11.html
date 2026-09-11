@@ -27,6 +27,9 @@
   <span class="kicker">Part 2　單元 11</span>
   <h1>公開金鑰密碼學（非對稱）</h1>
   <p>公私鑰加解密、回扣比特幣（專題並行）</p>
+
+<div class="hook-q"><span class="hook-tag">💭 先想一想</span><p>「為什麼你可以把公開資訊給全世界，卻還是能安全地收到只有你看得到的東西？」</p></div>
+
 </section><div class="goals">
   <h2>🎯 學習目標</h2>
   <ul>
@@ -40,7 +43,7 @@
   
 <p>對稱式加密最大的痛點：雙方要先用安全管道交換同一把 key，而且每多一個通訊對象，就要多管理一把 key。<strong>公開金鑰加密系統（非對稱式加密）</strong>解決了這個問題：每個人有一對數學上相關、但不能互相推算的鑰匙 —— <strong>公開金鑰（公鑰）</strong>可以公開給所有人，<strong>私有金鑰（私鑰）</strong>則自己保密收好。</p>
 <div class="callout tip"><span class="t">🔁 回扣比特幣</span>
-<p>還記得單元 5 說「私鑰可以簽署交易、公鑰算出地址」嗎？這裡就是它背後的數學原理：<strong>用私鑰簽章、用公鑰驗證</strong>，正是非對稱加密最經典的應用之一。</p>
+<p>還記得單元 6 說「私鑰可以簽署交易、公鑰算出地址」嗎？這裡就是它背後的數學原理：<strong>用私鑰簽章、用公鑰驗證</strong>，正是非對稱加密最經典的應用之一。</p>
 </div>
 
 </section><section class="block" id="sec2">
@@ -95,6 +98,16 @@
   <div class="card"><h3>🅱️ 小組任務：換一組更小的質數自己算</h3><p>把全班分組，每組拿到一組更小的質數（例如 p=7, q=13），自己走一遍金鑰產生 → 簽章 → 驗證的流程，最後互相驗證別組的簽章，體會「公鑰誰都能驗證，但只有私鑰持有人能簽出正確簽章」。</p></div>
 </div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">小組任務版本更適合已經啟動 PBL 專題、想要更多動手體驗的班級；時間較緊的班級可用第一種方案。</p>
 </div>
+  <section class="block" id="sec4">
+  <h2><span class="num">04</span>🎯 今天學這個，我可以拿來幹嘛？</h2>
+  <p>公開金鑰到底在幹嘛？你手機、電腦裡其實已經天天在用它，只是被包裝成「看不見的背景機制」。</p>
+  <div class="table-wrap"><table class="center"><thead><tr><th>你看到的畫面</th><th>背後其實在做什麼</th></tr></thead><tbody>
+  <tr><td>網址列的小鎖頭🔒（HTTPS）</td><td>用網站的公鑰安全地交換一把「這次連線」專用的對稱金鑰（下個單元會細講完整流程）</td></tr>
+  <tr><td>用 Apple／Google 帳號登入其他 App</td><td>你的裝置用私鑰簽章證明「這是你」，對方用你帳號的公鑰驗證簽章是不是真的</td></tr>
+  <tr><td>軟體更新前跳出「已驗證發布者」</td><td>開發商用私鑰簽過這個安裝檔，你的電腦用開發商公開的公鑰驗證檔案沒被冒充或竄改</td></tr>
+  </tbody></table></div>
+  <div class="skill-box"><h4>🔑 一句話記住公開金鑰的精神</h4><p style="margin-bottom:0">公鑰負責「讓別人可以安全地對你做事（加密給你、驗證你的簽章）」，私鑰負責「只有你能做到的事（解密、簽章）」——公鑰可以到處公開，私鑰絕對不能外流。</p></div>
+  </section>
   <nav class="unit-nav">
     <a class="prev" href="unit10.html"><div class="dir">← 上一單元</div><div class="ttl">古典密碼學（傳統密碼）</div></a>
     <a class="next" href="unit12.html"><div class="dir">下一單元 →</div><div class="ttl">電子簽章與數位憑證</div></a>

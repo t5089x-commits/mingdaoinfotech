@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 0：一支 iPhone 的背後：科技、供應鏈、AI 取代人類與資訊安全｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="0">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 0</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 0　前導單元</span>
+  <h1>一支 iPhone 的背後：科技、供應鏈、AI 取代人類與資訊安全</h1>
+  <p>正式進入 Web3、區塊鏈、密碼學之前，先從一支手機拆開全球科技供應鏈：錢怎麼分配、AI 自動化會怎麼改變這條供應鏈，一路談到兩百年前的盧德運動，最後收回這學期真正要學的主題——資訊安全。</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>從台積電與 iPhone 供應鏈，認識台灣在全球科技產業中的位置</li>
+<li>用真實的公開財報數據，拆解一支手機的售價大致如何分配到設計、零件、組裝、通路等環節，並分清楚「成本、營收、毛利、淨利」的差別</li>
+<li>思考 AI／機器人自動化如果取代大量供應鏈工作，生產力提升的果實會流向誰</li>
+<li>認識工業革命與盧德運動的真實樣貌，理解抗爭核心是「資方利用機械剝削勞工」，而不是單純反科技</li>
+<li>銜接到資訊安全：當供應鏈與生產高度依賴 AI 與數位系統，會出現哪些新的資安風險</li>
+  </ul>
+</div>
+
+<div class="callout tip">
+<span class="t">📌 這堂課怎麼上</span>
+<p style="margin-bottom:0">每一段都是「先丟情境／先問問題 → 再看真實資料 → 最後一起整理概念」，不是傳統的科技史講述。文中所有跟「賺多少錢」有關的數字都附了公開資料來源連結，凡是沒有精確官方數字的地方，會清楚標成「研究機構估算」，不會假裝是精確數字。</p>
+</div>
+
+<section class="block" id="sec1">
+  <h2><span class="num">01</span>從台灣出發：台積電與供應鏈裡的位置</h2>
+
+<p>不管是 iPhone、AI 伺服器，還是你手上的筆電，裡面最關鍵的晶片，很有可能是在台灣製造的。台灣在全球科技供應鏈中，最特別的位置就是<strong>晶圓代工（Foundry）</strong>——專門幫其他公司「製造」晶片，自己不設計、也不賣品牌手機或電腦。</p>
+
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Building%20of%20Taiwan%20Semiconductor%20Manufacturing%20Fab%2012B%20at%20dusk1.jpg?width=760" alt="台積電 Fab 12B 廠房建築外觀" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>台積電 Fab 12B 廠房建築外觀</span></div>
+  <figcaption>台積電（TSMC）晶圓廠廠房。台積電是全世界最大的晶圓代工廠，Apple、AMD、輝達（NVIDIA）等公司設計好晶片後，都交給台積電生產。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Building_of_Taiwan_Semiconductor_Manufacturing_Fab_12B_at_dusk1.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+
+<div class="part">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/12-inch%20silicon%20wafer.jpg?width=560" alt="12 吋（300mm）矽晶圓" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>12 吋矽晶圓</span></div>
+  <figcaption>一片矽晶圓，上面會蝕刻出成千上萬顆晶片，切割後再送去封裝、測試。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:12-inch_silicon_wafer.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<div>
+  <p><strong>台積電的商業模式很特別：</strong>它不設計晶片、不賣自己的手機或電腦品牌，純粹幫別人「代工製造」晶片——這叫做「晶圓代工（Foundry）」模式，跟 Apple「自己設計、找人代工」剛好是互補關係。</p>
+  <p>Apple 的 A 系列（iPhone）、M 系列（Mac）晶片，都是 Apple 自己設計，再交給台積電用最先進的製程生產。</p>
+</div>
+</div>
+
+<div class="callout">
+<span class="t">💰 台積電的獲利能力，先劇透一下</span>
+<p style="margin-bottom:0">根據台積電官方公布的 2025 年第 4 季財報，毛利率高達 <strong>62.3%</strong>，財務長表示主要是先進製程需求帶動。這個數字先記起來——等一下第 2 節會看到，「做晶片」跟「組裝手機」的獲利能力，差距大到你可能想不到。（資料來源：<a href="https://pr.tsmc.com/english/news/3281" target="_blank" rel="noopener">TSMC 2025 Q4 官方新聞稿 ↗</a>）</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>如果一支 iPhone 賣 100 元，這 100 元怎麼分？</h2>
+
+<p>一支 iPhone 賣出去的錢，會流向很多不同的公司：設計手機的 Apple、做零件的供應商（晶片、螢幕、鏡頭、電池……）、把零件組裝成手機的工廠，還有物流與零售通路。<strong>如果把賣出去的錢看成 100 元，你覺得這 100 元大概會怎麼分配到這幾個環節？</strong></p>
+
+<p style="font-size:.9rem;color:var(--text-soft)">先看一張示意圖：一支 iPhone 從設計到你手上，實際上經過了哪些公司？</p>
+<div class="timeline tl-scroll">
+  <div class="tl-row nowrap">
+    <div class="tl-block a"><div class="tl-what">🍎 Apple<br><small style="font-weight:600">設計、軟體、品牌</small></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-block a"><div class="tl-what">🔧 零件供應商<br><small style="font-weight:600">台積電、Sony、SK Hynix 等</small></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-block a"><div class="tl-what">🏭 組裝廠<br><small style="font-weight:600">鴻海（Foxconn）等</small></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-block a"><div class="tl-what">🚢 物流與通路<br><small style="font-weight:600">海運／空運</small></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-block a"><div class="tl-what">🏬 銷售店面<br><small style="font-weight:600">零售門市</small></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-block a"><div class="tl-what" style="white-space:nowrap">🙋 消費者</div></div>
+  </div>
+</div>
+<p style="font-size:.82rem;color:var(--text-faint)">同一顆晶片，台積電可能同時也是 AMD、輝達等其他品牌的供應商；同一家組裝廠，也可能同時幫好幾個手機品牌代工——供應鏈裡的每一個角色，通常不是只服務一家公司。</p>
+
+<div class="exercise">
+<h3>✏️ 課堂活動：先猜猜看，再對答案</h3>
+<p>找旁邊的同學討論，把 100 元分配到下面四個環節（四個數字加起來要等於 100）：</p>
+<ol>
+<li>Apple（設計、軟體、品牌、行銷）：＿＿＿ 元</li>
+<li>零件供應商（晶片、面板、鏡頭、記憶體、電池……全部加起來）：＿＿＿ 元</li>
+<li>組裝廠（把零件組裝成成品）：＿＿＿ 元</li>
+<li>物流、通路與零售：＿＿＿ 元</li>
+</ol>
+<div class="reveal" onclick="toggleAnswer(this)">▶ 公布真實資料（沒有標準答案，但有公開財報數字可以參考）</div>
+<div class="answer">
+<p style="margin-bottom:0"><strong>老實說：沒有任何一家公司會公布「這支手機賣出的錢，精確地分成這四塊各拿多少」這種數字——這是商業機密。</strong>但我們可以用每家公司「整體」的公開財報，去合理推論每個環節大概有多會賺錢。下面是真實查證過的公開資料：</p>
+</div>
+</div>
+
+<h3>🧮 看數字之前，先搞懂三個詞：BOM 成本、毛利率、淨利率</h3>
+<p>等一下的圖表會出現「毛利率」「營業利益率」「淨利率」，還有另一張表會出現「BOM 成本」——這四個詞很容易被搞混，先用一張表分清楚：</p>
+
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>名詞</th><th>是什麼</th><th>算不算研發／組裝／行銷／物流的費用</th><th>等一下會出現在哪裡</th></tr></thead>
+  <tbody>
+  <tr><td><strong>BOM 成本</strong></td><td>只算「零件本身」買進來的錢</td><td>❌ 完全不算</td><td>後面的「歷代 iPhone BOM 表」</td></tr>
+  <tr><td><strong>毛利率</strong></td><td>（營收－銷貨成本）／營收</td><td>銷貨成本含零件＋組裝，但不含行銷、研發等營運費用</td><td>下面橫條圖的台積電、Apple</td></tr>
+  <tr><td><strong>營業利益率</strong></td><td>毛利再扣掉行銷、研發、管理費用之後／營收</td><td>✅ 算</td><td>下面橫條圖的 SK Hynix、Sony</td></tr>
+  <tr><td><strong>淨利率</strong></td><td>營業利益再扣掉利息、稅之後／營收</td><td>✅ 全部都算，四者中最全面</td><td>下面橫條圖的鴻海</td></tr>
+  </tbody>
+</table>
+</div>
+<p style="font-size:.86rem;color:var(--text-soft)">記住這張表，等一下看到不同公司用不同指標，就知道那不是隨便挑的，而是每家公司公開揭露的財報本來就用不同的算法——不能直接把不同指標的數字拿去相減。</p>
+
+<h3>📊 真實資料：各環節公司的獲利能力比一比</h3>
+<p>下面用每家公司「整體」的財報數字（不是 iPhone 專屬數字）畫成橫條圖，指標名稱都對照上面那張表清楚標註：</p>
+
+<div class="mbar-wrap">
+  <div class="mbar-row">
+    <div class="mbar-label">台積電<small>晶片代工</small></div>
+    <div class="mbar-track"><div class="mbar-fill" style="width:62.3%">62.3%</div></div>
+  </div>
+  <div class="mbar-note">毛利率・2025 Q4・先進製程需求帶動</div>
+  <div class="mbar-row">
+    <div class="mbar-label">SK Hynix<small>記憶體</small></div>
+    <div class="mbar-track"><div class="mbar-fill" style="width:49%">49%</div></div>
+  </div>
+  <div class="mbar-note">營業利益率・2025 全年・AI／HBM 需求帶動，非 iPhone 專屬業務</div>
+  <div class="mbar-row">
+    <div class="mbar-label">Apple<small>設計／品牌</small></div>
+    <div class="mbar-track"><div class="mbar-fill" style="width:36.2%">36.2%</div></div>
+  </div>
+  <div class="mbar-note">毛利率・2025 Q4・「Products」大類別，非 iPhone 專屬毛利率</div>
+  <div class="mbar-row">
+    <div class="mbar-label">Sony<small>影像感測元件</small></div>
+    <div class="mbar-track"><div class="mbar-fill" style="width:16.6%">16.6%</div></div>
+  </div>
+  <div class="mbar-note">營業利益率・2025 財年・I&amp;SS 事業部整體</div>
+  <div class="mbar-row">
+    <div class="mbar-label">鴻海<small>組裝代工</small></div>
+    <div class="mbar-track"><div class="mbar-fill warn2" style="width:12%">2.34%</div></div>
+  </div>
+  <div class="mbar-note">稅後淨利率・2025 全年（橫條長度已放大方便看清楚，實際比例遠比圖上更懸殊）</div>
+</div>
+
+<p>從這張圖可以看到一件事：<strong>同樣圍繞著一支 iPhone 在賺錢，賺錢能力可以從 2.34% 到 62.3%，差距超過 25 倍。</strong>做晶片的（台積電）比賣品牌手機的（Apple）還賺；組裝手機的（鴻海）雖然出貨量驚人，賺的比例卻小得多。</p>
+
+<div class="part">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/IPhone%203G%20teardown%20-%20main%20board-3296.jpg?width=680" alt="手機主機板拆解照片，可看到密密麻麻的零件與晶片" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>手機主機板拆解照片</span></div>
+  <figcaption>手機拆解後的主機板：上面每一顆晶片、每一個模組，幾乎都來自不同的零件供應商。（示意圖，非最新機型） <a class="credit" href="https://commons.wikimedia.org/wiki/File:IPhone_3G_teardown_-_main_board-3296.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Foxconn%20Pardubice.JPG?width=680" alt="鴻海（Foxconn）海外廠房建築" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>鴻海（Foxconn）廠房</span></div>
+  <figcaption>鴻海（Foxconn）是全球最大的電子代工廠之一，負責把各家供應商的零件組裝成完整的 iPhone。圖為鴻海在捷克帕爾杜比采的廠房。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Foxconn_Pardubice.JPG" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+</div>
+
+<h3>📱 歷代 iPhone 的零件成本（BOM）估算</h3>
+<p>下面這張表，全部都是研究機構（TechInsights、Counterpoint Research 等）拆解手機估算出來的數字，<strong>Apple 從未官方公布過任何一支 iPhone 的零件成本</strong>，所以整張表都要看成「研究機構估算」，不是精確數字：</p>
+
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>機型</th><th>BOM 估算</th><th>建議售價</th><th>BOM／售價比</th><th>估算來源</th></tr></thead>
+  <tbody>
+  <tr><td>iPhone X</td><td>約 $370</td><td>$999</td><td>37.1%</td><td>TechInsights／IHS Markit</td></tr>
+  <tr><td>iPhone XS Max</td><td>約 $390</td><td>$1,099</td><td>35.5%</td><td>TechInsights／IHS Markit</td></tr>
+  <tr><td>iPhone 11 Pro Max</td><td>約 $451</td><td>$1,099</td><td>44.6%</td><td>TechInsights／S&amp;P Global／Statista</td></tr>
+  <tr><td>iPhone 14 Pro Max</td><td>約 $464</td><td>$1,099</td><td>42.2%</td><td>Counterpoint Research</td></tr>
+  <tr><td>iPhone 15 Pro Max</td><td>約 $502</td><td>$1,199</td><td>41.9%</td><td>Counterpoint Research</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<span class="t">⚠ BOM 占比不能直接當成「Apple 只賺剩下的部分」</span>
+<p style="margin-bottom:0">BOM／售價比看起來有 40% 多，但這不代表 Apple 賺了「剩下的 60%」——因為 BOM 不含研發、組裝、行銷、物流、通路、稅務等費用，這些都要從剩下的錢裡再扣，才會得到前面第一節看到的「毛利率」（36.2%）。另外，坊間流傳的 iPhone 17 系列 BOM 拆解數字，來源文章沒有明確說明是哪一家拆解機構做的分析，可信度低於上面幾代有清楚標註公司名稱的數字，這裡刻意不放進表格，避免當成精確數字使用。</p>
+</div>
+
+<ul class="tidy">
+<li><strong>iPhone 14 Pro Max：</strong>A16 仿生晶片約佔整體 BOM 的 20%；Apple 自行設計的零組件（觸控晶片、連接性晶片、音訊、電源管理電路）約佔 BOM 的 22%。</li>
+<li><strong>iPhone 15 Pro Max：</strong>A17 Pro 晶片讓成本多了約 $30；相機系統成本年增 34%；鈦金屬機身成本年增 18%；Apple 自行設計零件占比提高到 25%。</li>
+</ul>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>2050 情境：當 AI 與機器人接手供應鏈</h2>
+
+<p>剛剛看到的整條供應鏈——設計、零件、組裝、物流——現在都還需要大量人力。想像一下 2050 年：如果 AI、機器人、自動化已經成熟到可以大幅取代零件製造、品質檢測、倉儲、物流、手機組裝，甚至部分工程與管理工作，供應鏈會變成什麼樣子？</p>
+
+<p style="font-size:.86rem;color:var(--text-soft)">左邊是「今天」主要靠什麼運作，右邊是 2050 的假設情境，同一個位置直接左右對照：</p>
+<div class="tl-compare">
+  <div class="tl-col">
+    <div class="tl-col-head">🕐 今天</div>
+    <div class="tl-block a"><div class="tl-tag">👷 人力為主</div><div class="tl-what">🧑‍💻 Apple 設計團隊</div></div>
+    <div class="tl-arrow-v">↓</div>
+    <div class="tl-block a"><div class="tl-tag">👷 人力為主</div><div class="tl-what">🏭 零件供應商<br>（大量人力＋自動化產線）</div></div>
+    <div class="tl-arrow-v">↓</div>
+    <div class="tl-block a"><div class="tl-tag">👷 人力為主</div><div class="tl-what">👷 組裝廠<br>（大量人力）</div></div>
+    <div class="tl-arrow-v">↓</div>
+    <div class="tl-block a"><div class="tl-tag">👷 人力為主</div><div class="tl-what">🚚 物流／零售</div></div>
+    <div class="tl-arrow-v">↓</div>
+    <div class="tl-block a"><div class="tl-tag">👷 人力為主</div><div class="tl-what">🏬 銷售（門市）</div></div>
+    <div class="tl-arrow-v">↓</div>
+    <div class="tl-block a"><div class="tl-what" style="white-space:nowrap">🙋 消費者</div></div>
+  </div>
+  <div class="tl-col">
+    <div class="tl-col-head accent">🔮 2050（假設）</div>
+    <div class="tl-block c"><div class="tl-tag">🤖 AI／機器人為主</div><div class="tl-what">🤖 AI 設計系統</div></div>
+    <div class="tl-arrow-v accent">↓</div>
+    <div class="tl-block c"><div class="tl-tag">🤖 AI／機器人為主</div><div class="tl-what">🧠 AI 管理供應鏈</div></div>
+    <div class="tl-arrow-v accent">↓</div>
+    <div class="tl-block c"><div class="tl-tag">🤖 AI／機器人為主</div><div class="tl-what">🦾 AI＋機器人工廠<br>（自動製造＋自動組裝）</div></div>
+    <div class="tl-arrow-v accent">↓</div>
+    <div class="tl-block c"><div class="tl-tag">🤖 AI／機器人為主</div><div class="tl-what">📦 自動物流</div></div>
+    <div class="tl-arrow-v accent">↓</div>
+    <div class="tl-block c"><div class="tl-tag">🤖 AI／機器人為主</div><div class="tl-what">🏬 AI 智慧門市<br>（無人商店）</div></div>
+    <div class="tl-arrow-v accent">↓</div>
+    <div class="tl-block c"><div class="tl-what" style="white-space:nowrap">🙋 消費者</div></div>
+  </div>
+</div>
+
+<div class="part">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Electronics%20factory%20in%20Shenzhen.jpg?width=680" alt="深圳一間電子廠的生產線，工人在流水線上作業" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>電子廠生產線工人</span></div>
+  <figcaption>今天的電子產品組裝，還是需要大量人力站在流水線上，一件一件完成組裝與檢測。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Electronics_factory_in_Shenzhen.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/FANUC%206-axis%20welding%20robots.jpg?width=680" alt="工業機器手臂在生產線上作業" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>工業機器手臂生產線</span></div>
+  <figcaption>工業機器手臂已經大量應用在焊接、組裝等產線工作上——2050 情境只是把這個趨勢延伸得更徹底。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:FANUC_6-axis_welding_robots.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+</div>
+
+<div class="exercise">
+<h3>💭 討論看看</h3>
+<ul class="tidy">
+<li>如果原本 1000 人做的工作，未來只需要 100 人，剩下的 900 人去哪裡？</li>
+<li>生產力提高後，多出來的利潤流向誰？是 AI 公司、機器人公司、工廠所有者、Apple，還是一般勞工？</li>
+<li>AI 會消滅工作，還是創造新的工作？（提示：歷史上每一次技術革命，兩種情況都發生過）</li>
+<li><strong>問題到底是「AI 本身」，還是「AI 的所有權與利益分配」？</strong>如果 AI 帶來的生產力提升，利潤只集中在少數擁有 AI／機器人的人手上，跟利潤被公平分配出去，會是完全不同的社會結果——這正是下一段要回頭看歷史的原因。</li>
+</ul>
+</div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>回到 1811 年：英國的盧德運動</h2>
+
+<p>「機器取代人力、生產力提升但工人失業」這件事，其實 200 多年前就發生過一次——英國工業革命時期的<strong>盧德運動（Luddite Movement）</strong>。</p>
+
+<div class="callout">
+<span class="t">📖 老師整理的說明</span>
+<p>在 1811 年至 1816 年的工業革命期間，英國傳統的紡織手工藝人因為織布機等自動化機械的引進，面臨<strong>失業、薪資大幅縮水以及勞動條件惡化</strong>的困境。</p>
+<p>為了反抗這種改變，工人們組織起來，秘密潛入工廠搗毀、砸碎這些新式機器，這場以<strong>「搗毀機器」</strong>為主要特徵的激進工人運動，歷史上稱為<strong>盧德運動</strong>。</p>
+<p><strong>名稱由來：</strong>相傳源於一位名叫<strong>內德・盧德（Ned Ludd）</strong>的傳奇人物，據說他是第一位憤而砸碎織布機的工人，後來成為工人們對抗資本家的精神領袖與代號。</p>
+<p><strong>抗爭的核心原因：</strong>工人們反對的不是「科技進步」本身，而是<strong>反對資本家利用機器剝削勞工、壓低薪資、剝奪他們的生計與尊嚴</strong>。</p>
+<p><strong>政府的鎮壓：</strong>英國政府為保護資產階級與工業發展實施嚴厲鎮壓，<strong>1812 年國會通過法案將「搗毀機器」列為死刑罪</strong>，並派軍隊鎮壓，運動在 1817 年左右失敗。</p>
+<p style="margin-bottom:0"><strong>現代延伸意涵：</strong>現代英語中 "Luddite"（盧德分子）已成為代名詞，用來形容反對新科技、害怕技術進步或拒絕使用現代電子產品的人。近年隨著生成式 AI 興起，許多人擔心 AI 取代畫家、工程師、作家的工作，這種集體焦慮與反抗情緒常被稱為<strong>「新盧德主義」（Neo-Luddism）</strong>。</p>
+</div>
+
+<p style="font-size:.85rem;color:var(--text-faint)">（以上為老師整理的說明文字，經查證與大英百科全書、維基百科等公開資料交叉核對，內容正確，以下補上可查證的來源與細節。）</p>
+
+<div class="part">
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Powerloom%20weaving%20in%201835.jpg?width=680" alt="1835 年描繪動力織布機工廠的版畫" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>1835 年動力織布機工廠版畫</span></div>
+  <figcaption>1835 年描繪動力織布機（power loom）工廠的版畫——這正是盧德運動工人們搗毀的那一類機器。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Powerloom_weaving_in_1835.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+<figure class="fig">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Luddite.jpg?width=480" alt="描繪盧德運動的歷史版畫" loading="lazy" onerror="this.closest('figure').classList.add('img-fail')">
+  <div class="img-fallback">🖼️ 圖片需連網載入<br><span>描繪盧德運動的歷史版畫</span></div>
+  <figcaption>描繪盧德運動時期的歷史版畫。 <a class="credit" href="https://commons.wikimedia.org/wiki/File:Luddite.jpg" target="_blank" rel="noopener">圖片來源：Wikimedia Commons ↗</a></figcaption>
+</figure>
+</div>
+
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>年份</th><th>事件</th></tr></thead>
+  <tbody>
+  <tr><td>1811</td><td>盧德運動在諾丁漢附近興起，隨後蔓延到約克夏、蘭開夏、德比郡、萊斯特郡</td></tr>
+  <tr><td>1812</td><td>英國國會通過《毀壞織襪機法案》，把破壞機器列為<strong>唯一死刑</strong>的重罪（比 1788 年舊法的 7-14 年流放刑罰更重）；詩人拜倫在上議院處女演說中反對此法案</td></tr>
+  <tr><td>1812–1813</td><td>政府派軍隊鎮壓；1813 年約克大審判，多人被處決或流放</td></tr>
+  <tr><td>1817</td><td>鎮壓加上拿破崙戰爭結束後經濟復甦，運動式微</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<span class="t">🔎 一個容易被忽略的細節</span>
+<p style="margin-bottom:0">雖然鎮壓期間約有 60–70 名盧德分子被處以絞刑，但根據維基百科整理，「似乎沒有任何一件死刑判決是依據 1812 年這條法案本身，法官普遍還是引用既有法律」——這代表歷史事件常常比一句話的敘述更複雜，不要把「1812 年法案＝直接絞死一堆人」講得過於機械化。</p>
+</div>
+
+<p><strong>不要把盧德分子簡化成「只是討厭科技」。</strong>比較準確的說法是：抗爭核心是工作權、薪資、技能貶值、勞動條件，以及資方利用機械改變勞動關係——問題出在「機器被拿來剝削勞工」，不是「機器本身」。這跟上一段 2050 情境裡「問題是 AI 本身，還是 AI 的所有權與利益分配」的提問，其實是同一個問題在不同時代的翻版。</p>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>工業革命 vs AI 時代：對照一下</h2>
+
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>對照面向</th><th>工業革命（1811–1816）</th><th>AI 時代（現在～未來）</th></tr></thead>
+  <tbody>
+  <tr><td>取代的對象</td><td>紡織手工藝人的手工技能</td><td>部分知識型工作、重複性腦力勞動、部分工程與管理工作</td></tr>
+  <tr><td>核心技術</td><td>機械化織布機、蒸汽動力</td><td>AI、機器人、自動化系統</td></tr>
+  <tr><td>受衝擊者的處境</td><td>失業、薪資縮水、勞動條件惡化</td><td>職缺減少或轉型、技能被自動化取代的焦慮</td></tr>
+  <tr><td>反抗／焦慮形式</td><td>組織起來搗毀機器（盧德運動）</td><td>輿論焦慮、「新盧德主義」（Neo-Luddism）、對 AI 公司的抵制討論</td></tr>
+  <tr><td>政府／社會回應</td><td>嚴厲軍事鎮壓、立法加重刑罰</td><td>目前多在討論監管、課稅、社會安全網等政策，尚無定論</td></tr>
+  <tr><td>後續發展</td><td>機械化持續推進，工業革命最終大幅提升整體生產力與生活水準（但過程中付出巨大代價）</td><td>尚在發生中，結果未知</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout tip">
+<span class="t">🧭 這張表想讓你思考的事</span>
+<p style="margin-bottom:0">工業革命最後確實大幅提升了人類整體的生活水準，但「最後變好」不代表「過程中每個人都公平受益」——盧德運動期間受衝擊的那一代紡織工人，很多人終其一生都沒有等到「變好」的那一天。AI 時代會不會重演類似的過程，正是下一段要討論的問題。</p>
+</div>
+
+</section><section class="block" id="sec6">
+  <h2><span class="num">06</span>分組討論：兩個對立的立場，你該怎麼辦？</h2>
+
+<p>這次不是選一個立場，而是先看兩個站在對立面的角色，想想看他們各自的處境跟難處：</p>
+
+<div class="grid cols-2">
+  <div class="card stance-card"><span class="stance-mark">🏭</span><h3>你是 AI／機器人公司的老闆</h3><p>你花了大量金錢架設資料中心、研發機器人與 AI 產品，為所有人「創造」出更方便快速的生活——但你做出來的產品，也讓好多人的工作被取代掉了。<strong>你會怎麼看待自己做的這件事？你覺得自己需要為這些人的失業負責嗎？</strong></p></div>
+  <div class="card stance-card"><span class="stance-mark">🏛️</span><h3>你是一國的總統</h3><p>你的人民已經有一大部分沒有工作了，因為 AI 與機器人取代了他們的職位，收入也出現問題，社會開始不穩定。<strong>這時候你該怎麼辦？你能對 AI 公司做什麼？你又能對失業的人民做什麼？</strong></p></div>
+</div>
+
+<div class="exercise">
+<h3>💭 先自己想想看：如果換成是你，站在「中間」……</h3>
+<p>你不是老闆，也不是總統，而是要負責解決這個對立的人——你覺得有什麼方法，可以同時兼顧「AI 公司想繼續發展科技賺錢」跟「人民需要工作與收入才能生活」這兩件事？把你想到的方法寫下來，再往下看一個真實存在的解方。</p>
+</div>
+
+<h3>💡 一個真實被拿出來討論的解方：全民基本收入（UBI）</h3>
+<p><strong>全民基本收入（Universal Basic Income, UBI）</strong>是一種社會政策構想：政府定期無條件發給每一位國民一筆固定的錢，不論這個人有沒有工作、工作賺多少，都能領到這筆錢，用來維持基本生活。這筆錢通常規劃從稅收而來——常被提出的做法之一，就是向因為 AI／自動化而大幅提升獲利的企業課徵更高的稅，把一部分利潤重新分配出去。近年隨著 AI 讓不少人開始擔心大規模失業，UBI 重新變成各國政策討論裡很熱門的話題。</p>
+
+<div class="callout tip">
+<span class="t">🔄 把 UBI 套回剛剛的兩個立場</span>
+<p>如果政府真的開始向 AI／機器人公司課徵較高的稅，把稅收拿來發放全民基本收入給每一位國民：</p>
+<ul class="tidy" style="margin-top:6px">
+<li>對 <strong>AI 公司老闆</strong>來說：這樣的稅收合理嗎？會不會讓公司想把資料中心、工廠搬到稅比較低的國家？</li>
+<li>對 <strong>總統</strong>來說：稅要向誰收、收多少，才不會逼走這些公司，又能真的照顧到失業的人民？</li>
+<li>對 <strong>一般人民</strong>來說：每個月固定領到一筆錢，就足夠解決問題了嗎？還是人除了收入之外，也需要工作帶來的意義感與社會參與？</li>
+</ul>
+</div>
+
+<div class="callout warn">
+<span class="t">🧭 這兩個對立的立場，真正應該一起討論的是什麼？</span>
+<p style="margin-bottom:0">AI 公司老闆想要的是「能繼續發展、繼續獲利」，總統要面對的是「人民要有工作和收入」——這兩件事表面上互相衝突，但真正需要被攤開來討論的問題其實是：<strong>AI 帶來的生產力提升，這塊「多出來的餅」該怎麼分配？</strong>是全部留在少數公司與股東手上，還是有辦法透過稅收、法規、教育轉型等方式，讓整個社會一起分到好處？這正好呼應第 3 節最後問的那個問題——「問題到底是 AI 本身，還是 AI 的所有權與利益分配？」</p>
+</div>
+
+<div class="callout" style="border-color:var(--brand)">
+<span class="t">📣 特別想對文組的你說</span>
+<p>科技巨浪一波波打來，很多人以為能站上浪頭的，只有寫得出程式碼的那群人。<strong>但真正決定這波 AI 浪潮最後把社會沖向哪裡的，從來不是技術本身，而是政治怎麼監管它、經濟怎麼分配它創造出來的財富、社會怎麼承接被取代的那些人、人心又要怎麼安頓這一切帶來的焦慮與不安。</strong>這正是政治學、經濟學、社會學、心理學——你們現在正在學的這些學問——最有用武之地的戰場。</p>
+<p style="margin-bottom:0">別小看自己手上握著的武器：懂政治學，你才能看穿一項政策究竟是真心照顧人民，還是替少數既得利益者護航；懂經濟學，你才能看懂「效率提升」的漂亮數字背後，到底是誰賺走了、又是誰被犧牲了；懂社會學，你才能理解一整代人失去工作之後，整個社會結構會怎麼鬆動、又該怎麼被重新撐起來；懂心理學，你才能陪伴身邊那些因為被取代而恐慌、憤怒、甚至失去自我價值的人，走過最難熬的那一段路。<strong>這場浪潮不會等任何人準備好才打過來——你今天在課堂上學的每一門文科知識，就是你未來為自己、也為你所生活的這片土地站穩腳步、迎向衝擊時，最真實可靠的力量。</strong></p>
+</div>
+
+</section><section class="block" id="sec7">
+  <h2><span class="num">07</span>收回主題：AI 供應鏈上的資訊安全風險</h2>
+
+<p>假設 2050 年的情境真的發生——工廠、供應鏈、物流、金融、身分、社會系統都高度依賴 AI 與數位系統，這時候<strong>資訊安全</strong>會變成什麼等級的問題？</p>
+
+<div class="callout warn">
+<span class="t">🚨 想一想：如果……</span>
+<ul class="tidy" style="margin-top:6px">
+<li>AI 管理的工廠被駭客入侵，會發生什麼事？（不只是資料外洩，可能是實體生產線停擺、甚至被操控）</li>
+<li>供應鏈的物流系統被入侵、貨物被竄改或劫持怎麼辦？</li>
+<li>AI 做出錯誤的決策（不管是被駭、還是自己判斷失誤），誰要負責？</li>
+<li>整條自動化生產系統被勒索軟體鎖住，工廠停擺一天要付出多少代價？</li>
+<li>如果連「數位身分」都被 AI 系統大量處理，身分被竊取的後果會比現在嚴重多少倍？</li>
+</ul>
+</div>
+
+<p>當「經濟」與「生產」越來越依賴 AI 與數位系統，資訊安全就不再只是「保護個人帳號密碼」這麼單純——它變成攸關整個社會能不能正常運作的關鍵基礎建設。這也是為什麼，在正式進入 Web3、區塊鏈、密碼學這些技術主題之前，我們要先花一堂課，把「為什麼資訊安全這麼重要」的背景想清楚。接下來的單元，會從<a href="unit01.html">「2050 年的一天」</a>這個情境出發，正式展開這學期的資安地圖。</p>
+
+</section><section class="block" id="sec8">
+  <h2><span class="num">08</span>課後反思</h2>
+
+<div class="exercise">
+<h3>✏️ 選幾題寫下你的想法（老師會整理成 Google 表單）</h3>
+<ol>
+<li>你猜測的「100 元分配」跟真實查到的財報數據差多少？哪個數字最讓你意外？</li>
+<li>如果 2050 年的情境真的發生，你覺得「被取代的那 900 人」最可能去做什麼？你自己會怎麼準備？</li>
+<li>第 6 節「AI 公司老闆」跟「總統」這兩個角色，你覺得誰的處境比較難？如果真的實施全民基本收入，你支持嗎？為什麼？</li>
+<li>盧德運動的工人「砸機器」，跟現代人對 AI 的焦慮，你覺得最像的地方跟最不像的地方分別是什麼？</li>
+<li>如果一家公司的 AI 工廠被駭客入侵、停止運作一整天，你覺得受影響最大的會是誰？（公司老闆？員工？消費者？還是整個社會？）</li>
+</ol>
+</div>
+
+</section>
+
+<div class="callout" style="margin-top:10px">
+<span class="t">📚 資料來源與延伸閱讀</span>
+<ul class="tidy" style="margin-top:6px">
+<li><a href="https://www.investing.com/news/transcripts/earnings-call-transcript-apple-beats-q4-2025-forecasts-stock-rises-93CH-4322156" target="_blank" rel="noopener">Apple 2025 Q4 財報電話會議逐字稿（Investing.com）↗</a></li>
+<li><a href="https://www.macrotrends.net/stocks/charts/AAPL/apple/gross-margin" target="_blank" rel="noopener">Apple 歷年毛利率走勢（Macrotrends）↗</a></li>
+<li><a href="https://pr.tsmc.com/english/news/3281" target="_blank" rel="noopener">台積電 2025 Q4 官方財報新聞稿 ↗</a></li>
+<li><a href="https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978" target="_blank" rel="noopener">鴻海 FY2025 與 4Q25 財報結果 ↗</a></li>
+<li><a href="https://www.prnewswire.com/news-releases/sk-hynix-announces-fy25-financial-results-posts-record-high-results-and-delivers-highest-shareholder-returns-302672384.html" target="_blank" rel="noopener">SK hynix FY2025 財報結果（PR Newswire）↗</a></li>
+<li><a href="https://www.digitalcameraworld.com/cameras/sonys-image-sensors-drive-record-us-usd9-6-billion-profits-as-electronics-division-slumps" target="_blank" rel="noopener">Sony 影像感測事業部財報報導（Digital Camera World）↗</a></li>
+<li><a href="https://www.bankmycell.com/blog/how-much-do-iphones-cost-to-make" target="_blank" rel="noopener">歷代 iPhone BOM 成本估算彙整（BankMyCell）↗</a></li>
+<li><a href="https://m.gsmarena.com/cr_iphone_14_pro_max_bom_is_464_nearly_4_more_than_13_pro_max-news-57532.php" target="_blank" rel="noopener">iPhone 14 Pro Max BOM 分析（GSMArena／Counterpoint）↗</a></li>
+<li><a href="https://counterpointresearch.com/en/insights/bom-analysis-iphone-15-pro-max-costs-37-7" target="_blank" rel="noopener">iPhone 15 Pro Max BOM 分析（Counterpoint Research）↗</a></li>
+<li><a href="https://www.britannica.com/event/Luddite" target="_blank" rel="noopener">Luddite（大英百科全書）↗</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Destruction_of_Stocking_Frames,_etc._Act_1812" target="_blank" rel="noopener">Destruction of Stocking Frames, etc. Act 1812（維基百科）↗</a></li>
+</ul>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev disabled"><div class="dir">← 上一單元</div><div class="ttl">已是第一個</div></a>
+    <a class="next" href="unit01.html"><div class="dir">下一單元 →</div><div class="ttl">課程介紹＋2050 未來情境</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

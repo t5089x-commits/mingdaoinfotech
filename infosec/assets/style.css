@@ -646,9 +646,31 @@ pre code { font-family: inherit; white-space: pre; font-variant-ligatures: none;
 .tl-block.b { border-top: 4px solid #f59e0b; }
 .tl-block.c { border-top: 4px solid #8b5cf6; }
 .tl-when { font-size: .74rem; color: var(--text-faint); font-weight: 700; }
+.tl-tag { font-size: .68rem; font-weight: 800; color: var(--brand-strong); background: var(--brand-soft); display: inline-block; padding: 1px 8px; border-radius: 999px; margin: 1px 0 2px; }
+.tl-block.c .tl-tag { color: var(--accent); background: var(--accent-soft); }
 .tl-what { font-size: 1rem; font-weight: 800; color: var(--text); line-height: 1.35; }
 .tl-arrow { align-self: center; color: var(--brand); font-weight: 800; font-size: 1.2rem; flex: 0 0 auto; }
 @media (max-width: 640px) { .tl-arrow { transform: rotate(90deg); } .tl-block { flex: 1 1 100%; } }
+/* 單排不換行的時間軸（窄螢幕改用橫向捲動，不再往下折行） */
+.tl-scroll { overflow-x: auto; padding-bottom: 4px; }
+.tl-row.nowrap { flex-wrap: nowrap; }
+.tl-row.nowrap .tl-block { flex: 1 1 0; min-width: 0; padding: 8px 7px; }
+.tl-row.nowrap .tl-what { font-size: .82rem; line-height: 1.3; }
+.tl-row.nowrap .tl-what small { font-size: .78em; }
+.tl-row.nowrap .tl-arrow { font-size: 1rem; }
+@media (max-width: 700px) {
+  .tl-scroll .tl-row.nowrap { min-width: 760px; }
+  .tl-scroll .tl-row.nowrap .tl-block { flex: 1 1 130px; }
+}
+/* 今天 vs 2050：左右對照直向流程 */
+.tl-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 14px 0; }
+.tl-col { display: flex; flex-direction: column; align-items: stretch; gap: 2px; }
+.tl-col-head { text-align: center; font-weight: 800; font-size: .92rem; color: var(--brand-strong); background: var(--brand-soft); border-radius: 8px; padding: 5px 0; margin-bottom: 4px; }
+.tl-col-head.accent { color: var(--accent); background: var(--accent-soft); }
+.tl-col .tl-block { width: 100%; flex: 0 0 auto; }
+.tl-arrow-v { text-align: center; color: var(--brand); font-weight: 800; font-size: 1.05rem; line-height: 1.6; }
+.tl-arrow-v.accent { color: var(--accent); }
+@media (max-width: 640px) { .tl-compare { grid-template-columns: 1fr; } }
 /* 影片連結 */
 .vidlink { display: inline-block; font-weight: 700; color: var(--brand-strong); text-decoration: none; }
 .vidlink:hover { text-decoration: underline; }
@@ -1267,3 +1289,53 @@ pre::-webkit-scrollbar-thumb,.table-wrap::-webkit-scrollbar-thumb{background:rgb
 
 /* 迴圈追蹤表格：不要卷軸，整個攤開 */
 .ls-tablewrap { max-height: none; overflow: visible; }
+
+/* ---------- 單元 0：利潤比較橫條圖 mbar ---------- */
+.mbar-wrap { margin: 18px 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 18px; box-shadow: var(--shadow); }
+.mbar-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+.mbar-label { flex: 0 0 128px; font-size: .86rem; font-weight: 800; color: var(--text); text-align: right; line-height: 1.3; }
+.mbar-label small { display: block; font-weight: 600; color: var(--text-faint); font-size: .7rem; }
+.mbar-track { flex: 1; background: var(--surface-2); border-radius: 8px; overflow: hidden; height: 28px; border: 1px solid var(--border); min-width: 60px; }
+.mbar-fill { height: 100%; background: linear-gradient(90deg, var(--brand), var(--accent)); display: flex; align-items: center; justify-content: flex-end; padding-right: 9px; color: #fff; font-weight: 800; font-size: .8rem; font-family: var(--mono); white-space: nowrap; border-radius: 8px; }
+.mbar-fill.warn2 { background: linear-gradient(90deg, var(--warn), #f2b25c); }
+.mbar-note { flex: 0 0 auto; width: 100%; font-size: .74rem; color: var(--text-faint); text-align: right; margin-top: -4px; }
+@media (max-width: 640px) { .mbar-label { flex-basis: 84px; font-size: .76rem; } }
+
+/* ---------- 單元 0：公司名稱視覺（優先用維基百科自由授權商標，找不到就用純文字徽章） ---------- */
+.co-logo { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px 5px 8px; vertical-align: middle; }
+.co-logo img { height: 16px; width: auto; max-width: 64px; object-fit: contain; display: block; }
+.co-logo span { font-size: .82rem; font-weight: 800; color: #111; white-space: nowrap; }
+.co-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px; font-size: .82rem; font-weight: 800; color: var(--text); vertical-align: middle; }
+.role-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 10px 0; }
+
+/* ---------- 單元 0：四種立場卡（分組討論） ---------- */
+.stance-card { position: relative; }
+.stance-card .stance-mark { position: absolute; right: 16px; top: 16px; font-family: var(--mono); font-weight: 900; font-size: 1.4rem; color: var(--brand); opacity: .5; }
+.stance-card h3 { margin-top: 0; }
+
+/* ---------- 各單元共用：開場提問 hook-q ---------- */
+.hook-q {
+  background: var(--hero-bg); color: var(--hero-text);
+  border-radius: var(--radius); padding: 22px 26px; margin: 0 0 26px;
+  box-shadow: var(--shadow), inset 0 0 0 1px var(--hero-ring);
+  position: relative; overflow: hidden;
+}
+.hook-q::after {
+  content: ""; position: absolute; right: -30px; bottom: -30px;
+  width: 160px; height: 160px; background: radial-gradient(circle, rgba(255,255,255,.14), transparent 65%);
+}
+.hook-q .hook-tag {
+  display: inline-block; background: var(--hero-kicker-bg); color: var(--hero-kicker-text);
+  padding: 3px 12px; border-radius: 999px; font-size: .76rem; font-weight: 700;
+  letter-spacing: .5px; margin-bottom: 10px; font-family: var(--mono);
+}
+.hook-q p { margin: 0; font-size: 1.14rem; font-weight: 800; line-height: 1.55; position: relative; z-index: 1; }
+.hook-q p small { display: block; margin-top: 8px; font-size: .84rem; font-weight: 500; opacity: .88; }
+
+/* ---------- 各單元共用：「今天學這個，我可以拿來幹嘛？」生活技能區塊 ---------- */
+.skill-box {
+  background: var(--brand-soft); border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+  border-radius: var(--radius); padding: 20px 24px; margin: 16px 0;
+}
+.skill-box h4 { margin: 0 0 8px; color: var(--brand-strong); font-size: 1rem; display:flex; align-items:center; gap:8px; }
+.skill-box p:last-child { margin-bottom: 0; }

@@ -27,6 +27,9 @@
   <span class="kicker">Part 2　單元 12</span>
   <h1>電子簽章與數位憑證</h1>
   <p>CA、HTTPS、信任鏈（專題並行）</p>
+
+<div class="hook-q"><span class="hook-tag">💭 先想一想</span><p>「你現在用學校 Wi-Fi 登入網銀，旁邊的人看得到你的密碼嗎？」</p></div>
+
 </section><div class="goals">
   <h2>🎯 學習目標</h2>
   <ul>
@@ -51,7 +54,7 @@
 那麼 s3 就會是 m3 的『正確』簽章 —— 即使從沒有人簽過 m3！</code></pre>
 </div>
 <div class="callout tip"><span class="t">🩹 解法：先做雜湊，再簽章</span>
-<p>簽章前先用雜湊函數對明文取摘要：<code>s = H(m)^d mod n</code>。因為雜湊函數<strong>沒有乘法代數性質</strong>（H(m1×m2) ≠ H(m1)×H(m2)），攻擊者再也無法用兩個舊簽章兜出一個新的合法簽章。這正是單元 9「Hash」在這裡派上用場的地方。</p>
+<p>簽章前先用雜湊函數對明文取摘要：<code>s = H(m)^d mod n</code>。因為雜湊函數<strong>沒有乘法代數性質</strong>（H(m1×m2) ≠ H(m1)×H(m2)），攻擊者再也無法用兩個舊簽章兜出一個新的合法簽章。這正是單元 5「Hash」在這裡派上用場的地方。</p>
 </div>
 
 </section><section class="block" id="sec2">
@@ -78,6 +81,12 @@
   <p>打開瀏覽器，點一下網址列的小鎖頭圖示，找找看「憑證資訊」，看看這個網站的憑證是由哪一家憑證中心（CA）簽發的、有效期限到什麼時候。</p>
   
 </div>
+  <section class="block" id="sec4">
+  <h2><span class="num">04</span>🎯 今天學這個，我可以拿來幹嘛？</h2>
+  <p>「你登入網銀時到底發生什麼？」——今天學的 HTTPS 四步驟，就是完整的答案。</p>
+  <div class="skill-box"><h4>🔒 養成看小鎖頭的習慣</h4><p style="margin-bottom:0">輸入密碼、信用卡卡號之前，先確認網址列有 https:// 跟小鎖頭。沒有的話，代表資料是用明文在網路上傳輸，只要跟你連同一個 Wi-Fi（例如學校、咖啡廳的公用網路），理論上就有機會被攔截看到內容。</p></div>
+  <div class="exercise"><h3>✏️ 想一想</h3><p style="margin-bottom:0">如果有人在公用 Wi-Fi 架了一個假的憑證，想騙你的瀏覽器相信它是真的銀行網站，這學期學過的哪個機制（CA、信任鏈）可以防止這件事發生？</p></div>
+  </section>
   <nav class="unit-nav">
     <a class="prev" href="unit11.html"><div class="dir">← 上一單元</div><div class="ttl">公開金鑰密碼學（非對稱）</div></a>
     <a class="next" href="unit13.html"><div class="dir">下一單元 →</div><div class="ttl">成果製作（一）</div></a>
