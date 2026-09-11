@@ -170,6 +170,36 @@ print(f"我的分數是{score:.1f}分")   # :.1f 保留小數點後 1 位 → 88
 </div>
 <div class="callout tip"><span class="t">💡 小技巧：:.1f／:.2f</span>
 <p><code>{變數:.1f}</code> 表示四捨五入到小數點後 1 位，<code>.2f</code> 就是 2 位，畫圖表、算平均分數時非常常用。</p></div>
+<p>再看一組例子，把不同的格式規格放在一起比較，更容易記住差異：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">python</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre><code data-lang="python">name = "阿翔"
+score = 87.6666
+print(f"{name} 的分數是 {score}")            # 阿翔 的分數是 87.6666
+print(f"{name} 的分數是 {score:.1f}")        # 保留 1 位小數 → 87.7
+print(f"{name} 的分數是 {score:.2f}")        # 保留 2 位小數 → 87.67
+print(f"{name} 的分數是 {score:6.1f}")       # 總寬度 6，靠右對齊 →   87.7
+print(f"{name} 的分數是 {score:06.1f}")      # 總寬度 6，補 0 對齊 → 0087.7</code></pre>
+</div>
+<h3><code>{值:格式}</code> 冒號後面到底在寫什麼？</h3>
+<p>f-string 的 <code>{ }</code> 裡面，冒號 <code>:</code> 後面接的是「格式規格（format spec）」，可以疊在一起用，順序固定是「<strong>補齊符號 → 總寬度 → 小數位數 → 型態</strong>」：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>寫法</th><th>意思</th><th>範例（<code>score = 87.6666</code>）</th><th>結果</th></tr></thead>
+  <tbody>
+    <tr><td><code>.1f</code></td><td>保留小數點後 1 位（四捨五入）</td><td><code>{score:.1f}</code></td><td><code>87.7</code></td></tr>
+    <tr><td><code>.2f</code></td><td>保留小數點後 2 位</td><td><code>{score:.2f}</code></td><td><code>87.67</code></td></tr>
+    <tr><td><code>6.1f</code></td><td>總寬度 6 個字元、保留 1 位小數，預設補空白、靠右對齊</td><td><code>{score:6.1f}</code></td><td><code>␣␣87.7</code></td></tr>
+    <tr><td><code>06.1f</code></td><td>總寬度 6，把補齊用的空白改成補 <code>0</code></td><td><code>{score:06.1f}</code></td><td><code>0087.7</code></td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout"><span class="t">🔎 表格裡的 ␣ 是什麼？</span>
+<p style="margin-bottom:0">␣ 代表一個「空白字元」，只是為了讓你看清楚總寬度有沒有補滿，實際印出來就是普通的空格，不會真的看到這個符號。</p></div>
 
 </section><div class="exercise">
   <h3>✏️ 小挑戰</h3>
