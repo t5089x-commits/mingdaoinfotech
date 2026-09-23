@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 附：輸入技巧與常用函式：split()／map()｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="4">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 附</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">起點篇　補充單元</span>
+  <h1>輸入技巧與常用函式：split()／map()</h1>
+  <p>APCS 實作題最常見的輸入方式，加上這學期會一直用到的內建函式，這裡一次補齊</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>知道 APCS 程式實作最常見的輸入格式：「一行裡有好幾個數字，用空白隔開」</li>
+    <li>會用 <code>split()</code> 把一行文字切開，並理解切開後<strong>還是字串</strong></li>
+    <li>會用 <code>map(int, ...)</code> 批次轉型態，寫出 <code>list(map(int, input().split()))</code> 這個最常見的一行寫法</li>
+    <li>認識這學期會一直用到的內建函式對照表：<code>sorted()</code>、<code>sum()</code>、<code>zip()</code>、<code>enumerate()</code> 等</li>
+  </ul>
+</div>
+
+<section class="block">
+  <h2><span class="num">01</span>APCS 最常見的輸入格式</h2>
+  <p>APCS 實作題最常見的輸入方式，是「一行裡有好幾個數字，用空白隔開」，例如輸入 <code>3 5 7 9</code>。這種情況要用 <code>split()</code> 和 <code>map()</code> 這組技巧——這學期後面每一題只要牽涉到「一次讀好幾個數字」，幾乎都會用到：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">split()：把一行文字依空白切開</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">line = input()          # 假設使用者輸入：3 5 7 9
+parts = line.split()      # 依空白切開 → ['3', '5', '7', '9']
+print(parts)               # 注意：這些還是「字串」，不是數字！
+print(parts[0] + parts[1])  # '3' + '5' → '35'（字串相加是接在一起，不是數學運算）</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 切開之後，還是字串！</span>
+  <p style="margin-bottom:0"><code>split()</code> 回傳的 list 裡，每一個元素都還是<strong>字串</strong>，不是數字。如果直接拿去做加法，Python 不會報錯，而是會把字串「接在一起」，例如 <code>'3' + '5'</code> 的結果是 <code>'35'</code>，不是 <code>8</code>。這是初學者很容易忽略、但又不會報錯的陷阱，跟單元 2 學過的 <code>input()</code> 一樣，記得要先轉型。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">02</span>map()：把切開的每一段文字都轉成數字</h2>
+  <p><code>map(f, x)</code> 會把函式 <code>f</code> 套用到 <code>x</code> 裡的每一個元素上，回傳一個新的結果。搭配 <code>int</code> 一起用，就能把一整排字串「一次」轉成數字：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">map(int, ...)：批次轉換型態</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">line = "3 5 7 9"
+parts = line.split()          # ['3', '5', '7', '9']（字串）
+nums = list(map(int, parts))    # 把每個字串都轉成 int → [3, 4, 7, 9]
+print(nums)
+print(sum(nums))                  # 21，這次是真的數學運算
+
+# APCS 最常見的寫法，直接一行搞定：
+nums = list(map(int, input().split()))
+print(nums)</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">📌 這一行程式碼，這學期會一直看到</span>
+  <p style="margin-bottom:0"><code>nums = list(map(int, input().split()))</code> 這行等於做了三件事：<code>input()</code> 讀一行文字 → <code>.split()</code> 依空白切開 → <code>map(int, ...)</code> 把每一段都轉成整數，最後用 <code>list(...)</code> 包成一個 list。這個「一行讀多個數字」的寫法值得直接背起來。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">03</span>split(sep)：依指定符號切開</h2>
+  <p><code>split()</code> 不寫參數預設依「空白」切開；如果資料是用逗號或其他符號分隔（例如處理 CSV 這類資料），可以直接指定分隔符號：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">依指定符號切開</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">line = "小明,88,92,76"
+parts = line.split(",")     # 依逗號切開 → ['小明', '88', '92', '76']
+name = parts[0]
+scores = list(map(int, parts[1:]))   # 第 0 個是名字，其餘轉成數字
+print(name, scores, sum(scores))</code></pre>
+  </div>
+</section>
+
+<section class="block">
+  <h2><span class="num">04</span>這學期會一直用到的內建函式對照表</h2>
+  <p>下面這些函式，這學期後面每一個單元幾乎都會用到——先在這裡認識一次，之後看到就不會陌生：</p>
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>函式</th><th>用途</th><th>範例</th></tr></thead>
+      <tbody>
+        <tr><td><code>len(x)</code></td><td>取得長度（字串、list 都可以用）</td><td><code>len([1,2,3])</code> → 3</td></tr>
+        <tr><td><code>x.append(v)</code></td><td>在 list 尾端加入一個元素</td><td><code>a=[1,2]; a.append(3)</code> → [1,2,3]</td></tr>
+        <tr><td><code>x.pop()</code></td><td>從 list 尾端取出並刪除一個元素</td><td><code>a=[1,2,3]; a.pop()</code> → 3</td></tr>
+        <tr><td><code>deque.popleft()</code></td><td>從 deque 前端取出並刪除（佇列常用，下學期會用到）</td><td>下學期單元：佇列與堆疊</td></tr>
+        <tr><td><code>"..".split()</code></td><td>把字串依空白（或指定符號）切成 list</td><td><code>"3 5 7".split()</code> → ['3','5','7']</td></tr>
+        <tr><td><code>"-".join(x)</code></td><td>把 list 的元素接成一個字串，中間插入指定符號</td><td><code>"-".join(['a','b'])</code> → 'a-b'</td></tr>
+        <tr><td><code>map(f, x)</code></td><td>對 x 裡的每個元素都套用函式 f</td><td><code>list(map(int,['1','2']))</code> → [1, 2]</td></tr>
+        <tr><td><code>set(x)</code></td><td>把 list 轉成集合（自動去除重複）</td><td><code>set([1,1,2])</code> → {1, 2}</td></tr>
+        <tr><td><code>list(x)</code></td><td>把其他型態轉成 list</td><td><code>list(range(3))</code> → [0, 1, 2]</td></tr>
+        <tr><td><code>sorted(x)</code></td><td>回傳排序好的「新」list（原本的不會被改變）</td><td><code>sorted([3,1,2])</code> → [1, 2, 3]</td></tr>
+        <tr><td><code>x.sort()</code></td><td>直接把 list 原地排序（沒有回傳值）</td><td><code>a=[3,1,2]; a.sort()</code> → a 變 [1,2,3]</td></tr>
+        <tr><td><code>sum(x)</code></td><td>加總 list（或其他可迭代物件）裡所有的值</td><td><code>sum([1,2,3])</code> → 6</td></tr>
+        <tr><td><code>zip(a, b)</code></td><td>把兩個 list 一一配對起來</td><td><code>list(zip([1,2],['a','b']))</code> → [(1,'a'), (2,'b')]</td></tr>
+        <tr><td><code>enumerate(x)</code></td><td>走訪的同時取得「索引」和「值」</td><td><code>for i, v in enumerate(['a','b']):</code></td></tr>
+        <tr><td><code>round(x, n)</code></td><td>四捨五入到小數點第 n 位</td><td><code>round(3.14159, 2)</code> → 3.14</td></tr>
+        <tr><td><code>"x".isalpha()</code></td><td>判斷字串是否全部是英文字母</td><td><code>"ABC".isalpha()</code> → True</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><span class="t">🔎 <code>sorted(x)</code> 跟 <code>x.sort()</code> 差在哪？</span>
+  <p style="margin-bottom:0"><code>sorted(x)</code> 是<strong>內建函式</strong>，會回傳一份「排序好的新 list」，原本的 <code>x</code> 不會被改變；<code>x.sort()</code> 是 list 的<strong>方法</strong>，直接把 <code>x</code> 原地排序、沒有回傳值。如果題目要求「保留原本順序、另外輸出排序結果」，就要用 <code>sorted()</code>；如果只是要把資料排好備用，用 <code>x.sort()</code> 更省記憶體。</p></div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li>讀入一行以空白分隔的整數（例如 <code>12 45 7 89 23</code>），輸出這些數字的總和與最大值。</li>
+    <li>讀入一行以逗號分隔的姓名（例如 <code>小明,小華,小美</code>），輸出總共有幾個名字，並依字母排序後印出（原本的順序不要被改變）。</li>
+    <li>追蹤思考：如果忘記寫 <code>map(int, ...)</code>，直接對 <code>input().split()</code> 的結果做 <code>sum()</code>，會發生什麼事？為什麼？</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">nums = list(map(int, input().split()))
+print("總和：", sum(nums))
+print("最大值：", max(nums))</code></pre>
+</div>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 2 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">names = input().split(",")
+print("共有", len(names), "個名字")
+print(sorted(names))     # 用 sorted()，names 原本的順序不會被改變
+print(names)               # 印出來確認：names 本身還是原來的順序</code></pre>
+</div>
+    <p><strong>第 3 題：</strong>不會報錯，但答案會是錯的——<code>sum()</code> 要求每個元素都能用 <code>+</code> 相加，字串之間的 <code>+</code> 是「接在一起」，所以 <code>sum(['3','5'])</code> 這種寫法其實會直接 <code>TypeError</code>（<code>sum()</code> 預設從整數 <code>0</code> 開始加，<code>0 + '3'</code> 型態不合會報錯）。要先用 <code>map(int, ...)</code> 把每個字串都轉成數字，<code>sum()</code> 才能正確加總。</p>
+  </div>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit04.html"><div class="dir">← 上一單元</div><div class="ttl">條件判斷與迴圈</div></a>
+    <a class="next" href="unit05.html"><div class="dir">下一單元 →</div><div class="ttl">陣列與串列（List）</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

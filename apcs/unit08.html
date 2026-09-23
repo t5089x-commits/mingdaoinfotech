@@ -52,7 +52,7 @@
     lo = min(scores)
     passed = 0
     for s in scores:
-        if s &gt;= 60:
+        if s >= 60:
             passed += 1
     return avg, hi, lo, passed
 
@@ -79,7 +79,7 @@ print(f"及格人數：{passed}")</code></pre>
       <span class="label">check_password.py</span>
       <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
     <pre><code data-lang="python">def is_strong(pw):
-    if len(pw) &lt; 8:
+    if len(pw) < 8:
         return False
     has_alpha = False
     has_digit = False
@@ -142,10 +142,10 @@ print("加密結果：", caesar(msg, k))</code></pre>
   <pre><code data-lang="python">def second_max(nums):
     first = second = None
     for x in nums:
-        if first is None or x &gt; first:
+        if first is None or x > first:
             second = first
             first = x
-        elif x != first and (second is None or x &gt; second):
+        elif x != first and (second is None or x > second):
             second = x
     return second
 
