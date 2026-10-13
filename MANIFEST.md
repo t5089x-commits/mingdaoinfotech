@@ -7,7 +7,7 @@
 
 ```
 / (repo 根目錄 = GitHub Pages 首頁)
-├── index.html              ← 總首頁，連到五科課程首頁
+├── index.html              ← 總首頁，連到五科＋apcs-ee 共六個課程首頁
 ├── MANIFEST.md              ← 就是這份文件
 ├── shared/                  ← 五科共用的檔案，任何一科的對話都「不要」單獨修改，
 │                               要改請先確認會不會影響其他科
@@ -39,23 +39,65 @@
 │   ├── index.html, unit01~unit10.html
 │   ├── assets/, build/
 │   └── README.txt
-└── apcs/                    ← APCS 先修班（新增第五科，2026 學年度第一學期建立）
-    ├── index.html, unit01~unit08.html
-    └── assets/ (style.css, script.js, progress.js)
+├── apcs/                    ← APCS 先修班（第五科，高一多元選修，每週三下午 2 節）
+│   ├── index.html, judge.html, mock.html, functions.html
+│   ├── unit01~unit09.html ＋ unit01b／unit02b／unit04b／unit06b／unit07b 五個補充單元
+│   │   （上課順序：01→01b→02→02b→03→04→04b→05→06→07→07b→06b→08→09；
+│   │   鎖定序號：01b 跟 01、02b 跟 02、04b 跟 04、06b 跟 06、07b 跟 07、09 跟 08
+│   │   一起開放，共用總表的 "apcs" 最大值仍是 8）
+│   ├── assets/ (style.css, script.js, progress.js, tabs.css, plan.css, judge.css,
+│   │   reading-viewer.js, loop-trace.css/js), assets/reading/, assets/handouts/, images/
+│   └── README.txt
+└── apcs-ee/                 ← 資電 APCS 週六培訓班（⚠️ 不是正式五科之一，見下方第 1.1 節）
+    ├── index.html, schedule.html, mock.html, functions.html
+    ├── unit01~unit09.html ＋ unit01b／unit02b／unit04b／unit06b／unit07b 五個補充單元
+    │   （跟 apcs/ 同一套順序與鎖定序號，但 assets/progress.js 已寫死 unlockedUpTo:99，
+    │   跟共用總表脫鉤——教材預設全部開放）
+    ├── assets/ (style.css, script.js, progress.js, tabs.css, plan.css,
+    │   reading-viewer.js, loop-trace.css/js, mock.css/js, mock-data.js),
+    │   assets/reading/, assets/handouts/, images/
+    ├── _gen/                 ← 產生 unit02b／06b／07b／09、課程規劃頁、回家作業 PDF 的
+    │   Python 程式（開發工具，不是網站的一部分，教學使用不需理會）
+    └── README.txt
 ```
 
-五科各自是完全獨立的資料夾，內部連結全部是相對路徑（`unit01.html`、`assets/style.css`
-這種寫法），所以放在同一個 repo 底下的子資料夾，五科互相不會衝突、也不會互相覆蓋。
-**這回答了你原本擔心的「單元一二三重複命名會不會造成 GitHub 瀏覽 bug」：不會**，
-因為瀏覽器是照「資料夾/檔名」找頁面，`it-tech/unit01.html` 跟 `algo/unit01.html`
-是兩個完全不同的網址，不會互相干擾。真正該注意的是下面第 2、3 節這種「同名但邏輯不同」
-的地方。
+### 1.1　⚠️ `apcs/` 跟 `apcs-ee/`：兩個完全獨立的課程，名字很像，千萬不要混用
+
+這是目前整個網站裡**唯一一組命名容易混淆**的資料夾，之後不管是回到原本的對話改，
+還是開新對話處理，都先看這一段：
+
+- **`apcs/`** = 高一多元選修「APCS 先修班」，每週三下午 2 節，是正式的**第五科**，
+  進度跟著 `shared/core/progress.js` 共用總表的 `"apcs"` 一起走。
+- **`apcs-ee/`** = 另外獨立的「資電 APCS 週六培訓班」，專為資電群二年級開設、
+  分兩梯次的週六密集課程，**不算在五科之內**，進度已經跟共用總表脫鉤
+  （`assets/progress.js` 的 `unlockedUpTo` 寫死為 `99`，全部開放）。
+- 兩個資料夾內部結構幾乎一樣（都有 `unit01.html`～`unit09.html`、`unit01b.html` 等
+  補充單元、`functions.html`、`mock.html`，連 `assets/` 底下的檔名都大多相同），
+  這是因為 `apcs/` 是從 `apcs-ee` 的內容調整長度與用詞後產生的，**但兩者之間完全
+  沒有互相連結**，所有連結都是資料夾內的相對路徑，不會互相牽動。
+- 混用的典型事故：把 `apcs-ee/` 的某個檔案複製貼到 `apcs/` 底下（或反過來），
+  或是在編輯器裡開錯資料夾改到另一邊的檔案而不自知。改之前務必看清楚網址列／
+  檔案路徑最前面是 `apcs/` 還是 `apcs-ee/`。
+- 兩科的 `teacherKey`（單元鎖定）都是 `ji32k7au4a83`，跟其他科一致；影片資源庫
+  的密鑰是另一把，兩個資料夾共用同一個入口 `shared/video/video-access.html`，
+  細節見第 5 節。
+
+五科（加上 `apcs-ee/` 共六個資料夾）各自是完全獨立的資料夾，內部連結全部是相對路徑
+（`unit01.html`、`assets/style.css` 這種寫法），所以放在同一個 repo 底下的子資料夾，
+彼此互相不會衝突、也不會互相覆蓋。**這回答了你原本擔心的「單元一二三重複命名會不會
+造成 GitHub 瀏覽 bug」：不會**，因為瀏覽器是照「資料夾/檔名」找頁面，`it-tech/unit01.html`
+跟 `algo/unit01.html` 是兩個完全不同的網址，不會互相干擾；`apcs/unit01.html` 跟
+`apcs-ee/unit01.html` 同理也是兩個完全不同的網址。真正該注意的是上面第 1.1 節、
+下面第 2、3 節這種「同名但邏輯不同」的地方。
 
 `apcs/` 的 `assets/style.css`、`assets/script.js` 是直接從 `it-tech/` 複製後只調整
 品牌色（改成玫瑰紅＋琥珀金，跟其他四科都不撞色）跟頁首註解，沿用同一套元件（`.code-card`、
-`.callout`、`.exercise`／`.reveal`、`.timeline`、`.varstep` 互動追蹤等），沒有另外
-新增共用機制。內容延續 `it-tech/` 的 Python 教材（變數、輸出入、運算子、條件、迴圈），
-但加深加廣到 APCS 中級範圍（陣列／串列、字元／字串），並把函式（單元 7）提前講得更細。
+`.callout`、`.exercise`／`.reveal`、`.timeline`、`.varstep` 互動追蹤等）。內容延續
+`it-tech/` 的 Python 教材（變數、輸出入、運算子、條件、迴圈），但加深加廣到 APCS
+中級範圍（陣列／串列、字元／字串），並新增上機評測、二維串列、遞迴追蹤、識讀總整理
+等補充單元（`02b／04b／06b／07b`）。`apcs-ee/` 是同一套內容的資電群週六密集班版本
+（技高角度、梯次制，詳見 `apcs-ee/README.txt` 的版本調整紀錄），額外多了 `schedule.html`
+（課程規劃）、`_gen/`（產生補充單元與 PDF 講義的 Python 程式，不是網站本身的一部分）。
 
 ## 2. 單元命名規則（統整後）
 
@@ -74,13 +116,23 @@
   單元同步）。所有內部連結（首頁卡片、上一/下一單元、總複習頁）都已經同步改好。
 - **infosec**：`unit01.html` ~ `unit20.html`（原本就是這個格式，沒有動）。
 - **advprog**：`unit01.html` ~ `unit10.html`（原本就是這個格式，沒有動）。
-- **apcs**：`unit01.html` ~ `unit08.html`（新增第五科，一開始就用這個格式建立，
-  沒有歷史包袱）。
+- **apcs**：`unit01.html` ~ `unit09.html`，另外五個補充單元 `unit01b`／`unit02b`／
+  `unit04b`／`unit06b`／`unit07b` 分別跟著單元 01／02／04／06／07 一起鎖／解鎖
+  （`unit09` 則跟著單元 08 一起鎖／解鎖，所以共用總表 `"apcs"` 的最大值仍是 8）。
+  另外新增 `judge.html`（Judge／識讀練習總表）、`mock.html`（線上識讀模擬考）、
+  `functions.html`（函式與語法統整表）三個沒有 `data-unit`、不會被鎖定的工具頁。
+- **apcs-ee**（不算五科之一，見第 1.1 節）：跟 `apcs` 完全相同的單元命名與鎖定序號
+  （`unit01.html` ~ `unit09.html` ＋ 五個 `b` 補充單元），但多了 `schedule.html`
+  （課程規劃，沒有 `data-unit`），且 `assets/progress.js` 已把 `unlockedUpTo`
+  寫死為 `99`，不受共用總表影響，所以共用總表裡**不需要**也**沒有** `"apcs-ee"`
+  這個鍵。
 
 ## 3. 共用的單元鎖定機制 —— 進度總表已經合併成一份
 
 五科都用同一套機制（`shared/core/progress.js` + 各科 `assets/progress.js` +
-`assets/script.js` 裡的鎖定邏輯）：
+`assets/script.js` 裡的鎖定邏輯）。**`apcs-ee/` 不在這套共用總表裡**——它的
+`assets/progress.js` 已經把 `unlockedUpTo` 寫死為 `99`（教材全部開放，配合
+短期培訓班的性質），跟下面這份總表完全脫鉤，改總表裡的數字不會影響它：
 
 - **★ 老師平常只需要改一個檔案：`shared/core/progress.js`。** 裡面是一個物件，
   五科各一行：
@@ -134,21 +186,24 @@
 既有頁面的樣式跑掉。這次先不動，把發現的細節記在 `shared/core/README.md`，
 列成下一階段的任務，等你要動的時候我們再仔細對過一輪、逐頁檢查再合併。
 
-## 5. 共用影片瀏覽區（`shared/video/`）—— 五科現在共用同一頁（含 APCS）
+## 5. 共用影片瀏覽區（`shared/video/`）—— 六個課程資料夾現在共用同一頁
 
 原本影片資源庫只有 it-tech 有、放在 it-tech 資料夾裡。**統整後改成共用同一份**：
 整個影片資源庫（頁面、密鑰關卡、彩蛋說明頁）都搬到 `shared/video/`，不再屬於任何
-單一科目。五科課程首頁右下角的「🔒 教師專區」按鈕（apcs 建立時就直接照這個規則接上），
-現在都連到同一個網址 `shared/video/video-access.html`，輸入密鑰後一起進到同一份
-`video-library.html`。
+單一科目。五科＋`apcs-ee` 課程首頁右下角的「🔒 教師專區」按鈕都連到同一個網址
+`shared/video/video-access.html`，輸入密鑰後一起進到同一份 `video-library.html`
+——**這是目前唯一一個 `apcs-ee` 也掛進來的共用機制**，其他共用機制（進度總表）
+`apcs-ee` 都沒有參與，見上面第 1.1、3 節。
 
 - 影片資料以「哪一科最適合」分成四大類（頁面上的分類篩選鈕）：**演算法**、
   **進階程式設計**、**資安**、**高一資訊科技**（這一類再依原本的單元／補充主題
   細分成好幾個小節，如「單元1｜課程介紹」「補充｜AI 通識與社會議題」等）。
-  ⚠️ **apcs 目前還沒有專屬分類**——它共用同一把教師密鑰、同一個「🔒 教師專區」
-  入口，但 `video-library.html` 裡還沒有幫它新增分類與影片。之後如果要補
-  APCS 相關的影片，可以在這份檔案裡新增一個 `data-b="APCS"` 的 section，
-  規則跟其他四類一樣，詳見下面的 `shared/video/README.md`。
+  ⚠️ **apcs 跟 apcs-ee 都還沒有專屬分類**——兩者都共用同一把教師密鑰、同一個
+  「🔒 教師專區」入口，但 `video-library.html` 裡還沒有幫它們新增分類與影片。
+  之後如果要補 APCS 相關的影片，可以在這份檔案裡新增一個 `data-b="APCS"` 的
+  section，規則跟其他四類一樣，詳見下面的 `shared/video/README.md`（如果
+  apcs 跟 apcs-ee 的影片需要分開列，記得另外取不同的 `data-b` 代號，例如
+  `APCS` 跟 `APCSEE`，避免兩邊影片混在一起篩選不出來）。
 - 分類的判斷原則：內容跟哪一科的課程性質最接近就歸哪一類（例如原本歸在「資安」
   補充的影片，現在直接是資安這個大類；跟 AI 工具/Agent 操作有關的影片歸進階程式
   設計；跟遞迴、複雜度、排序搜尋等演算法概念有關的歸演算法）；其餘偏電腦硬體、
@@ -167,10 +222,10 @@
 
 ## 6. 「丟回原本對話去改」的建議做法
 
-每一科資料夾裡的 `README.txt`（algo 目前還沒有，之後可以請我補一份）都已經／會加上
-一段「本資料夾是『資訊科技教學網』的一部分」的說明。丟回原本那個對話時，建議這樣做：
+每個資料夾裡的 `README.txt` 都已經加上一段「本資料夾是『資訊科技教學網』的一部分」
+的說明（六個資料夾都有）。丟回原本那個對話時，建議這樣做：
 
-1. 只丟該科的資料夾（例如整個 `it-tech/`），不用整個 repo。
+1. 只丟該資料夾（例如整個 `it-tech/`），不用整個 repo。
 2. 附上一句話提醒：「這個資料夾現在是明道資訊科技教學網的一部分，解鎖單元用的
    `teacherKey` 統一是 `ji32k7au4a83`（跟影片資源庫的密鑰是兩把不同的，互不
    相通），影片資源庫的版型已經搬到 `shared/video/`，請看資料夾裡的
@@ -178,6 +233,10 @@
 3. 如果那次要改的東西完全在單元內容本身（像文字、例題、圖片），不涉及檔名或共用機制，
    基本上不太會出事；如果會動到檔名、鎖定機制、或影片資源庫，記得回來這邊或跟我確認
    一下會不會影響其他科。
+4. **`apcs/` 跟 `apcs-ee/` 特別要多附一句**：「這是 `apcs/`／`apcs-ee/`（兩者擇一
+   講清楚），跟另一個資料夾是完全獨立的課程，請不要互相參照或複製檔案」——這兩個
+   資料夾結構太像，光講「APCS 那個資料夾」很容易讓對話誤會成另一邊，務必把資料夾
+   名稱打清楚（見第 1.1 節）。
 
 ## 7. GitHub 部署備忘
 
