@@ -1,0 +1,64 @@
+  <section class="unit-hero">
+    <span class="kicker">第 4 次課　限時 90 分鐘</span>
+    <h1>程式識讀模擬考（線上作答）</h1>
+    <p>30 題單選，題目選自吳邦一〈APCS Python 程式識讀 125 題〉（易、中、難各 10 題）。用紙筆追蹤，不要用電腦執行程式。</p>
+  </section>
+
+  <!-- ① 輸入密碼 -->
+  <section class="block mk-gate" id="mk-gate">
+    <h2><span class="num">🔒</span>輸入密碼</h2>
+    <p>題目和答案都加密了，請輸入老師上課時公布的密碼。</p>
+    <form id="mk-pw-form" class="mk-pw" autocomplete="off">
+      <label for="mk-pw" class="sr-only">密碼</label>
+      <input id="mk-pw" type="password" placeholder="密碼" autocomplete="off">
+      <button type="submit" class="mk-btn">解鎖</button>
+    </form>
+    <p id="mk-pw-msg" class="mk-msg" role="status"></p>
+  </section>
+
+  <!-- ② 作答說明 -->
+  <section class="block mk-hidden" id="mk-intro">
+    <h2><span class="num">📝</span>作答說明</h2>
+    <ul>
+      <li>共 30 題，每題 1 分，限時 <strong>90 分鐘</strong>，按「開始作答」才開始計時。</li>
+      <li>選項 (E) 通常是「以上皆非或執行錯誤」，程式真的會出錯時就選它。</li>
+      <li>作答中可以隨時換答案；上方的題號格可以跳到任何一題，灰色是還沒作答的題目。</li>
+      <li>時間到會自動交卷。交卷後會顯示分數、每一題的正確答案，可以直接拿來檢討。</li>
+      <li>作答紀錄只存在這台電腦的瀏覽器裡，不會上傳；換電腦或清除瀏覽資料就不見了。</li>
+    </ul>
+    <div class="mk-who">
+      <label>班級座號 <input id="mk-seat" type="text" inputmode="numeric" placeholder="例如 20512"></label>
+      <label>姓名 <input id="mk-name" type="text" placeholder="姓名"></label>
+    </div>
+    <p><button type="button" class="mk-btn" id="mk-start">開始作答（計時 90 分鐘）</button></p>
+  </section>
+
+  <!-- ③ 作答區 -->
+  <div class="mk-bar mk-hidden" id="mk-bar">
+    <span class="mk-timer" id="mk-timer" aria-live="off">90:00</span>
+    <span class="mk-count" id="mk-count">已作答 0／30</span>
+    <div class="mk-grid" id="mk-grid" aria-label="題號"></div>
+    <button type="button" class="mk-btn" id="mk-submit">交卷</button>
+  </div>
+  <div id="mk-paper" class="mk-hidden"></div>
+
+  <!-- ④ 成績 -->
+  <section class="block mk-hidden" id="mk-result">
+    <h2><span class="num">📊</span>成績（僅供參考）</h2>
+    <div id="mk-score"></div>
+    <div class="callout warn"><span class="t">⚠ 這個分數僅供參考</span>
+      <p style="margin-bottom:0">題目選自吳邦一〈Python 程式識讀 125 題〉，每題有 5 個選項，題型與難度分布都和正式檢測不同（官方範例是 4 選 1）。這裡只是把答對比例換成 100 分，再對照官方的級分區間，用來看自己大概在哪個程度，<strong>不代表正式檢測的成績</strong>。</p></div>
+    <div id="mk-table"></div>
+    <p><button type="button" class="mk-btn ghost" id="mk-review">回到題目看對錯</button>
+       <button type="button" class="mk-btn ghost" id="mk-reset">清除紀錄、重新作答</button></p>
+  </section>
+
+  <!-- 交卷確認 -->
+  <div class="mk-modal mk-hidden" id="mk-modal" role="dialog" aria-modal="true" aria-labelledby="mk-modal-t">
+    <div class="mk-modal-box">
+      <h3 id="mk-modal-t">確定要交卷嗎？</h3>
+      <p id="mk-modal-msg"></p>
+      <p><button type="button" class="mk-btn" id="mk-yes">確定交卷</button>
+         <button type="button" class="mk-btn ghost" id="mk-no">繼續作答</button></p>
+    </div>
+  </div>
