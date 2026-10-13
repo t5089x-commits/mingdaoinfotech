@@ -31,11 +31,11 @@
    細節說明寫在那個檔案裡。
    =========================================================== */
 window.ALL_COURSE_PROGRESS = {
-  "it-tech": 4,
-  "algo": 4,
-  "infosec": 4,
-  "advprog": 4,
-  "apcs": 4,
+  "it-tech": 5,
+  "algo": 5,
+  "infosec": 7,
+  "advprog": 6,
+  "apcs": 6,
   teacherKey: "ji32k7au4a83"   // 🎉 恭喜你獲得密碼！寄信到 t5089x@ms.mingdao.edu.tw 告訴老師。
 };
 
