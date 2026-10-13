@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="7">
@@ -26,7 +33,7 @@
   <section class="unit-hero">
   <span class="kicker">挑戰篇　單元 7</span>
   <h1>函式使用規則大全</h1>
-  <p>正式來說屬於中高級範圍，但值得提早練熟——也是下學期遞迴的地基</p>
+  <p>正式來說屬於中高級範圍，但值得提早練熟——也是遞迴的地基（程式識讀很常考）</p>
 </section>
 
 <div class="goals">
@@ -40,9 +47,9 @@
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>為什麼函式值得提早學？</h2>
-  <p><strong>函式（function）</strong>正式列在 APCS「中高級」的檢測範圍，跟遞迴、佇列、堆疊排在一起。但函式其實是<strong>寫出乾淨、可重複使用程式</strong>的基本功——中級的陣列、字串題目，只要用函式包裝，程式會更好讀、好除錯。所以我們提早在這裡把函式的規則練熟，一方面現在就能寫出更好的程式，一方面也替下學期的遞迴打好地基。</p>
+  <p><strong>函式（function）</strong>正式列在 APCS「中高級」的檢測範圍，跟遞迴、佇列、堆疊排在一起。但函式其實是<strong>寫出乾淨、可重複使用程式</strong>的基本功——中級的陣列、字串題目，只要用函式包裝，程式會更好讀、好除錯。所以我們提早在這裡把函式的規則練熟，一方面現在就能寫出更好的程式，一方面也替遞迴打好地基——官方識讀範例 30 題裡，光是遞迴就有 9 題。</p>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="label">python</span>
@@ -57,7 +64,7 @@ for x in nums:
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>定義與呼叫的語法規則</h2>
   <ul class="tidy">
     <li>用 <code>def</code> 開頭，接函式名稱、括號裡放參數，最後一定要有冒號 <code>:</code></li>
@@ -77,7 +84,7 @@ greet("APCS")             # 同一個函式可以重複呼叫，傳不同的值<
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="s03">
   <h2><span class="num">03</span>參數規則大全</h2>
 
   <h3>① 位置參數（positional）——最基本的方式</h3>
@@ -140,6 +147,33 @@ print(my_sum())                  # 0（沒傳也可以）</code></pre>
   </div>
   <div class="callout"><span class="t">🔎 名字不是重點，<code>*</code> 才是關鍵</span>
   <p style="margin-bottom:0"><code>*args</code> 的 <code>args</code> 只是慣用的命名，寫成 <code>*nums</code> 效果一樣——真正讓 Python「把多個值收成一個 tuple」的是參數名前面的那個 <code>*</code>。</p></div>
+  <h3>兩種星號：定義時「收集」，呼叫時「拆開」</h3>
+  <p>星號在 Python 裡有兩種相反的用法，很容易搞混：</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>寫在哪裡</th><th>作用</th><th>例子</th></tr></thead>
+    <tbody>
+      <tr><td><strong>定義</strong>函式的參數前面</td><td>把傳進來的很多個值<strong>收集</strong>成一個 tuple</td><td><code>def my_sum(*args):</code></td></tr>
+      <tr><td><strong>呼叫</strong>函式時，串列前面</td><td>把串列<strong>拆開</strong>，一個一個傳進去</td><td><code>print(*a)</code>、<code>my_sum(*a)</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">收集與拆開</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def my_sum(*args):
+    return sum(args)
+
+a = [10, 20, 30]
+print(my_sum(*a))      # 拆開：等於 my_sum(10, 20, 30)
+print(*a)              # 拆開：等於 print(10, 20, 30)
+print(a)               # 沒拆：整個串列當成一個東西</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+60
+10 20 30
+[10, 20, 30]</div>
+  </div>
+  <div class="callout tip"><span class="t">📌 APCS 最常用的是哪一種？</span>
+  <p style="margin-bottom:0">寫實作題時最常用的是「拆開」：<code>print(*a)</code> 把一整排答案用空白隔開印出來（見<a href="unit02b.html#s03">單元 2 附</a>）。<code>*args</code> 自己定義函式時比較少用到，看得懂就好。</p></div>
 
   <h3>⑤ 傳參數時：不可變 vs 可變型態，行為不一樣</h3>
   <div class="code-card">
@@ -165,7 +199,7 @@ print(y)                # [1, 2, 3, 99]　←　y 被函式改變了！</code></
   <p style="margin-bottom:0">數字、字串是<strong>不可變（immutable）</strong>型態，傳進函式後在函式裡怎麼改，都不會影響外面的原始變數。但 list 是<strong>可變（mutable）</strong>型態，函式拿到的是「同一個 list」，在函式裡用 <code>.append()</code>、<code>[i]=</code> 這種<strong>直接修改內容</strong>的操作，會反映到外面。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s04">
   <h2><span class="num">04</span>回傳值（return）的規則</h2>
   <ul class="tidy">
     <li><code>return</code> 執行到就<strong>立刻結束函式</strong>，後面的程式碼不會再執行</li>
@@ -201,7 +235,7 @@ print(lo, hi)                          # 1 9</code></pre>
   <p style="margin-bottom:0"><code>return lo, hi</code> 其實回傳的是 <code>(lo, hi)</code> 這個 tuple；<code>a, b = min_max(...)</code> 則是用「解包（unpacking）」把 tuple 拆開分別存進兩個變數。如果只用一個變數接，<code>r = min_max(nums)</code>，<code>r</code> 就會是整個 tuple <code>(1, 9)</code>。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s05">
   <h2><span class="num">05</span>區域變數與全域變數</h2>
   <p>函式<strong>裡面</strong>定義（包括參數）的是<strong>區域變數（local）</strong>，只在函式執行期間存在；函式<strong>外面</strong>定義的是<strong>全域變數（global）</strong>，整個程式都看得到。</p>
   <div class="code-card">
@@ -243,7 +277,7 @@ print(score)   # 110　←　這次真的被改變了</code></pre>
   <p style="margin-bottom:0">能不用 <code>global</code> 就盡量不用——用參數傳進去、用 <code>return</code> 傳回來，程式邏輯會更清楚，也比較不容易因為「函式偷偷改了全域變數」而產生難以追蹤的錯誤。<code>global</code> 是「規則要知道」，不代表要常常拿來用。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s06">
   <h2><span class="num">06</span>互動追蹤：一步一步看函式怎麼呼叫</h2>
   <p>下面用一個「先平方、再加一」的兩層函式呼叫，一步一步看參數怎麼傳進去、回傳值怎麼傳出來：</p>
   <div class="varstep" id="fstep">
@@ -319,9 +353,9 @@ print(score)   # 110　←　這次真的被改變了</code></pre>
   </script>
 </section>
 
-<section class="block">
+<section class="block" id="s07">
   <h2><span class="num">07</span>搶先看：遞迴（recursion）長什麼樣子</h2>
-  <p>遞迴是「<strong>函式呼叫自己</strong>」，正式屬於下學期的中高級範圍，這裡先用階乘（factorial）搶先感受一下。每次呼叫都要有<strong>基準情況（base case）</strong>讓它停下來，否則會無限呼叫下去：</p>
+  <p>遞迴是「<strong>函式呼叫自己</strong>」，正式屬於中高級範圍，但程式識讀很常考，這裡先用階乘（factorial）搶先感受一下。每次呼叫都要有<strong>基準情況（base case）</strong>讓它停下來，否則會無限呼叫下去：</p>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="label">python</span>
@@ -342,11 +376,91 @@ print(factorial(4))   # 24　（4×3×2×1）</code></pre>
       <li>接著<strong>一層一層往回算</strong>：<code>1×1=1</code> → <code>2×1=2</code> → <code>3×2=6</code> → <code>4×6=24</code></li>
     </ul>
   </div>
-  <div class="callout tip"><span class="t">📅 下學期會講得更深入</span>
-  <p style="margin-bottom:0">遞迴牽涉到「呼叫堆疊（call stack）」怎麼運作、什麼時候該用遞迴、遞迴和迴圈怎麼互相轉換，這些我們下學期會完整講解，搭配佇列、堆疊、樹狀結構一起練習。這裡只要先知道「函式可以呼叫自己」「一定要有 base case」就夠了。</p></div>
+  <h3>互動追蹤：factorial(4) 一層一層呼叫、再一層一層回來</h3>
+  <p>上面每個方塊代表一次函式呼叫。往下呼叫時，方塊裡會顯示「還在等誰」；碰到 base case 之後，再從最下面一路往回把答案算出來：</p>
+  <div class="varstep" id="rstep">
+    <div class="vs-stage">
+      <div class="vs-boxes">
+        <div class="vs-box empty" id="rc-4"><span class="vs-name">factorial(4)</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="rc-3"><span class="vs-name">factorial(3)</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="rc-2"><span class="vs-name">factorial(2)</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="rc-1"><span class="vs-name">factorial(1)</span><span class="vs-val"></span></div>
+        <div class="vs-box empty" id="rc-0"><span class="vs-name">factorial(0)</span><span class="vs-val"></span></div>
+      </div>
+      <div class="vs-calc" id="rs-calc"></div>
+    </div>
+    <div class="vs-cc"><div class="vs-srccard">
+      <div class="vs-srchead"><span class="vsdot r"></span><span class="vsdot y"></span><span class="vsdot g"></span><span class="vs-srclabel">遞迴追蹤.py　—　目前執行的那一行會反白</span></div>
+      <div class="vs-src">
+        <div class="vs-ln" data-ln="0">def factorial(n):</div>
+        <div class="vs-ln" data-ln="1">    if n == 0:</div>
+        <div class="vs-ln" data-ln="2">        return 1</div>
+        <div class="vs-ln" data-ln="3">    return n * factorial(n - 1)</div>
+        <div class="vs-ln" data-ln="4"></div>
+        <div class="vs-ln" data-ln="5">print(factorial(4))</div>
+      </div>
+    </div>
+      <div class="vs-console"><div class="vs-console-h">🖥️ 程式輸出</div><div class="vs-console-body" id="rs-out"></div></div>
+    </div>
+    <div class="vs-cap" id="rs-cap"></div>
+    <div class="vs-controls">
+      <button type="button" class="vs-btn" id="rs-next">下一步 ▶</button>
+      <button type="button" class="vs-btn ghost" id="rs-prev">◀ 上一步</button>
+      <button type="button" class="vs-btn ghost" id="rs-reset">↺ 重來</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var root=document.getElementById("rstep"); if(!root) return;
+    // v：factorial(4)~factorial(0) 五個方塊的內容；hi：要亮起的方塊
+    var E=["","","","",""];
+    function S(v,ln,calc,cap,hi,out){return {v:v,ln:ln,calc:calc,cap:cap,hi:hi,out:out||[]};}
+    var steps=[
+      S(E,-1,"","點「下一步 ▶」開始：看 factorial(4) 怎麼一路呼叫到 factorial(0)，再一路算回來。",[]),
+      S(["n=4","","","",""],5,"print(factorial(4)) → 先呼叫 factorial(4)","執行最後一行：要印出 factorial(4)，所以先呼叫它，參數 n = 4。",[0]),
+      S(["4 × 等 f(3)","n=3","","",""],3,"n=4，不是 0 → return 4 * factorial(3)","n 不是 0，跳到最後一行。要算 4 * factorial(3)，但還不知道 factorial(3) 是多少，所以 factorial(4) <strong>先暫停</strong>，去呼叫 factorial(3)。",[1]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","n=2","",""],3,"n=3，不是 0 → return 3 * factorial(2)","factorial(3) 也一樣：要等 factorial(2)，先暫停。",[2]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","2 × 等 f(1)","n=1",""],3,"n=2，不是 0 → return 2 * factorial(1)","factorial(2) 暫停，去呼叫 factorial(1)。注意：上面已經有三層在「等待」了。",[3]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","2 × 等 f(1)","1 × 等 f(0)","n=0"],3,"n=1，不是 0 → return 1 * factorial(0)","factorial(1) 暫停，去呼叫 factorial(0)。",[4]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","2 × 等 f(1)","1 × 等 f(0)","n=0"],1,"n=0 → if n == 0 成立！","factorial(0) 檢查 n == 0：<strong>成立</strong>，這就是 base case，不用再往下呼叫了。",[4]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","2 × 等 f(1)","1 × 等 f(0)","回傳 1"],2,"return 1","factorial(0) 直接回傳 1。接下來開始<strong>一層一層往回算</strong>。",[4]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","2 × 等 f(1)","回傳 1","回傳 1"],3,"factorial(1) = 1 × 1 = 1","factorial(1) 拿到 factorial(0) 的答案 1，算出 1 × 1 = 1，回傳 1。",[3]),
+      S(["4 × 等 f(3)","3 × 等 f(2)","回傳 2","回傳 1","回傳 1"],3,"factorial(2) = 2 × 1 = 2","factorial(2) 拿到 1，算出 2 × 1 = 2，回傳 2。",[2]),
+      S(["4 × 等 f(3)","回傳 6","回傳 2","回傳 1","回傳 1"],3,"factorial(3) = 3 × 2 = 6","factorial(3) 拿到 2，算出 3 × 2 = 6，回傳 6。",[1]),
+      S(["回傳 24","回傳 6","回傳 2","回傳 1","回傳 1"],3,"factorial(4) = 4 × 6 = 24","factorial(4) 拿到 6，算出 4 × 6 = 24，回傳 24。所有等待的呼叫都結束了。",[0]),
+      S(["回傳 24","回傳 6","回傳 2","回傳 1","回傳 1"],5,"print(24)","回到最後一行，印出 24。<strong>往下呼叫 5 次、往回算 5 次</strong>：識讀題追遞迴，就是照這個順序一層一層寫下來。",[],["24"])
+    ];
+    var i=0, ids=[4,3,2,1,0];
+    var bx=ids.map(function(k){return document.getElementById("rc-"+k);});
+    var calc=document.getElementById("rs-calc"),cap=document.getElementById("rs-cap"),out=document.getElementById("rs-out");
+    var srclns=root.querySelectorAll(".vs-ln");
+    var next=document.getElementById("rs-next"),prevB=document.getElementById("rs-prev"),reset=document.getElementById("rs-reset");
+    function render(pi){
+      var s=steps[i],p=pi!=null?steps[pi]:null;
+      bx.forEach(function(box,k){
+        var val=s.v[k],el=box.querySelector(".vs-val");
+        el.textContent=val; box.classList.toggle("empty",val==="");
+        box.classList.toggle("hi",s.hi.indexOf(k)>=0);
+        if(p&&p.v[k]!==val){box.classList.remove("pop");void box.offsetWidth;box.classList.add("pop");}
+      });
+      for(var q=0;q<srclns.length;q++){srclns[q].classList.toggle("hi",srclns[q].getAttribute("data-ln")===String(s.ln));}
+      calc.textContent=s.calc;calc.style.visibility=s.calc?"visible":"hidden";
+      cap.innerHTML=s.cap; out.innerHTML="";
+      if(!s.out.length){var ph=document.createElement("div");ph.className="vs-outph";ph.textContent="（還沒有 print 輸出）";out.appendChild(ph);}
+      else{s.out.forEach(function(t){var l=document.createElement("div");l.className="vs-outline fresh";l.textContent=t;out.appendChild(l);});}
+      next.textContent=(i>=steps.length-1)?"✓ 完成":"下一步 ▶"; next.disabled=(i>=steps.length-1); prevB.disabled=(i<=0);
+    }
+    next.addEventListener("click",function(){if(i<steps.length-1){var pv=i;i++;render(pv);}});
+    prevB.addEventListener("click",function(){if(i>0){var pv=i;i--;render(pv);}});
+    reset.addEventListener("click",function(){var pv=i;i=0;render(pv);});
+    render(null);
+  })();
+  </script>
+  <div class="callout tip"><span class="t">🧭 想學得更深入</span>
+  <p style="margin-bottom:0">遞迴牽涉到「呼叫堆疊（call stack）」怎麼運作、什麼時候該用遞迴、遞迴和迴圈怎麼互相轉換。下一個附錄單元「<a href="unit07b.html">遞迴追蹤：識讀的重點題型</a>」會用官方識讀範例，把多分支遞迴、呼叫樹、由小算到大的列表法、互相呼叫完整練一遍。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s08">
   <h2><span class="num">08</span>常見錯誤整理</h2>
   <div class="table-wrap">
     <table>
@@ -406,9 +520,21 @@ print(t, hi, lo)   # 25 9 1</code></pre>
   </div>
 </div>
 
-  <nav class="unit-nav">
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p style="margin-bottom:0">函式這一單元以<strong>識讀</strong>為主，沒有另外派 Judge。寫題目時試著把重複的步驟包成函式，例如把單元 6 的 <a href="https://zerojudge.tw/ShowProblem?problemid=c290" target="_blank" rel="noopener">c290 秘密差</a> 改寫成 <code>def diff(s):</code>。遞迴的實作題在 <a href="unit07b.html#judge">單元 7 附</a>。</p>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 7 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-2-challenge.pdf" target="_blank" rel="noopener">《挑戰篇（一）　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=2" target="_blank" rel="noopener" title="Q036・易・在講義第 2 頁">36</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=3" target="_blank" rel="noopener" title="Q037・中・在講義第 3 頁">37</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=6" target="_blank" rel="noopener" title="Q064・中・在講義第 6 頁">64</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=7" target="_blank" rel="noopener" title="Q066・中・在講義第 7 頁">66</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=7" target="_blank" rel="noopener" title="Q068・中・在講義第 7 頁">68</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=8" target="_blank" rel="noopener" title="Q072・中・在講義第 8 頁">72</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=9" target="_blank" rel="noopener" title="Q074・中・在講義第 9 頁">74</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
     <a class="prev" href="unit06.html"><div class="dir">← 上一單元</div><div class="ttl">字元與字串（String）</div></a>
-    <a class="next" href="unit08.html"><div class="dir">下一單元 →</div><div class="ttl">綜合實戰與下學期預告</div></a>
+    <a class="next" href="unit07b.html"><div class="dir">下一單元 →</div><div class="ttl">遞迴追蹤：識讀的重點題型</div></a>
   </nav>
 </main>
 

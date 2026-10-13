@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="6">
@@ -32,37 +39,19 @@
 <div class="goals">
   <h2>🎯 學習目標</h2>
   <ul>
-    <li>理解字元（character）與 ASCII 碼的對應關係</li>
-    <li>會用索引、切片走訪字串，並知道字串<strong>不可變</strong>的特性</li>
+    <li>會用 <code>s[i]</code>、切片、<code>for ch in s</code> 處理字串，並知道字串<strong>不可變</strong>的特性</li>
+    <li>會用字串的 <code>+</code> 與 <code>*</code>（含用字串乘法印圖形），知道 <code>True</code>／<code>False</code> 計算時是 <code>1</code>／<code>0</code></li>
+    <li>會用 <code>isupper()</code>、<code>isdigit()</code> 判斷字元種類，用 <code>int(c)</code>、<code>str(n)</code> 在字元和數字之間轉換</li>
     <li>熟悉常用字串方法，能處理基本的文字處理題</li>
     <li>能組合迴圈＋字串，寫出「迴文判斷」等 APCS 常見題型</li>
+    <li>會用字典（dict）統計每一種東西出現幾次，找出出現最多的</li>
+    <li>（補充）知道 ASCII 編碼與 <code>ord()</code>／<code>chr()</code></li>
   </ul>
 </div>
 
-<section class="block">
-  <h2><span class="num">01</span>字元與 ASCII</h2>
-  <p>電腦裡的每個字元都對應一個數字編碼，英文字母、數字、符號常用的是 <strong>ASCII 碼</strong>。Python 用 <code>ord()</code> 查字元對應的編碼，<code>chr()</code> 反過來把編碼變回字元：</p>
-  <div class="code-card">
-    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-      <span class="label">python</span>
-      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
-    <pre><code data-lang="python">print(ord('A'))    # 65
-print(ord('a'))    # 97
-print(ord('0'))    # 48
-print(chr(65))      # 'A'
-print(chr(97))      # 'a'
-
-# A~Z 是連續的 65~90，a~z 是連續的 97~122
-c = 'D'
-print(chr(ord(c) + 1))   # 'E'　←　字母往後移一位</code></pre>
-  </div>
-  <div class="callout tip"><span class="t">💡 大小寫轉換的原理</span>
-  <p style="margin-bottom:0">大寫和小寫字母的 ASCII 碼剛好差 <code>32</code>（<code>'a' - 'A' == 32</code>）。所以 <code>chr(ord(c) + 32)</code> 可以把大寫字母 <code>c</code> 轉成小寫——雖然平常直接用 <code>.upper()</code>／<code>.lower()</code> 更方便，但看懂原理，遇到「自己刻轉換」的題目才不會卡住。</p></div>
-</section>
-
-<section class="block">
-  <h2><span class="num">02</span>字串是「字元的序列」</h2>
-  <p>字串的索引、切片規則和 list 完全一樣：</p>
+<section class="block" id="s01">
+  <h2><span class="num">01</span>字串是「字元的序列」</h2>
+  <p>APCS 中級範圍的「字元」，在 Python 裡就是<strong>長度 1 的字串</strong>：<code>s[i]</code> 拿出第 i 個字元，<code>for ch in s</code> 一個字元一個字元處理。字串的索引、切片規則和 list 完全一樣：</p>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="label">python</span>
@@ -82,8 +71,220 @@ print()</code></pre>
   <p style="margin-bottom:0">跟 list 不一樣，<strong>字串不能直接改某一個字元</strong>：<code>s[0] = 'X'</code> 會直接 <code>TypeError</code> 報錯！要「修改」字串，只能建立一個<strong>新的字串</strong>去取代它，例如 <code>s = 'X' + s[1:]</code>。這是程式測試與除錯常考的觀念。</p></div>
 </section>
 
-<section class="block">
-  <h2><span class="num">03</span>常用字串方法</h2>
+<section class="block" id="s02">
+  <h2><span class="num">02</span>字串的 + 與 *、布林值也能算、用字串印圖形</h2>
+  <p>同一個運算子，碰到不同型態意思就不一樣。字串的 <code>+</code> 是「接起來」，<code>*</code> 是「重複幾次」：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字串的 + 與 *</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = &#x27;py&#x27;
+print(s + &#x27;thon&#x27;)    # python
+print(s * 3)         # pypypy
+print(3 * &#x27;ab&#x27;)      # ababab（數字放前面也可以）
+print(&#x27;-&#x27; * 10)      # ----------（印分隔線、印圖形很常用）
+print(&#x27;[&#x27; + &#x27;py&#x27; * 0 + &#x27;]&#x27;)   # []（乘 0 是空字串）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+python
+pypypy
+ababab
+----------
+[]</div>
+  </div>
+  <p>字串只能跟字串相加。要把數字接進字串，先用 <code>str()</code> 轉型：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字串 + 數字</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(&#x27;py&#x27; + str(2))   # py2
+print(&#x27;py&#x27; + 2)        # 字串 + 數字 會出錯</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+py2
+<span class="err">Traceback (most recent call last):
+  File "程式.py", line 2, in &lt;module&gt;
+TypeError: can only concatenate str (not &quot;int&quot;) to str</span></div>
+  </div>
+  <h3>True 當 1、False 當 0</h3>
+  <p>布林值其實是一種特別的整數：拿去計算時，<code>True</code> 就是 <code>1</code>、<code>False</code> 就是 <code>0</code>。識讀題常把比較的結果直接拿去加、拿去乘：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">布林值拿去算</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(True + True)          # 2
+print(int(5 &gt; 3))           # 1
+print(10 * (2 &gt; 5))         # 0
+print(&#x27;ab&#x27; * (3 &gt; 1))       # ab（乘 True 就是乘 1）
+print(str(3 &gt; 1) + &#x27;!&#x27;)     # True!（str() 把 True 變成字串 &#x27;True&#x27;）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+2
+1
+0
+ab
+True!</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱</span>
+  <p style="margin-bottom:0">看到 <code>字串 * (比較)</code>、<code>數字 + (比較)</code>，先把比較算成 <code>True</code>／<code>False</code>，再換成 <code>1</code>／<code>0</code>。乘 <code>False</code> 的字串會變成空字串，印出來什麼都看不到。</p></div>
+  <h3>用字串乘法印圖形</h3>
+  <p>上面學了 <code>'*' * 3</code> 是 <code>'***'</code>。印三角形這類圖形時，外層迴圈決定「第幾列」，每一列要印幾個符號，用字串乘法算出來就好，不一定要再寫一層迴圈：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">靠左與靠右的三角形</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = 4
+for i in range(1, n + 1):
+    print(&#x27;*&#x27; * i)
+
+for i in range(1, n + 1):
+    print(&#x27; &#x27; * (n - i) + &#x27;*&#x27; * i)   # 前面先補 n-i 個空白，變成靠右</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+*
+**
+***
+****
+   *
+  **
+ ***
+****</div>
+  </div>
+  <div class="callout"><span class="t">🔎 識讀題怎麼追圖形</span>
+  <p style="margin-bottom:0">先算出每一列的「空白幾個、符號幾個」，列成表：<code>i = 1</code> 時 3 個空白 1 顆星、<code>i = 2</code> 時 2 個空白 2 顆星……再畫出來。官方識讀範例第 5 題就是印星號圖形的除錯題。</p></div>
+  <div class="exercise">
+    <h3>✏️ 隨堂練習</h3>
+    <ol>
+      <li><code>print('ab' * 3 + 'c')</code> 印出什麼？</li>
+      <li><code>print(True + 2, 'x' * (5 &gt; 3), '[' + 'x' * (5 &lt; 3) + ']')</code> 印出什麼？</li>
+      <li>讀入 n，印出 n 列的倒三角形（n = 3 時第一列 3 顆星，最後一列 1 顆星）。</li>
+    </ol>
+    <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+    <div class="answer">
+      <ol>
+        <li><code>'ab' * 3</code> 是 <code>ababab</code>，再接 <code>c</code>，印出 <code>abababc</code>。</li>
+        <li><code>True + 2</code> 是 <code>3</code>；<code>5 &gt; 3</code> 是 True，<code>'x' * 1</code> 是 <code>x</code>；<code>5 &lt; 3</code> 是 False，<code>'x' * 0</code> 是空字串。印出 <code>3 x []</code>。</li>
+      </ol>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">第 3 題參考解</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+for i in range(n, 0, -1):
+    print(&#x27;*&#x27; * i)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+<span class="muted">▼ 執行結果</span>
+***
+**
+*</div>
+  </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>字元判斷與轉換：中級最常用的寫法</h2>
+
+  <p>拿到一個字元 <code>c</code> 之後，最常要做的兩件事是：<strong>判斷它是哪一種字元</strong>，以及<strong>把數字字元轉成真正的數字</strong>。</p>
+  <h3>判斷字元的種類</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>寫法</th><th>什麼時候是 True</th><th>例子</th></tr></thead>
+      <tbody>
+        <tr><td><code>c.isupper()</code></td><td>大寫英文字母</td><td><code>'A'.isupper()</code> → True</td></tr>
+        <tr><td><code>c.islower()</code></td><td>小寫英文字母</td><td><code>'a'.islower()</code> → True</td></tr>
+        <tr><td><code>c.isalpha()</code></td><td>英文字母（大小寫都算）</td><td><code>'Q'.isalpha()</code> → True</td></tr>
+        <tr><td><code>c.isdigit()</code></td><td>數字字元 0～9</td><td><code>'7'.isdigit()</code> → True</td></tr>
+        <tr><td><code>c == '1'</code></td><td>剛好是某一個字元</td><td>數 0/1 字串時最常用</td></tr>
+        <tr><td><code>c in 'aeiou'</code></td><td>是這幾個字元的其中一個</td><td>判斷母音</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">統計大寫、小寫、數字、其他</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = &quot;Mingdao2026!&quot;
+up = low = digit = other = 0
+for c in s:
+    if c.isupper():
+        up += 1
+    elif c.islower():
+        low += 1
+    elif c.isdigit():
+        digit += 1
+    else:
+        other += 1
+print(up, low, digit, other)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1 6 4 1</div>
+  </div>
+
+  <h3>大小寫轉換</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">upper()、lower()</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">c = &#x27;g&#x27;
+print(c.upper(), &#x27;G&#x27;.lower())
+s = &quot;aPcS&quot;
+t = &quot;&quot;
+for c in s:                     # 大寫變小寫、小寫變大寫
+    if c.isupper():
+        t += c.lower()
+    else:
+        t += c.upper()
+print(t)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+G g
+ApCs</div>
+  </div>
+
+  <h3>數字字元 ↔ 數字：int(c) 與 str(n)</h3>
+  <p><code>'7'</code> 是字元，<code>7</code> 才是數字。要把每一位數字拿來計算，先用 <code>int(c)</code> 轉成數字；反過來要把數字接進字串，用 <code>str(n)</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">條碼每一位相加（2025 年 10 月中級「商品包裝地」的寫法）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">code = &quot;4710018000102&quot;
+odd = even = 0
+for i in range(12):            # 前 12 位
+    d = int(code[i])           # 字元轉成數字
+    if i % 2 == 0:             # 第 1、3、5…位（索引 0、2、4…）
+        odd += d
+    else:
+        even += d
+print(odd, even)
+print(&quot;位數和：&quot; + str(odd + even))   # 數字接進字串要先 str()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+14 8
+位數和：22</div>
+  </div>
+
+  <h3>數 0/1 字串裡有幾個 1</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">官方中級範例「字串解碼」會用到</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">e = &quot;10110&quot;
+cnt = 0
+for c in e:
+    if c == &#x27;1&#x27;:
+        cnt += 1
+print(cnt, e.count(&#x27;1&#x27;))      # 自己數，或用 count()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 3</div>
+  </div>
+
+  <div class="callout warn"><span class="t">⚠ 開頭是 0 的數字字串，不要整個轉成 int</span>
+  <p style="margin-bottom:0"><code>int('0309')</code> 會變成 <code>309</code>，開頭的 0 不見了，「第幾位是什麼」就對不上了。題目要看每一位時，保持字串，需要計算的那一位再 <code>int(c)</code>。</p></div>
+
+  <div class="callout tip"><span class="t">📌 對照 C 語言</span>
+  <p style="margin-bottom:0">C／C++ 要把數字字元轉成數字，常寫 <code>c - '0'</code>，那是利用 ASCII 編碼。Python 直接 <code>int(c)</code> 就好，ASCII 的原理放在本單元最後的補充。</p></div>
+
+</section>
+
+<section class="block" id="s04">
+  <h2><span class="num">04</span>常用字串方法</h2>
   <div class="table-wrap">
     <table>
       <thead><tr><th>方法</th><th>作用</th><th>範例</th></tr></thead>
@@ -101,8 +302,8 @@ print()</code></pre>
   </div>
 </section>
 
-<section class="block">
-  <h2><span class="num">04</span>常見題型：迴圈＋字串</h2>
+<section class="block" id="s05">
+  <h2><span class="num">05</span>常見題型：迴圈＋字串</h2>
   <h3>算母音字母個數（不用內建方法，自己判斷）</h3>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -148,6 +349,158 @@ print(result)   # A-B-C-D-E-</code></pre>
   <p style="margin-bottom:0">程式識讀考的是<strong>邏輯拆解能力</strong>，題目常常要求「不能用某個內建函式」，逼你用迴圈把邏輯自己想一遍。內建方法（如 <code>.count()</code>）平常寫程式當然可以直接用，但練習時建議兩種都會，遇到限制條件也不慌。</p></div>
 </section>
 
+<section class="block" id="s06">
+  <h2><span class="num">06</span>字典（dict）：統計每一種出現幾次</h2>
+
+  <p>「每一種東西各出現幾次」「出現最多的是哪一個」是中級很常見的問題，例如 2025 年 10 月中級第 3 題「商品包裝地」要統計每個產地的條碼數。用<strong>字典</strong>最直接：字典是一組一組的「<strong>鍵：值</strong>」，用鍵去查值。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字典的基本用法</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">d = {}                 # 空字典
+d[&#x27;471&#x27;] = 2           # 新增：鍵 &#x27;471&#x27;，值 2
+d[&#x27;030&#x27;] = 1
+print(d)
+print(d[&#x27;471&#x27;])        # 用鍵查值
+print(&#x27;471&#x27; in d, &#x27;999&#x27; in d)   # 鍵在不在字典裡</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+{&#x27;471&#x27;: 2, &#x27;030&#x27;: 1}
+2
+True False</div>
+  </div>
+
+  <h3>計數的標準寫法</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">d.get(鍵, 0) + 1</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">words = [&#x27;471&#x27;, &#x27;030&#x27;, &#x27;471&#x27;, &#x27;300&#x27;, &#x27;471&#x27;]
+cnt = {}
+for w in words:
+    cnt[w] = cnt.get(w, 0) + 1     # 沒出現過就從 0 開始
+print(cnt)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+{&#x27;471&#x27;: 3, &#x27;030&#x27;: 1, &#x27;300&#x27;: 1}</div>
+  </div>
+
+  <p><code>cnt.get(w, 0)</code> 的意思是「有這個鍵就拿它的值，沒有就當作 0」。如果直接寫 <code>cnt[w] += 1</code>，第一次遇到 w 時字典裡還沒有它，會出現 <code>KeyError</code>。</p>
+  <h3>找出現最多的</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">max(d, key=d.get) 與 items()</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">cnt = {&#x27;471&#x27;: 3, &#x27;030&#x27;: 1, &#x27;300&#x27;: 1}
+best = max(cnt, key=cnt.get)       # 依「值」比大小，回傳鍵
+print(best, cnt[best])
+
+for k, v in cnt.items():           # 同時拿到鍵和值
+    print(k, v)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+471 3
+471 3
+030 1
+300 1</div>
+  </div>
+  <h3>items() 是什麼？</h3>
+  <p><code>d.items()</code> 會把字典拆成一組一組的<strong>（鍵, 值）</strong>，讓 <code>for</code> 迴圈一次拿到兩個東西。<code>for k, v in cnt.items():</code> 的意思是：每一輪拿出一組，鍵放進 <code>k</code>、值放進 <code>v</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">items() 拿出來的是什麼</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">cnt = {&#x27;471&#x27;: 3, &#x27;030&#x27;: 1, &#x27;300&#x27;: 1}
+print(list(cnt.items()))     # 每一組都是 (鍵, 值)
+
+for pair in cnt.items():     # 不拆開：pair 是一整組
+    print(pair)
+
+for k, v in cnt.items():     # 拆開：鍵給 k、值給 v
+    print(k, &quot;出現&quot;, v, &quot;次&quot;)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[(&#x27;471&#x27;, 3), (&#x27;030&#x27;, 1), (&#x27;300&#x27;, 1)]
+(&#x27;471&#x27;, 3)
+(&#x27;030&#x27;, 1)
+(&#x27;300&#x27;, 1)
+471 出現 3 次
+030 出現 1 次
+300 出現 1 次</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>寫法</th><th>每一輪拿到</th><th>什麼時候用</th></tr></thead>
+      <tbody>
+        <tr><td><code>for k in d:</code></td><td>只有鍵</td><td>只需要鍵，值再用 <code>d[k]</code> 查</td></tr>
+        <tr><td><code>for k, v in d.items():</code></td><td>鍵和值</td><td>鍵和值都要用，最常見</td></tr>
+        <tr><td><code>for v in d.values():</code></td><td>只有值</td><td>只在乎數量，例如加總 <code>sum(d.values())</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><code>for k, v in ...</code> 這種「一次拆給兩個變數」的寫法，跟 <code>a, b = 3, 5</code> 是同一個道理：右邊有兩個東西，就分給左邊的兩個變數。</p>
+
+
+  <h3>字串＋字典：統計字母</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">每個字母出現幾次</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = input()
+cnt = {}
+for c in s:
+    if c.isalpha():
+        cnt[c] = cnt.get(c, 0) + 1
+for k in sorted(cnt):              # 依字母順序印出
+    print(k, cnt[k])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+banana
+<span class="muted">▼ 執行結果</span>
+a 3
+b 1
+n 2</div>
+  </div>
+
+  <div class="callout tip"><span class="t">💡 不用字典也可以嗎？</span>
+  <p style="margin-bottom:0">如果「種類」很少而且是固定的（例如只有 26 個小寫字母），也可以用串列 <code>cnt = [0] * 26</code> 搭配 <code>ord(c) - ord('a')</code> 當索引。但種類不固定時（產地、名字、條碼），字典最方便。</p></div>
+
+</section>
+
+<section class="block" id="s07">
+  <details class="supp">
+    <summary><span class="num">07</span>補充：ASCII 與 ord()／chr()<span class="supp-tag">補充・點開閱讀</span></summary>
+    <div class="supp-body">
+  <p>這一節是補充，平常寫中級題目用前面的 <code>isupper()</code>、<code>int(c)</code> 就夠了。電腦裡的每個字元都對應一個數字編碼，英文字母、數字、符號常用的是 <strong>ASCII 碼</strong>。Python 用 <code>ord()</code> 查字元對應的編碼，<code>chr()</code> 反過來把編碼變回字元：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(ord('A'))    # 65
+print(ord('a'))    # 97
+print(ord('0'))    # 48
+print(chr(65))      # 'A'
+print(chr(97))      # 'a'
+
+# A~Z 是連續的 65~90，a~z 是連續的 97~122
+c = 'D'
+print(chr(ord(c) + 1))   # 'E'　←　字母往後移一位</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">💡 大小寫轉換的原理</span>
+  <p style="margin-bottom:0">大寫和小寫字母的 ASCII 碼剛好差 <code>32</code>（<code>ord('a') - ord('A') == 32</code>；Python 不能直接寫 <code>'a' - 'A'</code>，那是 C 的寫法，在 Python 會 <code>TypeError</code>）。所以 <code>chr(ord(c) + 32)</code> 可以把大寫字母 <code>c</code> 轉成小寫——雖然平常直接用 <code>.upper()</code>／<code>.lower()</code> 更方便，但看懂原理，遇到「自己刻轉換」的題目才不會卡住。</p></div>
+
+  <h3>什麼時候真的需要 ord()？</h3>
+  <p>官方中級範例和 2025 年 10 月中級真題都沒有用到。會用到的情況主要是兩種：字母轉成 0～25 的索引來計數，以及字母位移（單元 8 的凱薩密碼補充）。識讀也可能出現，例如吳邦一 125 題的 Q19、Q69。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字母轉成 0～25 的索引（吳邦一 125 題 Q69 的寫法）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">cnt = [0] * 26                 # 26 個小寫字母各一格
+for c in &quot;banana&quot;:
+    cnt[ord(c) - ord(&#x27;a&#x27;)] += 1    # &#x27;a&#x27;→0、&#x27;b&#x27;→1、…、&#x27;z&#x27;→25
+print(cnt[:3], max(cnt))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[3, 1, 0] 3</div>
+  </div>
+    </div>
+  </details>
+</section>
+
 <div class="exercise">
   <h3>✏️ 課堂練習</h3>
   <ol>
@@ -177,12 +530,38 @@ for ch in s:
     n = s.count(ch)
     if n &gt; best_n:
         best_ch, best_n = ch, n
-print(best_ch, best_n)   # r 2（或 g 2，看哪個先達到最大次數）</code></pre>
+print(best_ch, best_n)   # r 2（r、g、m 都出現 2 次，最先遇到的是 r）</code></pre>
 </div>
   </div>
 </div>
 
-  <nav class="unit-nav">
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-must"><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=c290" target="_blank" rel="noopener"><b>c290</b>秘密差</a></td><td>APCS 第 1 題：數字當字串、奇偶位數分開加</td><td><span class="jtag must">必寫</span></td></tr>
+        <tr class="j-must"><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=q182" target="_blank" rel="noopener"><b>q182</b>字串操作</a></td><td>字串處理</td><td><span class="jtag must">必寫</span></td></tr>
+        <tr class="j-must"><td><a class="zj must official" href="https://zerojudge.tw/ShowProblem?problemid=i400" target="_blank" rel="noopener"><b>i400</b>字串解碼</a></td><td>★ 官方中級範例：先拿第 1 子題</td><td><span class="jtag must">★ 官方範例・必寫</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=e313" target="_blank" rel="noopener"><b>e313</b>最少相異字母</a></td><td>字典計數</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=g275" target="_blank" rel="noopener"><b>g275</b>七言對聯</a></td><td>APCS 第 1 題：字串規則判斷</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c462" target="_blank" rel="noopener"><b>c462</b>交錯字串</a></td><td>字串＋字元判斷</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=j606" target="_blank" rel="noopener"><b>j606</b>造字程式</a></td><td>字串切片與重組</td><td><span class="jtag bonus">加分</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 12 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-2-challenge.pdf" target="_blank" rel="noopener">《挑戰篇（一）　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=1" target="_blank" rel="noopener" title="Q019・中・在講義第 1 頁">19</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=6" target="_blank" rel="noopener" title="Q062・中・在講義第 6 頁">62</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=8" target="_blank" rel="noopener" title="Q069・中・在講義第 8 頁">69</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=9" target="_blank" rel="noopener" title="Q082・中・在講義第 9 頁">82</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=11" target="_blank" rel="noopener" title="Q090・中・在講義第 11 頁">90</a><a class="wq d3" href="assets/handouts/reading-2-challenge.pdf#page=11" target="_blank" rel="noopener" title="Q092・難・在講義第 11 頁">92</a><a class="wq d3" href="assets/handouts/reading-2-challenge.pdf#page=12" target="_blank" rel="noopener" title="Q095・難・在講義第 12 頁">95</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=12" target="_blank" rel="noopener" title="Q108・中・在講義第 12 頁">108</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=13" target="_blank" rel="noopener" title="Q109・中・在講義第 13 頁">109</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=14" target="_blank" rel="noopener" title="Q122・易・在講義第 14 頁">122</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=15" target="_blank" rel="noopener" title="Q123・中・在講義第 15 頁">123</a><a class="wq d3" href="assets/handouts/reading-2-challenge.pdf#page=15" target="_blank" rel="noopener" title="Q124・難・在講義第 15 頁">124</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
     <a class="prev" href="unit05.html"><div class="dir">← 上一單元</div><div class="ttl">陣列與串列（List）</div></a>
     <a class="next" href="unit07.html"><div class="dir">下一單元 →</div><div class="ttl">函式使用規則大全</div></a>
   </nav>

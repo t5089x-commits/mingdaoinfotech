@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>單元 附：輸入技巧與常用函式：split()／map()｜明道中學 · APCS</title>
+<title>單元 4 附：輸入技巧與多行輸入：split()／map()｜明道中學 · APCS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,17 +19,21 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="4">
   <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 附</span></nav>
   <section class="unit-hero">
   <span class="kicker">起點篇　補充單元</span>
-  <h1>輸入技巧與常用函式：split()／map()</h1>
-  <p>APCS 實作題最常見的輸入方式，加上這學期會一直用到的內建函式，這裡一次補齊</p>
+  <h1>輸入技巧與常用函式：split()／map()／多行輸入</h1>
+  <p>APCS 實作題最常見的輸入方式，加上課程中會一直用到的內建函式，這裡一次補齊</p>
 </section>
 
 <div class="goals">
@@ -35,13 +42,14 @@
     <li>知道 APCS 程式實作最常見的輸入格式：「一行裡有好幾個數字，用空白隔開」</li>
     <li>會用 <code>split()</code> 把一行文字切開，並理解切開後<strong>還是字串</strong></li>
     <li>會用 <code>map(int, ...)</code> 批次轉型態，寫出 <code>list(map(int, input().split()))</code> 這個最常見的一行寫法</li>
-    <li>認識這學期會一直用到的內建函式對照表：<code>sorted()</code>、<code>sum()</code>、<code>zip()</code>、<code>enumerate()</code> 等</li>
+    <li>會讀 APCS 中級最常見的多行輸入：先讀 n，再讀 n 行；以及 n×m 的表格</li>
+    <li>認識課程中會一直用到的內建函式對照表：<code>sorted()</code>、<code>sum()</code>、<code>zip()</code>、<code>enumerate()</code> 等</li>
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>APCS 最常見的輸入格式</h2>
-  <p>APCS 實作題最常見的輸入方式，是「一行裡有好幾個數字，用空白隔開」，例如輸入 <code>3 5 7 9</code>。這種情況要用 <code>split()</code> 和 <code>map()</code> 這組技巧——這學期後面每一題只要牽涉到「一次讀好幾個數字」，幾乎都會用到：</p>
+  <p>APCS 實作題最常見的輸入方式，是「一行裡有好幾個數字，用空白隔開」，例如輸入 <code>3 5 7 9</code>。這種情況要用 <code>split()</code> 和 <code>map()</code> 這組技巧——後面每一題只要牽涉到「一次讀好幾個數字」，幾乎都會用到：</p>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="label">split()：把一行文字依空白切開</span>
@@ -55,7 +63,7 @@ print(parts[0] + parts[1])  # '3' + '5' → '35'（字串相加是接在一起�
   <p style="margin-bottom:0"><code>split()</code> 回傳的 list 裡，每一個元素都還是<strong>字串</strong>，不是數字。如果直接拿去做加法，Python 不會報錯，而是會把字串「接在一起」，例如 <code>'3' + '5'</code> 的結果是 <code>'35'</code>，不是 <code>8</code>。這是初學者很容易忽略、但又不會報錯的陷阱，跟單元 2 學過的 <code>input()</code> 一樣，記得要先轉型。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>map()：把切開的每一段文字都轉成數字</h2>
   <p><code>map(f, x)</code> 會把函式 <code>f</code> 套用到 <code>x</code> 裡的每一個元素上，回傳一個新的結果。搭配 <code>int</code> 一起用，就能把一整排字串「一次」轉成數字：</p>
   <div class="code-card">
@@ -64,19 +72,19 @@ print(parts[0] + parts[1])  # '3' + '5' → '35'（字串相加是接在一起�
       <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
     <pre><code data-lang="python">line = "3 5 7 9"
 parts = line.split()          # ['3', '5', '7', '9']（字串）
-nums = list(map(int, parts))    # 把每個字串都轉成 int → [3, 4, 7, 9]
+nums = list(map(int, parts))    # 把每個字串都轉成 int → [3, 5, 7, 9]
 print(nums)
-print(sum(nums))                  # 21，這次是真的數學運算
+print(sum(nums))                  # 24，這次是真的數學運算
 
 # APCS 最常見的寫法，直接一行搞定：
 nums = list(map(int, input().split()))
 print(nums)</code></pre>
   </div>
-  <div class="callout tip"><span class="t">📌 這一行程式碼，這學期會一直看到</span>
+  <div class="callout tip"><span class="t">📌 這一行程式碼，課程中會一直看到</span>
   <p style="margin-bottom:0"><code>nums = list(map(int, input().split()))</code> 這行等於做了三件事：<code>input()</code> 讀一行文字 → <code>.split()</code> 依空白切開 → <code>map(int, ...)</code> 把每一段都轉成整數，最後用 <code>list(...)</code> 包成一個 list。這個「一行讀多個數字」的寫法值得直接背起來。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s03">
   <h2><span class="num">03</span>split(sep)：依指定符號切開</h2>
   <p><code>split()</code> 不寫參數預設依「空白」切開；如果資料是用逗號或其他符號分隔（例如處理 CSV 這類資料），可以直接指定分隔符號：</p>
   <div class="code-card">
@@ -91,9 +99,184 @@ print(name, scores, sum(scores))</code></pre>
   </div>
 </section>
 
-<section class="block">
-  <h2><span class="num">04</span>這學期會一直用到的內建函式對照表</h2>
-  <p>下面這些函式，這學期後面每一個單元幾乎都會用到——先在這裡認識一次，之後看到就不會陌生：</p>
+<section class="block" id="s04">
+  <h2><span class="num">04</span>多行輸入：APCS 中級題目的標準格式</h2>
+
+  <p>前面學的是「一行裡有好幾個數字」。但 APCS 中級的題目，<strong>幾乎都是多行輸入</strong>：第一行先告訴你有幾筆資料，後面再一行一行給。官方中級範例的三題全部都是這種格式。</p>
+
+  <h3>格式 ①：第一行 n，接著 n 行、每行一個數</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">一行一個數</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())          # 第一行：有幾筆
+nums = []
+for _ in range(n):        # 再讀 n 行
+    nums.append(int(input()))
+print(nums, sum(nums))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+10
+20
+30
+<span class="muted">▼ 執行結果</span>
+[10, 20, 30] 60</div>
+  </div>
+
+  <p><code>for _ in range(n)</code> 裡的 <code>_</code> 是「我不會用到這個變數」的意思，只是要重複 n 次而已。</p>
+
+  <h3>格式 ②：第一行 n，第二行 n 個數</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">第二行一次給完</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+a = list(map(int, input().split()))
+print(n, a)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+4
+5 2 9 1
+<span class="muted">▼ 執行結果</span>
+4 [5, 2, 9, 1]</div>
+  </div>
+
+
+  <h3>格式 ③：n 行，每行有好幾個數（例如每人的兩個成績）</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">每行固定幾個數</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+for _ in range(n):
+    a, b = map(int, input().split())   # 每行固定兩個數，直接拆給 a、b
+    print(a + b)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+1 2
+10 20
+7 8
+<span class="muted">▼ 執行結果</span>
+3
+30
+15</div>
+  </div>
+
+  <p>如果之後還要用到這些資料，就先存起來：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">存起來之後再處理</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+data = []
+for _ in range(n):
+    t, s = map(int, input().split())
+    data.append([t, s])        # 存成「串列裡面裝串列」
+print(data)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+3 89
+5 -1
+10 90
+<span class="muted">▼ 執行結果</span>
+[[3, 89], [5, -1], [10, 90]]</div>
+  </div>
+
+
+  <h3>格式 ④：第一行兩個數 n、m，接著 n 行、每行 m 個數（二維）</h3>
+  <p>這是官方中級範例「特殊位置」的格式，也是二維串列題最常見的寫法：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">讀入一個 n×m 的表格</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n, m = map(int, input().split())
+g = []
+for _ in range(n):
+    g.append(list(map(int, input().split())))
+print(g)
+print(g[1][2])      # 第 1 列第 2 行（從 0 開始數）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+2 3
+1 3 4
+1 1 4
+<span class="muted">▼ 執行結果</span>
+[[1, 3, 4], [1, 1, 4]]
+4</div>
+  </div>
+
+  <p>熟了之後可以寫成一行：<code>g = [list(map(int, input().split())) for _ in range(n)]</code>（這叫串列生成式，單元 5 會教）。二維串列的用法在單元 6 附會完整介紹。</p>
+
+  <h3>格式 ⑤：n 行，每行一個字串</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">讀入字串</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+codes = []
+for _ in range(n):
+    codes.append(input())
+print(codes)
+print(codes[0][:3])    # 第一筆的前 3 個字</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+2
+0309876543216
+4711234560012
+<span class="muted">▼ 執行結果</span>
+[&#x27;0309876543216&#x27;, &#x27;4711234560012&#x27;]
+030</div>
+  </div>
+
+  <div class="callout warn"><span class="t">⚠ 看起來是數字，不一定要轉成 int</span>
+  <p style="margin-bottom:0">像條碼、學號、電話這種「開頭可能是 0」的資料，轉成 <code>int</code> 之後開頭的 0 就不見了（<code>int('0309')</code> 變成 <code>309</code>）。題目要你看「第幾位是什麼」的時候，要保持字串。</p></div>
+
+
+  <h3>格式對照表</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>輸入長這樣</th><th>寫法</th></tr></thead>
+      <tbody>
+        <tr><td><code>5</code>（一個數）</td><td><code>n = int(input())</code></td></tr>
+        <tr><td><code>3 5</code>（固定兩個數）</td><td><code>a, b = map(int, input().split())</code></td></tr>
+        <tr><td><code>3 1 4 1 5</code>（一串數）</td><td><code>a = list(map(int, input().split()))</code></td></tr>
+        <tr><td>n 行，每行一個數</td><td><code>for _ in range(n): x = int(input())</code></td></tr>
+        <tr><td>n 行，每行一串數（表格）</td><td><code>for _ in range(n): g.append(list(map(int, input().split())))</code></td></tr>
+        <tr><td>n 行，每行一個字串</td><td><code>for _ in range(n): s.append(input())</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip"><span class="t">🔎 讀錯格式會怎樣？</span>
+  <p style="margin-bottom:0">一行有兩個數，卻寫 <code>int(input())</code>，會出現 <code>ValueError: invalid literal for int() with base 10: '3 5'</code>，意思是「<code>'3 5'</code> 不能轉成整數」。看到這個錯誤，先回頭檢查輸入格式。</p></div>
+
+<div class="exercise qa-list">
+  <h3>✏️ 識讀練習：先自己追蹤，再按「顯示解答」</h3>
+  <ol>
+    <li>輸入格式：第一行 n，接下來 n 行各有一個學生的「座號 分數」。請寫出讀入資料、印出最高分那位學生座號的程式。（範例輸入如下）
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p style="margin-bottom:0">參考寫法：<pre class='workpre'>n = int(input())
+best_id, best = 0, -1
+for _ in range(n):
+    sid, score = map(int, input().split())
+    if score &gt; best:
+        best_id, best = sid, score
+print(best_id)</pre>範例輸入 <code>3 / 1 80 / 2 95 / 3 70</code>（每個斜線代表換行）會印出 <code>2</code>。</p></div>
+    </li>
+    <li>下面的輸入要怎麼讀？<br><code>2 3</code><br><code>1 2 3</code><br><code>4 5 6</code><br>讀完之後，<code>g[1][0]</code> 是多少？
+      <pre class="workpre">n, m = map(int, input().split())
+g = []
+for _ in range(n):
+    g.append(list(map(int, input().split())))
+print(g[1][0])</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">4</pre><p style="margin-bottom:0">第一行讀 n、m，再讀 n 行。<code>g[1]</code> 是第二列 <code>[4, 5, 6]</code>，<code>g[1][0]</code> 是 4。</p></div>
+    </li>
+  </ol>
+</div>
+
+</section>
+
+<section class="block" id="s05">
+  <h2><span class="num">05</span>課程中會一直用到的內建函式對照表</h2>
+  <p>下面這些函式，後面每一個單元幾乎都會用到——先在這裡認識一次，之後看到就不會陌生：</p>
   <div class="table-wrap">
     <table class="center">
       <thead><tr><th>函式</th><th>用途</th><th>範例</th></tr></thead>
@@ -101,7 +284,7 @@ print(name, scores, sum(scores))</code></pre>
         <tr><td><code>len(x)</code></td><td>取得長度（字串、list 都可以用）</td><td><code>len([1,2,3])</code> → 3</td></tr>
         <tr><td><code>x.append(v)</code></td><td>在 list 尾端加入一個元素</td><td><code>a=[1,2]; a.append(3)</code> → [1,2,3]</td></tr>
         <tr><td><code>x.pop()</code></td><td>從 list 尾端取出並刪除一個元素</td><td><code>a=[1,2,3]; a.pop()</code> → 3</td></tr>
-        <tr><td><code>deque.popleft()</code></td><td>從 deque 前端取出並刪除（佇列常用，下學期會用到）</td><td>下學期單元：佇列與堆疊</td></tr>
+        <tr><td><code>deque.popleft()</code></td><td>從佇列前端取出並刪除（中高級補充，要先 <code>from collections import deque</code>）</td><td><code>q=deque([1,2,3]); q.popleft()</code> → 1</td></tr>
         <tr><td><code>"..".split()</code></td><td>把字串依空白（或指定符號）切成 list</td><td><code>"3 5 7".split()</code> → ['3','5','7']</td></tr>
         <tr><td><code>"-".join(x)</code></td><td>把 list 的元素接成一個字串，中間插入指定符號</td><td><code>"-".join(['a','b'])</code> → 'a-b'</td></tr>
         <tr><td><code>map(f, x)</code></td><td>對 x 裡的每個元素都套用函式 f</td><td><code>list(map(int,['1','2']))</code> → [1, 2]</td></tr>
@@ -112,7 +295,7 @@ print(name, scores, sum(scores))</code></pre>
         <tr><td><code>sum(x)</code></td><td>加總 list（或其他可迭代物件）裡所有的值</td><td><code>sum([1,2,3])</code> → 6</td></tr>
         <tr><td><code>zip(a, b)</code></td><td>把兩個 list 一一配對起來</td><td><code>list(zip([1,2],['a','b']))</code> → [(1,'a'), (2,'b')]</td></tr>
         <tr><td><code>enumerate(x)</code></td><td>走訪的同時取得「索引」和「值」</td><td><code>for i, v in enumerate(['a','b']):</code></td></tr>
-        <tr><td><code>round(x, n)</code></td><td>四捨五入到小數點第 n 位</td><td><code>round(3.14159, 2)</code> → 3.14</td></tr>
+        <tr><td><code>round(x, n)</code></td><td>取到小數點第 n 位（剛好 .5 時不一定進位，見單元 2）</td><td><code>round(3.14159, 2)</code> → 3.14</td></tr>
         <tr><td><code>"x".isalpha()</code></td><td>判斷字串是否全部是英文字母</td><td><code>"ABC".isalpha()</code> → True</td></tr>
       </tbody>
     </table>
@@ -147,11 +330,43 @@ print("共有", len(names), "個名字")
 print(sorted(names))     # 用 sorted()，names 原本的順序不會被改變
 print(names)               # 印出來確認：names 本身還是原來的順序</code></pre>
 </div>
-    <p><strong>第 3 題：</strong>不會報錯，但答案會是錯的——<code>sum()</code> 要求每個元素都能用 <code>+</code> 相加，字串之間的 <code>+</code> 是「接在一起」，所以 <code>sum(['3','5'])</code> 這種寫法其實會直接 <code>TypeError</code>（<code>sum()</code> 預設從整數 <code>0</code> 開始加，<code>0 + '3'</code> 型態不合會報錯）。要先用 <code>map(int, ...)</code> 把每個字串都轉成數字，<code>sum()</code> 才能正確加總。</p>
+    <p><strong>第 3 題：</strong>會直接出錯：<code>sum(['3','5'])</code> 會得到 <code>TypeError</code>（<code>sum()</code> 預設從整數 <code>0</code> 開始加，<code>0 + '3'</code> 型態不合會報錯）。要先用 <code>map(int, ...)</code> 把每個字串都轉成數字，<code>sum()</code> 才能正確加總。</p>
   </div>
 </div>
 
-  <nav class="unit-nav">
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>第三次、第四次 Judge 都在這一單元：一行多個數字、多行輸入，加上四題 APCS 第 1 題的演練。 按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=b971" target="_blank" rel="noopener"><b>b971</b>等差數列</a></td><td>一行讀三個數（split／map），用 range 印數列</td><td><span class="jtag done">✅ 第 3 次 Judge・9/30</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=a005" target="_blank" rel="noopener"><b>a005</b>Eva 的回家作業</a></td><td>先讀 t，再讀 t 行、每行 4 個數</td><td><span class="jtag done">✅ 第 3 次 Judge・9/30</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=f818" target="_blank" rel="noopener"><b>f818</b>物競天擇 (Survival)</a></td><td>多行輸入＋比較判斷（APCS 風格）</td><td><span class="jtag done">✅ 第 3 次 Judge・9/30</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=j605" target="_blank" rel="noopener"><b>j605</b>程式考試</a></td><td>APCS 第 1 題：逐筆讀資料、邊讀邊記錄</td><td><span class="jtag done">✅ 第 4 次 Judge・10/7</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=f579" target="_blank" rel="noopener"><b>f579</b>購物車</a></td><td>APCS 第 1 題：多行輸入＋計數</td><td><span class="jtag done">✅ 第 4 次 Judge・10/7</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=f312" target="_blank" rel="noopener"><b>f312</b>人力分配</a></td><td>APCS 第 1 題：枚舉所有分法找最大值</td><td><span class="jtag done">✅ 第 4 次 Judge・10/7</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=d065" target="_blank" rel="noopener"><b>d065</b>三人行必有我師（1 行版）</a></td><td>三個數在同一行：用 split 改寫 k200</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=h026" target="_blank" rel="noopener"><b>h026</b>猜拳</a></td><td>APCS 第 1 題：判斷＋迴圈模擬</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=o711" target="_blank" rel="noopener"><b>o711</b>裝飲料</a></td><td>APCS 第 1 題：迴圈模擬</td><td><span class="jtag bonus">加分</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c294" target="_blank" rel="noopener"><b>c294</b>三角形辨別</a></td><td>APCS 第 1 題：sorted() 排序後判斷</td><td><span class="jtag bonus">加分</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>APCS 官方識讀範例（2 題）</h3>
+  <p>按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="7" title="看官方識讀範例第 7 題">7</button><span>迴圈：費氏數列填空</span></li><li><button type="button" class="qchip" data-q="9" title="看官方識讀範例第 9 題">9</button><span>經典：輾轉相除法（迴圈）</span></li></ul>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 4 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-1-start.pdf" target="_blank" rel="noopener">《起點篇　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=2" target="_blank" rel="noopener" title="Q012・中・在講義第 2 頁">12</a><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=3" target="_blank" rel="noopener" title="Q013・中・在講義第 3 頁">13</a><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=3" target="_blank" rel="noopener" title="Q014・中・在講義第 3 頁">14</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=6" target="_blank" rel="noopener" title="Q028・易・在講義第 6 頁">28</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
     <a class="prev" href="unit04.html"><div class="dir">← 上一單元</div><div class="ttl">條件判斷與迴圈</div></a>
     <a class="next" href="unit05.html"><div class="dir">下一單元 →</div><div class="ttl">陣列與串列（List）</div></a>
   </nav>
@@ -164,5 +379,6 @@ print(names)               # 印出來確認：names 本身還是原來的順序
 <script src="../shared/core/progress.js"></script>
 <script src="assets/progress.js"></script>
 <script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
 </body>
 </html>

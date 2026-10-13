@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+<link rel="stylesheet" href="assets/loop-trace.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +20,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="4">
@@ -38,7 +46,7 @@
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>條件判斷：if / elif / else</h2>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -72,9 +80,11 @@ else:
   </div>
   <div class="callout warn"><span class="t">⚠ elif 陷阱：多個 if 各自獨立，不會互相排除</span>
   <p style="margin-bottom:0">如果把上面 <code>elif</code> 全部改成<strong>各自獨立的 <code>if</code></strong>，每一行都會被檢查一次，可能同時符合好幾個條件、結果被後面的覆蓋掉，這是程式識讀常出的陷阱：<strong>看清楚是 <code>elif</code> 還是獨立的 <code>if</code></strong>。</p></div>
+  <div class="callout tip"><span class="t">🟥 跑出紅字了？先看最後一行</span>
+  <p style="margin-bottom:0">寫 <code>if</code> 最常遇到的是 <code>IndentationError</code>（下一行沒縮排）和 <code>SyntaxError</code>（少了冒號、用了全形符號）。紅字只要看<strong>最後一行</strong>的錯誤種類，再看上一行寫的 <code>line 幾</code>。常見錯誤訊息整理在 <a href="unit09.html#s05">單元 9 §05 看懂錯誤訊息</a>，第一次出錯就可以先去對照。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>重複結構：for 與 while</h2>
   <p><code>for</code> 通常搭配 <code>range()</code>，用在「知道要跑幾次」的情況；<code>while</code> 用在「不知道要跑幾次，只知道什麼時候該停」的情況。</p>
   <div class="code-card">
@@ -98,27 +108,92 @@ while n &lt;= 100:
 print(total)                  # 5050</code></pre>
   </div>
   <h3>break 與 continue</h3>
+  <p>下面兩個程式<strong>只差一個字</strong>：遇到 3 的倍數時，一個用 <code>continue</code>、一個用 <code>break</code>。按下面的分頁切換，看看兩者跑出來有什麼不一樣。</p>
+  <div class="bc-tabs">
+    <div class="bc-tablist" role="tablist" aria-label="continue 與 break 對照">
+      <button type="button" role="tab" id="bctab-continue" aria-controls="bc-continue" aria-selected="true">continue：跳過這一輪</button>
+      <button type="button" role="tab" id="bctab-break" aria-controls="bc-break" aria-selected="false" tabindex="-1">break：整個迴圈結束</button>
+    </div>
+    <div class="bc-panel" role="tabpanel" id="bc-continue" aria-labelledby="bctab-continue">
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-      <span class="label">python</span>
+      <span class="label">continue.py</span>
       <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
     <pre><code data-lang="python">for i in range(1, 11):
-    if i == 6:
-        break          # 直接跳出整個迴圈
-    print(i, end=" ")
-print()                  # 1 2 3 4 5
-
-for i in range(1, 11):
-    if i % 2 == 0:
-        continue        # 跳過這次，回到迴圈開頭繼續下一輪
-    print(i, end=" ")
-print()                  # 1 3 5 7 9</code></pre>
+    if i % 3 == 0:
+        continue      # 3 的倍數：跳過這一輪剩下的程式，直接換下一個 i
+    print(i, end=&quot; &quot;)
+print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1 2 4 5 7 8 10 </div>
   </div>
+  <div class="table-wrap">
+    <table class="center bc">
+      <thead><tr><th>i</th><th>i % 3 == 0？</th><th>結果</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>否</td><td><span class="print">印出 1</span></td></tr>
+        <tr><td>2</td><td>否</td><td><span class="print">印出 2</span></td></tr>
+        <tr><td>3</td><td>是</td><td><span class="skip">continue：跳過，不印</span></td></tr>
+        <tr><td>4</td><td>否</td><td><span class="print">印出 4</span></td></tr>
+        <tr><td>5</td><td>否</td><td><span class="print">印出 5</span></td></tr>
+        <tr><td>6</td><td>是</td><td><span class="skip">continue：跳過，不印</span></td></tr>
+        <tr><td>7</td><td>否</td><td><span class="print">印出 7</span></td></tr>
+        <tr><td>8</td><td>否</td><td><span class="print">印出 8</span></td></tr>
+        <tr><td>9</td><td>是</td><td><span class="skip">continue：跳過，不印</span></td></tr>
+        <tr><td>10</td><td>否</td><td><span class="print">印出 10</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+      <p class="bc-sum">遇到 3、6、9 只是<strong>跳過那一輪</strong>，迴圈繼續跑到 10，印出 <code>1 2 4 5 7 8 10</code>。</p>
+    </div>
+    <div class="bc-panel" role="tabpanel" id="bc-break" aria-labelledby="bctab-break" hidden>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">break.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">for i in range(1, 11):
+    if i % 3 == 0:
+        break         # 3 的倍數：整個迴圈直接結束
+    print(i, end=&quot; &quot;)
+print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1 2 </div>
+  </div>
+  <div class="table-wrap">
+    <table class="center bc">
+      <thead><tr><th>i</th><th>i % 3 == 0？</th><th>結果</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>否</td><td><span class="print">印出 1</span></td></tr>
+        <tr><td>2</td><td>否</td><td><span class="print">印出 2</span></td></tr>
+        <tr><td>3</td><td>是</td><td><span class="stop">break：迴圈結束</span></td></tr>
+        <tr><td>4～10</td><td>—</td><td>不會執行，迴圈已經結束了</td></tr>
+      </tbody>
+    </table>
+  </div>
+      <p class="bc-sum">遇到 3 就<strong>整個迴圈結束</strong>，後面的 4～10 都不會跑，只印出 <code>1 2</code>。</p>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var tabs=[].slice.call(document.querySelectorAll('.bc-tablist [role="tab"]'));
+    function pick(t,focus){
+      tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});
+      if(focus)t.focus();
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){pick(t);});
+      t.addEventListener('keydown',function(e){
+        if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pick(tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length],true);}
+      });
+    });
+  })();
+  </script>
   <div class="callout"><span class="t">🔎 break vs continue，一次記住</span>
   <p style="margin-bottom:0"><code>break</code>：整個迴圈<strong>直接結束</strong>，後面的迴圈不再跑。<code>continue</code>：<strong>只跳過這一輪</strong>剩下的程式碼，迴圈繼續跑下一輪。兩個都只作用在<strong>最靠近它的那一層</strong>迴圈。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s03">
   <h2><span class="num">03</span>巢狀迴圈</h2>
   <p>迴圈裡面還有迴圈，外層跑一次，內層就整個跑完一輪。常用來處理「表格」「座標」「兩兩配對」這類題目：</p>
   <div class="code-card">
@@ -134,6 +209,9 @@ print()                  # 1 3 5 7 9</code></pre>
 # (2,1) (2,2) (2,3)
 # (3,1) (3,2) (3,3)</code></pre>
   </div>
+  <h3>動畫：一步一步看巢狀迴圈怎麼跑</h3>
+  <p>按「下一步」，每按一次執行一行。注意看：<strong>i 停在原地等 j 跑完一整圈</strong>，然後才換下一個 i。</p>
+  <div class="lt" data-lt-outer="3" data-lt-inner="3"></div>
   <div class="callout tip"><span class="t">💡 追蹤巢狀迴圈的技巧</span>
   <p style="margin-bottom:0">「外層跑幾次」×「內層跑幾次」＝ 內層程式碼<strong>總共執行的次數</strong>。上面外層 3 次、內層 3 次，<code>print(f"({i},{j})"...)</code> 就會執行 3×3 = 9 次。這是效能分析題常用的計算方式。</p></div>
 </section>
@@ -175,9 +253,33 @@ print()                  # 1 3 5 7 9</code></pre>
   </div>
 </div>
 
-  <nav class="unit-nav">
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=k200" target="_blank" rel="noopener"><b>k200</b>三人行必有我師</a></td><td>if／elif／else 條件判斷</td><td><span class="jtag done">✅ 第 2 次 Judge・9/23</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=a621" target="_blank" rel="noopener"><b>a621</b>Powers of Two</a></td><td>for 迴圈＋** 次方</td><td><span class="jtag done">✅ 第 2 次 Judge・9/23</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>APCS 官方識讀範例（6 題）</h3>
+  <p>按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="2" title="看官方識讀範例第 2 題">2</button><span>迴圈：while 條件填空</span></li><li><button type="button" class="qchip" data-q="5" title="看官方識讀範例第 5 題">5</button><span>迴圈：印星號圖形除錯</span></li><li><button type="button" class="qchip" data-q="12" title="看官方識讀範例第 12 題">12</button><span>迴圈：依輸出反推 while 參數</span></li><li><button type="button" class="qchip" data-q="19" title="看官方識讀範例第 19 題">19</button><span>迴圈：range 負的間隔</span></li><li><button type="button" class="qchip" data-q="26" title="看官方識讀範例第 26 題">26</button><span>迴圈：range 的執行次數</span></li><li><button type="button" class="qchip" data-q="27" title="看官方識讀範例第 27 題">27</button><span>條件：永遠不會執行的程式碼</span></li></ul>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 6 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-1-start.pdf" target="_blank" rel="noopener">《起點篇　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=6" target="_blank" rel="noopener" title="Q031・易・在講義第 6 頁">31</a><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=7" target="_blank" rel="noopener" title="Q033・中・在講義第 7 頁">33</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=7" target="_blank" rel="noopener" title="Q034・易・在講義第 7 頁">34</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=7" target="_blank" rel="noopener" title="Q035・易・在講義第 7 頁">35</a><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=8" target="_blank" rel="noopener" title="Q040・中・在講義第 8 頁">40</a><a class="wq d3" href="assets/handouts/reading-1-start.pdf#page=8" target="_blank" rel="noopener" title="Q043・難・在講義第 8 頁">43</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
     <a class="prev" href="unit03.html"><div class="dir">← 上一單元</div><div class="ttl">運算子大全：算術・比較・邏輯・位元</div></a>
-    <a class="next" href="unit04b.html"><div class="dir">下一單元 →</div><div class="ttl">輸入技巧與常用函式：split()／map()</div></a>
+    <a class="next" href="unit04b.html"><div class="dir">下一單元 →</div><div class="ttl">輸入技巧與常用函式：split()／map()／多行輸入</div></a>
   </nav>
 </main>
 
@@ -188,5 +290,7 @@ print()                  # 1 3 5 7 9</code></pre>
 <script src="../shared/core/progress.js"></script>
 <script src="assets/progress.js"></script>
 <script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+<script src="assets/loop-trace.js"></script>
 </body>
 </html>

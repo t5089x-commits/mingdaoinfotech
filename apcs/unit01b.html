@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+<link rel="stylesheet" href="assets/judge.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="1">
@@ -26,7 +33,7 @@
   <section class="unit-hero">
   <span class="kicker">起點篇　操作入門</span>
   <h1>IDLE 操作入門</h1>
-  <p>這學期的程式範例，統一用 <strong>IDLE</strong>（Python 內建的編輯器）來寫、來執行——這不只是習慣問題，跟 APCS 正式檢測的考場環境也直接相關。這是一個很小的單元，帶你快速認識 IDE／IDLE 是什麼、IDLE 的兩個視窗、怎麼新增檔案、怎麼執行程式。</p>
+  <p>這門課的程式範例，統一用 <strong>IDLE</strong>（Python 內建的編輯器）來寫、來執行——這不只是習慣問題，跟 APCS 正式檢測的考場環境也直接相關。這是一個很小的單元，帶你快速認識 IDE／IDLE 是什麼、IDLE 的兩個視窗、怎麼新增檔案、怎麼執行程式。</p>
 </section>
 
 <div class="goals">
@@ -40,7 +47,7 @@
   </ul>
 </div>
 
-<section class="block" id="sec1">
+<section class="block" id="sec1"><span id="s01" class="anchor"></span>
   <h2><span class="num">01</span>什麼是 IDE？什麼是 IDLE？</h2>
   <p><strong>IDE（Integrated Development Environment，整合開發環境）</strong>是一種把「編輯程式碼、執行程式、除錯」整合在同一個軟體裡的工具，讓你不用一直切換不同軟體，就能完成寫程式的整個流程。常見的 IDE 有 PyCharm、VS Code、IDLE 等等，種類很多、功能也各有差異。</p>
   <p><strong>IDLE（Integrated Development and Learning Environment）</strong>則是安裝 Python 的時候<strong>會自動一起裝好</strong>的編輯器，是 Python 官方內建、專門給 Python 用的 IDE。它的功能比 PyCharm、VS Code 陽春很多，但也因為這樣——不用額外下載、不用註冊帳號、不用連上網路、幾乎每一台裝了 Python 的電腦都找得到它，所以特別穩定、特別適合拿來練習跟考試。</p>
@@ -48,28 +55,31 @@
     <div class="tile"><h4><span class="ico">🧰</span>IDE（整合開發環境）</h4>
       <p>一整套幫你寫程式的工具，種類很多（PyCharm、VS Code……），功能通常比較齊全，但大多需要另外安裝，有些也需要連網下載外掛。</p></div>
     <div class="tile"><h4><span class="ico">🐍</span>IDLE（Python 內建的 IDE）</h4>
-      <p>裝好 Python 就自動有了，不用另外裝、不用連網、幾乎到哪台電腦都找得到——這學期上課、寫作業、練習範例程式，統一用它。</p></div>
+      <p>裝好 Python 就自動有了，不用另外裝、不用連網、幾乎到哪台電腦都找得到——上課、寫作業、練習範例程式，統一用它。</p></div>
   </div>
 </section>
 
-<section class="block" id="sec2">
+<section class="block" id="sec2"><span id="s02" class="anchor"></span>
   <h2><span class="num">02</span>為什麼 APCS 這門課要統一用 IDLE？</h2>
   <p>這不只是老師的個人偏好，而是跟<strong>正式檢測的考場環境</strong>直接相關：</p>
-  <div class="callout warn"><span class="t">⚠ APCS 正式檢測時，電腦是不能連上網路的</span>
-  <p style="margin-bottom:0">檢測現場提供的電腦只安裝了基本的作業系統與 Python 內建的 IDLE，<strong>不能開瀏覽器、不能用任何線上編譯器（例如 Programiz、repl.it 之類的網站）、也不能安裝其他軟體</strong>。也就是說，你在家裡習慣用的「線上執行」網站，到了正式考場完全用不到——考場能用的，就只有內建的 IDE（IDLE）。</p></div>
-  <p>為了讓你提早熟悉「正式上場」會用的環境，<strong>這學期起，我們所有課堂範例跟練習都統一用 IDLE 來寫、來執行</strong>——這樣真正進考場的時候，操作方式你早就已經很熟了，不會因為介面不熟悉而手忙腳亂、浪費寶貴的檢測時間。因為這個原因，之後的單元頁面也不會再放「線上編譯」的連結按鈕，全部改成用 IDLE 操作。</p>
+  <div class="callout warn"><span class="t">⚠ APCS 考場的電腦不能上網，也不能自己裝軟體</span>
+  <p>依 APCS 官網〈<a href="https://apcs.csie.ntnu.edu.tw/index.php/environment" target="_blank" rel="noopener">系統環境</a> ↗〉，考場電腦是 <strong>Ubuntu 22.04（Linux）＋ LXDE 桌面</strong>，Python 版本是 <strong>3.10</strong>。寫 Python 能用的只有考場裝好的工具：<strong>Python 內建的 IDLE</strong>、Eclipse，以及 vim、leafpad 這類純文字編輯器。<strong>不能用 Programiz、repl.it 之類的線上編譯器，也不能另外安裝 VS Code、PyCharm。</strong></p>
+  <p style="margin-bottom:0">這幾個選項裡，IDLE 最簡單，而且跟我們上課用的是同一套，所以這門課統一用 IDLE。實際環境以每次檢測前官網公告為準。</p></div>
+  <p>為了讓你提早熟悉「正式上場」會用的環境，<strong>從這門課開始，我們所有課堂範例跟練習都統一用 IDLE 來寫、來執行</strong>——這樣真正進考場的時候，操作方式你早就已經很熟了，不會因為介面不熟悉而手忙腳亂、浪費寶貴的檢測時間。因為這個原因，之後的單元頁面也不會再放「線上編譯」的連結按鈕，全部改成用 IDLE 操作。</p>
 </section>
 
-<section class="block" id="sec3">
+<section class="block" id="sec3"><span id="s03" class="anchor"></span>
   <h2><span class="num">03</span>怎麼打開 IDLE？</h2>
 <p>在 Windows 上，從開始選單找到 <strong>IDLE (Python 3.x)</strong> 點開即可（用開始選單搜尋「IDLE」三個字最快）。第一次打開時會看到一個標題寫著 <code>Python 3.x.x Shell</code> 的視窗，這就是 IDLE 的主畫面。</p>
+<div class="callout"><span class="t">📌 考場的畫面會跟這裡不一樣</span>
+<p style="margin-bottom:0">下面的截圖是學校電腦的 Windows。考場是 Linux（LXDE 桌面），打開 IDLE 的位置不同，請依考場現場說明；但 IDLE 打開之後的操作（Shell 視窗、File → New File、按 F5 執行）完全一樣。另外考場是 Python 3.10，我們課堂的範例都在 3.10 確認過結果相同，只有錯誤訊息的排版可能稍微不一樣。</p></div>
 <figure class="fig">
   <img src="images/idle-01-find-in-start-menu.png" alt="在 Windows 開始選單搜尋 IDLE，搜尋結果顯示「IDLE (Python 3.13 64-bit)」應用程式" loading="lazy">
   <figcaption>在開始選單搜尋「IDLE」，點選搜尋結果裡的 IDLE 應用程式即可開啟。</figcaption>
 </figure>
 </section>
 
-<section class="block" id="sec4">
+<section class="block" id="sec4"><span id="s04" class="anchor"></span>
   <h2><span class="num">04</span>Shell 視窗：先玩玩看</h2>
 <p>剛打開的這個視窗叫 <strong>Interactive Shell（互動模式）</strong>，看到 <code>&gt;&gt;&gt;</code> 這個提示符號，就代表它在等你輸入一行程式碼。輸入完按 <kbd>Enter</kbd>，馬上就會看到結果——很適合用來快速測試一小段程式碼。</p>
 <div class="code-card">
@@ -93,7 +103,7 @@ Hello, IDLE!
 <p>Shell 裡打的東西不會存檔，關掉視窗就沒了。真正要寫作業、寫範例程式的時候，要用下一段介紹的「編輯器視窗」。</p></div>
 </section>
 
-<section class="block" id="sec5">
+<section class="block" id="sec5"><span id="s05" class="anchor"></span>
   <h2><span class="num">05</span>新增檔案並執行程式</h2>
 <p>這是接下來每一堂課都會用到的流程：</p>
 <div class="table-wrap">
@@ -134,7 +144,7 @@ Hello, IDLE!
 </figure>
 </section>
 
-<section class="block" id="sec6">
+<section class="block" id="sec6"><span id="s06" class="anchor"></span>
   <h2><span class="num">06</span>幾個小提醒</h2>
 <div class="callout warn"><span class="t">⚠ 存檔前要注意這幾件事</span>
 <p>檔名<strong>不要用中文、空白或特殊符號</strong>，用英文、數字、底線就好（例如 <code>unit02.py</code>，不要用 <code>單元02.py</code>）；存檔位置建議固定放在一個容易找到的資料夾（例如桌面新增一個「APCS」資料夾），方便之後找檔案、交作業。</p></div>
@@ -143,7 +153,7 @@ Hello, IDLE!
 </section>
 
   <nav class="unit-nav">
-    <a class="prev" href="unit01.html"><div class="dir">← 上一單元</div><div class="ttl">APCS 是什麼？學期地圖</div></a>
+    <a class="prev" href="unit01.html"><div class="dir">← 上一單元</div><div class="ttl">APCS 是什麼？課程地圖</div></a>
     <a class="next" href="unit02.html"><div class="dir">下一單元 →</div><div class="ttl">變數、資料型態與輸出入</div></a>
   </nav>
 </main>

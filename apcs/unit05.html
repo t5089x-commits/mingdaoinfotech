@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="5">
@@ -34,12 +41,14 @@
   <ul>
     <li>會建立、索引、切片 Python 的 list（APCS 所指的「陣列」）</li>
     <li>會用迴圈走訪 list，並實作常見操作：找最大值、搜尋、反轉</li>
-    <li>認識常用的 list 方法：append、insert、remove、pop、sort</li>
+    <li>會用 <code>[0] * n</code>、<code>list(range())</code>、串列生成式建立串列，會用 <code>%</code> 讓索引繞一圈</li>
+    <li>會用 <code>sort()</code>／<code>sorted()</code> 的 <code>reverse=True</code> 與 <code>key=</code> 指定排序規則</li>
+    <li>認識常用的 list 方法：append、insert、remove、pop、sort、count，以及 <code>in</code></li>
     <li>知道「複製一個 list」和「兩個名字指向同一個 list」的差別</li>
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>認識 List</h2>
   <p>C、C++、Java 裡的<strong>陣列（array）</strong>，在 Python 裡最常用<strong>串列（list）</strong>來實作——list 可以裝一整排資料，用<strong>索引（index）</strong>存取每一個位置，索引從 <code>0</code> 開始。</p>
   <div class="code-card">
@@ -58,9 +67,75 @@ print(nums)          # [10, 20, 99, 40, 50]</code></pre>
   </div>
   <div class="callout warn"><span class="t">⚠ 索引超出範圍會直接報錯</span>
   <p style="margin-bottom:0">長度 5 的 list，合法索引是 <code>0~4</code>（或 <code>-1~-5</code>）。存取 <code>nums[5]</code> 會得到 <code>IndexError</code>——這正是「程式測試與除錯」很愛考的情境：邊界值有沒有算對。</p></div>
+  <h3>建立串列的幾種方法</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">建立串列</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = []                          # 空串列，之後再 append
+b = [0] * 5                     # [0, 0, 0, 0, 0]：n 個 0，計數、記錄狀態最常用
+c = list(range(1, 6))           # [1, 2, 3, 4, 5]
+d = [i * i for i in range(5)]   # [0, 1, 4, 9, 16]：串列生成式（下面介紹）
+print(a, b, c, d)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[] [0, 0, 0, 0, 0] [1, 2, 3, 4, 5] [0, 1, 4, 9, 16]</div>
+  </div>
+  <div class="callout"><span class="t">📌 <code>[0] * n</code> 是什麼意思？</span>
+  <p style="margin-bottom:0">串列的 <code>*</code> 是「重複」（字串也一樣，<code>'-' * 10</code> 是 10 個減號，單元 6 會再講）：<code>[0] * 5</code> 就是把 <code>[0]</code> 重複 5 次。一維串列這樣寫沒問題；二維表格不能寫 <code>[[0] * m] * n</code>，原因在單元 6 附。</p></div>
+  <h3>串列生成式：一行建立串列</h3>
+  <p>單元 4 附的 <code>list(map(int, input().split()))</code>，很多程式（包括識讀題）會寫成 <code>[int(x) for x in input().split()]</code>。這叫<strong>串列生成式</strong>：<code>[運算式 for 變數 in 一串東西]</code>，意思是「把一串東西裡的每一個拿出來，套進運算式，收集成一個新的串列」。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">串列生成式</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print([x * x for x in range(1, 6)])          # [1, 4, 9, 16, 25]
+print([int(x) for x in &quot;3 5 7&quot;.split()])     # [3, 5, 7]
+print([x for x in range(10) if x % 3 == 0])  # [0, 3, 6, 9]（後面加 if，只留下符合的）
+print([0 for _ in range(4)])                 # [0, 0, 0, 0]</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[1, 4, 9, 16, 25]
+[3, 5, 7]
+[0, 3, 6, 9]
+[0, 0, 0, 0]</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>用 map()</th><th>用串列生成式</th></tr></thead>
+      <tbody>
+        <tr><td><code>list(map(int, input().split()))</code></td><td><code>[int(x) for x in input().split()]</code></td></tr>
+        <tr><td><code>list(map(float, input().split()))</code></td><td><code>[float(x) for x in input().split()]</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>兩種寫法結果完全一樣，挑一種習慣就好。單元 4 附讀 n 行表格的迴圈，也可以寫成一行：<code>[list(map(int, input().split())) for _ in range(n)]</code>，每一輪讀一行，收集成 n 列。</p>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱一：生成式裡的變數不會改到外面</span>
+  <p style="margin-bottom:0">中括號裡的 <code>x</code> 只在生成式裡面有效。外面如果也有一個 <code>x</code>，跑完生成式之後還是原來的值。</p></div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">外面的 x 沒有被改掉</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">x = &#x27;hi&#x27;
+a = [x for x in range(3)]
+print(x, a)          # hi [0, 1, 2]</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+hi [0, 1, 2]</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱二：左右的個數要一樣</span>
+  <p style="margin-bottom:0"><code>a, b = [int(x) for x in input().split()]</code> 左邊有 2 個變數，右邊的串列就必須剛好 2 個元素；輸入 3 個數會出錯。</p></div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">輸入 3 個數，卻只用 2 個變數接</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a, b = [int(x) for x in &quot;100 45 25&quot;.split()]</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+<span class="muted">（沒有輸出）</span>
+<span class="err">Traceback (most recent call last):
+  File "程式.py", line 1, in &lt;module&gt;
+ValueError: too many values to unpack (expected 2)</span></div>
+  </div>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>切片（slicing）</h2>
   <p>用 <code>list[起點:終點]</code> 一次取出一段，<strong>包含起點、不包含終點</strong>，不寫起點／終點就代表「到底」：</p>
   <div class="code-card">
@@ -76,7 +151,7 @@ print(nums[::-1])     # [50, 40, 30, 20, 10]  反轉（step = -1）</code></pre>
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="s03">
   <h2><span class="num">03</span>走訪 List：三種寫法</h2>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -96,9 +171,25 @@ for i, x in enumerate(nums):         # 寫法三：索引和值一起拿
     print(f"{i}:{x}", end="  ")
 print()</code></pre>
   </div>
+  <div class="callout"><span class="t">📌 小括號 <code>( )</code> 是 tuple，走訪方式一樣</span>
+  <p>識讀題有時候用小括號寫一串資料，例如 <code>for t in (-5, -1, 5, 11):</code>。小括號是 <strong>tuple（元組）</strong>，用 <code>for</code> 走訪、用 <code>t[0]</code> 取值、用 <code>len()</code> 都跟串列一樣；差別是 tuple <strong>不能修改</strong>（不能 <code>append</code>、不能改某一格）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">走訪 tuple</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">for t in (-5, 3, 8):
+    print(t, end=" ")
+print()
+p = (3, 5)
+print(p[0], len(p))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+-5 3 8 
+3 2</div>
+  </div>
+  </div>
 </section>
 
-<section class="block">
+<section class="block" id="s04">
   <h2><span class="num">04</span>常見操作：不靠內建函式，自己動手實作</h2>
   <p>APCS 程式實作常常<strong>要求你自己寫出邏輯</strong>，而不是只呼叫內建函式。這幾個「手刻」模式一定要練到反射動作：</p>
   <h3>找最大值</h3>
@@ -140,9 +231,23 @@ print(nums)   # [5, 4, 3, 2, 1]</code></pre>
   </div>
   <div class="callout"><span class="t">🔎 Python 一行交換的祕密</span>
   <p style="margin-bottom:0"><code>a, b = b, a</code> 這種寫法叫<strong>多重指定</strong>，Python 會先把右邊全部算好，再一次指定給左邊，所以不需要額外的暫存變數就能交換兩個值。C／Java 通常要寫三行（借一個暫存變數）才能做到同樣的事。</p></div>
+  <h3>索引用 <code>%</code> 繞一圈</h3>
+  <p>走到串列尾巴之後要「回到開頭」，可以把索引 <code>% n</code>：索引 <code>n</code> 會變回 <code>0</code>、<code>n+1</code> 變回 <code>1</code>，永遠不會超出範圍。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">環狀走訪</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [10, 20, 30, 40, 50]
+n = len(a)
+for i in range(n):
+    print(a[(i + 2) % n], end=&quot; &quot;)   # 從索引 2 開始，繞一圈
+print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+30 40 50 10 20 </div>
+  </div>
 </section>
 
-<section class="block">
+<section class="block" id="s05">
   <h2><span class="num">05</span>常用 List 方法</h2>
   <div class="table-wrap">
     <table>
@@ -151,12 +256,46 @@ print(nums)   # [5, 4, 3, 2, 1]</code></pre>
         <tr><td><code>.append(x)</code></td><td>在尾端加一個元素</td><td><code>nums.append(6)</code></td></tr>
         <tr><td><code>.insert(i, x)</code></td><td>在索引 i 插入 x</td><td><code>nums.insert(0, 99)</code></td></tr>
         <tr><td><code>.remove(x)</code></td><td>刪除「第一個」值為 x 的元素</td><td><code>nums.remove(30)</code></td></tr>
+        <tr><td><code>.clear()</code></td><td>把串列清空，變成 <code>[]</code>（跟 <code>b = a</code> 共用的那一個也會一起變空）</td><td><code>nums.clear()</code></td></tr>
         <tr><td><code>.pop(i)</code></td><td>移除並回傳索引 i 的元素（省略 i 就是最後一個）</td><td><code>nums.pop()</code></td></tr>
         <tr><td><code>.sort()</code></td><td>原地排序（<code>reverse=True</code> 可降冪）</td><td><code>nums.sort()</code></td></tr>
         <tr><td><code>.index(x)</code></td><td>回傳第一個 x 的索引</td><td><code>nums.index(30)</code></td></tr>
+        <tr><td><code>.count(x)</code></td><td>x 出現幾次</td><td><code>nums.count(30)</code></td></tr>
+        <tr><td><code>x in a</code>／<code>x not in a</code></td><td>x 在不在串列裡（結果是 True／False）</td><td><code>30 in nums</code></td></tr>
         <tr><td><code>sum()/max()/min()</code></td><td>總和／最大／最小（內建函式，不是方法）</td><td><code>sum(nums)</code></td></tr>
       </tbody>
     </table>
+  </div>
+  <div class="callout"><span class="t">🔎 排序也可以指定規則：<code>key=</code> 與 <code>reverse=True</code></span>
+  <p style="margin-bottom:0"><code>reverse=True</code> 是由大到小；<code>key=len</code> 是「依長度排序」：每個元素先丟進 <code>len()</code> 算出長度，再依長度排。<code>sorted()</code> 和 <code>.sort()</code> 都可以加這兩個參數。</p></div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">key= 與 reverse=True</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">words = [&#x27;pear&#x27;, &#x27;fig&#x27;, &#x27;banana&#x27;]
+print(sorted(words))                     # [&#x27;banana&#x27;, &#x27;fig&#x27;, &#x27;pear&#x27;]（字典順序）
+print(sorted(words, key=len))            # [&#x27;fig&#x27;, &#x27;pear&#x27;, &#x27;banana&#x27;]（依長度）
+print(sorted([3, 1, 2], reverse=True))   # [3, 2, 1]</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[&#x27;banana&#x27;, &#x27;fig&#x27;, &#x27;pear&#x27;]
+[&#x27;fig&#x27;, &#x27;pear&#x27;, &#x27;banana&#x27;]
+[3, 2, 1]</div>
+  </div>
+    <h3>在不在裡面：<code>in</code> 與 <code>not in</code></h3>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">in、not in、count()</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">nums = [1, 5, 7]
+print(5 in nums)         # True
+print(3 in nums)         # False
+print(3 not in nums)     # True
+print(nums.count(5))     # 1（5 出現幾次）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+True
+False
+True
+1</div>
   </div>
   <div class="callout warn"><span class="t">⚠ 陷阱：b = a 不是「複製」，是「兩個名字指向同一份資料」</span>
   <p style="margin-bottom:0">list 是<strong>可變（mutable）</strong>物件，<code>b = a</code> 只是讓 <code>b</code> 和 <code>a</code> 指向<strong>同一個</strong> list，改 <code>b</code> 會連 <code>a</code> 也一起變。想要獨立一份要用 <code>b = a[:]</code> 或 <code>b = a.copy()</code>。這也是「找出程式錯誤」題型很常出的陷阱。</p>
@@ -210,8 +349,33 @@ print(count)   # 2</code></pre>
   </div>
 </div>
 
-  <nav class="unit-nav">
-    <a class="prev" href="unit04b.html"><div class="dir">← 上一單元</div><div class="ttl">輸入技巧與常用函式：split()／map()</div></a>
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-must"><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=b964" target="_blank" rel="noopener"><b>b964</b>成績指標</a></td><td>APCS 第 1 題：串列排序、找及格與不及格的邊界</td><td><span class="jtag must">必寫</span></td></tr>
+        <tr class="j-must"><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=m931" target="_blank" rel="noopener"><b>m931</b>遊戲選角</a></td><td>APCS 第 1 題：串列存資料、找第二大</td><td><span class="jtag must">必寫</span></td></tr>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c295" target="_blank" rel="noopener"><b>c295</b>最大和</a></td><td>APCS 第 2 題：每行取最大值、再檢查整除</td><td><span class="jtag bonus">加分</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>APCS 官方識讀範例（5 題）</h3>
+  <p>按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="15" title="看官方識讀範例第 15 題">15</button><span>串列：對稱交換兩次</span></li><li><button type="button" class="qchip" data-q="24" title="看官方識讀範例第 24 題">24</button><span>串列：最大值與最小值</span></li><li><button type="button" class="qchip" data-q="25" title="看官方識讀範例第 25 題">25</button><span>串列：用 % 讓索引循環</span></li><li><button type="button" class="qchip" data-q="29" title="看官方識讀範例第 29 題">29</button><span>串列：設計測資找出錯誤</span></li><li><button type="button" class="qchip" data-q="30" title="看官方識讀範例第 30 題">30</button><span>串列：前綴和</span></li></ul>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 17 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-2-challenge.pdf" target="_blank" rel="noopener">《挑戰篇（一）　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=2" target="_blank" rel="noopener" title="Q029・易・在講義第 2 頁">29</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=3" target="_blank" rel="noopener" title="Q046・易・在講義第 3 頁">46</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=3" target="_blank" rel="noopener" title="Q047・易・在講義第 3 頁">47</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=4" target="_blank" rel="noopener" title="Q048・中・在講義第 4 頁">48</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=4" target="_blank" rel="noopener" title="Q049・易・在講義第 4 頁">49</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=5" target="_blank" rel="noopener" title="Q051・中・在講義第 5 頁">51</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=5" target="_blank" rel="noopener" title="Q053・中・在講義第 5 頁">53</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=5" target="_blank" rel="noopener" title="Q055・中・在講義第 5 頁">55</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=6" target="_blank" rel="noopener" title="Q058・中・在講義第 6 頁">58</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=10" target="_blank" rel="noopener" title="Q086・中・在講義第 10 頁">86</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=10" target="_blank" rel="noopener" title="Q087・易・在講義第 10 頁">87</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=10" target="_blank" rel="noopener" title="Q089・中・在講義第 10 頁">89</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=13" target="_blank" rel="noopener" title="Q113・中・在講義第 13 頁">113</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=13" target="_blank" rel="noopener" title="Q114・中・在講義第 13 頁">114</a><a class="wq d1" href="assets/handouts/reading-2-challenge.pdf#page=14" target="_blank" rel="noopener" title="Q120・易・在講義第 14 頁">120</a><a class="wq d3" href="assets/handouts/reading-2-challenge.pdf#page=14" target="_blank" rel="noopener" title="Q121・難・在講義第 14 頁">121</a><a class="wq d2" href="assets/handouts/reading-2-challenge.pdf#page=15" target="_blank" rel="noopener" title="Q125・中・在講義第 15 頁">125</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
+    <a class="prev" href="unit04b.html"><div class="dir">← 上一單元</div><div class="ttl">輸入技巧與常用函式：split()／map()／多行輸入</div></a>
     <a class="next" href="unit06.html"><div class="dir">下一單元 →</div><div class="ttl">字元與字串（String）</div></a>
   </nav>
 </main>
@@ -223,5 +387,6 @@ print(count)   # 2</code></pre>
 <script src="../shared/core/progress.js"></script>
 <script src="assets/progress.js"></script>
 <script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
 </body>
 </html>

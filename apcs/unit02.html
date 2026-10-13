@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="2">
@@ -39,7 +46,7 @@
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>資料型態、常數與變數</h2>
   <p>程式裡的每一筆資料都有<strong>型態（data type）</strong>，型態決定了這筆資料能做什麼運算。APCS 最常用到的四種型態：</p>
   <div class="table-wrap">
@@ -80,25 +87,28 @@ print(type(area))    # &lt;class 'float'&gt;</code></pre>
   </ul>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>輸入：input()</h2>
   <p><code>input()</code> 讓程式暫停，等使用者從鍵盤輸入資料，按下 Enter 後把輸入的內容<strong>當成字串</strong>回傳——注意，就算你輸入的是數字，<code>input()</code> 拿到的還是字串，看看下面這個例子：</p>
   <div class="code-card">
     <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="label">python</span>
       <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
-    <pre><code data-lang="python">a = input("請輸入數字:")
-b = input("請輸入數字:")
+    <pre><code data-lang="python">a = input()
+b = input()
 print(a+b)
 print(type(a), type(b))</code></pre>
   </div>
   <div class="callout warn"><span class="t">⚠ 執行看看：如果 a 輸入 3、b 輸入 5</span>
   <p style="margin-bottom:0">你可能以為 <code>a+b</code> 會印出 <code>8</code>，但實際執行結果是 <code>35</code>！因為 <code>input()</code> 讀進來的 <code>a</code>、<code>b</code> 都是<strong>字串</strong>（不是數字），<code>a+b</code> 做的是「字串接起來」（<code>"3"+"5"</code> → <code>"35"</code>），不是數學加法。用 <code>print(type(a), type(b))</code> 查一下，會看到印出 <code>&lt;class 'str'&gt; &lt;class 'str'&gt;</code>，這就是問題所在。</p></div>
   <div class="callout"><span class="t">💡 常用寫法：邊讀邊轉型</span>
-  <p style="margin-bottom:0">如果要讓 <code>a</code>、<code>b</code> 真的做數學加法，必須先轉型：<code>a = int(input("請輸入數字:"))</code>，把 <code>input()</code> 讀進來的字串馬上包一層 <code>int()</code> 或 <code>float()</code> 轉成數字，一行搞定。這就是下一節「型別轉換」要解決的問題。</p></div>
+  <p style="margin-bottom:0">如果要讓 <code>a</code>、<code>b</code> 真的做數學加法，必須先轉型：<code>a = int(input())</code>，把 <code>input()</code> 讀進來的字串馬上包一層 <code>int()</code> 或 <code>float()</code> 轉成數字，一行搞定。這就是下一節「型別轉換」要解決的問題。</p></div>
+  <div class="callout warn"><span class="t">⚠ 這門課的規定：input() 一律用空括號</span>
+  <p>ZeroJudge 和 APCS 考場都是電腦自動改，括號裡的提示文字會被印到輸出裡，跟答案混在一起，直接被判<strong>答案錯誤（WA）</strong>。所以這門課從第一個範例開始，<code>input()</code> 一律<strong>空括號</strong>：<code>a = int(input())</code>。詳細說明見 <a href="unit02b.html">附錄：上機評測基本功</a>。</p>
+  <p style="margin-bottom:0"><strong>不是送 Judge 的程式</strong>（例如寫給別人用的小工具、專題作品），就要在括號裡放提示文字，讓使用的人知道該輸入什麼：<code>score = int(input("請輸入分數："))</code>。執行時提示文字會先印出來，游標停在後面等你輸入。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s03">
   <h2><span class="num">03</span>型別轉換</h2>
   <p>剛剛看到，<code>input()</code> 讀進來的資料<strong>一律是字串</strong>，這正是為什麼我們常常需要在不同型態之間互相轉換——要先轉成數字，才能做數學運算：</p>
   <div class="code-card">
@@ -114,18 +124,19 @@ print(int(3.9))     # 3　（float → int 直接捨去小數，不是四捨五�
 print(bool(0))       # False
 print(bool(5))       # True（0 是 False，其他數字都是 True）</code></pre>
   </div>
-  <div class="callout warn"><span class="t">⚠ 常見陷阱：int() 是「捨去」不是「四捨五入」</span>
-  <p style="margin-bottom:0"><code>int(3.9)</code> 的結果是 <code>3</code>，不是 <code>4</code>！<code>int()</code> 轉換浮點數時是直接<strong>捨去小數部分</strong>。如果要四捨五入，要用 <code>round()</code>：<code>round(3.9)</code> 才是 <code>4</code>。這是程式識讀考「程式追蹤」很愛考的細節。</p></div>
+  <div class="callout warn"><span class="t">⚠ 常見陷阱：int() 是「捨去」，round() 也不是課本的四捨五入</span>
+  <p><code>int(3.9)</code> 的結果是 <code>3</code>，不是 <code>4</code>！<code>int()</code> 轉換浮點數時是直接<strong>捨去小數部分</strong>（負數也是直接去掉：<code>int(-3.9)</code> 是 <code>-3</code>）。要取「最接近的整數」用 <code>round()</code>：<code>round(3.9)</code> 是 <code>4</code>。</p>
+  <p style="margin-bottom:0">但是 <code>round()</code> 遇到<strong>剛好在正中間（.5）</strong>時，Python 會取<strong>偶數</strong>那一邊：<code>round(2.5)</code> 是 <code>2</code>、<code>round(3.5)</code> 是 <code>4</code>，跟數學課的四捨五入不一樣。這兩個都是程式識讀很愛考的細節。</p></div>
   <h3>這一節用到的函式，整理一下</h3>
   <div class="table-wrap">
     <table class="center">
       <thead><tr><th>函式</th><th>作用</th><th>例子</th></tr></thead>
       <tbody>
         <tr><td><code>type(x)</code></td><td>查詢 <code>x</code> 目前的資料型態</td><td><code>type(3.14)</code> → <code>&lt;class 'float'&gt;</code></td></tr>
-        <tr><td><code>input(提示文字)</code></td><td>讀取使用者輸入，結果一律是字串</td><td><code>input("請輸入:")</code></td></tr>
+        <tr><td><code>input()</code></td><td>讀取使用者輸入，結果一律是字串（送 Judge 一律空括號；不是送 Judge 的程式才放提示文字）</td><td><code>input()</code>、<code>input("請輸入:")</code></td></tr>
         <tr><td><code>print(值, ...)</code></td><td>把一個或多個值印到畫面上</td><td><code>print("a", "b")</code> → <code>a b</code></td></tr>
         <tr><td><code>int(x)</code></td><td>轉成整數（小數<strong>直接捨去</strong>）</td><td><code>int(3.9)</code> → <code>3</code></td></tr>
-        <tr><td><code>float(x)</code></td><td>轉成浮點數</td><td><code>float("10")</code> → <code>10.0</code></td></tr>
+        <tr><td><code>float(x)</code></td><td>轉成浮點數</td><td><code>float("10")</code> → <code>10.0</code>；<code>float("2.5e2")</code> → <code>250.0</code>（e2 是 ×10²）</td></tr>
         <tr><td><code>str(x)</code></td><td>轉成字串</td><td><code>str(99)</code> → <code>"99"</code></td></tr>
         <tr><td><code>bool(x)</code></td><td>轉成布林值</td><td><code>bool(0)</code> → <code>False</code></td></tr>
       </tbody>
@@ -133,7 +144,7 @@ print(bool(5))       # True（0 是 False，其他數字都是 True）</code></p
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="s04">
   <h2><span class="num">04</span>輸出：print() 與 f-string</h2>
   <p><code>print()</code> 可以一次印多個值，預設用空白隔開、最後自動換行；也可以用 <code>sep</code>、<code>end</code> 參數調整：</p>
   <div class="code-card">
@@ -167,7 +178,7 @@ print(f"{name} 的分數是 {score:06.1f}")      # 總寬度 6，補 0 對齊 �
     <table class="center">
       <thead><tr><th>寫法</th><th>意思</th><th>範例（<code>score = 87.6666</code>）</th><th>結果</th></tr></thead>
       <tbody>
-        <tr><td><code>.1f</code></td><td>保留小數點後 1 位（四捨五入）</td><td><code>{score:.1f}</code></td><td><code>87.7</code></td></tr>
+        <tr><td><code>.1f</code></td><td>保留小數點後 1 位（取最接近的值）</td><td><code>{score:.1f}</code></td><td><code>87.7</code></td></tr>
         <tr><td><code>.2f</code></td><td>保留小數點後 2 位</td><td><code>{score:.2f}</code></td><td><code>87.67</code></td></tr>
         <tr><td><code>6.1f</code></td><td>總寬度 6 個字元、保留 1 位小數，預設補空白、靠右對齊</td><td><code>{score:6.1f}</code></td><td><code>␣␣87.7</code></td></tr>
         <tr><td><code>06.1f</code></td><td>總寬度 6，把補齊用的空白改成補 <code>0</code></td><td><code>{score:06.1f}</code></td><td><code>0087.7</code></td></tr>
@@ -191,8 +202,8 @@ print(f"{name} 的分數是 {score:06.1f}")      # 總寬度 6，補 0 對齊 �
   <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
     <span class="label">第 1 題參考解</span>
     <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
-  <pre><code data-lang="python">name = input("請輸入姓名:")
-seat = input("請輸入座號:")
+  <pre><code data-lang="python">name = input()
+seat = input()
 print(type(name), type(seat))    # &lt;class 'str'&gt; &lt;class 'str'&gt;　—— 兩個都還是字串
 
 seat = int(seat)                 # 轉成整數
@@ -200,14 +211,35 @@ print(f"{name}的座號是{seat}號")</code></pre>
 </div>
     <ol start="2">
       <li><code>int("7") + int("3")</code> 是<strong>數字相加</strong> → <code>10</code>；<code>"7" + "3"</code> 是<strong>字串接起來</strong> → <code>"73"</code>。同樣是 <code>+</code>，作用在數字和字串上意義完全不同。</li>
-      <li><code>int(9.8)</code> 是捨去小數 → <code>9</code>；<code>round(9.8)</code> 是四捨五入 → <code>10</code>。</li>
+      <li><code>int(9.8)</code> 是捨去小數 → <code>9</code>；<code>round(9.8)</code> 取最接近的整數 → <code>10</code>。</li>
     </ol>
   </div>
 </div>
 
-  <nav class="unit-nav">
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=a001" target="_blank" rel="noopener"><b>a001</b>哈囉</a></td><td>第一題：input() 讀一行、照格式輸出</td><td><span class="jtag done">✅ 第 1 次 Judge・9/16</span></td></tr>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=d049" target="_blank" rel="noopener"><b>d049</b>中華民國萬歲！</a></td><td>讀整數、算民國年，輸出一字不差</td><td><span class="jtag done">✅ 第 1 次 Judge・9/16</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 9 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-1-start.pdf" target="_blank" rel="noopener">《起點篇　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=1" target="_blank" rel="noopener" title="Q003・易・在講義第 1 頁">3</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=2" target="_blank" rel="noopener" title="Q005・易・在講義第 2 頁">5</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=2" target="_blank" rel="noopener" title="Q010・易・在講義第 2 頁">10</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=4" target="_blank" rel="noopener" title="Q018・易・在講義第 4 頁">18</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=4" target="_blank" rel="noopener" title="Q020・易・在講義第 4 頁">20</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=5" target="_blank" rel="noopener" title="Q024・易・在講義第 5 頁">24</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=5" target="_blank" rel="noopener" title="Q025・易・在講義第 5 頁">25</a><a class="wq d2" href="assets/handouts/reading-1-start.pdf#page=5" target="_blank" rel="noopener" title="Q026・中・在講義第 5 頁">26</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=6" target="_blank" rel="noopener" title="Q027・易・在講義第 6 頁">27</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
     <a class="prev" href="unit01b.html"><div class="dir">← 上一單元</div><div class="ttl">IDLE 操作入門</div></a>
-    <a class="next" href="unit03.html"><div class="dir">下一單元 →</div><div class="ttl">運算子大全：算術・比較・邏輯・位元</div></a>
+    <a class="next" href="unit02b.html"><div class="dir">下一單元 →</div><div class="ttl">上機評測基本功：ZeroJudge 與考場規則</div></a>
   </nav>
 </main>
 

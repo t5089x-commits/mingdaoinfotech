@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/plan.css">
+<link rel="stylesheet" href="assets/tabs.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="3">
@@ -34,11 +41,11 @@
   <ul>
     <li>熟悉算術、比較、邏輯運算子與複合指定運算子</li>
     <li>認識並會使用<strong>位元運算子</strong>：AND、OR、XOR、NOT、位移</li>
-    <li>能判斷一段運算式的運算子優先順序與結果</li>
+    <li>能判斷一段運算式的結果（運算子優先順序、負數的 <code>//</code>、<code>and</code>／<code>or</code> 的回傳值，補充在單元 9 §03）</li>
   </ul>
 </div>
 
-<section class="block">
+<section class="block" id="s01">
   <h2><span class="num">01</span>算術運算子</h2>
   <p><code>+</code> 加、<code>-</code> 減、<code>*</code> 乘、<code>/</code> 除、<code>%</code> 餘數、<code>//</code> 整數除（商）、<code>**</code> 指數。</p>
   <div class="code-card">
@@ -51,14 +58,14 @@ print(a - b)   # 12
 print(a * b)   # 85
 print(a / b)   # 3.4   （/ 一定回傳浮點數）
 print(a % b)   # 2     （餘數）
-print(a // b)  # 3     （商，捨去小數）
+print(a // b)  # 3     （商，往下取整）
 print(a ** b)  # 1419857</code></pre>
   </div>
   <div class="callout"><span class="t">🔎 <code>%</code> 和 <code>//</code> 是好朋友</span>
   <p style="margin-bottom:0">任何整數 <code>a</code>、<code>b</code>（<code>b</code> 不為 0），一定滿足 <code>a == (a // b) * b + a % b</code>。<code>//</code> 求「商」、<code>%</code> 求「餘數」，APCS 常考「奇偶判斷」（<code>n % 2 == 0</code>）、「個位數」（<code>n % 10</code>）都是靠它們。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s02">
   <h2><span class="num">02</span>比較與邏輯運算子</h2>
   <p>比較運算子的結果一定是布林值：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&gt;=</code>、<code>&lt;</code>、<code>&lt;=</code>。邏輯運算子用來組合多個條件：<code>and</code>（且）、<code>or</code>（或）、<code>not</code>（否定）。</p>
   <div class="code-card">
@@ -85,9 +92,9 @@ print(1 &lt;= n &lt;= 100)                          # Python 可以連續比較�
   </table>
 </section>
 
-<section class="block">
-  <h2><span class="num">03</span>位元運算子（APCS 初級必考）</h2>
-  <p>位元運算子把數字看成<strong>二進位</strong>，一個 bit 一個 bit 做運算。這是資訊科技數字系統單元學過的二進位概念，在 APCS 會直接考它的<strong>運算結果</strong>：</p>
+<section class="block" id="s03">
+  <h2><span class="num">03</span>位元運算子（APCS 初級範圍）</h2>
+  <p>位元運算子把數字看成<strong>二進位</strong>，一個 bit 一個 bit 做運算。這是資訊科技數字系統單元學過的二進位概念，官方把它列在初級範圍內，看得懂<strong>運算結果</strong>就好：</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>運算子</th><th>名稱</th><th>規則</th><th>範例</th></tr></thead>
@@ -116,12 +123,12 @@ print(a &lt;&lt; 1)      # 24  → 11000（左移 1 位＝乘以 2）
 print(a &gt;&gt; 2)      # 3   → 0011（右移 2 位＝除以 4，取商）</code></pre>
   </div>
   <div class="callout"><span class="t">🔎 位元運算子 vs 邏輯運算子：不要搞混！</span>
-  <p style="margin-bottom:0"><code>&amp;</code>／<code>|</code> 是<strong>位元運算</strong>，作用在整數的每一個 bit 上；<code>and</code>／<code>or</code> 是<strong>邏輯運算</strong>，作用在 <code>True</code>／<code>False</code> 這種布林值上，考慮的是「兩個條件成不成立」。<code>3 &amp; 5</code>（結果是 1）和 <code>3 and 5</code>（結果是 5，因為兩者都不是 0，取後面那個）意思完全不一樣，這是程式識讀很愛出的陷阱題。</p></div>
+  <p style="margin-bottom:0"><code>&amp;</code>／<code>|</code> 是<strong>位元運算</strong>，作用在整數的每一個 bit 上；<code>and</code>／<code>or</code> 是<strong>邏輯運算</strong>，作用在 <code>True</code>／<code>False</code> 這種布林值上，考慮的是「兩個條件成不成立」。<code>3 &amp; 5</code>（結果是 1）和 <code>3 and 5</code>（結果是 5，因為兩者都不是 0，取後面那個）意思完全不一樣，這兩組很容易搞混，看到時要特別注意。</p></div>
   <div class="callout tip"><span class="t">💡 為什麼要學位元運算？</span>
   <p style="margin-bottom:0">位元運算常用來<strong>用一個整數同時記錄很多個開關狀態</strong>（例如用 8 個 bit 記錄 8 種權限的開／關），或是快速做「乘 2 的次方」「除 2 的次方」「判斷奇偶」（<code>n &amp; 1</code> 就能判斷 <code>n</code> 是不是奇數）。</p></div>
 </section>
 
-<section class="block">
+<section class="block" id="s04">
   <h2><span class="num">04</span>複合指定運算子</h2>
   <p>把「運算」和「指定」合在一起的簡寫：<code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code>、<code>//=</code>、<code>**=</code>，位元運算也有對應的 <code>&amp;=</code>、<code>|=</code>、<code>^=</code>、<code>&lt;&lt;=</code>、<code>&gt;&gt;=</code>。<code>a += b</code> 就等同 <code>a = a + b</code>。</p>
   <div class="code-card">
@@ -152,13 +159,39 @@ print(bin(flags))   # 0b0</code></pre>
     <ol>
       <li><code>13 // 4 = 3</code>、<code>13 % 4 = 1</code>、<code>2 ** 6 = 64</code>。</li>
       <li><code>0b0110 &amp; 0b0011 = 0b0010</code>（2）、<code>0b0110 | 0b0011 = 0b0111</code>（7）、<code>0b0110 ^ 0b0011 = 0b0101</code>（5）。</li>
-      <li><code>n &amp; 1 == 1</code>：奇數的最後一個 bit 一定是 1，偶數一定是 0。</li>
+      <li><code>(n &amp; 1) == 1</code>（或直接寫 <code>if n &amp; 1:</code>）：奇數的最後一個 bit 一定是 1，偶數一定是 0。加上括號最不會看錯。</li>
     </ol>
   </div>
 </div>
 
+<div class="callout tip" style="margin-top:18px"><span class="t">🔎 識讀還會考的運算子細節</span>
+<p style="margin-bottom:0">負數的 <code>//</code> 與 <code>%</code>（<code>-7 // 2</code> 是 <code>-4</code>）、<code>0</code> 和空字串是「假」、<code>and</code>／<code>or</code> 回傳的是「其中一邊的值」、運算子優先順序（<code>-2 ** 2</code> 是 <code>-4</code>）——這些都整理在 <a href="unit09.html#s03">單元 9 §03</a>，學期後段準備識讀時一起練。</p></div>
+
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-done"><td><a class="zj done" href="https://zerojudge.tw/ShowProblem?problemid=d060" target="_blank" rel="noopener"><b>d060</b>還要等多久啊？</a></td><td>% 與條件判斷</td><td><span class="jtag done">✅ 第 2 次 Judge・9/23</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>APCS 官方識讀範例（1 題）</h3>
+  <p>按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="20" title="看官方識讀範例第 20 題">20</button><span>運算子：% 與 // 找零</span></li></ul>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 4 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-1-start.pdf" target="_blank" rel="noopener">《起點篇　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=1" target="_blank" rel="noopener" title="Q002・易・在講義第 1 頁">2</a><a class="wq d1" href="assets/handouts/reading-1-start.pdf#page=3" target="_blank" rel="noopener" title="Q015・易・在講義第 3 頁">15</a><a class="wq d3" href="assets/handouts/reading-1-start.pdf#page=4" target="_blank" rel="noopener" title="Q021・難・在講義第 4 頁">21</a><a class="wq d3" href="assets/handouts/reading-1-start.pdf#page=4" target="_blank" rel="noopener" title="Q023・難・在講義第 4 頁">23</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
   <nav class="unit-nav">
-    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">變數、資料型態與輸出入</div></a>
+    <a class="prev" href="unit02b.html"><div class="dir">← 上一單元</div><div class="ttl">上機評測基本功：ZeroJudge 與考場規則</div></a>
     <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">條件判斷與迴圈</div></a>
   </nav>
 </main>
@@ -170,5 +203,6 @@ print(bin(flags))   # 0b0</code></pre>
 <script src="../shared/core/progress.js"></script>
 <script src="assets/progress.js"></script>
 <script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
 </body>
 </html>

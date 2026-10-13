@@ -1,0 +1,61 @@
+/* ===========================================================
+   巢狀迴圈逐步追蹤動畫（unit04 用）
+   沿用 style.css 的顏色變數
+   =========================================================== */
+.lt {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); box-shadow: var(--shadow);
+  margin: 18px 0; overflow: hidden;
+}
+.lt-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+@media (max-width: 720px) { .lt-grid { grid-template-columns: 1fr; } }
+.lt-code {
+  background: var(--code-bg); color: var(--code-text);
+  font-family: var(--mono); font-size: .9rem; line-height: 1.5;
+  padding: 14px 0; margin: 0; overflow-x: auto;
+}
+.lt-line { display: block; padding: 3px 16px 3px 12px; border-left: 4px solid transparent; white-space: pre; }
+.lt-line .ln { display: inline-block; width: 1.6em; color: var(--text-faint); user-select: none; }
+.lt-line.on { background: color-mix(in srgb, var(--accent) 26%, transparent); border-left-color: var(--accent); }
+.lt-side { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.lt-vars { display: flex; gap: 10px; flex-wrap: wrap; }
+.lt-var {
+  min-width: 74px; text-align: center; padding: 6px 10px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.lt-var b { display: block; font-family: var(--mono); font-size: .8rem; color: var(--text-soft); }
+.lt-var span { font-family: var(--mono); font-size: 1.35rem; font-weight: 800; color: var(--text); }
+.lt-var.changed { border-color: var(--brand); background: var(--brand-soft); }
+.lt-var.changed span { color: var(--brand-strong); }
+@media (prefers-reduced-motion: no-preference) {
+  .lt-var.changed span { animation: lt-pop .35s ease; }
+  .lt-out .new { animation: lt-in .35s ease; }
+}
+@keyframes lt-pop { 0% { transform: scale(1.5); } 100% { transform: scale(1); } }
+@keyframes lt-in { 0% { opacity: 0; background: var(--accent); } 100% { opacity: 1; background: transparent; } }
+.lt-out-label { font-size: .8rem; color: var(--text-faint); margin-bottom: 4px; }
+.lt-out {
+  background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .9rem;
+  border-radius: 8px; padding: 10px 12px; min-height: 6.2em; white-space: pre; overflow-x: auto;
+}
+.lt-out .cursor { display: inline-block; width: .55em; background: var(--code-text); opacity: .6; }
+.lt-cap {
+  padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface-2);
+  font-size: .93rem; min-height: 3.2em; color: var(--text);
+}
+.lt-ctrl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 10px 16px; border-top: 1px solid var(--border); }
+.lt-btn {
+  font: inherit; font-weight: 800; font-size: .9rem; cursor: pointer;
+  padding: 8px 16px; border-radius: 9px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+}
+.lt-btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.lt-btn:disabled { opacity: .45; cursor: default; }
+.lt-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.lt-step { margin-left: auto; font-size: .82rem; color: var(--text-faint); font-family: var(--mono); }
+
+/* break / continue 追蹤表 */
+table.bc td.skip { color: var(--warn); font-weight: 700; }
+table.bc td.stop { color: var(--danger); font-weight: 700; }
+table.bc td.print { color: var(--ok); font-weight: 700; }
+@media print { .lt-ctrl { display: none; } }

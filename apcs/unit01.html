@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+<link rel="stylesheet" href="assets/judge.css">
 </head>
 <body>
 <header class="topbar">
@@ -16,9 +19,13 @@
       <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
     </a>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">課程首頁</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
   </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
 </header>
 
 <main class="wrap" data-unit="1">
@@ -35,28 +42,30 @@
     <li>知道 APCS 是什麼、成績可以用在哪裡</li>
     <li>認識「程式識讀」與「程式實作」兩科的題型與配分</li>
     <li>認識初級／中級／中高級／高級四個題本的範圍</li>
-    <li>清楚這學期（目標：中級）與下學期（挑戰中高級以上）的規劃</li>
+    <li>清楚這學期的目標：初級練穩、中級挑戰（識讀 4 級分、實作中級 3 級分）</li>
   </ul>
 </div>
 
-<section class="block" id="sec1">
+<section class="block" id="sec1"><span id="s01" class="anchor"></span>
   <h2><span class="num">01</span>為什麼要準備 APCS？</h2>
   <p><strong>APCS（Advanced Placement Computer Science，大學程式設計先修檢測）</strong>是由臺灣師範大學資訊工程系主辦的線上檢測，用來衡量高中生的<strong>程式設計與運算思維能力</strong>。官方網站：
     <a href="https://apcs.csie.ntnu.edu.tw/" target="_blank" rel="noopener">apcs.csie.ntnu.edu.tw ↗</a>，
     最新的簡章、報名期程、歷屆試題都請以官網公告為準。</p>
   <div class="grid cols-3">
     <div class="tile"><h4><span class="ico">🎓</span>升學用途</h4>
-      <p>成績可以用在大學特殊選才、繁星推薦、申請入學等管道的備審／加分項目，是很多資訊相關科系看重的指標。</p></div>
+      <p>大學申請入學有不少資訊相關校系採計 APCS（例如學測沒過一階，APCS 達標仍可能以超額篩選進入二階）；特殊選才也常把 APCS 當作程式能力的證明。各校系怎麼採計，一律以當年度簡章為準。</p></div>
     <div class="tile"><h4><span class="ico">🧠</span>檢驗運算思維</h4>
       <p>題目不是背語法，而是真的要「看懂問題、拆解問題、寫出程式解決問題」，跟我們平常練的思考方式一致。</p></div>
     <div class="tile"><h4><span class="ico">🐍</span>延續我們學過的 Python</h4>
-      <p>高一資訊科技已經打好 Python 基礎；這門課就是把同一套語言，練到能應付 APCS 的題型與難度。</p></div>
+      <p>高一資訊科技的 Python 基礎，這門課把同一套語言練到能應付 APCS 的題型與難度。</p></div>
   </div>
   <div class="callout tip"><span class="t">💡 老師的話</span>
   <p style="margin-bottom:0">這門課的教材<strong>延續高一資訊科技的 Python 內容</strong>，用一樣的語言、一樣的教學方式，只是把深度往上加、加入更多 APCS 風格的題目。已經學過的同學會覺得很熟悉；沒學過的同學，這裡也會把基礎再帶過一次。</p></div>
+  <div class="callout warn"><span class="t">📣 APCS 要自己報名，記下這幾個日期</span>
+  <p style="margin-bottom:0">修這門課<strong>不等於</strong>報名檢測，要自己到 APCS 官網報名（每天 9:00～18:00 開放）。<strong>2027/1/10 檢測：報名 2026/11/23～12/11</strong>；2027/3/14 檢測：報名 2026/12/7～12/25；再下一次是 2027/6/13。報完到信箱確認「報名完成通知」。日期以 <a href="https://apcs.csie.ntnu.edu.tw/" target="_blank" rel="noopener">APCS 官網 ↗</a> 最新公告為準。</p></div>
 </section>
 
-<section class="block" id="sec2">
+<section class="block" id="sec2"><span id="s02" class="anchor"></span>
   <h2><span class="num">02</span>檢測架構：程式識讀 ＋ 程式實作</h2>
   <p>APCS 分成兩個科目，可以只考一科，也可以兩科都考：</p>
   <div class="table-wrap">
@@ -88,42 +97,63 @@
   <p style="margin-bottom:0">程式識讀考的其實就是「<strong>你在腦中能不能像電腦一樣，一行一行把程式跑過一遍</strong>」——這正是我們每個單元的<strong>課堂練習＋顯示解答</strong>在訓練的能力。多練「追蹤程式」，程式識讀就會越來越上手。</p></div>
 </section>
 
-<section class="block" id="sec3">
+<section class="block" id="sec3"><span id="s03" class="anchor"></span>
   <h2><span class="num">03</span>四個題本：範圍一路往上疊加</h2>
   <p>APCS 依難度分成四個題本，範圍是<strong>累加</strong>的：中級包含初級的能力、中高級包含中級……以此類推，越後面的題本並不是「換一套全新的東西」，而是「在前一級的基礎上，再多學一些工具」。</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>題本</th><th>著重能力</th><th>檢測範圍</th></tr></thead>
+      <thead><tr><th>題本</th><th>著重能力</th><th>檢測範圍</th><th>這學期</th></tr></thead>
       <tbody>
         <tr><td><strong>初級</strong></td>
           <td>基礎程式設計能力：用變數存資料、選擇結構做邏輯判斷、迴圈處理重複性任務</td>
-          <td>輸入與輸出・算術／邏輯／位元運算・條件判斷與迴圈</td></tr>
+          <td>輸入與輸出・算術／邏輯／位元運算・條件判斷與迴圈</td>
+          <td><span class="unit-tag go">✅ 打底</span></td></tr>
         <tr><td><strong>中級</strong></td>
           <td>序列型資料結構運用能力：用陣列或串列儲存與處理資料，能做文字處理與流程模擬</td>
-          <td>陣列（arrays）・字元（character）・字串（string）</td></tr>
+          <td>陣列（Python 用串列 list）・字元（Python 是長度 1 的字串，如 <code>s[i]</code>）・字串（string）</td>
+          <td><span class="unit-tag go">🎯 實作目標</span></td></tr>
         <tr><td>中高級</td>
           <td>基礎資料結構運用能力：能用基礎資料結構與演算思維解決問題</td>
-          <td>函式與遞迴・佇列／堆疊・簡單樹（如二元樹）・簡單圖（如網格）・枚舉／資料遍歷・搜尋（二分搜尋、DFS）</td></tr>
+          <td>函式與遞迴・佇列／堆疊・簡單樹（如二元樹）・簡單圖（如網格）・枚舉／資料遍歷・搜尋（二分搜尋、DFS）</td>
+          <td><span class="unit-tag soon">🔍 識讀會考函式、遞迴、二分搜尋</span></td></tr>
         <tr><td>高級</td>
           <td>基礎演算法運用能力：具備複雜度分析能力，能有效率地解決問題</td>
-          <td>樹／圖・動態規劃（DP）・分治法・貪心法則</td></tr>
+          <td>樹／圖・動態規劃（DP）・分治法・貪心法則</td>
+          <td><span class="unit-tag later">📅 下學期／自學（見單元 8）</span></td></tr>
       </tbody>
     </table>
   </div>
+  <details class="supp" style="margin:16px 0">
+    <summary>📌 中級的「字元」，在 Python 裡是什麼？<span class="supp-tag">點開閱讀</span></summary>
+    <div class="supp-body">
+      <p>「字元（character）」是 C／C++／Java 的說法，這些語言有獨立的 <code>char</code> 型態，常用 <code>c - '0'</code> 這種 ASCII 運算。<strong>Python 沒有字元型態</strong>，一個字元就是「長度 1 的字串」，例如 <code>s[0]</code>、<code>for c in s</code> 裡的 <code>c</code>。所以對我們來說，「字元」指的就是<strong>把字串一個字一個字拿出來處理</strong>。</p>
+      <p>對照官方公布的中級範例與真題，實際用到字元的地方是：</p>
+      <ul style="margin:0 0 8px">
+        <li><strong>字串解碼</strong>（官方中級範例）：數 0/1 字串裡有幾個 <code>'1'</code>、判斷 <code>e[i]</code> 是 <code>'0'</code> 還是 <code>'1'</code>、從字串頭尾各取一個字元。</li>
+        <li><strong>商品包裝地</strong>（2025 年 10 月中級）：把條碼的每一位取出來，用 <code>int(c)</code> 轉成數字相加；條碼開頭可能是 0，必須保持字串。</li>
+        <li><strong>特殊位置</strong>、<strong>蒐集寶石</strong>（官方中級範例）：都是二維陣列題，沒有用到字元。</li>
+      </ul>
+      <p style="margin-bottom:0">結論：Python 要練的是 <code>s[i]</code>、<code>for c in s</code>、<code>c == '1'</code>、<code>s.count('1')</code>、<code>int(c)</code>、<code>isupper()</code> 這些寫法；<code>ord()</code>／<code>chr()</code> 只有字母位移、字母轉索引時才需要，當作備用技巧即可。</p>
+    </div>
+  </details>
+  <div class="callout">
+      <span class="t">🎯 這學期的目標</span>
+      <p><strong>程式識讀拿到 4 級分</strong>（70 分以上，30 題至少答對 21 題），<strong>程式實作報考中級題本拿到 3 級分</strong>（150 分以上，三題至少穩拿兩題）。實作的重心是中級的陣列、字元、字串與二維模擬；識讀的範圍比較廣，官方識讀範例 30 題裡光是遞迴就有 9 題，所以學期後段會花時間把遞迴追蹤練熟。每個單元要寫哪些 Judge、做哪些識讀題，統整在 <a href="judge.html">Judge 與識讀練習</a>。</p>
+    </div>
   <div class="grid cols-2">
     <div class="tile"><h4><span class="ico">✅</span>初級 ＋ 中級</h4>
       <p><strong>這學期的主戰場。</strong>把變數、運算子、條件、迴圈練到穩，再把陣列、字元、字串練到能上場挑戰中級。</p></div>
     <div class="tile"><h4><span class="ico">🔜</span>函式（中高級的一部分）</h4>
-      <p>函式正式來說屬於「中高級」，但因為它是寫出乾淨程式的基本功，我們提早在單元 7 詳細講——順便替下學期的遞迴打地基。</p></div>
+      <p>函式正式來說屬於「中高級」，但因為它是寫出乾淨程式的基本功，我們提早在單元 7 詳細講——程式識讀也很常考函式與遞迴。</p></div>
   </div>
 </section>
 
-<section class="block" id="sec4">
+<section class="block" id="sec4"><span id="s04" class="anchor"></span>
   <h2><span class="num">04</span>這學期的地圖</h2>
   <div class="timeline"><div class="tl-row">
     <div class="tl-block a"><span class="tl-when">單元 1–4</span><span class="tl-what">📗 初級打底</span></div>
     <div class="tl-arrow">➜</div>
-    <div class="tl-block b"><span class="tl-when">單元 5–8</span><span class="tl-what">🎯 挑戰中級＋函式</span></div>
+    <div class="tl-block b"><span class="tl-when">單元 5–9</span><span class="tl-what">🎯 挑戰中級＋識讀</span></div>
     <div class="tl-arrow">➜</div>
     <div class="tl-block c"><span class="tl-when">下學期</span><span class="tl-what">🚀 中高級以上</span></div>
   </div></div>
@@ -131,23 +161,24 @@
     <div class="card">
       <h3>📗 起點篇：初級打底（單元 1–4）</h3>
       <ul>
-        <li>變數、資料型態與輸出入</li>
+        <li>變數、資料型態與輸出入；附：上機評測基本功</li>
         <li>運算子大全：算術・比較・邏輯・位元</li>
-        <li>條件判斷與迴圈</li>
+        <li>條件判斷與迴圈；附：輸入技巧與多行輸入</li>
       </ul>
     </div>
     <div class="card">
-      <h3>🎯 挑戰篇：邁向中級（單元 5–8）</h3>
+      <h3>🎯 挑戰篇與識讀篇（單元 5–9）</h3>
       <ul>
         <li>陣列與串列（List）</li>
-        <li>字元與字串（String）</li>
-        <li>函式使用規則大全（附遞迴暖身）</li>
-        <li>綜合實戰演練與下學期預告</li>
+        <li>字元與字串、字典計數；附：二維串列與網格模擬</li>
+        <li>函式使用規則大全；附：遞迴追蹤</li>
+        <li>綜合實戰、經典小程式與進階學習地圖</li>
+        <li>識讀基本觀念與總整理（單元 9）</li>
       </ul>
     </div>
   </div>
   <div class="callout tip"><span class="t">📅 下學期預告</span>
-  <p style="margin-bottom:0">如果下學期繼續修 APCS，我們會接著把<strong>中高級到高級</strong>的內容講深：遞迴（recursion）、佇列與堆疊（queue／stack）、樹與圖的基本操作、二分搜尋與 DFS，一路往上到動態規劃、分治法、貪心法則——目標挑戰中高級以上的題本。</p></div>
+  <p style="margin-bottom:0">如果下學期繼續修 APCS，我們會接著把<strong>中高級到高級</strong>的內容講深：遞迴、佇列與堆疊、樹與圖、二分搜尋與 DFS，一路往上到貪心、分治、動態規劃。想先自學的同學，單元 8 整理了學習地圖與吳邦一老師的 AP325 教材連結。</p></div>
 </section>
 
 <div class="exercise">

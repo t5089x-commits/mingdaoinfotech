@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 7 附：遞迴追蹤｜明道中學 · APCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/judge.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · APCS<small>115 學年度第一學期 · 高中部</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="judge.html">🧩 Judge 與識讀練習</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap" data-unit="7">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 7 附</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">挑戰篇　補充單元（識讀主力）</span>
+  <h1>遞迴追蹤：識讀的重點題型</h1>
+  <p>官方識讀範例 30 題裡有 9 題是遞迴。學會「找終止條件、寫出關係式、由小算到大」三步驟，就能穩穩拿分。</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>會用「找終止條件 → 寫關係式 → 由小算到大」追蹤遞迴</li>
+    <li>會畫兩個分支的呼叫樹，算出呼叫次數</li>
+    <li>看得出 print 放在遞迴呼叫前後，印出順序有什麼不同</li>
+    <li>會追蹤兩個函式互相呼叫，會找出終止條件的錯誤</li>
+  </ul>
+</div>
+
+<section class="block" id="s01">
+  <h2><span class="num">01</span>追蹤遞迴的三個步驟</h2>
+
+  <p>官方識讀範例 30 題裡有 9 題是遞迴，比例很高，是能不能拿到 4 級分的關鍵。追遞迴不用硬記技巧，照這三步做就好：</p>
+  <div class="grid cols-3">
+    <div class="tile"><h4><span class="ico">①</span>找終止條件</h4><p>哪一行<strong>不會再呼叫自己</strong>？那就是 base case，例如 <code>if n == 0: return 1</code>。</p></div>
+    <div class="tile"><h4><span class="ico">②</span>寫出關係式</h4><p>把程式翻成數學式，例如 <code>f(n) = n × f(n-1)</code>。看清楚是 <code>n-1</code> 還是 <code>n-2</code>、是加還是乘。</p></div>
+    <div class="tile"><h4><span class="ico">③</span>由小算到大</h4><p>從 base case 開始，<strong>列表</strong>算出 f(0)、f(1)、f(2)……一路往上，直到題目問的那個。</p></div>
+  </div>
+  <div class="callout tip"><span class="t">💡 為什麼要「由小算到大」？</span>
+  <p style="margin-bottom:0">如果從 f(10) 往下展開，會寫出一長串等待的算式，很容易漏掉或算錯。反過來從最小的開始列表，每一格只需要用前面算好的數字，又快又不容易錯。單元 7 的 factorial(4) 動畫，就是「往下呼叫、再往回算」的過程。</p></div>
+
+</section>
+
+<section class="block" id="s02">
+  <h2><span class="num">02</span>單一呼叫的遞迴：階乘、次方、最大公因數</h2>
+
+  <p>每次只呼叫自己一次的遞迴，就像一條鏈子，往下走到底再往回算。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">次方：G(a, x) = a × G(a, x-1)</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def G(a, x):              # a 的 x 次方
+    if x == 0:
+        return 1
+    return a * G(a, x - 1)
+
+print(G(3, 4))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+81</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>呼叫</th><th>a</th><th>x</th><th>x == 0？</th><th>接下來</th><th>回傳值（往回算）</th></tr></thead>
+      <tbody>
+        <tr><td>G(3, 4)</td><td>3</td><td>4</td><td>否</td><td>要算 3 × G(3, 3)，先呼叫 G(3, 3)</td><td>3 × 27 = <b>81</b></td></tr>
+        <tr><td>G(3, 3)</td><td>3</td><td>3</td><td>否</td><td>要算 3 × G(3, 2)，先呼叫 G(3, 2)</td><td>3 × 9 = 27</td></tr>
+        <tr><td>G(3, 2)</td><td>3</td><td>2</td><td>否</td><td>要算 3 × G(3, 1)，先呼叫 G(3, 1)</td><td>3 × 3 = 9</td></tr>
+        <tr><td>G(3, 1)</td><td>3</td><td>1</td><td>否</td><td>要算 3 × G(3, 0)，先呼叫 G(3, 0)</td><td>3 × 1 = 3</td></tr>
+        <tr><td>G(3, 0)</td><td>3</td><td>0</td><td>是</td><td>終止條件，不再呼叫</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>由上往下看「接下來」欄是<strong>往下呼叫</strong>的過程；碰到終止條件之後，再<strong>由下往上</strong>看「回傳值」欄，一層一層把答案算回來，最上面的 G(3, 4) 就是 81。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">最大公因數：輾轉相除法</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def gcd(a, b):
+    r = a % b
+    if r == 0:
+        return b
+    return gcd(b, r)
+
+print(gcd(76, 48))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+4</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>呼叫</th><th>a</th><th>b</th><th>r = a % b</th><th>接下來</th></tr></thead>
+      <tbody>
+        <tr><td>gcd(76, 48)</td><td>76</td><td>48</td><td>28</td><td>呼叫 gcd(48, 28)</td></tr>
+        <tr><td>gcd(48, 28)</td><td>48</td><td>28</td><td>20</td><td>呼叫 gcd(28, 20)</td></tr>
+        <tr><td>gcd(28, 20)</td><td>28</td><td>20</td><td>8</td><td>呼叫 gcd(20, 8)</td></tr>
+        <tr><td>gcd(20, 8)</td><td>20</td><td>8</td><td>4</td><td>呼叫 gcd(8, 4)</td></tr>
+        <tr><td>gcd(8, 4)</td><td>8</td><td>4</td><td>0</td><td>r 是 0，回傳 b = <b>4</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>官方識讀範例相關題目：<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="11" title="看官方識讀範例第 11 題">11</button><button type="button" class="qchip" data-q="21" title="看官方識讀範例第 21 題">21</button><button type="button" class="qchip" data-q="23" title="看官方識讀範例第 23 題">23</button></span>（11 是階乘的終止條件除錯、21 是次方、23 是 GCD 填空）</p>
+</section>
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>兩個分支的遞迴：費氏數列與呼叫樹</h2>
+
+  <p>如果一次呼叫自己<strong>兩次</strong>，展開就不是一條鏈子，而是一棵「呼叫樹」：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">費氏數列</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def fib(n):
+    if n &lt;= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print([fib(i) for i in range(10)])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</div>
+  </div>
+
+  <div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">fib(4) 的呼叫樹</span></div>
+  <pre><code>fib(4)
+├── fib(3)
+│   ├── fib(2)
+│   │   ├── fib(1) → 1
+│   │   └── fib(0) → 0
+│   └── fib(1) → 1
+└── fib(2)
+    ├── fib(1) → 1
+    └── fib(0) → 0</code></pre></div>
+  <p>畫出呼叫樹，就可以回答識讀很愛問的「<strong>總共呼叫了幾次</strong>」：數樹上有幾個節點就好，fib(4) 一共呼叫 9 次。也可以用程式驗證：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">數呼叫次數</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">count = 0
+def fib(n):
+    global count
+    count += 1
+    if n &lt;= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+for k in range(1, 7):
+    count = 0
+    fib(k)
+    print(f&quot;fib({k}) 呼叫了 {count} 次&quot;)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+fib(1) 呼叫了 1 次
+fib(2) 呼叫了 3 次
+fib(3) 呼叫了 5 次
+fib(4) 呼叫了 9 次
+fib(5) 呼叫了 15 次
+fib(6) 呼叫了 25 次</div>
+  </div>
+
+  <div class="callout"><span class="t">🔎 觀察</span>
+  <p style="margin-bottom:0">fib(2) 在樹裡被算了兩次、fib(1) 被算了三次——同樣的東西一直重算，所以 n 稍微變大，呼叫次數就暴增。這也是識讀「效能分析」題的考點：兩個分支的遞迴，次數大約每多 1 就變成將近兩倍。</p></div>
+
+  <p>官方識讀範例相關題目：<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="14" title="看官方識讀範例第 14 題">14</button></span>（填出費氏數列的遞迴式）</p>
+</section>
+
+<section class="block" id="s04">
+  <h2><span class="num">04</span>由小算到大：列表法</h2>
+
+  <p>遇到看不出在算什麼的遞迴，就直接列表。官方識讀範例第 16 題：<code>F(a) = F(a-2) + F(a-3)</code>，問終止條件是什麼才會讓 F(7) = 12。我們先假設終止條件是 <code>a &lt; 0</code>：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">先把每一個值算出來</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def F(a):
+    if a &lt; 0:
+        return 1
+    return F(a - 2) + F(a - 3)
+
+print([F(a) for a in range(8)])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[2, 2, 3, 4, 5, 7, 9, 12]</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>a</th><th>-3</th><th>-2</th><th>-1</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+      <tbody>
+        <tr><td>F(a)</td><td>1</td><td>1</td><td>1</td><td>F(-2)+F(-3) = 2</td><td>F(-1)+F(-2) = 2</td><td>F(0)+F(-1) = 3</td><td>F(1)+F(0) = 4</td><td>F(2)+F(1) = 5</td><td>F(3)+F(2) = 7</td><td>F(4)+F(3) = 9</td><td>F(5)+F(4) = <b>12</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>F(7) = 12，所以終止條件是 <code>a &lt; 0</code>。考試時換成別的條件，一樣把表重列一次，就能刪去錯的選項。<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="16" title="看官方識讀範例第 16 題">16</button><button type="button" class="qchip" data-q="3" title="看官方識讀範例第 3 題">3</button></span></p>
+</section>
+
+<section class="block" id="s05">
+  <h2><span class="num">05</span>遞迴裡有 print：注意印出的順序</h2>
+
+  <p><code>print</code> 放在遞迴呼叫的<strong>前面</strong>還是<strong>後面</strong>，印出的順序完全不一樣：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">print 在呼叫前 vs. 呼叫後</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def down(n):
+    if n == 0:
+        return
+    print(n, end=&quot; &quot;)      # 先印，再往下呼叫
+    down(n - 1)
+
+def up(n):
+    if n == 0:
+        return
+    up(n - 1)              # 先往下呼叫，回來才印
+    print(n, end=&quot; &quot;)
+
+down(3); print()
+up(3); print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 2 1 
+1 2 3 </div>
+  </div>
+
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">前後都有 print：像照鏡子</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def both(n):
+    if n == 0:
+        return
+    print(n, end=&quot; &quot;)
+    both(n - 1)
+    print(n, end=&quot; &quot;)
+
+both(3)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 2 1 1 2 3 </div>
+  </div>
+
+  <p>追這種題目，可以把呼叫樹畫出來，<strong>進入一個呼叫時寫下前面的 print，離開時寫下後面的 print</strong>。</p>
+</section>
+
+<section class="block" id="s06">
+  <h2><span class="num">06</span>兩個函式互相呼叫</h2>
+
+  <p>官方識讀範例第 8 題是 <code>f1</code> 呼叫 <code>f2</code>、<code>f2</code> 又呼叫 <code>f1</code>。追蹤方法一樣：把每一次呼叫寫成一行，記下參數和印出的東西。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">官方識讀範例第 8 題的程式</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def f1(m):
+    if m &gt; 3:
+        print(m)
+        return
+    print(m)
+    f2(m + 2)
+    print(m)
+
+def f2(n):
+    if n &gt; 3:
+        print(n)
+        return
+    print(n)
+    f1(n - 1)
+    print(n)
+
+f1(1)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1
+3
+2
+4
+2
+3
+1</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>呼叫順序</th><th>參數</th><th>做了什麼</th></tr></thead>
+      <tbody>
+        <tr><td>f1(1)</td><td>m = 1</td><td>印 1，呼叫 f2(3)，等它回來再印 1</td></tr>
+        <tr><td>　f2(3)</td><td>n = 3</td><td>印 3，呼叫 f1(2)，等它回來再印 3</td></tr>
+        <tr><td>　　f1(2)</td><td>m = 2</td><td>印 2，呼叫 f2(4)，等它回來再印 2</td></tr>
+        <tr><td>　　　f2(4)</td><td>n = 4</td><td>4 > 3，印 4，直接結束</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>所以印出順序是 1、3、2、4、2、3、1。f1 被呼叫 2 次、f2 被呼叫 2 次。<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="8" title="看官方識讀範例第 8 題">8</button><button type="button" class="qchip" data-q="13" title="看官方識讀範例第 13 題">13</button></span></p>
+</section>
+
+<section class="block" id="s07">
+  <h2><span class="num">07</span>遞迴的除錯：沒有終止條件會怎樣？</h2>
+
+  <p>終止條件寫錯，遞迴就停不下來，Python 會在呼叫太多層之後當掉：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">❌ 沒有終止條件</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def fac(n):
+    return n * fac(n - 1)     # 忘了寫終止條件
+
+print(fac(3))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+<span class="muted">（沒有輸出）</span>
+<span class="err">Traceback (most recent call last):
+  File "程式.py", line 2, in fac
+RecursionError: maximum recursion depth exceeded</span></div>
+  </div>
+
+  <p>另一種常見錯誤是終止條件「放錯位置」。官方識讀範例第 11 題：<code>if n &gt;= 0:</code> 會讓 n = 0 時繼續呼叫 <code>fun(-1)</code>，乘到 0，結果永遠是 0。<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="11" title="看官方識讀範例第 11 題">11</button><button type="button" class="qchip" data-q="1" title="看官方識讀範例第 1 題">1</button></span></p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">終止條件寫錯：答案永遠是 0</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def fun(n):
+    fac = 1
+    if n &gt;= 0:              # 錯：n = 0 時還會繼續往下
+        fac = n * fun(n - 1)
+    return fac
+
+print(fun(4))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+0</div>
+  </div>
+
+</section>
+<div class="exercise qa-list">
+  <h3>✏️ 識讀練習：先自己追蹤，再按「顯示解答」</h3>
+  <ol>
+    <li><code>f(5)</code> 回傳多少？
+      <pre class="workpre">def f(n):
+    if n == 1:
+        return 1
+    return n + f(n - 1)
+
+print(f(5))</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">15</pre><p style="margin-bottom:0">f(n) = n + f(n-1)，f(1) = 1，所以是 1+2+3+4+5 = 15。</p></div>
+    </li>
+    <li><code>g(4)</code> 回傳多少？
+      <pre class="workpre">def g(n):
+    if n &lt;= 1:
+        return 1
+    return g(n - 1) + 2 * g(n - 2)
+
+print(g(4))</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">11</pre><p style="margin-bottom:0">列表：g(0)=1、g(1)=1、g(2)=1+2×1=3、g(3)=3+2×1=5、g(4)=5+2×3=11。</p></div>
+    </li>
+    <li>這段程式印出什麼？
+      <pre class="workpre">def p(n):
+    if n &lt;= 0:
+        return
+    p(n - 2)
+    print(n, end=&#x27; &#x27;)
+
+p(7)</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">1 3 5 7 </pre><p style="margin-bottom:0">print 在呼叫之後，所以會先一路呼叫到 p(-1)，再往回印：1 3 5 7。</p></div>
+    </li>
+    <li><code>h(1234)</code> 回傳多少？這個函式在算什麼？
+      <pre class="workpre">def h(n):
+    if n &lt; 10:
+        return n
+    return h(n // 10) + n % 10
+
+print(h(1234))</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">10</pre><p style="margin-bottom:0">每次取出最後一位加起來：h(1234) = h(123) + 4 = h(12) + 3 + 4 = h(1) + 2 + 3 + 4 = 10，這個函式在算「各位數字的和」。</p></div>
+    </li>
+    <li><code>fib(6)</code> 的值是多少？呼叫 <code>fib(5)</code> 一共會呼叫 fib 幾次（包含自己）？
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p style="margin-bottom:0">fib(6) = 8。fib(5) 一共呼叫 15 次，可以畫呼叫樹，或用第 03 節的程式驗證。</p></div>
+    </li>
+  </ol>
+</div>
+
+<section class="block judge-block" id="judge">
+  <h2><span class="num">🧩</span>本單元去哪裡 Judge</h2>
+  <p>按題號直接開啟 ZeroJudge。送出前先看 <a href="unit02b.html">單元 2 附：上機評測基本功</a>（<code>input()</code> 不放提示文字、輸出格式一字不差）。<span class="jtag done">✅</span> 是已經派過的作業；<span class="jtag must">必寫</span> 每個人都要 AC；<span class="jtag bonus">加分</span> 寫完必寫題再挑戰。</p>
+  <div class="table-wrap">
+    <table class="jtable">
+      <thead><tr><th>題目</th><th>練什麼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr class="j-bonus"><td><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=d212" target="_blank" rel="noopener"><b>d212</b>東東爬階梯</a></td><td>遞迴／由小算到大</td><td><span class="jtag bonus">加分</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習</h2>
+  <h3>APCS 官方識讀範例（9 題）</h3>
+  <p>按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="1" title="看官方識讀範例第 1 題">1</button><span>遞迴：依條件分支的回傳值</span></li><li><button type="button" class="qchip" data-q="3" title="看官方識讀範例第 3 題">3</button><span>遞迴：依回傳值反推參數</span></li><li><button type="button" class="qchip" data-q="8" title="看官方識讀範例第 8 題">8</button><span>遞迴：兩個函式互相呼叫</span></li><li><button type="button" class="qchip" data-q="11" title="看官方識讀範例第 11 題">11</button><span>遞迴：階乘的終止條件除錯</span></li><li><button type="button" class="qchip" data-q="13" title="看官方識讀範例第 13 題">13</button><span>遞迴：迴圈中呼叫遞迴函式</span></li><li><button type="button" class="qchip" data-q="14" title="看官方識讀範例第 14 題">14</button><span>遞迴：費氏數列</span></li><li><button type="button" class="qchip" data-q="16" title="看官方識讀範例第 16 題">16</button><span>遞迴：依回傳值反推終止條件</span></li><li><button type="button" class="qchip" data-q="21" title="看官方識讀範例第 21 題">21</button><span>遞迴：次方</span></li><li><button type="button" class="qchip" data-q="23" title="看官方識讀範例第 23 題">23</button><span>遞迴：最大公因數 GCD</span></li></ul>
+  <h3>吳邦一〈Python 程式識讀 125 題〉：這一單元 3 題</h3>
+  <p>題目收在講義 <a href="assets/handouts/reading-3-final.pdf" target="_blank" rel="noopener">《挑戰篇（二）＋總整理　識讀練習》PDF</a>，按題號會跳到那一題（<span class="wq d1">易</span><span class="wq d2">中</span><span class="wq d3">難</span>）。每一題都用紙筆追蹤，不要用電腦跑；解答在原題本後半。</p>
+  <p class="wq-row"><span class="wqs"><a class="wq d2" href="assets/handouts/reading-3-final.pdf#page=3" target="_blank" rel="noopener" title="Q071・中・在講義第 3 頁">71</a><a class="wq d2" href="assets/handouts/reading-3-final.pdf#page=3" target="_blank" rel="noopener" title="Q075・中・在講義第 3 頁">75</a><a class="wq d3" href="assets/handouts/reading-3-final.pdf#page=9" target="_blank" rel="noopener" title="Q116・難・在講義第 9 頁">116</a></span></p>
+  <p class="muted">全部的 Judge 題目與識讀練習統整在 <a href="judge.html">🧩 Judge 與識讀練習</a>。</p>
+</section>
+
+<nav class="unit-nav">
+    <a class="prev" href="unit07.html"><div class="dir">← 上一單元</div><div class="ttl">函式使用規則大全</div></a>
+    <a class="next" href="unit06b.html"><div class="dir">下一單元 →</div><div class="ttl">二維串列與網格模擬</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · APCS 先修班　115 學年度第一學期 · 高中部　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>
