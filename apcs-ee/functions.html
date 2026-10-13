@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>函式與語法統整表｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html" class="on" aria-current="page">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>函式與語法統整表</span></nav>
+  <section class="unit-hero">
+    <span class="kicker">資電APCS週六課程　函式與語法統整</span>
+    <h1>函式與語法統整表</h1>
+    <p>課程中會用到的 100 個函式與寫法，全部放在這一頁。每個範例都可以直接複製到 IDLE 執行，右邊的結果就是實際印出來的內容。</p>
+  </section>
+
+<div class="fn-tools">
+  <input class="fn-search" type="search" placeholder="搜尋函式或關鍵字，例如 split、二維、遞迴" aria-label="搜尋函式">
+  <span class="fn-count"></span>
+</div>
+<nav class="fn-cats" aria-label="分類">
+  <a href="#fn-io">輸入與輸出</a>
+  <a href="#fn-type">型態轉換</a>
+  <a href="#fn-op">運算子</a>
+  <a href="#fn-loop">迴圈與 range</a>
+  <a href="#fn-list">一維串列</a>
+  <a href="#fn-char">字元判斷與轉換</a>
+  <a href="#fn-str">字串處理</a>
+  <a href="#fn-dict">字典計數</a>
+  <a href="#fn-grid">二維串列與網格模擬</a>
+  <a href="#fn-func">函式與遞迴</a>
+  <a href="#fn-search">排序、搜尋與效能</a>
+</nav>
+
+<section class="block" id="fn-io" data-fn-cat="io">
+  <h2><span class="num">fx</span>輸入與輸出</h2>
+  <p>APCS 實作題第一步就是把資料讀進來；讀錯格式，後面寫得再好也拿不到分。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>input()</code></td><td class="use">讀入一整行文字，結果一定是字串</td><td><pre class="ex">s = input()
+print(s, type(s))</pre></td><td><pre class="res"><span class="muted">輸入：42</span>
+42 &lt;class &#x27;str&#x27;&gt;</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>print(a, b)</code></td><td class="use">印出多個值，預設用空白隔開、最後換行</td><td><pre class="ex">print(3, 5, &#x27;ok&#x27;)</pre></td><td><pre class="res">3 5 ok</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>print(…, sep=…)</code></td><td class="use">指定多個值之間的分隔符號</td><td><pre class="ex">print(2026, 10, 5, sep=&#x27;/&#x27;)</pre></td><td><pre class="res">2026/10/5</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>print(…, end=…)</code></td><td class="use">指定結尾，不換行就能接著印</td><td><pre class="ex">print(&#x27;A&#x27;, end=&#x27;&#x27;)
+print(&#x27;B&#x27;)</pre></td><td><pre class="res">AB</pre></td><td class="wk">第 1 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button></div></td></tr>
+        <tr><td class="name"><code>f-string</code></td><td class="use">把變數直接嵌進字串</td><td><pre class="ex">x = 7
+print(f&#x27;[{x * 2}]&#x27;)</pre></td><td><pre class="res">[14]</pre></td><td class="wk">第 1 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button></div></td></tr>
+        <tr><td class="name"><code>s.split()</code></td><td class="use">依空白把字串切成串列（元素還是字串）</td><td><pre class="ex">print(&#x27;3 5 7&#x27;.split())</pre></td><td><pre class="res">[&#x27;3&#x27;, &#x27;5&#x27;, &#x27;7&#x27;]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>map(int, …)</code></td><td class="use">把每個元素都轉成整數</td><td><pre class="ex">print(list(map(int, [&#x27;3&#x27;, &#x27;5&#x27;])))</pre></td><td><pre class="res">[3, 5]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>list(map(int, input().split()))</code></td><td class="use">APCS 最常見的一行讀多個整數</td><td><pre class="ex">nums = list(map(int, input().split()))
+print(nums, sum(nums))</pre></td><td><pre class="res"><span class="muted">輸入：4 8 15</span>
+[4, 8, 15] 27</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>a, b = map(int, input().split())</code></td><td class="use">一行讀入固定個數的整數</td><td><pre class="ex">n, m = map(int, input().split())
+print(n * m)</pre></td><td><pre class="res"><span class="muted">輸入：3 4</span>
+12</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+      <tr><td class="name"><code>print(*a)</code></td><td class="use">把串列拆開，用空白隔開印出（Judge 最常用）</td><td><pre class="ex">a = [3, 1, 4]
+print(*a)
+print(*a, sep=&#x27;,&#x27;)</pre></td><td><pre class="res">3 1 4
+3,1,4</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>for _ in range(n): input()</code></td><td class="use">先讀 n，再讀 n 行</td><td><pre class="ex">n = int(input())
+for _ in range(n):
+    a, b = map(int, input().split())
+    print(a + b)</pre></td><td><pre class="res"><span class="muted">輸入：2 ⏎ 1 2 ⏎ 3 4</span>
+3
+7</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>[list(map(int, input().split())) for _ in range(n)]</code></td><td class="use">讀入 n 行的表格（二維串列）</td><td><pre class="ex">n, m = map(int, input().split())
+g = [list(map(int, input().split())) for _ in range(n)]
+print(g)</pre></td><td><pre class="res"><span class="muted">輸入：2 3 ⏎ 1 2 3 ⏎ 4 5 6</span>
+[[1, 2, 3], [4, 5, 6]]</pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-type" data-fn-cat="type">
+  <h2><span class="num">fx</span>型態轉換</h2>
+  <p>字串和數字之間的轉換，是實作題最常見的無聲錯誤來源。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>int(x)</code></td><td class="use">轉成整數；字串裡要是整數</td><td><pre class="ex">print(int(&#x27;15&#x27;) + 1)</pre></td><td><pre class="res">16</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>str(x)</code></td><td class="use">轉成字串</td><td><pre class="ex">print(str(15) + &#x27;1&#x27;)</pre></td><td><pre class="res">151</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>round(x)</code></td><td class="use">取最接近的整數；剛好 .5 時取偶數</td><td><pre class="ex">print(round(3.7), round(2.5), round(3.5))</pre></td><td><pre class="res">4 2 4</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>int(c) 處理每一位數</code></td><td class="use">把數字字串的每一位轉成數字相加</td><td><pre class="ex">code = &#x27;4710018&#x27;
+print(sum(int(c) for c in code))</pre></td><td><pre class="res">21</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>list(x)</code></td><td class="use">轉成串列</td><td><pre class="ex">print(list(range(4)))
+print(list(&#x27;abc&#x27;))</pre></td><td><pre class="res">[0, 1, 2, 3]
+[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-op" data-fn-cat="op">
+  <h2><span class="num">fx</span>運算子</h2>
+  <p>識讀最愛考 // 和 % 的組合，要算得又快又準。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>a // b</code></td><td class="use">整數除法：往下取整（負數要小心，<code>-7 // 2</code> 是 -4）</td><td><pre class="ex">print(17 // 5, -7 // 2)</pre></td><td><pre class="res">3 -4</pre></td><td class="wk">第 1 次<br>第 3 節<div class="qchips"><button type="button" class="qchip" data-q="1" title="看第 1 題">1</button><button type="button" class="qchip" data-q="3" title="看第 3 題">3</button><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button></div></td></tr>
+        <tr><td class="name"><code>a % b</code></td><td class="use">取餘數</td><td><pre class="ex">print(17 % 5, 76 % 48)</pre></td><td><pre class="res">2 28</pre></td><td class="wk">第 1 次<br>第 3 節<div class="qchips"><button type="button" class="qchip" data-q="9" title="看第 9 題">9</button><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button><button type="button" class="qchip" data-q="23" title="看第 23 題">23</button></div></td></tr>
+        <tr><td class="name"><code>(i + k) % n</code></td><td class="use">讓索引在 0～n-1 之間循環</td><td><pre class="ex">n = 10
+print([(i + 2) % n for i in range(10)])</pre></td><td><pre class="res">[2, 3, 4, 5, 6, 7, 8, 9, 0, 1]</pre></td><td class="wk">第 2 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="25" title="看第 25 題">25</button></div></td></tr>
+        <tr><td class="name"><code>a ** b</code></td><td class="use">次方</td><td><pre class="ex">print(3 ** 7)</pre></td><td><pre class="res">2187</pre></td><td class="wk">第 1 次<br>第 3 節<div class="qchips"><button type="button" class="qchip" data-q="21" title="看第 21 題">21</button></div></td></tr>
+        <tr><td class="name"><code>abs(x)</code></td><td class="use">絕對值；常用來算兩點距離</td><td><pre class="ex">print(abs(2 - 7) + abs(5 - 1))</pre></td><td><pre class="res">9</pre></td><td class="wk">第 3 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>and / or / not</code></td><td class="use">邏輯運算；<code>and</code>／<code>or</code> 回傳的是其中一邊的值</td><td><pre class="ex">x = 15
+print(x &gt; 10 and x % 2 == 0, not x &lt; 0)</pre></td><td><pre class="res">False True</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>運算子優先順序</code></td><td class="use">** → 負號 → * / // % → + - → 比較 → not → and → or</td><td><pre class="ex">print(2 + 3 * 4, -2 ** 2, 2 ** 3 ** 2)</pre></td><td><pre class="res">14 -4 512</pre></td><td class="wk">第 1 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>0 視為假</code></td><td class="use">if 後面放數字，0 是假、非 0 是真</td><td><pre class="ex">count = 0
+if count:
+    print(&#x27;真&#x27;)
+else:
+    print(&#x27;假&#x27;)</pre></td><td><pre class="res">假</pre></td><td class="wk">第 1 次<br>第 4 節<div class="qchips"><button type="button" class="qchip" data-q="10" title="看第 10 題">10</button></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-loop" data-fn-cat="loop">
+  <h2><span class="num">fx</span>迴圈與 range</h2>
+  <p>range 的起點、終點、間隔是識讀最常見的陷阱。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>range(n)</code></td><td class="use">0, 1, …, n-1</td><td><pre class="ex">print(list(range(5)))</pre></td><td><pre class="res">[0, 1, 2, 3, 4]</pre></td><td class="wk">第 1 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>range(a, b)</code></td><td class="use">a, a+1, …, b-1（不含 b）</td><td><pre class="ex">print(list(range(2, 6)))</pre></td><td><pre class="res">[2, 3, 4, 5]</pre></td><td class="wk">第 1 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>range(a, b, k)</code></td><td class="use">每次加 k</td><td><pre class="ex">print(len(range(0, 101, 5)))</pre></td><td><pre class="res">21</pre></td><td class="wk">第 1 次<br>第 5 節<div class="qchips"><button type="button" class="qchip" data-q="26" title="看第 26 題">26</button></div></td></tr>
+        <tr><td class="name"><code>range(a, b, -1)</code></td><td class="use">由大往小，一樣不含 b</td><td><pre class="ex">print(list(range(6, 0, -1)))</pre></td><td><pre class="res">[6, 5, 4, 3, 2, 1]</pre></td><td class="wk">第 1 次<br>第 5 節<div class="qchips"><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button></div></td></tr>
+        <tr><td class="name"><code>while 條件:</code></td><td class="use">條件成立就一直重複</td><td><pre class="ex">i = 1
+while i &lt; 20:
+    i = i * 3
+print(i)</pre></td><td><pre class="res">27</pre></td><td class="wk">第 1 次<br>第 5 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="12" title="看第 12 題">12</button></div></td></tr>
+        <tr><td class="name"><code>break / continue</code></td><td class="use">跳出迴圈／跳過這一輪</td><td><pre class="ex">for i in range(10):
+    if i % 2 == 0:
+        continue
+    if i &gt; 6:
+        break
+    print(i, end=&#x27; &#x27;)</pre></td><td><pre class="res">1 3 5 </pre></td><td class="wk">第 1 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>&#x27;*&#x27; * m</code></td><td class="use">字串乘法：重複 m 次，印圖形常用</td><td><pre class="ex">for m in range(1, 4):
+    print(&#x27; &#x27; * (3 - m) + &#x27;*&#x27; * (2 * m - 1))</pre></td><td><pre class="res">  *
+ ***
+*****</pre></td><td class="wk">第 1 次<br>第 6 節<div class="qchips"><button type="button" class="qchip" data-q="5" title="看第 5 題">5</button><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-list" data-fn-cat="list">
+  <h2><span class="num">fx</span>一維串列</h2>
+  <p>中級題本的主角。索引、切片、走訪要練到不用想。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>[0] * n</code></td><td class="use">建立 n 個 0 的串列</td><td><pre class="ex">print([0] * 5)</pre></td><td><pre class="res">[0, 0, 0, 0, 0]</pre></td><td class="wk">第 2 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="4" title="看第 4 題">4</button><button type="button" class="qchip" data-q="25" title="看第 25 題">25</button></div></td></tr>
+        <tr><td class="name"><code>a[i]、a[-1]</code></td><td class="use">取第 i 個／最後一個元素</td><td><pre class="ex">a = [8, 3, 6, 1]
+print(a[0], a[-1])</pre></td><td><pre class="res">8 1</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>a[i:j:k]</code></td><td class="use">切片：從 i 到 j-1，每次跳 k</td><td><pre class="ex">a = [0, 1, 2, 3, 4, 5]
+print(a[1:4], a[::2])</pre></td><td><pre class="res">[1, 2, 3] [0, 2, 4]</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>a[::-1]</code></td><td class="use">反轉後的新串列</td><td><pre class="ex">print([1, 2, 3][::-1])</pre></td><td><pre class="res">[3, 2, 1]</pre></td><td class="wk">第 2 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>len(a)</code></td><td class="use">元素個數</td><td><pre class="ex">print(len([4, 7, 1]))</pre></td><td><pre class="res">3</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>for x in (…)</code></td><td class="use">走訪 tuple（小括號），用法跟串列一樣，但不能修改</td><td><pre class="ex">for t in (-5, 3, 8):
+    print(t, end=&#x27; &#x27;)</pre></td><td><pre class="res">-5 3 8 </pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>a.clear()</code></td><td class="use">把串列清空（共用同一個串列的名字也會變空）</td><td><pre class="ex">a = [1, 2, 3]
+b = a
+a.clear()
+print(a, b)</pre></td><td><pre class="res">[] []</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>a.append(x)</code></td><td class="use">在尾端加入元素</td><td><pre class="ex">a = []
+for i in range(3):
+    a.append(i * i)
+print(a)</pre></td><td><pre class="res">[0, 1, 4]</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>max() / min() / sum()</code></td><td class="use">最大值、最小值、總和</td><td><pre class="ex">a = [80, 90, 100]
+print(max(a), min(a), sum(a))</pre></td><td><pre class="res">100 80 270</pre></td><td class="wk">第 2 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="24" title="看第 24 題">24</button><button type="button" class="qchip" data-q="29" title="看第 29 題">29</button></div></td></tr>
+        <tr><td class="name"><code>a.count(x)</code></td><td class="use">x 出現幾次</td><td><pre class="ex">print([1, 2, 1, 1].count(1))</pre></td><td><pre class="res">3</pre></td><td class="wk">第 2 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>a.index(x)</code></td><td class="use">x 第一次出現的位置</td><td><pre class="ex">print([5, 7, 9, 7].index(7))</pre></td><td><pre class="res">1</pre></td><td class="wk">第 2 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>x in a</code></td><td class="use">判斷 x 在不在串列裡</td><td><pre class="ex">print(7 in [5, 7, 9], 4 in [5, 7, 9])</pre></td><td><pre class="res">True False</pre></td><td class="wk">第 2 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>a[i], a[j] = a[j], a[i]</code></td><td class="use">交換兩個元素</td><td><pre class="ex">a = [1, 2, 3, 4]
+a[0], a[3] = a[3], a[0]
+print(a)</pre></td><td><pre class="res">[4, 2, 3, 1]</pre></td><td class="wk">第 2 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="15" title="看第 15 題">15</button></div></td></tr>
+        <tr><td class="name"><code>[運算式 for i in range(n)]</code></td><td class="use">串列生成式：一行產生串列</td><td><pre class="ex">b = [i for i in range(6)]
+print(b)</pre></td><td><pre class="res">[0, 1, 2, 3, 4, 5]</pre></td><td class="wk">第 1 次<br>第 7 節<div class="qchips"><button type="button" class="qchip" data-q="30" title="看第 30 題">30</button></div></td></tr>
+        <tr><td class="name"><code>前綴和</code></td><td class="use">pre[i] = 前 i 項總和；區間和用相減</td><td><pre class="ex">a = [3, 1, 4, 1, 5]
+pre = [0] * (len(a) + 1)
+for i in range(len(a)):
+    pre[i + 1] = pre[i] + a[i]
+print(pre, pre[4] - pre[1])</pre></td><td><pre class="res">[0, 3, 4, 8, 9, 14] 6</pre></td><td class="wk">第 2 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="30" title="看第 30 題">30</button></div></td></tr>
+        <tr><td class="name"><code>a[:] / a.copy()</code></td><td class="use">複製一份新的串列</td><td><pre class="ex">a = [1, 2]
+b = a
+c = a[:]
+a.append(3)
+print(b, c)</pre></td><td><pre class="res">[1, 2, 3] [1, 2]</pre></td><td class="wk">第 2 次<br>第 1 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-char" data-fn-cat="char">
+  <h2><span class="num">fx</span>字元判斷與轉換</h2>
+  <p>實作題判斷字元，大多用字串方法就夠；ord／chr 是字母轉索引或位移時的備用技巧。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>c.isupper() / c.islower()</code></td><td class="use">是否為大寫／小寫字母</td><td><pre class="ex">print(&#x27;A&#x27;.isupper(), &#x27;a&#x27;.isupper())</pre></td><td><pre class="res">True False</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>c.isdigit()</code></td><td class="use">是否為數字字元</td><td><pre class="ex">print(&#x27;7&#x27;.isdigit(), &#x27;x&#x27;.isdigit())</pre></td><td><pre class="res">True False</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>c.isalpha()</code></td><td class="use">是否為英文字母</td><td><pre class="ex">print(&#x27;Q&#x27;.isalpha(), &#x27;3&#x27;.isalpha())</pre></td><td><pre class="res">True False</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>s.upper() / s.lower()</code></td><td class="use">轉成大寫／小寫</td><td><pre class="ex">print(&#x27;Apcs&#x27;.upper(), &#x27;Apcs&#x27;.lower())</pre></td><td><pre class="res">APCS apcs</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>ord(c)</code></td><td class="use">字元 → ASCII 編號</td><td><pre class="ex">print(ord(&#x27;A&#x27;), ord(&#x27;a&#x27;), ord(&#x27;0&#x27;))</pre></td><td><pre class="res">65 97 48</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>chr(n)</code></td><td class="use">ASCII 編號 → 字元</td><td><pre class="ex">print(chr(66), chr(98))</pre></td><td><pre class="res">B b</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>ord(c) - ord(&#x27;a&#x27;)</code></td><td class="use">字母轉成 0～25 的索引</td><td><pre class="ex">cnt = [0] * 26
+for c in &#x27;banana&#x27;:
+    cnt[ord(c) - ord(&#x27;a&#x27;)] += 1
+print(cnt[0], cnt[1], cnt[13])</pre></td><td><pre class="res">3 1 2</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-str" data-fn-cat="str">
+  <h2><span class="num">fx</span>字串處理</h2>
+  <p>字串不能直接修改，要用切片、串接重新組出新字串。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>s[i]、s[i:j]</code></td><td class="use">取字元／取一段子字串</td><td><pre class="ex">s = &#x27;MINGDAO&#x27;
+print(s[0], s[1:4], s[:3])</pre></td><td><pre class="res">M ING MIN</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s1 + s2</code></td><td class="use">串接字串</td><td><pre class="ex">print(&#x27;APCS&#x27; + &#x27;-&#x27; + &#x27;Py&#x27;)</pre></td><td><pre class="res">APCS-Py</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>s * n</code></td><td class="use">字串重複 n 次；乘 0 或 False 是空字串</td><td><pre class="ex">print(&#x27;ab&#x27; * 3, &#x27;[&#x27; + &#x27;x&#x27; * (1 &gt; 3) + &#x27;]&#x27;)</pre></td><td><pre class="res">ababab []</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>s[::-1]</code></td><td class="use">反轉字串</td><td><pre class="ex">print(&#x27;abcde&#x27;[::-1])</pre></td><td><pre class="res">edcba</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s.split(sep)</code></td><td class="use">依指定符號切開</td><td><pre class="ex">print(&#x27;8,9,10&#x27;.split(&#x27;,&#x27;))</pre></td><td><pre class="res">[&#x27;8&#x27;, &#x27;9&#x27;, &#x27;10&#x27;]</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>sep.join(lst)</code></td><td class="use">把字串串列接起來</td><td><pre class="ex">print(&#x27;-&#x27;.join([&#x27;2026&#x27;, &#x27;10&#x27;, &#x27;05&#x27;]))</pre></td><td><pre class="res">2026-10-05</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s.replace(a, b)</code></td><td class="use">把 a 全部換成 b</td><td><pre class="ex">print(&#x27;a-b-c&#x27;.replace(&#x27;-&#x27;, &#x27;&#x27;))</pre></td><td><pre class="res">abc</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s.find(x)</code></td><td class="use">x 第一次出現的位置，找不到回傳 -1</td><td><pre class="ex">print(&#x27;banana&#x27;.find(&#x27;n&#x27;), &#x27;banana&#x27;.find(&#x27;z&#x27;))</pre></td><td><pre class="res">2 -1</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s.count(x)</code></td><td class="use">x 出現幾次</td><td><pre class="ex">print(&#x27;banana&#x27;.count(&#x27;a&#x27;))</pre></td><td><pre class="res">3</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>s.strip()</code></td><td class="use">去掉頭尾空白與換行</td><td><pre class="ex">print(&#x27;[&#x27; + &#x27;  hi \n&#x27;.strip() + &#x27;]&#x27;)</pre></td><td><pre class="res">[hi]</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-dict" data-fn-cat="dict">
+  <h2><span class="num">fx</span>字典計數</h2>
+  <p>統計「每種東西出現幾次」最直接的工具。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>d = {}</code></td><td class="use">建立空字典，用 d[鍵] = 值 存資料</td><td><pre class="ex">d = {}
+d[&#x27;471&#x27;] = 2
+print(d)</pre></td><td><pre class="res">{&#x27;471&#x27;: 2}</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>d.get(k, 0)</code></td><td class="use">取值；鍵不存在時回傳預設值</td><td><pre class="ex">d = {&#x27;a&#x27;: 3}
+print(d.get(&#x27;a&#x27;, 0), d.get(&#x27;z&#x27;, 0))</pre></td><td><pre class="res">3 0</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>計數寫法</code></td><td class="use">d[k] = d.get(k, 0) + 1</td><td><pre class="ex">cnt = {}
+for w in [&#x27;471&#x27;, &#x27;030&#x27;, &#x27;471&#x27;]:
+    cnt[w] = cnt.get(w, 0) + 1
+print(cnt)</pre></td><td><pre class="res">{&#x27;471&#x27;: 2, &#x27;030&#x27;: 1}</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>for k, v in d.items()</code></td><td class="use">同時走訪鍵與值</td><td><pre class="ex">d = {&#x27;A&#x27;: 2, &#x27;B&#x27;: 5}
+for k, v in d.items():
+    print(k, v)</pre></td><td><pre class="res">A 2
+B 5</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>k in d</code></td><td class="use">判斷鍵是否存在</td><td><pre class="ex">print(&#x27;A&#x27; in {&#x27;A&#x27;: 1}, &#x27;B&#x27; in {&#x27;A&#x27;: 1})</pre></td><td><pre class="res">True False</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>max(d, key=d.get)</code></td><td class="use">找出值最大的那個鍵</td><td><pre class="ex">d = {&#x27;471&#x27;: 2, &#x27;030&#x27;: 1, &#x27;300&#x27;: 1}
+best = max(d, key=d.get)
+print(best, d[best])</pre></td><td><pre class="res">471 2</pre></td><td class="wk">第 2 次<br>第 5 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-grid" data-fn-cat="grid">
+  <h2><span class="num">fx</span>二維串列與網格模擬</h2>
+  <p>中級題本的大魔王：建表、走訪、邊界、方向、旋轉。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>[[0] * m for _ in range(n)]</code></td><td class="use">建立 n 列 m 行的二維串列</td><td><pre class="ex">g = [[0] * 3 for _ in range(2)]
+print(g)</pre></td><td><pre class="res">[[0, 0, 0], [0, 0, 0]]</pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>[[0] * m] * n（錯誤寫法）</code></td><td class="use">每一列其實是同一個串列，改一格整行都變</td><td><pre class="ex">g = [[0] * 3] * 2
+g[0][0] = 9
+print(g)</pre></td><td><pre class="res">[[9, 0, 0], [9, 0, 0]]</pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>讀取 n 列矩陣</code></td><td class="use">每一列用 list(map(int, input().split()))</td><td><pre class="ex">n, m = 2, 3
+g = [list(map(int, input().split())) for _ in range(n)]
+print(g)</pre></td><td><pre class="res"><span class="muted">輸入：1 2 3 ⏎ 4 5 6</span>
+[[1, 2, 3], [4, 5, 6]]</pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>len(g)、len(g[0])</code></td><td class="use">列數、行數</td><td><pre class="ex">g = [[1, 2, 3], [4, 5, 6]]
+print(len(g), len(g[0]))</pre></td><td><pre class="res">2 3</pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>雙層走訪</code></td><td class="use">外層跑列、內層跑行</td><td><pre class="ex">g = [[1, 2, 3], [4, 5, 6]]
+for i in range(len(g)):
+    for j in range(len(g[0])):
+        print(g[i][j], end=&#x27; &#x27;)
+    print()</pre></td><td><pre class="res">1 2 3 
+4 5 6 </pre></td><td class="wk">第 3 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>方向陣列</code></td><td class="use">上右下左四個方向的位移</td><td><pre class="ex">dr = [-1, 0, 1, 0]
+dc = [0, 1, 0, -1]
+r, c = 1, 1
+for d in range(4):
+    print((r + dr[d], c + dc[d]), end=&#x27; &#x27;)</pre></td><td><pre class="res">(0, 1) (1, 2) (2, 1) (1, 0) </pre></td><td class="wk">第 3 次<br>第 5 節<div class="qchips"><button type="button" class="qchip" data-q="18" title="看第 18 題">18</button></div></td></tr>
+        <tr><td class="name"><code>轉向</code></td><td class="use">右轉 (d+1)%4、左轉 (d+3)%4、迴轉 (d+2)%4</td><td><pre class="ex">d = 3
+print((d + 1) % 4, (d + 3) % 4, (d + 2) % 4)</pre></td><td><pre class="res">0 2 1</pre></td><td class="wk">第 3 次<br>第 5 節</td></tr>
+        <tr><td class="name"><code>邊界取交集</code></td><td class="use">用 max／min 把範圍夾在地圖內</td><td><pre class="ex">n, m, r, c, k = 5, 5, 0, 4, 3
+r1, r2 = max(0, r - k // 2), min(n - 1, r + k // 2)
+c1, c2 = max(0, c - k // 2), min(m - 1, c + k // 2)
+print(r1, r2, c1, c2)</pre></td><td><pre class="res">0 1 3 4</pre></td><td class="wk">第 3 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>0 &lt;= r &lt; n and 0 &lt;= c &lt; m</code></td><td class="use">判斷座標有沒有出界</td><td><pre class="ex">n, m = 3, 4
+for r, c in [(0, 0), (3, 1), (2, -1)]:
+    print(0 &lt;= r &lt; n and 0 &lt;= c &lt; m, end=&#x27; &#x27;)</pre></td><td><pre class="res">True False False </pre></td><td class="wk">第 3 次<br>第 4 節</td></tr>
+        <tr><td class="name"><code>順時針旋轉 90 度</code></td><td class="use">B[j][n-1-i] = A[i][j]，結果是 m×n</td><td><pre class="ex">A = [[1, 2, 3], [4, 5, 6]]
+n, m = len(A), len(A[0])
+B = [[0] * n for _ in range(m)]
+for i in range(n):
+    for j in range(m):
+        B[j][n - 1 - i] = A[i][j]
+print(B)</pre></td><td><pre class="res">[[4, 1], [5, 2], [6, 3]]</pre></td><td class="wk">第 3 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>旋轉 180 度</code></td><td class="use">列反轉，每一列也反轉</td><td><pre class="ex">A = [[1, 2, 3], [4, 5, 6]]
+print([row[::-1] for row in A[::-1]])</pre></td><td><pre class="res">[[6, 5, 4], [3, 2, 1]]</pre></td><td class="wk">第 3 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>zip(*A[::-1])</code></td><td class="use">順時針 90 度的簡寫（懂原理後再用）</td><td><pre class="ex">A = [[1, 2, 3], [4, 5, 6]]
+print([list(r) for r in zip(*A[::-1])])</pre></td><td><pre class="res">[[4, 1], [5, 2], [6, 3]]</pre></td><td class="wk">第 3 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>百分比無條件捨去</code></td><td class="use">先乘 100 再整數除法</td><td><pre class="ex">same, total = 15, 30
+print(f&#x27;{same * 100 // total}%&#x27;)</pre></td><td><pre class="res">50%</pre></td><td class="wk">第 3 次<br>第 6 節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-func" data-fn-cat="func">
+  <h2><span class="num">fx</span>函式與遞迴</h2>
+  <p>官方識讀範例 30 題裡有 9 題是遞迴。追蹤遞迴的關鍵：先找終止條件，再由小算到大。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>def f(x): … return …</code></td><td class="use">定義函式並回傳結果</td><td><pre class="ex">def area(w, h):
+    return w * h
+print(area(3, 4))</pre></td><td><pre class="res">12</pre></td><td class="wk">第 2 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>預設參數</code></td><td class="use">呼叫時沒給就用預設值</td><td><pre class="ex">def hi(name, times=2):
+    return name * times
+print(hi(&#x27;Py&#x27;), hi(&#x27;Py&#x27;, 3))</pre></td><td><pre class="res">PyPy PyPyPy</pre></td><td class="wk">第 2 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>區域與全域變數</code></td><td class="use">函式裡要改外面的變數要寫 global</td><td><pre class="ex">total = 0
+def add(x):
+    global total
+    total += x
+add(5); add(7)
+print(total)</pre></td><td><pre class="res">12</pre></td><td class="wk">第 2 次<br>第 6 節</td></tr>
+        <tr><td class="name"><code>遞迴：階乘</code></td><td class="use">n! = n × (n-1)!，終止條件 n == 0</td><td><pre class="ex">def fac(n):
+    if n == 0:
+        return 1
+    return n * fac(n - 1)
+print(fac(5))</pre></td><td><pre class="res">120</pre></td><td class="wk">第 3 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="11" title="看第 11 題">11</button></div></td></tr>
+        <tr><td class="name"><code>遞迴：次方</code></td><td class="use">a^x = a × a^(x-1)</td><td><pre class="ex">def G(a, x):
+    if x == 0:
+        return 1
+    return a * G(a, x - 1)
+print(G(3, 7))</pre></td><td><pre class="res">2187</pre></td><td class="wk">第 3 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="21" title="看第 21 題">21</button></div></td></tr>
+        <tr><td class="name"><code>遞迴：最大公因數</code></td><td class="use">GCD(a, b) = GCD(b, a % b)</td><td><pre class="ex">def gcd(a, b):
+    r = a % b
+    if r == 0:
+        return b
+    return gcd(b, r)
+print(gcd(76, 48))</pre></td><td><pre class="res">4</pre></td><td class="wk">第 3 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="9" title="看第 9 題">9</button><button type="button" class="qchip" data-q="23" title="看第 23 題">23</button></div></td></tr>
+        <tr><td class="name"><code>遞迴：費氏數列</code></td><td class="use">f(n) = f(n-1) + f(n-2)</td><td><pre class="ex">def fib(x):
+    if x &lt;= 1:
+        return x
+    return fib(x - 1) + fib(x - 2)
+print([fib(i) for i in range(10)])</pre></td><td><pre class="res">[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</pre></td><td class="wk">第 3 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="7" title="看第 7 題">7</button><button type="button" class="qchip" data-q="14" title="看第 14 題">14</button></div></td></tr>
+        <tr><td class="name"><code>由小算到大</code></td><td class="use">多分支遞迴先列表 f(0)、f(1)… 再往上推</td><td><pre class="ex">def F(a):
+    if a &lt; 0:
+        return 1
+    return F(a - 2) + F(a - 3)
+print([F(a) for a in range(8)])</pre></td><td><pre class="res">[2, 2, 3, 4, 5, 7, 9, 12]</pre></td><td class="wk">第 3 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="16" title="看第 16 題">16</button></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="fn-search" data-fn-cat="search">
+  <h2><span class="num">fx</span>排序、搜尋與效能</h2>
+  <p>識讀會考二分搜尋的次數與除錯；排序在實作中直接用內建函式。</p>
+  <div class="table-wrap">
+    <table class="fn">
+      <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><code>a.sort()</code></td><td class="use">原地排序，沒有回傳值</td><td><pre class="ex">a = [3, 1, 2]
+a.sort()
+print(a)</pre></td><td><pre class="res">[1, 2, 3]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>sorted(a)</code></td><td class="use">回傳排好的新串列，原本的不變</td><td><pre class="ex">a = [3, 1, 2]
+print(sorted(a), a)</pre></td><td><pre class="res">[1, 2, 3] [3, 1, 2]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>reverse=True</code></td><td class="use">由大到小</td><td><pre class="ex">print(sorted([3, 1, 2], reverse=True))</pre></td><td><pre class="res">[3, 2, 1]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>key=</code></td><td class="use">依指定規則排序</td><td><pre class="ex">pts = [(1, 9), (3, 2), (2, 5)]
+print(sorted(pts, key=lambda p: p[1]))</pre></td><td><pre class="res">[(3, 2), (2, 5), (1, 9)]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
+        <tr><td class="name"><code>二分搜尋</code></td><td class="use">每次砍掉一半，n 筆最多約 log₂n 次</td><td><pre class="ex">a = [3 * k + 1 for k in range(100)]
+low, high, cnt = 0, 99, 0
+while low &lt;= high:
+    cnt += 1
+    mid = (low + high) // 2
+    if a[mid] == 100:
+        break
+    elif a[mid] &lt; 100:
+        low = mid + 1
+    else:
+        high = mid - 1
+print(mid, cnt)</pre></td><td><pre class="res">33 5</pre></td><td class="wk">第 4 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="6" title="看第 6 題">6</button><button type="button" class="qchip" data-q="22" title="看第 22 題">22</button></div></td></tr>
+        <tr><td class="name"><code>迴圈次數估算</code></td><td class="use">k 每次乘 2 的迴圈跑 ⌊log₂n⌋+1 次</td><td><pre class="ex">n, cnt, k = 20, 0, 1
+while k &lt;= n:
+    cnt += 1
+    k *= 2
+print(cnt)</pre></td><td><pre class="res">5</pre></td><td class="wk">第 4 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="28" title="看第 28 題">28</button></div></td></tr>
+        <tr><td class="name"><code>O( ) 時間複雜度</code></td><td class="use">只留最大項、去掉常數倍：n(n+1)/2 → O(n²)；n 列 m 行兩層迴圈 → O(mn)</td><td><pre class="ex">n, m, c = 4, 3, 0
+for i in range(n):
+    for j in range(m):
+        c += 1
+print(c)</pre></td><td><pre class="res">12</pre></td><td class="wk">第 4 次<br>第 1 節</td></tr>
+        <tr><td class="name"><code>用 head／tail 模擬佇列</code></td><td class="use">從 head 取出、放到 tail</td><td><pre class="ex">Q = [1, 2, 3, 4, 5] + [0] * 10
+head, tail = 0, 5
+while tail &gt; head + 1:
+    v = Q[head]; head += 1
+    Q[tail] = v; tail += 1
+    head += 1
+print(Q[head])</pre></td><td><pre class="res">3</pre></td><td class="wk">第 4 次<br>第 1 節<div class="qchips"><button type="button" class="qchip" data-q="4" title="看第 4 題">4</button></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<p class="fn-empty">找不到符合的函式，換個關鍵字試試，例如「串列」或「range」。</p>
+
+  <nav class="unit-nav">
+    <a class="prev" href="schedule.html"><div class="dir">← 上一頁</div><div class="ttl">課程規劃（練習題目表）</div></a>
+    <a class="next" href="index.html"><div class="dir">回課程首頁 →</div><div class="ttl">資電APCS週六課程</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>

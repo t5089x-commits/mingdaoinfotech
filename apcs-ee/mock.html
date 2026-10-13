@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>識讀模擬考（線上作答）｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+<link rel="stylesheet" href="assets/mock.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>識讀模擬考（線上作答）</span></nav>
+  <section class="unit-hero">
+    <span class="kicker">第 4 次課　限時 90 分鐘</span>
+    <h1>程式識讀模擬考（線上作答）</h1>
+    <p>30 題單選，題目選自吳邦一〈APCS Python 程式識讀 125 題〉（易、中、難各 10 題）。用紙筆追蹤，不要用電腦執行程式。</p>
+  </section>
+
+  <!-- ① 輸入密碼 -->
+  <section class="block mk-gate" id="mk-gate">
+    <h2><span class="num">🔒</span>輸入密碼</h2>
+    <p>題目和答案都加密了，請輸入老師上課時公布的密碼。</p>
+    <form id="mk-pw-form" class="mk-pw" autocomplete="off">
+      <label for="mk-pw" class="sr-only">密碼</label>
+      <input id="mk-pw" type="password" placeholder="密碼" autocomplete="off">
+      <button type="submit" class="mk-btn">解鎖</button>
+    </form>
+    <p id="mk-pw-msg" class="mk-msg" role="status"></p>
+  </section>
+
+  <!-- ② 作答說明 -->
+  <section class="block mk-hidden" id="mk-intro">
+    <h2><span class="num">📝</span>作答說明</h2>
+    <ul>
+      <li>共 30 題，每題 1 分，限時 <strong>90 分鐘</strong>，按「開始作答」才開始計時。</li>
+      <li>選項 (E) 通常是「以上皆非或執行錯誤」，程式真的會出錯時就選它。</li>
+      <li>作答中可以隨時換答案；上方的題號格可以跳到任何一題，灰色是還沒作答的題目。</li>
+      <li>時間到會自動交卷。交卷後會顯示分數、每一題的正確答案，可以直接拿來檢討。</li>
+      <li>作答紀錄只存在這台電腦的瀏覽器裡，不會上傳；換電腦或清除瀏覽資料就不見了。</li>
+    </ul>
+    <div class="mk-who">
+      <label>班級座號 <input id="mk-seat" type="text" inputmode="numeric" placeholder="例如 20512"></label>
+      <label>姓名 <input id="mk-name" type="text" placeholder="姓名"></label>
+    </div>
+    <p><button type="button" class="mk-btn" id="mk-start">開始作答（計時 90 分鐘）</button></p>
+  </section>
+
+  <!-- ③ 作答區 -->
+  <div class="mk-bar mk-hidden" id="mk-bar">
+    <span class="mk-timer" id="mk-timer" aria-live="off">90:00</span>
+    <span class="mk-count" id="mk-count">已作答 0／30</span>
+    <div class="mk-grid" id="mk-grid" aria-label="題號"></div>
+    <button type="button" class="mk-btn" id="mk-submit">交卷</button>
+  </div>
+  <div id="mk-paper" class="mk-hidden"></div>
+
+  <!-- ④ 成績 -->
+  <section class="block mk-hidden" id="mk-result">
+    <h2><span class="num">📊</span>成績（僅供參考）</h2>
+    <div id="mk-score"></div>
+    <div class="callout warn"><span class="t">⚠ 這個分數僅供參考</span>
+      <p style="margin-bottom:0">題目選自吳邦一〈Python 程式識讀 125 題〉，每題有 5 個選項，題型與難度分布都和正式檢測不同（官方範例是 4 選 1）。這裡只是把答對比例換成 100 分，再對照官方的級分區間，用來看自己大概在哪個程度，<strong>不代表正式檢測的成績</strong>。</p></div>
+    <div id="mk-table"></div>
+    <p><button type="button" class="mk-btn ghost" id="mk-review">回到題目看對錯</button>
+       <button type="button" class="mk-btn ghost" id="mk-reset">清除紀錄、重新作答</button></p>
+  </section>
+
+  <!-- 交卷確認 -->
+  <div class="mk-modal mk-hidden" id="mk-modal" role="dialog" aria-modal="true" aria-labelledby="mk-modal-t">
+    <div class="mk-modal-box">
+      <h3 id="mk-modal-t">確定要交卷嗎？</h3>
+      <p id="mk-modal-msg"></p>
+      <p><button type="button" class="mk-btn" id="mk-yes">確定交卷</button>
+         <button type="button" class="mk-btn ghost" id="mk-no">繼續作答</button></p>
+    </div>
+  </div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="schedule.html"><div class="dir">← 課程規劃</div><div class="ttl">第 4 次課</div></a>
+    <a class="next" href="unit09.html"><div class="dir">考前複習 →</div><div class="ttl">識讀基本觀念與總整理</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/mock-data.js"></script>
+<script src="assets/mock.js"></script>
+</body>
+</html>

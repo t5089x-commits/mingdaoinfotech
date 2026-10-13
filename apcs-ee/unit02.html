@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 2：變數、資料型態與輸出入｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap" data-unit="2">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 2</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">起點篇　單元 2</span>
+  <h1>變數、資料型態與輸出入</h1>
+  <p>資料型態、常數與變數、指定與表達式，以及 input()／print() 的使用</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>分辨 APCS 常考的資料型態：整數、浮點數、字串、布林值</li>
+    <li>理解常數、變數、指定、表達式這幾個名詞的意思</li>
+    <li>會用 <code>input()</code> 讀取使用者輸入，並轉換成需要的型態</li>
+    <li>會用 <code>print()</code> 與 f-string 格式化輸出結果</li>
+    <li>會用字串的 <code>+</code> 與 <code>*</code>，知道 <code>True</code>／<code>False</code> 計算時是 <code>1</code>／<code>0</code></li>
+  </ul>
+</div>
+
+<section class="block" id="s01">
+  <h2><span class="num">01</span>資料型態、常數與變數</h2>
+  <p>程式裡的每一筆資料都有<strong>型態（data type）</strong>，型態決定了這筆資料能做什麼運算。APCS 最常用到的四種型態：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>型態</th><th>Python 名稱</th><th>範例</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>整數</td><td><code>int</code></td><td><code>10</code>、<code>-3</code></td><td>沒有小數點的數字</td></tr>
+        <tr><td>浮點數</td><td><code>float</code></td><td><code>3.14</code>、<code>-0.5</code></td><td>有小數點的數字</td></tr>
+        <tr><td>字串</td><td><code>str</code></td><td><code>"hello"</code></td><td>一串文字，用 <code>"</code> 或 <code>'</code> 包起來</td></tr>
+        <tr><td>布林值</td><td><code>bool</code></td><td><code>True</code>、<code>False</code></td><td>只有真／假兩種值，判斷結果常常是它</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>常數（constant）</strong>是「值不會變」的資料，例如 <code>3.14159</code> 這個圓周率；<strong>變數（variable）</strong>是一個有名字、可以裝資料、值可以改變的「箱子」。把值放進變數，叫做<strong>指定（assignment）</strong>，用 <code>=</code> 這個符號：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">pi = 3.14159        # 把常數 3.14159 指定給變數 pi
+r = 5                # 半徑
+area = pi * r ** 2   # area 是一個「表達式」算出來的結果
+print(area)          # 78.53975
+
+print(type(pi))      # &lt;class 'float'&gt;
+print(type(r))       # &lt;class 'int'&gt;
+print(type(area))    # &lt;class 'float'&gt;</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">💡 type() 是在做什麼？</span>
+  <p style="margin-bottom:0"><code>type(x)</code> 是一個函式，作用是「查詢 <code>x</code> 現在是什麼資料型態」，結果會印成 <code>&lt;class '型態名稱'&gt;</code> 這種格式——例如 <code>type(3.14159)</code> 印出來是 <code>&lt;class 'float'&gt;</code>。之後只要不確定一個變數目前到底是哪種型態，都可以用 <code>print(type(變數))</code> 查一下，這個習慣在除錯的時候非常好用。</p></div>
+  <div class="callout"><span class="t">🔎 什麼是「表達式」（expression）？</span>
+  <p style="margin-bottom:0"><code>pi * r ** 2</code> 這種「會算出一個值」的式子就叫<strong>表達式</strong>。表達式可以是一個數字（<code>5</code>）、一個變數（<code>r</code>），也可以是好幾個變數和運算子組合起來的算式；<code>area = pi * r ** 2</code> 這整行則叫做<strong>指定敘述（assignment statement）</strong>：先算右邊的表達式，再把結果存進左邊的變數。</p></div>
+  <h3>變數命名規則</h3>
+  <ul class="tidy">
+    <li>只能用<strong>英文字母、數字、底線 <code>_</code></strong>，而且<strong>不能用數字開頭</strong>（<code>score1</code> ✅、<code>1score</code> ❌）</li>
+    <li>大小寫視為不同變數（<code>Score</code> 和 <code>score</code> 是兩個變數）</li>
+    <li>不能用 Python 保留字，例如 <code>if</code>、<code>for</code>、<code>return</code></li>
+    <li>建議取<strong>看得懂意思</strong>的名字，例如用 <code>total</code> 而不是 <code>t</code></li>
+  </ul>
+</section>
+
+<section class="block" id="s02">
+  <h2><span class="num">02</span>輸入：input()</h2>
+  <p><code>input()</code> 讓程式暫停，等使用者從鍵盤輸入資料，按下 Enter 後把輸入的內容<strong>當成字串</strong>回傳——注意，就算你輸入的是數字，<code>input()</code> 拿到的還是字串，看看下面這個例子：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = input()
+b = input()
+print(a+b)
+print(type(a), type(b))</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 執行看看：如果 a 輸入 3、b 輸入 5</span>
+  <p style="margin-bottom:0">你可能以為 <code>a+b</code> 會印出 <code>8</code>，但實際執行結果是 <code>35</code>！因為 <code>input()</code> 讀進來的 <code>a</code>、<code>b</code> 都是<strong>字串</strong>（不是數字），<code>a+b</code> 做的是「字串接起來」（<code>"3"+"5"</code> → <code>"35"</code>），不是數學加法。用 <code>print(type(a), type(b))</code> 查一下，會看到印出 <code>&lt;class 'str'&gt; &lt;class 'str'&gt;</code>，這就是問題所在。</p></div>
+  <div class="callout"><span class="t">💡 常用寫法：邊讀邊轉型</span>
+  <p style="margin-bottom:0">如果要讓 <code>a</code>、<code>b</code> 真的做數學加法，必須先轉型：<code>a = int(input())</code>，把 <code>input()</code> 讀進來的字串馬上包一層 <code>int()</code> 或 <code>float()</code> 轉成數字，一行搞定。這就是下一節「型別轉換」要解決的問題。</p></div>
+  <div class="callout warn"><span class="t">⚠ 這門課的規定：input() 一律用空括號</span>
+  <p>ZeroJudge 和 APCS 考場都是電腦自動改，括號裡的提示文字會被印到輸出裡，跟答案混在一起，直接被判<strong>答案錯誤（WA）</strong>。所以這門課從第一個範例開始，<code>input()</code> 一律<strong>空括號</strong>：<code>a = int(input())</code>。詳細說明見 <a href="unit02b.html">附錄：上機評測基本功</a>。</p>
+  <p style="margin-bottom:0"><strong>不是送 Judge 的程式</strong>（例如寫給別人用的小工具、專題作品），就要在括號裡放提示文字，讓使用的人知道該輸入什麼：<code>score = int(input("請輸入分數："))</code>。執行時提示文字會先印出來，游標停在後面等你輸入。</p></div>
+</section>
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>型別轉換</h2>
+  <p>剛剛看到，<code>input()</code> 讀進來的資料<strong>一律是字串</strong>，這正是為什麼我們常常需要在不同型態之間互相轉換——要先轉成數字，才能做數學運算：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = "10"
+b = int(a)      # 字串 → 整數：10
+c = float(a)    # 字串 → 浮點數：10.0
+d = str(99)     # 數字 → 字串："99"
+
+print(int(3.9))     # 3　（float → int 直接捨去小數，不是四捨五入！）
+print(bool(0))       # False
+print(bool(5))       # True（0 是 False，其他數字都是 True）</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 常見陷阱：int() 是「捨去」，round() 也不是課本的四捨五入</span>
+  <p><code>int(3.9)</code> 的結果是 <code>3</code>，不是 <code>4</code>！<code>int()</code> 轉換浮點數時是直接<strong>捨去小數部分</strong>（負數也是直接去掉：<code>int(-3.9)</code> 是 <code>-3</code>）。要取「最接近的整數」用 <code>round()</code>：<code>round(3.9)</code> 是 <code>4</code>。</p>
+  <p style="margin-bottom:0">但是 <code>round()</code> 遇到<strong>剛好在正中間（.5）</strong>時，Python 會取<strong>偶數</strong>那一邊：<code>round(2.5)</code> 是 <code>2</code>、<code>round(3.5)</code> 是 <code>4</code>，跟數學課的四捨五入不一樣。這兩個都是程式識讀很愛考的細節。</p></div>
+  <h3>這一節用到的函式，整理一下</h3>
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>函式</th><th>作用</th><th>例子</th></tr></thead>
+      <tbody>
+        <tr><td><code>type(x)</code></td><td>查詢 <code>x</code> 目前的資料型態</td><td><code>type(3.14)</code> → <code>&lt;class 'float'&gt;</code></td></tr>
+        <tr><td><code>input()</code></td><td>讀取使用者輸入，結果一律是字串（送 Judge 一律空括號；不是送 Judge 的程式才放提示文字）</td><td><code>input()</code>、<code>input("請輸入:")</code></td></tr>
+        <tr><td><code>print(值, ...)</code></td><td>把一個或多個值印到畫面上</td><td><code>print("a", "b")</code> → <code>a b</code></td></tr>
+        <tr><td><code>int(x)</code></td><td>轉成整數（小數<strong>直接捨去</strong>）</td><td><code>int(3.9)</code> → <code>3</code></td></tr>
+        <tr><td><code>float(x)</code></td><td>轉成浮點數</td><td><code>float("10")</code> → <code>10.0</code>；<code>float("2.5e2")</code> → <code>250.0</code>（e2 是 ×10²）</td></tr>
+        <tr><td><code>str(x)</code></td><td>轉成字串</td><td><code>str(99)</code> → <code>"99"</code></td></tr>
+        <tr><td><code>bool(x)</code></td><td>轉成布林值</td><td><code>bool(0)</code> → <code>False</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="s04">
+  <h2><span class="num">04</span>輸出：print() 與 f-string</h2>
+  <p><code>print()</code> 可以一次印多個值，預設用空白隔開、最後自動換行；也可以用 <code>sep</code>、<code>end</code> 參數調整：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print("我是第一行", "a", "b", "c")             # 我是第一行 a b c
+print("我是第二行", "a", "b", "c", sep="-")    # 我是第二行-a-b-c
+print("我是第三行", "a", end="")                # 不換行
+print("我是第四行", "b")                        # 接在同一行 → 我是第三行 a我是第四行 b</code></pre>
+  </div>
+  <h3>格式化輸出：f-string</h3>
+  <p>在字串前面加一個 <code>f</code>，就能在 <code>{ }</code> 裡直接放變數或表達式，非常適合組合輸出結果：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">name = "阿翔"
+score = 87.6666
+print(f"{name} 的分數是 {score}")            # 阿翔 的分數是 87.6666
+print(f"{name} 的分數是 {score:.1f}")        # 保留 1 位小數 → 87.7
+print(f"{name} 的分數是 {score:.2f}")        # 保留 2 位小數 → 87.67
+print(f"{name} 的分數是 {score:6.1f}")       # 總寬度 6，靠右對齊 →   87.7
+print(f"{name} 的分數是 {score:06.1f}")      # 總寬度 6，補 0 對齊 → 0087.7</code></pre>
+  </div>
+  <div class="callout tip"><span class="t">📌 <code>{值:.1f}</code> 這種寫法要記熟</span>
+  <p style="margin-bottom:0"><code>:.1f</code> 表示「格式化成浮點數，保留 1 位小數」，APCS 程式實作很常需要輸出「到小數點後幾位」的答案，這個語法一定要練到看到就會用。</p></div>
+  <h3><code>{值:格式}</code> 冒號後面到底在寫什麼？</h3>
+  <p>f-string 的 <code>{ }</code> 裡面，冒號 <code>:</code> 後面接的是「格式規格（format spec）」，可以疊在一起用，順序固定是「<strong>補齊符號 → 總寬度 → 小數位數 → 型態</strong>」：</p>
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>寫法</th><th>意思</th><th>範例（<code>score = 87.6666</code>）</th><th>結果</th></tr></thead>
+      <tbody>
+        <tr><td><code>.1f</code></td><td>保留小數點後 1 位（取最接近的值）</td><td><code>{score:.1f}</code></td><td><code>87.7</code></td></tr>
+        <tr><td><code>.2f</code></td><td>保留小數點後 2 位</td><td><code>{score:.2f}</code></td><td><code>87.67</code></td></tr>
+        <tr><td><code>6.1f</code></td><td>總寬度 6 個字元、保留 1 位小數，預設補空白、靠右對齊</td><td><code>{score:6.1f}</code></td><td><code>␣␣87.7</code></td></tr>
+        <tr><td><code>06.1f</code></td><td>總寬度 6，把補齊用的空白改成補 <code>0</code></td><td><code>{score:06.1f}</code></td><td><code>0087.7</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><span class="t">🔎 表格裡的 ␣ 是什麼？</span>
+  <p style="margin-bottom:0">␣ 代表一個「空白字元」，只是為了讓你看清楚總寬度有沒有補滿，實際印出來就是普通的空格，不會真的看到這個符號。</p></div>
+</section>
+
+<section class="block" id="s05">
+  <h2><span class="num">05</span>字串的 + 與 *，布林值也能算</h2>
+  <p>同一個運算子，碰到不同型態意思就不一樣。字串的 <code>+</code> 是「接起來」，<code>*</code> 是「重複幾次」：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字串的 + 與 *</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = &#x27;py&#x27;
+print(s + &#x27;thon&#x27;)    # python
+print(s * 3)         # pypypy
+print(3 * &#x27;ab&#x27;)      # ababab（數字放前面也可以）
+print(&#x27;-&#x27; * 10)      # ----------（印分隔線、印圖形很常用）
+print(&#x27;[&#x27; + &#x27;py&#x27; * 0 + &#x27;]&#x27;)   # []（乘 0 是空字串）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+python
+pypypy
+ababab
+----------
+[]</div>
+  </div>
+  <p>字串只能跟字串相加。要把數字接進字串，先用 <code>str()</code> 轉型：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">字串 + 數字</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(&#x27;py&#x27; + str(2))   # py2
+print(&#x27;py&#x27; + 2)        # 字串 + 數字 會出錯</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+py2
+<span class="err">Traceback (most recent call last):
+  File "程式.py", line 2, in &lt;module&gt;
+TypeError: can only concatenate str (not &quot;int&quot;) to str</span></div>
+  </div>
+  <h3>True 當 1、False 當 0</h3>
+  <p>布林值其實是一種特別的整數：拿去計算時，<code>True</code> 就是 <code>1</code>、<code>False</code> 就是 <code>0</code>。識讀題常把比較的結果直接拿去加、拿去乘：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">布林值拿去算</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(True + True)          # 2
+print(int(5 &gt; 3))           # 1
+print(10 * (2 &gt; 5))         # 0
+print(&#x27;ab&#x27; * (3 &gt; 1))       # ab（乘 True 就是乘 1）
+print(str(3 &gt; 1) + &#x27;!&#x27;)     # True!（str() 把 True 變成字串 &#x27;True&#x27;）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+2
+1
+0
+ab
+True!</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱</span>
+  <p style="margin-bottom:0">看到 <code>字串 * (比較)</code>、<code>數字 + (比較)</code>，先把比較算成 <code>True</code>／<code>False</code>，再換成 <code>1</code>／<code>0</code>。乘 <code>False</code> 的字串會變成空字串，印出來什麼都看不到。</p></div>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li>寫程式讀入使用者的姓名（<code>name</code>）與座號（<code>seat</code>，用數字輸入），先用 <code>print(type(name), type(seat))</code> 印出兩者<strong>剛讀進來時</strong>的型態；接著把 <code>seat</code> 轉成整數，再用 f-string 印出像「王小明的座號是 5 號」這樣的句子。</li>
+    <li><code>print(int("7") + int("3"))</code> 和 <code>print("7" + "3")</code> 的結果分別是什麼？為什麼不一樣？</li>
+    <li><code>x = 9.8</code>，<code>print(int(x))</code> 和 <code>print(round(x))</code> 分別輸出什麼？</li>
+    <li><code>print('ab' * 3 + 'c')</code> 印出什麼？</li>
+    <li><code>print(True + 2, 'x' * (5 &gt; 3), '[' + 'x' * (5 &lt; 3) + ']')</code> 印出什麼？</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">第 1 題參考解</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">name = input()
+seat = input()
+print(type(name), type(seat))    # &lt;class 'str'&gt; &lt;class 'str'&gt;　—— 兩個都還是字串
+
+seat = int(seat)                 # 轉成整數
+print(f"{name}的座號是{seat}號")</code></pre>
+</div>
+    <ol start="2">
+      <li><code>int("7") + int("3")</code> 是<strong>數字相加</strong> → <code>10</code>；<code>"7" + "3"</code> 是<strong>字串接起來</strong> → <code>"73"</code>。同樣是 <code>+</code>，作用在數字和字串上意義完全不同。</li>
+      <li><code>int(9.8)</code> 是捨去小數 → <code>9</code>；<code>round(9.8)</code> 取最接近的整數 → <code>10</code>。</li>
+      <li><code>'ab' * 3</code> 是 <code>ababab</code>，再接 <code>c</code>，印出 <code>abababc</code>。</li>
+      <li><code>True + 2</code> 是 <code>3</code>；<code>5 &gt; 3</code> 是 True，<code>'x' * 1</code> 是 <code>x</code>；<code>5 &lt; 3</code> 是 False，<code>'x' * 0</code> 是空字串。印出 <code>3 x []</code>。</li>
+    </ol>
+  </div>
+</div>
+
+<nav class="unit-nav">
+    <a class="prev" href="unit01b.html"><div class="dir">← 上一單元</div><div class="ttl">IDLE 操作入門</div></a>
+    <a class="next" href="unit02b.html"><div class="dir">下一單元 →</div><div class="ttl">上機評測基本功：ZeroJudge 與考場規則</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>課程規劃（練習題目表）｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html" class="on" aria-current="page">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>課程規劃（練習題目表）</span></nav>
+  <section class="unit-hero">
+    <span class="kicker">資電APCS週六課程　4 次 × 7 節</span>
+    <h1>課程規劃（練習題目表）</h1>
+    <p>每一次課的節次安排、對應的教材章節、課堂練習題，以及回家要寫的題目，都整理在這一頁。</p>
+  </section>
+
+<div class="goals">
+  <h2>🎯 課程目標</h2>
+  <ul>
+    <li><strong>程式識讀：4 級分</strong>（70 分以上，30 題至少答對 21 題），選考 Python 題本</li>
+    <li><strong>程式實作：報考中級題本，目標 3 級分</strong>（150 分以上；中級三題中至少穩拿兩題）</li>
+    <li>全程使用 Python，從基礎語法開始教起</li>
+  </ul>
+</div>
+
+<section class="block" id="apply">
+  <h2><span class="num">📣</span>APCS 檢測報名時程（請學生自己報名）</h2>
+  <p>培訓班和 APCS 檢測是分開的，<strong>學生要自己到 <a href="https://apcs.csie.ntnu.edu.tw/" target="_blank" rel="noopener">APCS 官網 ↗</a> 報名</strong>。下面是官網公告的日程（以官網最新公告為準），每一次課的表格上方也有當天要提醒的事。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>檢測日期</th><th>報名期間（每天 9:00～18:00）</th><th>第一梯</th><th>第二梯</th></tr></thead>
+      <tbody>
+        <tr><td><strong>2027/1/10（日）</strong></td><td>2026/11/23～12/11<br><small>考場查詢 1/4～1/10，成績 1/22 公布</small></td><td>第 3 次課（12/5）在報名期間內，當天確認</td><td>上課日 11/21、12/12 <strong>都不在報名期間內</strong>：11/21 先說明，回家自己報名</td></tr>
+        <tr><td><strong>2027/3/14（日）</strong></td><td>2026/12/7～12/25</td><td>第 4 次課（12/19）還來得及報</td><td>第 3 次課（12/12）在報名期間內</td></tr>
+        <tr><td><strong>2027/6/13（日）</strong></td><td>依官網公告</td><td>1、3 月沒考好可以再考</td><td>1、3 月沒考好可以再考</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 報名要注意</span>
+  <p style="margin-bottom:0">報完請到信箱確認「報名完成通知」；要改資料或取消，也是在報名期間內上官網辦理。證件號碼、姓名填錯，要在報名截止後 3 日內把證件掃描檔寄到 apcs@ntnu.edu.tw 更正。</p></div>
+</section>
+
+<section class="block">
+  <h2><span class="num">ℹ️</span>怎麼看這張表</h2>
+  <div class="grid cols-3">
+    <div class="tile"><h4><span class="ico">🗓️</span>28 節課</h4><p>每次 7 節、每節 50 分鐘，共 4 次（星期六 08:15～16:10）。前段講解搭配隨堂練習，後段實作。第 1 次最後一節是識讀題組，第 2、3 次最後一節小測，第 4 次是兩場模擬考與檢討。</p></div>
+    <div class="tile"><h4><span class="ico">📖</span>主題下方的小標籤</h4><p>是這一節對應的教材章節，例如「單元 4 §02」就是單元 4 的第 02 節，按一下直接跳過去。</p></div>
+    <div class="tile"><h4><span class="ico">⚖️</span>依進度調整</h4><p>這是初步規劃，實際上課會依學生程度與學習進度，彈性調整各單元內容與練習比重。</p></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>欄位</th><th>題目來源</th><th>按下去會</th></tr></thead>
+      <tbody>
+        <tr><td>官方識讀範例</td><td>APCS 官方《程式識讀題目範例（Python 題本）》30 題，當作課堂例題</td><td>跳出那一題的題目（預設隱藏答案）</td></tr>
+        <tr><td>ZeroJudge 練習</td><td>ZeroJudge 解題系統的 APCS 歷屆題與基礎題，課堂實作用。<strong>實線框「必寫」</strong>每節一定要完成；<strong>虛線框「加分」</strong>寫完必寫題再挑戰</td><td>開啟 ZeroJudge 題目頁</td></tr>
+        <tr><td>🏠 回家練習</td><td>第 1～3 次課後：ZeroJudge 3 題＋吳邦一〈Python 程式識讀 125 題〉（每次課後發一份紙本 PDF）</td><td>ZeroJudge 題目頁／回家作業 PDF</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<nav class="week-jump" aria-label="課次快速跳轉">
+  <a href="#week1"><b>第 1 次</b><span>Python 基礎與程式流程</span></a>
+  <a href="#week2"><b>第 2 次</b><span>串列、字串與函式</span></a>
+  <a href="#week3"><b>第 3 次</b><span>遞迴與二維資料</span></a>
+  <a href="#week4"><b>第 4 次</b><span>APCS 模擬與補強</span></a>
+  <a href="#resources"><b>資源</b><span>練習資源與使用說明</span></a>
+</nav>
+
+<section class="block" id="week1">
+  <h2><span class="num">#1</span>第 1 次・Python 基礎與程式流程</h2>
+  <p class="dates">📅 第一梯 115/10/31（六）　｜　第二梯 115/11/7（六）</p>
+  <div class="apply-note">📣 <b>報名提醒</b><ul><li>第一梯：預告：2027/1/10 的 APCS 檢測，報名期間是 <b>11/23～12/11</b>（每天 9:00～18:00）。參加培訓班不等於報名，要自己上 APCS 官網報名。</li><li>第二梯：預告：2027/1/10 的 APCS 檢測，報名期間是 <b>11/23～12/11</b>（每天 9:00～18:00）。參加培訓班不等於報名，要自己上 APCS 官網報名。</li></ul></div>
+  <p>從變數、判斷、迴圈到 APCS 最常見的輸入寫法，同時開始練習追蹤程式。</p>
+  <div class="table-wrap">
+    <table class="plan">
+      <thead><tr><th>節次</th><th>類型</th><th>主題（對應章節）</th><th>內容重點</th><th>官方識讀範例</th><th>ZeroJudge 練習</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><span class="type intro">導論</span></td><td class="topic">APCS 介紹與考場環境<span class="chap"><a href="unit01.html">📖 單元 1</a><a href="unit01b.html">📖 單元 1 附</a></span></td><td class="detail">新制架構、題本與級分、技高升學用途、報名時程、IDLE 操作</td><td class="refs"><span class="muted">—</span></td><td><span class="muted">—</span></td></tr>
+        <tr><td>2</td><td><span class="type impl">實作</span></td><td class="topic">變數與輸出入<span class="chap"><a href="unit02.html">📖 單元 2</a><a href="unit02b.html">📖 單元 2 附</a></span></td><td class="detail">資料型態、<code>input()</code>（一律空括號）、<code>print()</code>、<code>sep</code> / <code>end</code>、f-string；Judge 的輸出格式</td><td class="refs"><span class="muted">—</span></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=a001" target="_blank" rel="noopener"><b>a001</b>哈囉<small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=d049" target="_blank" rel="noopener"><b>d049</b>中華民國萬歲！<small class="lvl">加分</small></a></td></tr>
+        <tr><td>3</td><td><span class="type both">實作＋識讀</span></td><td class="topic">運算子<span class="chap"><a href="unit03.html#s01">📖 單元 3 §01–03（§02 只到真值表）</a></span></td><td class="detail">算術、<code>//</code> 與 <code>%</code>（含負數）、比較、邏輯 <code>and</code>／<code>or</code>／<code>not</code>、複合指定 <code>+=</code></td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=d060" target="_blank" rel="noopener"><b>d060</b>還要等多久啊？<small class="lvl">必寫</small></a></td></tr>
+        <tr><td>4</td><td><span class="type both">實作＋識讀</span></td><td class="topic">條件判斷＋看懂錯誤訊息<span class="chap"><a href="unit04.html#s01">📖 單元 4 §01</a><a href="unit09.html#s04">📖 單元 9 §04</a></span></td><td class="detail"><code>if</code> / <code>elif</code> / <code>else</code>、巢狀判斷、<code>if n:</code>（0 與空字串視為假）；第一次看到紅字：縮排、語法、名字錯誤</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="10" title="看第 10 題">10</button><button type="button" class="qchip" data-q="27" title="看第 27 題">27</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=k200" target="_blank" rel="noopener"><b>k200</b>三人行必有我師<small class="lvl">必寫</small></a></td></tr>
+        <tr><td>5</td><td><span class="type both">實作＋識讀</span></td><td class="topic">迴圈<span class="chap"><a href="unit04.html#s02">📖 單元 4 §02</a></span></td><td class="detail"><code>for</code>、<code>while</code>、<code>range()</code> 起點／終點／間隔（含負數）、break／continue</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button><button type="button" class="qchip" data-q="26" title="看第 26 題">26</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=b971" target="_blank" rel="noopener"><b>b971</b>等差數列<small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=a621" target="_blank" rel="noopener"><b>a621</b>Powers of Two<small class="lvl">加分</small></a></td></tr>
+        <tr><td>6</td><td><span class="type read">識讀</span></td><td class="topic">程式追蹤：巢狀迴圈與運算子細節<span class="chap"><a href="unit02.html#s05">📖 單元 2 §05</a><a href="unit04.html#s03">📖 單元 4 §03</a><a href="unit03.html#s02">📖 單元 3 §02 真假值與回傳值、§04</a><a href="unit09.html#s02">📖 單元 9 §02</a></span></td><td class="detail">開頭 5 分鐘：字串的 <code>+</code> 與 <code>*</code>、<code>True</code> 當 1（印圖形要用到）；追蹤表技巧、字串乘法印圖形；用識讀題帶 <code>and</code>／<code>or</code> 的回傳值與運算子優先順序</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="5" title="看第 5 題">5</button><button type="button" class="qchip" data-q="12" title="看第 12 題">12</button></div></td><td><span class="muted">—</span></td></tr>
+        <tr><td>7</td><td><span class="type both">實作＋識讀</span></td><td class="topic">輸入技巧＋識讀題組<span class="chap"><a href="unit04b.html">📖 單元 4 附</a><a href="unit08.html#s04">📖 單元 8 §04</a></span></td><td class="detail"><code>split()</code>、<code>map()</code>、串列生成式、多行輸入、<code>sorted()</code>；經典迴圈：費氏數列、GCD</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="7" title="看第 7 題">7</button><button type="button" class="qchip" data-q="9" title="看第 9 題">9</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=d065" target="_blank" rel="noopener"><b>d065</b>三人行必有我師（1 行版）<small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=a005" target="_blank" rel="noopener"><b>a005</b>Eva 的回家作業<small class="lvl">加分</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=b964" target="_blank" rel="noopener"><b>b964</b>成績指標<small class="lvl">加分</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c290" target="_blank" rel="noopener"><b>c290</b>秘密差<small class="lvl">加分</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=f312" target="_blank" rel="noopener"><b>f312</b>人力分配<small class="lvl">加分</small></a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="homework">
+    <h3>🏠 本週回家練習題目（下次上課前完成）</h3>
+    <p class="hw-row"><strong>實作 ZeroJudge</strong></p>
+    <ul class="hw-list"><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=h026" target="_blank" rel="noopener"><b>h026</b>猜拳</a><span class="hw-kind">APCS 第1題・判斷</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=c294" target="_blank" rel="noopener"><b>c294</b>三角形辨別</a><span class="hw-kind">APCS 第1題・排序＋判斷</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=o711" target="_blank" rel="noopener"><b>o711</b>裝飲料</a><span class="hw-kind">APCS 第1題・迴圈模擬</span></li></ul>
+    <p class="hw-row"><strong>識讀 125 題回家作業</strong></p>
+    <a class="hw-pdf" href="assets/handouts/hw1-reading.pdf" target="_blank" rel="noopener">📄 第 1 次課　回家識讀練習（PDF）<small>共 23 題：易 14、中 6、難 3</small></a>
+    <p class="hw-read">範圍：單元 2、單元 3、單元 4、單元 4 附。上課會發紙本，題號與吳邦一原題本相同，第一頁有作答欄。</p>
+  </div>
+</section>
+
+<section class="block" id="week2">
+  <h2><span class="num">#2</span>第 2 次・串列、字串與函式</h2>
+  <p class="dates">📅 第一梯 115/11/14（六）　｜　第二梯 115/11/21（六）</p>
+  <div class="apply-note">📣 <b>報名提醒</b><ul><li>第一梯：1/10 檢測 <b>11/23 開放報名</b>，下次上課（12/5）會再確認誰報好了。</li><li>第二梯：後天 <b>11/23 開放報名、12/11 截止</b>，這段期間沒有上課，請回家自己報名，收到「報名完成通知」email 後截圖傳到班級群組。</li></ul></div>
+  <p>中級題本的前兩大類：串列與字串。最後把函式學起來，替第 3 次課的遞迴打底。</p>
+  <div class="table-wrap">
+    <table class="plan">
+      <thead><tr><th>節次</th><th>類型</th><th>主題（對應章節）</th><th>內容重點</th><th>官方識讀範例</th><th>ZeroJudge 練習</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><span class="type both">實作＋識讀</span></td><td class="topic">串列基礎<span class="chap"><a href="unit05.html#s01">📖 單元 5 §01–03</a></span></td><td class="detail"><code>[0] * n</code>、索引、切片、<code>len()</code>、<code>append()</code>、<code>a, b = b, a</code> 交換</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="15" title="看第 15 題">15</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=f818" target="_blank" rel="noopener"><b>f818</b>物競天擇<small class="lvl">必寫</small></a></td></tr>
+        <tr><td>2</td><td><span class="type both">實作＋識讀</span></td><td class="topic">串列常見樣式<span class="chap"><a href="unit05.html#s04">📖 單元 5 §04–05</a><a href="unit08.html#s04">📖 單元 8 §04</a></span></td><td class="detail"><code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>count()</code>、<code>index()</code>、<code>in</code>、索引用 <code>%</code> 繞圈；前綴和</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="24" title="看第 24 題">24</button><button type="button" class="qchip" data-q="25" title="看第 25 題">25</button><button type="button" class="qchip" data-q="30" title="看第 30 題">30</button></div></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=j605" target="_blank" rel="noopener"><b>j605</b>程式考試<small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c295" target="_blank" rel="noopener"><b>c295</b>最大和<small class="lvl">加分</small></a></td></tr>
+        <tr><td>3</td><td><span class="type impl">實作</span></td><td class="topic">字元判斷與轉換<span class="chap"><a href="unit06.html#s01">📖 單元 6 §01–02</a></span></td><td class="detail"><code>s[i]</code>、<code>for c in s</code>、<code>isupper()</code>、<code>isdigit()</code>、<code>int(c)</code>、<code>str(n)</code>（ASCII 與 <code>ord()</code>／<code>chr()</code> 為補充）</td><td class="refs"><span class="muted">—</span></td><td><span class="muted">—</span></td></tr>
+        <tr><td>4</td><td><span class="type impl">實作</span></td><td class="topic">字串處理<span class="chap"><a href="unit06.html#s03">📖 單元 6 §03–04</a></span></td><td class="detail">切片、<code>split()</code>、<code>join()</code>、<code>replace()</code>、<code>find()</code></td><td class="refs"><span class="muted">—</span></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=q182" target="_blank" rel="noopener"><b>q182</b>字串操作<small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=c462" target="_blank" rel="noopener"><b>c462</b>交錯字串<small class="lvl">加分</small></a></td></tr>
+        <tr><td>5</td><td><span class="type impl">實作</span></td><td class="topic">字典計數＋字串實作<span class="chap"><a href="unit06.html#s05">📖 單元 6 §05</a></span></td><td class="detail"><code>dict</code>、<code>get()</code>、<code>max(d, key=d.get)</code>；字串模擬題（官方範例 i400 先拿第 1 子題）</td><td class="refs"><span class="muted">—</span></td><td><a class="zj official must" href="https://zerojudge.tw/ShowProblem?problemid=i400" target="_blank" rel="noopener"><b>i400</b>字串解碼<small>★官方範例</small><small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=f579" target="_blank" rel="noopener"><b>f579</b>購物車<small class="lvl">加分</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=j606" target="_blank" rel="noopener"><b>j606</b>造字程式<small class="lvl">加分</small></a></td></tr>
+        <tr><td>6</td><td><span class="type read">識讀</span></td><td class="topic">函式基礎<span class="chap"><a href="unit07.html">📖 單元 7 §01–06</a></span></td><td class="detail"><code>def</code>、<code>return</code>、參數、區域與全域變數</td><td class="refs"><span class="muted">—</span></td><td><span class="muted">—</span></td></tr>
+        <tr><td>7</td><td><span class="type both">實作＋識讀</span></td><td class="topic">小測＋識讀題組<span class="chap"><a href="unit09.html#s03">📖 單元 9 §03</a></span></td><td class="detail">字串實作題；串列與函式追蹤題</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="17" title="看第 17 題">17</button></div></td><td><span class="muted">—</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="homework">
+    <h3>🏠 本週回家練習題目（下次上課前完成）</h3>
+    <p class="hw-row"><strong>實作 ZeroJudge</strong></p>
+    <ul class="hw-list"><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=m931" target="_blank" rel="noopener"><b>m931</b>遊戲選角</a><span class="hw-kind">APCS 第1題・串列</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=e313" target="_blank" rel="noopener"><b>e313</b>最少相異字母</a><span class="hw-kind">字串・計數</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=g275" target="_blank" rel="noopener"><b>g275</b>七言對聯</a><span class="hw-kind">APCS 第1題・字串規則</span></li></ul>
+    <p class="hw-row"><strong>識讀 125 題回家作業</strong></p>
+    <a class="hw-pdf" href="assets/handouts/hw2-reading.pdf" target="_blank" rel="noopener">📄 第 2 次課　回家識讀練習（PDF）<small>共 36 題：易 8、中 24、難 4</small></a>
+    <p class="hw-read">範圍：單元 5、單元 6、單元 7。上課會發紙本，題號與吳邦一原題本相同，第一頁有作答欄。</p>
+  </div>
+</section>
+
+<section class="block" id="week3">
+  <h2><span class="num">#3</span>第 3 次・遞迴與二維資料</h2>
+  <p class="dates">📅 第一梯 115/12/5（六）　｜　第二梯 115/12/12（六）</p>
+  <div class="apply-note">📣 <b>報名提醒</b><ul><li>第一梯：1/10 檢測報名 <b>12/11 截止</b>，還沒報的今天下課前確認；3/14 檢測的報名是 12/7～12/25。</li><li>第二梯：1/10 檢測的報名已在 12/11 截止；想考的同學請報 <b>3/14 檢測（12/7～12/25 報名）</b>。</li></ul></div>
+  <p>上午趁精神最好時追遞迴（識讀的重點題型，官方識讀範例 30 題中有 9 題）；下午動手寫中級題本最常卡人的二維模擬與矩陣操作。</p>
+  <div class="table-wrap">
+    <table class="plan">
+      <thead><tr><th>節次</th><th>類型</th><th>主題（對應章節）</th><th>內容重點</th><th>官方識讀範例</th><th>ZeroJudge 練習</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><span class="type read">識讀</span></td><td class="topic">遞迴（一）：呼叫追蹤<span class="chap"><a href="unit07.html#s06">📖 單元 7 §06（複習）</a><a href="unit07.html#s07">📖 單元 7 §07</a><a href="unit07b.html#s01">📖 單元 7 附 §01–03</a></span></td><td class="detail">開場 10 分鐘複習函式：<code>return</code>、參數、區域變數（用單元 7 的互動追蹤）；終止條件、呼叫樹、由小算到大；階乘、次方、GCD、費氏</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="11" title="看第 11 題">11</button><button type="button" class="qchip" data-q="14" title="看第 14 題">14</button><button type="button" class="qchip" data-q="21" title="看第 21 題">21</button><button type="button" class="qchip" data-q="23" title="看第 23 題">23</button></div></td><td><span class="muted">—</span></td></tr>
+        <tr><td>2</td><td><span class="type read">識讀</span></td><td class="topic">遞迴（二）：進階題型<span class="chap"><a href="unit07b.html#s04">📖 單元 7 附 §04–07</a></span></td><td class="detail">列表法、print 的順序、互相呼叫、遞迴填空與除錯</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="1" title="看第 1 題">1</button><button type="button" class="qchip" data-q="3" title="看第 3 題">3</button><button type="button" class="qchip" data-q="8" title="看第 8 題">8</button><button type="button" class="qchip" data-q="13" title="看第 13 題">13</button><button type="button" class="qchip" data-q="16" title="看第 16 題">16</button></div></td><td><span class="muted">—</span></td></tr>
+        <tr><td>3</td><td><span class="type impl">實作</span></td><td class="topic">二維串列<span class="chap"><a href="unit06b.html#s01">📖 單元 6 附 §01–03</a></span></td><td class="detail"><code>[[0]*m for _ in range(n)]</code>、讀取矩陣、雙層走訪</td><td class="refs"><span class="muted">—</span></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=h027" target="_blank" rel="noopener"><b>h027</b>矩陣總和<small class="lvl">必寫</small></a></td></tr>
+        <tr><td>4</td><td><span class="type impl">實作</span></td><td class="topic">範圍枚舉與邊界<span class="chap"><a href="unit06b.html#s04">📖 單元 6 附 §04</a></span></td><td class="detail">座標出界檢查、<code>abs()</code> 計算距離、雙層 <code>range()</code> 枚舉範圍、用 <code>max()</code> / <code>min()</code> 夾範圍；官方範例 k732 先拿第 1 子題 60 分</td><td class="refs"><span class="muted">—</span></td><td><a class="zj official must" href="https://zerojudge.tw/ShowProblem?problemid=k732" target="_blank" rel="noopener"><b>k732</b>特殊位置<small>★官方範例</small><small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=o077" target="_blank" rel="noopener"><b>o077</b>電子畫布<small class="lvl">加分</small></a></td></tr>
+        <tr><td>5</td><td><span class="type both">實作＋識讀</span></td><td class="topic">網格模擬<span class="chap"><a href="unit06b.html#s05">📖 單元 6 附 §05</a></span></td><td class="detail">方向陣列與轉向、撞牆轉彎的移動模擬；官方範例 o712 先拿第 1 子題</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="18" title="看第 18 題">18</button></div></td><td><a class="zj official must" href="https://zerojudge.tw/ShowProblem?problemid=o712" target="_blank" rel="noopener"><b>o712</b>蒐集寶石<small>★官方範例</small><small class="lvl">必寫</small></a><a class="zj bonus" href="https://zerojudge.tw/ShowProblem?problemid=m932" target="_blank" rel="noopener"><b>m932</b>蜜蜂觀察<small class="lvl">加分</small></a></td></tr>
+        <tr><td>6</td><td><span class="type impl">實作</span></td><td class="topic">矩陣操作<span class="chap"><a href="unit06b.html#s06">📖 單元 6 附 §06</a></span></td><td class="detail">矩陣旋轉、翻轉、逐格比對、<code>[::-1]</code></td><td class="refs"><span class="muted">—</span></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=b965" target="_blank" rel="noopener"><b>b965</b>矩陣轉換<small class="lvl">必寫</small></a></td></tr>
+        <tr><td>7</td><td><span class="type both">實作＋識讀</span></td><td class="topic">小測＋識讀題組<span class="chap"><a href="unit06b.html#s07">📖 單元 6 附 §07</a></span></td><td class="detail">二維實作題；遞迴追蹤題</td><td class="refs"><span class="muted">—</span></td><td><a class="zj challenge bonus" href="https://zerojudge.tw/ShowProblem?problemid=c292" target="_blank" rel="noopener"><b>c292</b>數字龍捲風<small>挑戰</small><small class="lvl">加分</small></a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="homework">
+    <h3>🏠 本週回家練習題目（下次上課前完成）</h3>
+    <p class="hw-row"><strong>實作 ZeroJudge</strong></p>
+    <ul class="hw-list"><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=g276" target="_blank" rel="noopener"><b>g276</b>魔王迷宮</a><span class="hw-kind">APCS 第2題・二維模擬</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=f580" target="_blank" rel="noopener"><b>f580</b>骰子</a><span class="hw-kind">APCS 第2題・模擬</span></li><li><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=d212" target="_blank" rel="noopener"><b>d212</b>東東爬階梯</a><span class="hw-kind">遞迴／由小算到大</span></li></ul>
+    <p class="hw-row"><strong>識讀 125 題回家作業</strong></p>
+    <a class="hw-pdf" href="assets/handouts/hw3-reading.pdf" target="_blank" rel="noopener">📄 第 3 次課　回家識讀練習＋考前加練（PDF）<small>共 20 題：易 1、中 15、難 4</small></a>
+    <p class="hw-read">範圍：單元 6 附、單元 7 附、單元 9（單元 9 是第 4 次課前的考前加練）。上課會發紙本，題號與吳邦一原題本相同，第一頁有作答欄。</p>
+  </div>
+</section>
+
+<section class="block" id="week4">
+  <h2><span class="num">#4</span>第 4 次・APCS 模擬與補強</h2>
+  <p class="dates">📅 第一梯 115/12/19（六）　｜　第二梯 116/1/9（六）</p>
+  <div class="apply-note">📣 <b>報名提醒</b><ul><li>第一梯：1/10 檢測 <b>1/4 起可查考場</b>；沒報到 1 月的同學，3/14 檢測報名到 <b>12/25</b>。</li><li>第二梯：<b>明天（1/10）就是檢測</b>：確認考場、帶證件，考場只算最後一次上傳。沒考到或想再考的，下一次是 6/13（報名日期看官網）。</li></ul></div>
+  <p>上午補齊搜尋與執行次數，接著識讀模擬考與檢討；午休後連排實作模擬考。</p>
+  <div class="table-wrap">
+    <table class="plan">
+      <thead><tr><th>節次</th><th>類型</th><th>主題（對應章節）</th><th>內容重點</th><th>官方識讀範例</th><th>ZeroJudge 練習</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><span class="type read">識讀</span></td><td class="topic">搜尋與執行次數<span class="chap"><a href="unit09.html#s05">📖 單元 9 §05–06</a></span></td><td class="detail">找錯與設計測資、循序 vs 二分搜尋、迴圈與搜尋的執行次數、寫成 <code>O( )</code>（時間複雜度）、佇列模擬（錯誤訊息第 1 次課已教，快速複習）</td><td class="refs"><div class="qchips"><button type="button" class="qchip" data-q="4" title="看第 4 題">4</button><button type="button" class="qchip" data-q="6" title="看第 6 題">6</button><button type="button" class="qchip" data-q="22" title="看第 22 題">22</button><button type="button" class="qchip" data-q="28" title="看第 28 題">28</button><button type="button" class="qchip" data-q="29" title="看第 29 題">29</button></div></td><td><span class="muted">—</span></td></tr>
+        <tr><td>2–3</td><td><span class="type read">識讀</span></td><td class="topic">程式識讀模擬考<span class="chap"><a href="mock.html">📖 線上作答頁</a><a href="unit09.html#s07">📖 單元 9 §07</a></span></td><td class="detail">吳邦一 125 題保留的 30 題（易、中、難各 10 題），限時 90 分鐘，兩節連排：中間下課照常計時，可以上廁所，不交談、題目不帶出教室。紙本或線上作答頁擇一</td><td class="refs"><span class="muted">—</span></td><td><span class="muted">—</span></td></tr>
+        <tr><td>4</td><td><span class="type read">識讀</span></td><td class="topic">識讀模擬考檢討<span class="chap"><a href="unit09.html#s03">📖 單元 9 §03</a></span></td><td class="detail">對答案、講解錯最多的題目、訂正；對照統整表找出要回去複習的單元。順口帶課程沒講過的兩個寫法：<code>.clear()</code> 清空串列、<code>for t in (-5, -1, 5)</code> 走訪 tuple（單元 5 §03、§05 有補充）</td><td class="refs"><span class="muted">—</span></td><td><span class="muted">—</span></td></tr>
+        <tr><td>5–7</td><td><span class="type impl">實作</span></td><td class="topic">程式實作模擬考<span class="chap"><a href="unit02b.html#s05">📖 單元 2 附 §05–06</a></span></td><td class="detail">午休後連排：2025 年 10 月中級真題 3 題，限時 120 分鐘，剩下約 30 分鐘檢討</td><td class="refs"><span class="muted">—</span></td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=r488" target="_blank" rel="noopener"><b>r488</b>彗星撞擊</a><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=r489" target="_blank" rel="noopener"><b>r489</b>航空拍照圖</a><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=r490" target="_blank" rel="noopener"><b>r490</b>商品包裝地</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="resources">
+  <h2><span class="num">📚</span>練習資源與使用說明</h2>
+
+  <h3>🧩 ZeroJudge（實作）</h3>
+  <p>ZeroJudge 送出後由系統自動用測資評分，跟 APCS 正式考試一樣。請先到 <a href="https://zerojudge.tw/" target="_blank" rel="noopener">zerojudge.tw ↗</a> 註冊帳號，送出時語言選 <strong>Python</strong>。第一次送出前，先讀 <a href="unit02b.html">單元 2 附：上機評測基本功</a>。上面各次課的表格裡，「ZeroJudge 練習」欄就是課堂題目，按題號可以直接開啟。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>題目類型</th><th>難度</th><th>怎麼練</th></tr></thead>
+      <tbody>
+        <tr><td>基礎題庫（a001、d049…）</td><td>入門</td><td>練輸入輸出、運算、判斷、迴圈的基本寫法</td></tr>
+        <tr><td>APCS 第 1 題（b964、c290…）</td><td>約等於現在的初級</td><td>練熟迴圈與串列，每題 20～30 分鐘內寫完</td></tr>
+        <tr><td>APCS 第 2 題（標 <strong>★官方範例</strong> 的三題就是官方中級題本範例）</td><td>約等於現在的中級</td><td>先拿子題的 60 分，再拚完整解</td></tr>
+        <tr><td>標「挑戰」的題目（c292）</td><td>舊制第 3 題，比中級難</td><td>學有餘力再寫</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>2025 年 10 月的三題中級真題（r488～r490）保留到第 4 次課的模擬考，之前先不要寫。</p>
+
+  <h3>📝 吳邦一〈APCS Python 程式識讀 125 題〉（識讀回家作業）</h3>
+  <p>中正大學資工系吳邦一教授為 Python 初學者寫的程式識讀模擬題，難度分易、中、難，每一題的解答都附說明（作者同意教學使用與分享，<a href="https://drive.google.com/file/d/1WaZOpxgcz23vEil2UOzLWXrtYeUr0Nnc/view?usp=drive_link" target="_blank" rel="noopener">作者原始連結 ↗</a>）。我們把題目依單元分好，<strong>每次課後一次發一份紙本</strong>，就是各次課「本週回家練習題目」裡的 PDF；另外保留 30 題（易、中、難各 10 題）當第 4 次課的識讀模擬考，不會出現在回家作業裡。</p>
+  <div class="callout tip"><span class="t">💡 怎麼寫回家作業</span>
+  <p style="margin-bottom:0">① 每一題都用紙筆追蹤，不要用電腦跑；② 先做「易」「中」，「難」是挑戰題（每題右上方有標）；③ 下次上課對答案，錯的題目回去看對應單元。</p></div>
+
+
+  <h3>📄 官方識讀範例 30 題</h3>
+  <p>各次課表格裡的「官方識讀範例」欄。30 題依主題、依單元的完整對照，在 <a href="unit09.html#s07">單元 9 §07 各單元的識讀重點統整</a>。</p>
+
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="index.html"><div class="dir">← 回課程首頁</div><div class="ttl">資電APCS週六課程</div></a>
+    <a class="next" href="functions.html"><div class="dir">下一頁 →</div><div class="ttl">函式與語法統整表</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>

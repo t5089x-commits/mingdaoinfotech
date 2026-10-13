@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 3：運算子大全：算術・比較・邏輯・位元｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap" data-unit="3">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 3</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">起點篇　單元 3</span>
+  <h1>運算子大全：算術・比較・邏輯・位元</h1>
+  <p>APCS 初級範圍的運算子，這裡一次補齊；位元運算列為補充</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>熟悉算術、比較、邏輯運算子與複合指定運算子</li>
+    <li>會算負數的 <code>//</code> 與 <code>%</code>，知道哪些值是「假」、<code>and</code>／<code>or</code> 回傳的是什麼</li>
+    <li>（補充）認識<strong>位元運算子</strong>：AND、OR、XOR、NOT、位移</li>
+    <li>能判斷一段運算式的運算子優先順序與結果</li>
+  </ul>
+</div>
+
+<section class="block" id="s01">
+  <h2><span class="num">01</span>算術運算子</h2>
+  <p><code>+</code> 加、<code>-</code> 減、<code>*</code> 乘、<code>/</code> 除、<code>%</code> 餘數、<code>//</code> 整數除（商）、<code>**</code> 指數。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a, b = 17, 5
+print(a + b)   # 22
+print(a - b)   # 12
+print(a * b)   # 85
+print(a / b)   # 3.4   （/ 一定回傳浮點數）
+print(a % b)   # 2     （餘數）
+print(a // b)  # 3     （商，捨去小數）
+print(a ** b)  # 1419857</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 <code>%</code> 和 <code>//</code> 是好朋友</span>
+  <p style="margin-bottom:0">任何整數 <code>a</code>、<code>b</code>（<code>b</code> 不為 0），一定滿足 <code>a == (a // b) * b + a % b</code>。<code>//</code> 求「商」、<code>%</code> 求「餘數」，APCS 常考「奇偶判斷」（<code>n % 2 == 0</code>）、「個位數」（<code>n % 10</code>）都是靠它們。</p></div>
+  <h3>負數的 <code>//</code> 和 <code>%</code>：往下取整</h3>
+  <p><code>//</code> 不是「把小數去掉」，而是取<strong>比真正答案小、最接近的整數</strong>（往下取整）。正數看不出差別，負數就不一樣了：<code>-7 / 2</code> 是 <code>-3.5</code>，往下取整是 <code>-4</code>，不是 <code>-3</code>。<code>%</code> 再用上面那條式子算回來：<code>-7 - (-4)×2 = 1</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">負數的整數除法與餘數</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(7 // 2, -7 // 2)      # 3 -4
+print(7 % 2, -7 % 2)        # 1 1
+print(-13 // 5, -13 % 5)    # -3 2
+print(int(-7 / 2))          # -3（int() 才是直接去掉小數）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 -4
+1 1
+-3 2
+-3</div>
+  </div>
+  <div class="callout"><span class="t">📌 記法</span>
+  <p style="margin-bottom:0">除數 <code>b</code> 是正數時，<code>a % b</code> 的結果一定落在 <code>0</code>～<code>b-1</code>，不會是負的。所以 <code>-13 % 5</code> 是 <code>2</code>，商就是 <code>(-13 - 2) // 5 = -3</code>。</p></div>
+</section>
+
+<section class="block" id="s02">
+  <h2><span class="num">02</span>比較與邏輯運算子</h2>
+  <p>比較運算子的結果一定是布林值：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&gt;=</code>、<code>&lt;</code>、<code>&lt;=</code>。邏輯運算子用來組合多個條件：<code>and</code>（且）、<code>or</code>（或）、<code>not</code>（否定）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">score = 78
+print(score &gt;= 60)                          # True
+print(score &gt;= 90 or score &gt;= 60)            # True（有一個為真就是 True）
+print(score &gt;= 60 and score &lt; 90)            # True（兩個都要為真）
+print(not (score &gt;= 60))                     # False
+
+n = 15
+print(1 &lt;= n &lt;= 100)                          # Python 可以連續比較，等同 (1&lt;=n) and (n&lt;=100)</code></pre>
+  </div>
+  <table class="center" style="margin:14px 0">
+    <thead><tr><th>a</th><th>b</th><th>a and b</th><th>a or b</th></tr></thead>
+    <tbody>
+      <tr><td>True</td><td>True</td><td>True</td><td>True</td></tr>
+      <tr><td>True</td><td>False</td><td>False</td><td>True</td></tr>
+      <tr><td>False</td><td>True</td><td>False</td><td>True</td></tr>
+      <tr><td>False</td><td>False</td><td>False</td><td>False</td></tr>
+    </tbody>
+  </table>
+  <h3>真假值：不是只有 True 和 False</h3>
+  <p>放在 <code>if</code>、<code>while</code>、<code>and</code>／<code>or</code>／<code>not</code> 裡的資料，Python 都會把它看成「真」或「假」：<strong><code>0</code>、<code>0.0</code>、空字串 <code>''</code>、空串列 <code>[]</code> 是假</strong>，其他（不是 0 的數、有內容的字串……）都是真。用 <code>bool()</code> 可以查。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">哪些是假？</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(bool(0), bool(7), bool(-1))      # False True True
+print(bool(&#x27;&#x27;), bool(&#x27;0&#x27;), bool(&#x27; &#x27;))   # False True True（&#x27;0&#x27; 和空白都是有內容的字串）
+print(bool([]), bool([0]))              # False True</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+False True True
+False True True
+False True</div>
+  </div>
+
+  <h3><code>and</code>、<code>or</code> 回傳的是「其中一邊的值」</h3>
+  <p>兩邊都是 True／False 時，結果就跟上面的真值表一樣。但如果放的是數字或字串，<code>and</code>／<code>or</code> 回傳的是<strong>其中一邊原本的值</strong>，不一定是 True／False：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>運算</th><th>左邊是真</th><th>左邊是假</th></tr></thead>
+      <tbody>
+        <tr><td><code>a and b</code></td><td>回傳 <code>b</code></td><td>回傳 <code>a</code>（右邊不用看）</td></tr>
+        <tr><td><code>a or b</code></td><td>回傳 <code>a</code>（右邊不用看）</td><td>回傳 <code>b</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">and／or 的回傳值</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(3 and 5)            # 5
+print(0 and 5)            # 0
+print(3 or 5)             # 3
+print(&#x27;&#x27; or &#x27;empty&#x27;)      # empty
+print((2 and &#x27;ok&#x27;) or 0)  # ok
+print(not 0, not &#x27;a&#x27;)     # True False（not 一定回傳 True／False）
+
+name = &#x27;&#x27;
+print(name or &#x27;無名氏&#x27;)    # 常見用法：空字串時給一個預設值</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+5
+0
+3
+empty
+ok
+True False
+無名氏</div>
+  </div>
+  <div class="callout"><span class="t">🔎 右邊不用看＝不會執行</span>
+  <p style="margin-bottom:0"><code>and</code> 左邊是假、<code>or</code> 左邊是真時，右邊根本不會被算（短路）。所以 <code>x != 0 and 10 / x &gt; 1</code> 在 <code>x</code> 是 0 時會直接得到 <code>False</code>，不會發生除以 0 的錯誤。</p></div>
+</section>
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>複合指定運算子</h2>
+  <p>把「運算」和「指定」合在一起的簡寫。<code>a += b</code> 就等同 <code>a = a + b</code>：先用 <code>a</code> 原本的值算出結果，再存回 <code>a</code>。</p>
+  <div class="table-wrap">
+    <table class="center">
+      <thead><tr><th>寫法</th><th>等同於</th><th>假設 a = 10，執行後 a 變成</th></tr></thead>
+      <tbody>
+        <tr><td><code>a += 3</code></td><td><code>a = a + 3</code></td><td><code>13</code></td></tr>
+        <tr><td><code>a -= 3</code></td><td><code>a = a - 3</code></td><td><code>7</code></td></tr>
+        <tr><td><code>a *= 3</code></td><td><code>a = a * 3</code></td><td><code>30</code></td></tr>
+        <tr><td><code>a /= 4</code></td><td><code>a = a / 4</code></td><td><code>2.5</code>（變成小數）</td></tr>
+        <tr><td><code>a //= 3</code></td><td><code>a = a // 3</code></td><td><code>3</code></td></tr>
+        <tr><td><code>a %= 3</code></td><td><code>a = a % 3</code></td><td><code>1</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">+=、-=、*=、/= 連續執行，追蹤 a 的變化</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = 10
+a += 5      # a = 10 + 5  → 15
+print(a)    # 15
+a -= 3      # a = 15 - 3  → 12
+print(a)    # 12
+a *= 2      # a = 12 * 2  → 24
+print(a)    # 24
+a /= 4      # a = 24 / 4  → 6.0
+print(a)    # 6.0（/ 的結果一定是小數）</code></pre>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">最常見的用法：在迴圈裡累加</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">total = 0
+for i in range(1, 6):
+    total += i     # 每一輪把 i 加進 total
+print(total)        # 1+2+3+4+5 = 15
+
+count = 0
+for ch in "banana":
+    if ch == "a":
+        count += 1  # 計數器：遇到 a 就加 1
+print(count)        # 3</code></pre>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀常見陷阱</span>
+  <p style="margin-bottom:0"><code>/=</code> 之後變數就變成<strong>小數</strong>（例如 <code>6.0</code>），印出來會多一個 <code>.0</code>；想保持整數要用 <code>//=</code>。另外 Python <strong>沒有</strong> <code>a++</code>、<code>a--</code> 這種寫法，要寫成 <code>a += 1</code>、<code>a -= 1</code>。</p></div>
+</section>
+
+<section class="block" id="s04">
+  <h2><span class="num">04</span>運算子優先順序</h2>
+  <p>一個式子裡有好幾個運算子時，Python 照固定的順序算：先算上面的，同一層由左到右。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>順序</th><th>運算子</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>( )</code></td><td>括號最優先</td></tr>
+        <tr><td>2</td><td><code>**</code></td><td>次方；連續兩個 <code>**</code> 是<strong>由右到左</strong></td></tr>
+        <tr><td>3</td><td><code>-x</code></td><td>負號；<code>-2 ** 2</code> 是先算 <code>2 ** 2</code> 再加負號，結果 <code>-4</code></td></tr>
+        <tr><td>4</td><td><code>*</code>　<code>/</code>　<code>//</code>　<code>%</code></td><td>乘除同一層，由左到右</td></tr>
+        <tr><td>5</td><td><code>+</code>　<code>-</code></td><td>加減</td></tr>
+        <tr><td>6</td><td><code>==</code>　<code>!=</code>　<code>&lt;</code>　<code>&lt;=</code>　<code>&gt;</code>　<code>&gt;=</code></td><td>比較，可以連寫</td></tr>
+        <tr><td>7</td><td><code>not</code></td><td></td></tr>
+        <tr><td>8</td><td><code>and</code></td><td><code>and</code> 比 <code>or</code> 先算</td></tr>
+        <tr><td>9</td><td><code>or</code></td><td>最後才算</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">照順序算算看</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(2 + 3 * 4)               # 14
+print((2 + 3) * 4)             # 20
+print(10 - 4 - 3)              # 3（同一層由左到右）
+print(2 ** 3 ** 2)             # 512（先算 3 ** 2）
+print(-2 ** 2)                 # -4
+print(17 // 5 * 5 + 17 % 5)    # 17
+print(1 + 2 &gt; 2 and not 3 &lt; 1) # True
+print(True or False and False) # True（先算 and）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+14
+20
+3
+512
+-4
+17
+True
+True</div>
+  </div>
+  <div class="callout"><span class="t">💡 看不懂就自己加括號</span>
+  <p style="margin-bottom:0">寫程式時，不確定順序就加括號，例如 <code>(a + b) * c</code>、<code>(x &gt; 0) and (y &gt; 0)</code>，自己和別人都好讀。識讀題則要照上面的順序一步一步算，最常考的是 <code>-2 ** 2</code>、<code>2 ** 3 ** 2</code> 和 <code>and</code>／<code>or</code> 混在一起。</p></div>
+</section>
+
+<section class="block" id="bitwise"><span id="s05" class="anchor"></span>
+  <details class="supp">
+    <summary><span class="num">05</span>補充：位元運算子<span class="supp-tag">自主補充・點開閱讀</span></summary>
+    <div class="supp-body">
+  <p>位元運算子把數字看成<strong>二進位</strong>，一個 bit 一個 bit 做運算，規則跟數位邏輯課學過的 AND、OR、XOR 閘一樣：</p>
+  <div class="callout"><span class="t">📌 為什麼列為補充？</span>
+  <p style="margin-bottom:0">官方把位元運算列在初級題本的檢測範圍內，但我們查過官方公布的識讀範例題（C 語言版 75 題、Python 版 30 題），都<strong>沒有出現</strong>位元運算的題目，網路上整理的歷屆觀念題也找不到相關題目。所以這一節當作補充：知道每個運算子的意思、看得懂結果就好，時間有限時優先把前面四節練熟。</p></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>運算子</th><th>名稱</th><th>規則</th><th>範例</th></tr></thead>
+      <tbody>
+        <tr><td><code>&amp;</code></td><td>AND</td><td>兩個 bit 都是 1 才是 1</td><td><code>0b1100 &amp; 0b1010</code> → <code>0b1000</code>（8）</td></tr>
+        <tr><td><code>|</code></td><td>OR</td><td>只要有一個 bit 是 1 就是 1</td><td><code>0b1100 | 0b1010</code> → <code>0b1110</code>（14）</td></tr>
+        <tr><td><code>^</code></td><td>XOR</td><td>兩個 bit <strong>不同</strong>才是 1</td><td><code>0b1100 ^ 0b1010</code> → <code>0b0110</code>（6）</td></tr>
+        <tr><td><code>~</code></td><td>NOT</td><td>每個 bit 反過來（結果 = <code>-x-1</code>）</td><td><code>~5</code> → <code>-6</code></td></tr>
+        <tr><td><code>&lt;&lt;</code></td><td>左移</td><td>所有 bit 往左移 n 位，右邊補 0（等於 ×2ⁿ）</td><td><code>3 &lt;&lt; 2</code> → <code>12</code></td></tr>
+        <tr><td><code>&gt;&gt;</code></td><td>右移</td><td>所有 bit 往右移 n 位（等於整數除以 2ⁿ）</td><td><code>12 &gt;&gt; 2</code> → <code>3</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = 12   # 二進位 1100
+b = 10   # 二進位 1010
+
+print(bin(a))     # 0b1100
+print(a &amp; b)      # 8   →  1000
+print(a | b)      # 14  →  1110
+print(a ^ b)      # 6   →  0110
+print(a &lt;&lt; 1)      # 24  → 11000（左移 1 位＝乘以 2）
+print(a &gt;&gt; 2)      # 3   → 0011（右移 2 位＝除以 4，取商）</code></pre>
+  </div>
+  <div class="callout"><span class="t">🔎 位元運算子 vs 邏輯運算子：不要搞混！</span>
+  <p style="margin-bottom:0"><code>&amp;</code>／<code>|</code> 是<strong>位元運算</strong>，作用在整數的每一個 bit 上；<code>and</code>／<code>or</code> 是<strong>邏輯運算</strong>，作用在 <code>True</code>／<code>False</code> 這種布林值上，考慮的是「兩個條件成不成立」。<code>3 &amp; 5</code>（結果是 1）和 <code>3 and 5</code>（結果是 5，因為兩者都不是 0，取後面那個）意思完全不一樣，這兩組很容易搞混，看到時要特別注意。</p></div>
+  <div class="callout tip"><span class="t">💡 為什麼要學位元運算？</span>
+  <p style="margin-bottom:0">位元運算常用來<strong>用一個整數同時記錄很多個開關狀態</strong>（例如用 8 個 bit 記錄 8 種權限的開／關），或是快速做「乘 2 的次方」「除 2 的次方」「判斷奇偶」（<code>n &amp; 1</code> 就能判斷 <code>n</code> 是不是奇數）。</p></div>
+  <h3>位元運算的複合指定（補充）</h3>
+  <p>位元運算也有對應的複合指定運算子：<code>&amp;=</code>、<code>|=</code>、<code>^=</code>、<code>&lt;&lt;=</code>、<code>&gt;&gt;=</code>，用法跟 <code>+=</code> 一樣。常見用途是用一個整數記錄好幾個「開關」：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">用 |= 開、&amp;= 關某一個 bit</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">flags = 0b0000
+flags |= 0b0100     # 打開第 3 個開關 → 0b100
+print(bin(flags))   # 0b100
+flags &amp;= ~0b0100    # 再把它關掉     → 0b0
+print(bin(flags))   # 0b0
+x = 3
+x &lt;&lt;= 2             # x = x &lt;&lt; 2 → 12（乘以 4）
+print(x)            # 12</code></pre>
+  </div>
+    </div>
+  </details>
+</section>
+
+
+
+<div class="exercise">
+  <h3>✏️ 課堂練習</h3>
+  <ol>
+    <li><code>13 // 4</code>、<code>13 % 4</code>、<code>2 ** 6</code> 分別是多少？</li>
+    <li>追蹤程式：<code>x = 7</code>，接著依序執行 <code>x *= 3</code>、<code>x -= 5</code>、<code>x //= 4</code>，最後 <code>print(x)</code> 印出什麼？如果最後一行改成 <code>x /= 4</code> 呢？</li>
+    <li><code>print(-11 // 3, -11 % 3)</code> 印出什麼？</li>
+    <li><code>print(0 or 'A', 5 and 0, 4 and 'B')</code> 印出什麼？</li>
+    <li><code>print(2 + 3 * 4 ** 2 // 8)</code> 印出什麼？依照優先順序寫出每一步。</li>
+    <li>（補充）<code>a = 6</code>（<code>0b0110</code>），<code>b = 3</code>（<code>0b0011</code>），求 <code>a &amp; b</code>、<code>a | b</code>、<code>a ^ b</code>。</li>
+    <li>（補充）不用 <code>%</code>，改用位元運算判斷一個整數 <code>n</code> 是不是奇數，該怎麼寫？</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+    <ol>
+      <li><code>13 // 4 = 3</code>、<code>13 % 4 = 1</code>、<code>2 ** 6 = 64</code>。</li>
+      <li><code>x</code> 依序變成 7 → 21 → 16 → <strong>4</strong>，印出 <code>4</code>；改成 <code>x /= 4</code> 的話是 <code>16 / 4</code>，印出 <code>4.0</code>（<code>/</code> 的結果一定是小數）。</li>
+      <li><code>-11 / 3</code> 約是 -3.67，往下取整是 <code>-4</code>；餘數 <code>-11 - (-4)×3 = 1</code>，印出 <code>-4 1</code>。</li>
+      <li><code>0 or 'A'</code> 左邊是假 → <code>A</code>；<code>5 and 0</code> 左邊是真 → <code>0</code>；<code>4 and 'B'</code> → <code>B</code>。印出 <code>A 0 B</code>。</li>
+      <li><code>4 ** 2 = 16</code> → <code>3 * 16 = 48</code> → <code>48 // 8 = 6</code> → <code>2 + 6 = 8</code>，印出 <code>8</code>。</li>
+      <li><code>0b0110 &amp; 0b0011 = 0b0010</code>（2）、<code>0b0110 | 0b0011 = 0b0111</code>（7）、<code>0b0110 ^ 0b0011 = 0b0101</code>（5）。</li>
+      <li><code>(n &amp; 1) == 1</code>（或直接寫 <code>if n &amp; 1:</code>）：奇數的最後一個 bit 一定是 1，偶數一定是 0。在 Python 裡，<code>&amp;</code> 會比 <code>==</code> 先算，所以不加括號的 <code>n &amp; 1 == 1</code> 結果也一樣；但 C／C++ 剛好相反（<code>==</code> 先算），加上括號最不會看錯。</li>
+    </ol>
+  </div>
+</div>
+
+<section class="block py125" id="py125">
+  <h2><span class="num">📝</span>課後識讀練習：APCS 官方識讀範例</h2>
+  <p>APCS 官方《程式識讀題目範例（Python 題本）》裡跟這一單元有關的 1 題，跟<a href="schedule.html">課程規劃</a>上課用的是同一批。按題號會跳出題目（預設隱藏答案），先自己用紙筆追蹤，再按「顯示官方答案」對答案。</p>
+  <ul class="official-list"><li><button type="button" class="qchip" data-q="20" title="看官方識讀範例第 20 題">20</button><span>運算子：% 與 // 找零</span></li></ul>
+  <p class="muted">吳邦一〈Python 程式識讀 125 題〉會在每次課後一次發紙本，見課程規劃各次課的「本週回家練習題目」。</p>
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit02b.html"><div class="dir">← 上一單元</div><div class="ttl">上機評測基本功：ZeroJudge 與考場規則</div></a>
+    <a class="next" href="unit04.html"><div class="dir">下一單元 →</div><div class="ttl">條件判斷與迴圈</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 8：綜合實戰、經典小程式與進階學習地圖｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap" data-unit="8">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 8</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">挑戰篇　單元 8</span>
+  <h1>綜合實戰、經典小程式與進階學習地圖</h1>
+  <p>用 APCS 的輸入輸出格式整合前面學過的東西；整理識讀最常出現的經典小程式；最後是往 AP325、中高級前進的路線。</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>用 Judge 的輸入輸出格式，整合串列、字串、函式完成綜合題</li>
+    <li>認得 12 個經典小程式，識讀時一眼看出程式在做什麼</li>
+    <li>知道開始讀 AP325 之前，自己需要具備哪些能力</li>
+    <li>知道想往中高級、高級邁進，接下來該學什麼、用什麼教材</li>
+  </ul>
+</div>
+
+<section class="block" id="s01">
+  <h2><span class="num">01</span>綜合實戰一：成績統計（APCS 輸入格式）</h2>
+
+  <p><strong>題目</strong>：第一行是學生人數 n，第二行是 n 個整數分數。請依序輸出四行：平均（印到小數點後 2 位，用 <code>f"{x:.2f}"</code>）、最高分、最低分、及格（≥ 60）人數。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">score_stats.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def stats(scores):
+    passed = 0
+    for s in scores:
+        if s &gt;= 60:
+            passed += 1
+    return sum(scores) / len(scores), max(scores), min(scores), passed
+
+n = int(input())
+scores = list(map(int, input().split()))
+avg, hi, lo, passed = stats(scores)
+print(f&quot;{avg:.2f}&quot;)
+print(hi)
+print(lo)
+print(passed)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+5
+80 45 92 60 77
+<span class="muted">▼ 執行結果</span>
+70.80
+92
+45
+4</div>
+  </div>
+
+  <div class="callout"><span class="t">🔎 這題練到什麼？</span>
+  <p style="margin-bottom:0">多行輸入、串列的 <code>sum</code>／<code>max</code>／<code>min</code>、計數、函式一次回傳多個值、<code>f"{x:.2f}"</code> 格式化輸出。注意 <code>input()</code> 沒有提示文字，輸出也沒有多印「平均：」這類說明，這就是 Judge 的格式。</p></div>
+
+</section>
+
+<section class="block" id="s02">
+  <h2><span class="num">02</span>綜合實戰二：檢查密碼強度（字元判斷）</h2>
+
+  <p><strong>題目</strong>：第一行 n，接下來 n 行各一個密碼。長度至少 8、而且同時有英文字母和數字，輸出 <code>OK</code>，否則輸出 <code>NO</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">check_password.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def is_strong(pw):
+    if len(pw) &lt; 8:
+        return False
+    has_alpha = False
+    has_digit = False
+    for ch in pw:              # 一個字元一個字元檢查
+        if ch.isalpha():
+            has_alpha = True
+        if ch.isdigit():
+            has_digit = True
+    return has_alpha and has_digit
+
+n = int(input())
+for _ in range(n):
+    pw = input()
+    print(&quot;OK&quot; if is_strong(pw) else &quot;NO&quot;)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+abc12345
+abcdefgh
+md2026
+<span class="muted">▼ 執行結果</span>
+OK
+NO
+NO</div>
+  </div>
+
+  <div class="callout"><span class="t">🔎 這題練到什麼？</span>
+  <p style="margin-bottom:0">中級範圍的「字元」：<code>for ch in s</code> 逐字處理、<code>isalpha()</code>／<code>isdigit()</code> 判斷字元種類，以及用旗標變數（<code>has_alpha</code>）記錄「有沒有出現過」。</p></div>
+
+</section>
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>綜合實戰三：字串壓縮（流程模擬）</h2>
+
+  <p><strong>題目</strong>：輸入一個只有大寫字母的字串，把<strong>連續相同</strong>的字母壓縮成「字母＋次數」。例如 <code>AAABBC</code> → <code>A3B2C1</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">compress.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = input()
+result = &quot;&quot;
+i = 0
+while i &lt; len(s):
+    j = i
+    while j &lt; len(s) and s[j] == s[i]:   # 往後找，直到遇到不一樣的字母
+        j += 1
+    result += s[i] + str(j - i)          # 字母 + 這一段的長度
+    i = j                                # 從下一段開始
+print(result)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+AAABBCAA
+<span class="muted">▼ 執行結果</span>
+A3B2C1A2</div>
+  </div>
+
+  <div class="callout tip"><span class="t">🔎 這題練到什麼？</span>
+  <p style="margin-bottom:0">中級最常見的「照規則一步一步做」：用兩個索引 <code>i</code>、<code>j</code> 找出一段連續的字母，<code>while</code> 條件裡先檢查 <code>j &lt; len(s)</code> 再看 <code>s[j]</code>，避免索引超出範圍。注意最後的 <code>AA</code> 是另一段，所以答案結尾是 <code>A2</code>。</p></div>
+
+  <details class="supp" style="margin-top:16px">
+    <summary>補充：凱薩密碼（ord／chr 字母位移）<span class="supp-tag">非 APCS 重點・點開閱讀</span></summary>
+    <div class="supp-body">
+      <p><strong>這一題對 APCS 有沒有用？</strong>直接幫助不大：我們查過官方中級範例三題、2025 年 10 月中級真題，以及官方識讀範例 30 題，都沒有用到 <code>ord()</code>／<code>chr()</code> 的字母位移。它唯一有價值的是 <code>% 26</code> 讓數值「繞一圈回到開頭」的技巧，這個技巧在 APCS 常以別的形式出現，例如方向的 <code>(d + 1) % 4</code>、官方識讀範例第 25 題的 <code>(i + 2) % 10</code>。所以這題留作補充，有興趣再看。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">caesar_cipher.py</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def caesar(s, k):
+    result = &quot;&quot;
+    for ch in s:
+        if ch.isupper():
+            result += chr((ord(ch) - ord(&#x27;A&#x27;) + k) % 26 + ord(&#x27;A&#x27;))
+        elif ch.islower():
+            result += chr((ord(ch) - ord(&#x27;a&#x27;) + k) % 26 + ord(&#x27;a&#x27;))
+        else:
+            result += ch
+    return result
+
+print(caesar(&quot;Hello, APCS xyz&quot;, 3))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+Khoor, DSFV abc</div>
+  </div>
+
+    </div>
+  </details>
+</section>
+
+<div class="exercise">
+  <h3>✏️ 課堂練習：自己動手拼一題</h3>
+  <ol>
+    <li>第一行 n，第二行 n 個整數。輸出<strong>第二大</strong>的數（不能用 <code>sort()</code>，保證至少有兩個不同的數）。</li>
+    <li>輸入一行英文句子，輸出每個單字的第一個字母大寫、其餘小寫，單字之間用一個空白隔開（例如 <code>hello apcs world</code> → <code>Hello Apcs World</code>）。</li>
+    <li>把綜合實戰三反過來：輸入 <code>A3B2C1</code>，輸出 <code>AAABBC</code>（次數都只有一位數）。</li>
+  </ol>
+  <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+  <div class="answer">
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">第 1 題參考解</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+a = list(map(int, input().split()))
+first = second = None
+for x in a:
+    if first is None or x &gt; first:
+        second = first
+        first = x
+    elif x != first and (second is None or x &gt; second):
+        second = x
+print(second)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+5
+5 1 9 9 4
+<span class="muted">▼ 執行結果</span>
+5</div>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">第 2 題參考解</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">words = input().split()
+print(&quot; &quot;.join(w[0].upper() + w[1:].lower() for w in words))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+hello aPCS WORLD
+<span class="muted">▼ 執行結果</span>
+Hello Apcs World</div>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">第 3 題參考解</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = input()
+result = &quot;&quot;
+for i in range(0, len(s), 2):          # 每兩個字元一組：字母 + 次數
+    result += s[i] * int(s[i + 1])
+print(result)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+A3B2C1
+<span class="muted">▼ 執行結果</span>
+AAABBC</div>
+  </div>
+  </div>
+</div>
+
+<section class="block" id="classics"><span id="s04" class="anchor"></span>
+  <h2><span class="num">04</span>經典小程式庫：一眼認出程式在做什麼</h2>
+  <p>識讀題的程式，很多都是下面這些「經典小程式」換個樣子。<strong>一眼認出程式在做什麼</strong>，就不用一行一行追；實作時也能直接拿來用。每一個都附上官方識讀範例裡出現過的題號。</p>
+  <h3>1. 最大值／最小值　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="24" title="看官方識讀範例第 24 題">24</button><button type="button" class="qchip" data-q="29" title="看官方識讀範例第 29 題">29</button></span></h3>
+  <p>從第一個開始當作目前最大，遇到更大的就換掉。初始值要用 <code>a[0]</code>，不要用 0（全部負數就錯了）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">最大值／最小值</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [3, -1, 8, 2]
+mx = a[0]
+for x in a:
+    if x &gt; mx:
+        mx = x
+print(mx)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+8</div>
+  </div>
+  <h3>2. 計數與累加　</h3>
+  <p>符合條件就 +1（計數）或加上去（累加）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">計數與累加</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [55, 72, 90, 40]
+cnt, total = 0, 0
+for x in a:
+    total += x
+    if x &gt;= 60:
+        cnt += 1
+print(cnt, total)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+2 257</div>
+  </div>
+  <h3>3. 數字拆位數　</h3>
+  <p><code>n % 10</code> 拿最後一位、<code>n // 10</code> 去掉最後一位，重複到 n 變 0。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">數字拆位數</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = 2026
+s = 0
+while n &gt; 0:
+    s += n % 10
+    n //= 10
+print(s)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+10</div>
+  </div>
+  <h3>4. 最大公因數（輾轉相除法）　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="9" title="看官方識讀範例第 9 題">9</button><button type="button" class="qchip" data-q="23" title="看官方識讀範例第 23 題">23</button></span></h3>
+  <p><code>a, b = b, a % b</code>，直到 b 變 0，答案是 a。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">最大公因數（輾轉相除法）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a, b = 76, 48
+while b != 0:
+    a, b = b, a % b
+print(a)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+4</div>
+  </div>
+  <h3>5. 質數判斷　</h3>
+  <p>只要試到 √n：有因數就不是質數。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">質數判斷</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def is_prime(n):
+    if n &lt; 2:
+        return False
+    i = 2
+    while i * i &lt;= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+print([k for k in range(20) if is_prime(k)])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[2, 3, 5, 7, 11, 13, 17, 19]</div>
+  </div>
+  <h3>6. 費氏數列（迴圈版）　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="7" title="看官方識讀範例第 7 題">7</button><button type="button" class="qchip" data-q="14" title="看官方識讀範例第 14 題">14</button></span></h3>
+  <p>只記最後兩個數，一路往後推。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">費氏數列（迴圈版）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a, b = 0, 1
+for _ in range(10):
+    print(a, end=&#x27; &#x27;)
+    a, b = b, a + b
+print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+0 1 1 2 3 5 8 13 21 34 </div>
+  </div>
+  <h3>7. 次方與階乘　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="21" title="看官方識讀範例第 21 題">21</button><button type="button" class="qchip" data-q="11" title="看官方識讀範例第 11 題">11</button></span></h3>
+  <p>用變數累乘。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">次方與階乘</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">p, f = 1, 1
+for i in range(1, 6):
+    p *= 2
+    f *= i
+print(p, f)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+32 120</div>
+  </div>
+  <h3>8. 反轉串列（自己交換）　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="15" title="看官方識讀範例第 15 題">15</button></span></h3>
+  <p>頭尾交換，只交換到一半；交換全部會換回原樣（第 15 題）。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">反轉串列（自己交換）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [1, 2, 3, 4, 5]
+n = len(a)
+for i in range(n // 2):
+    a[i], a[n - 1 - i] = a[n - 1 - i], a[i]
+print(a)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[5, 4, 3, 2, 1]</div>
+  </div>
+  <h3>9. 前綴和：快速算區間和　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="30" title="看官方識讀範例第 30 題">30</button></span></h3>
+  <p><code>pre[i]</code> 是前 i 個的總和，區間和用相減。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">前綴和：快速算區間和</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [3, 1, 4, 1, 5]
+pre = [0]
+for x in a:
+    pre.append(pre[-1] + x)
+print(pre, pre[4] - pre[1])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[0, 3, 4, 8, 9, 14] 6</div>
+  </div>
+  <h3>10. 找零（貪心）　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="20" title="看官方識讀範例第 20 題">20</button></span></h3>
+  <p>由大面額往小面額，用 <code>//</code> 算張數、<code>%</code> 算剩下的錢。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">找零（貪心）</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">change = 1880
+for c in [500, 100, 50, 10, 5, 1]:
+    print(c, change // c)
+    change %= c</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+500 3
+100 3
+50 1
+10 3
+5 0
+1 0</div>
+  </div>
+  <h3>11. 二分搜尋　<span class="qchips" style="display:inline-flex"><button type="button" class="qchip" data-q="6" title="看官方識讀範例第 6 題">6</button><button type="button" class="qchip" data-q="22" title="看官方識讀範例第 22 題">22</button></span></h3>
+  <p>在排好序的資料裡，每次跟中間比，砍掉一半。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">二分搜尋</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [1, 4, 7, 10, 13, 16]
+low, high = 0, len(a) - 1
+while low &lt;= high:
+    mid = (low + high) // 2
+    if a[mid] == 10:
+        print(&#x27;找到，位置&#x27;, mid)
+        break
+    elif a[mid] &lt; 10:
+        low = mid + 1
+    else:
+        high = mid - 1</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+找到，位置 3</div>
+  </div>
+  <h3>12. 迴文判斷　</h3>
+  <p>正著讀和反著讀一樣。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">迴文判斷</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = &#x27;level&#x27;
+print(s == s[::-1])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+True</div>
+  </div>
+
+</section>
+
+<section class="block" id="next-level"><span id="s05" class="anchor"></span>
+  <h2><span class="num">05</span>往中高級邁進：該學哪些東西？</h2>
+  <p>這一梯次把初級練穩、中級（陣列、字元、字串、二維模擬）練到能上場，識讀也練過函式與遞迴追蹤。如果你未來想挑戰更高的題本，可以照下面的順序往上爬：</p>
+  <div class="timeline"><div class="tl-row">
+    <div class="tl-block a"><span class="tl-when">這一梯次</span><span class="tl-what">✅ 初級＋中級</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block b"><span class="tl-when">下一步</span><span class="tl-what">🧩 中高級</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block c"><span class="tl-when">再往上</span><span class="tl-what">🚀 高級</span></div>
+  </div></div>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>🧩 中高級：基礎資料結構</h3>
+      <ul>
+        <li><strong>遞迴</strong>：呼叫堆疊、遞迴 vs 迴圈、窮舉所有組合</li>
+        <li><strong>排序與二分搜尋</strong>：<code>sort()</code> 的 <code>key=</code>、自己寫二分搜、<code>bisect</code> 模組</li>
+        <li><strong>佇列與堆疊</strong>：<code>deque</code>、括號配對、單調堆疊</li>
+        <li><strong>簡單樹與圖</strong>：用串列存圖、BFS、DFS、網格上的搜尋</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🚀 高級：基礎演算法</h3>
+      <ul>
+        <li><strong>複雜度分析</strong>：判斷 O(n)、O(n log n)、O(n²) 能不能在時限內跑完</li>
+        <li><strong>貪心法則</strong>與<strong>掃描線</strong></li>
+        <li><strong>分治法</strong>：把大問題拆成小問題</li>
+        <li><strong>動態規劃（DP）</strong></li>
+        <li><strong>圖論與樹上演算法</strong>：最短路徑、拓樸排序、樹的走訪</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="ap325-ready"><span id="s06" class="anchor"></span>
+  <h2><span class="num">06</span>往 AP325 前進：先確認你會這些</h2>
+
+  <p><strong>AP325</strong> 是中正大學資工系吳邦一教授為 APCS 寫的免費教材，名稱的意思是「從 APCS 實作 3 級分到 5 級分」，有 Python 版。它是寫給<strong>已經有 3 級分程度</strong>的人看的，開始讀之前，先用下面這張表檢查自己。每一項都做得到，再往下讀會順很多：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>能力</th><th>做得到的標準</th><th>還不熟就回去看</th></tr></thead>
+      <tbody>
+        <tr><td>讀入任何格式的輸入</td><td>一行多數、n 行、n×m 表格都能不查資料寫出來</td><td><a href='unit04b.html'>單元 4 附</a></td></tr>
+        <tr><td>輸出格式完全正確</td><td>ZeroJudge 送出很少因為格式被判 WA</td><td><a href='unit02b.html'>單元 2 附</a></td></tr>
+        <tr><td>串列和字串的基本操作</td><td>索引、切片、走訪、計數、最大最小、反轉都能自己寫</td><td><a href='unit05.html'>單元 5</a>、<a href='unit06.html'>單元 6</a></td></tr>
+        <tr><td>二維串列與模擬</td><td>能寫出網格移動、範圍枚舉、矩陣旋轉</td><td><a href='unit06b.html'>單元 6 附</a></td></tr>
+        <tr><td>函式</td><td>會自己定義函式、傳參數、回傳多個值</td><td><a href='unit07.html'>單元 7</a></td></tr>
+        <tr><td>遞迴</td><td>看得懂、追得出 fib、gcd 這類遞迴，會寫出簡單的遞迴</td><td><a href='unit07b.html'>單元 7 附</a></td></tr>
+        <tr><td>排序</td><td>會用 <code>sort()</code>、<code>sorted()</code>，知道 <code>key=</code>、<code>reverse=True</code></td><td><a href='unit04b.html#s05'>單元 4 附</a>、<a href='functions.html#fn-search'>函式統整表</a></td></tr>
+        <tr><td>估計程式會不會太慢</td><td>知道雙層迴圈大約跑 n² 次，n 很大時要換方法</td><td><a href='unit09.html'>單元 9</a> 第 06 節</td></tr>
+        <tr><td>中級題目的實力</td><td>中級（舊制第 2 題）能在 40 分鐘內寫出 AC</td><td>課程規劃的 ZeroJudge 題單</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>AP325 每一章要用到這門課的哪些能力？</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>AP325 章節</th><th>先要會的</th><th>新學的工具</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 章 遞迴</td><td>函式、遞迴追蹤</td><td>用遞迴窮舉所有組合</td></tr>
+        <tr><td>第 2 章 排序與二分搜</td><td>串列、<code>sort()</code>、二分搜尋的概念</td><td>自訂排序、<code>bisect</code> 模組、在答案上二分搜</td></tr>
+        <tr><td>第 3 章 佇列與堆疊</td><td>串列的 append／pop、模擬</td><td><code>deque</code>、括號配對、單調堆疊</td></tr>
+        <tr><td>第 4 章 貪心與掃描線</td><td>排序、迴圈</td><td>證明「每次選最好的」會得到最佳解</td></tr>
+        <tr><td>第 5 章 分治</td><td>遞迴</td><td>把問題切一半各自解決再合併</td></tr>
+        <tr><td>第 6 章 動態規劃</td><td>遞迴、由小算到大的列表法</td><td>把列表法寫成程式（DP 表格）</td></tr>
+        <tr><td>第 7、8 章 圖論、樹</td><td>二維串列、方向陣列、遞迴</td><td>BFS、DFS、用串列存圖</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip"><span class="t">💡 為什麼第 1 章是遞迴？</span>
+  <p style="margin-bottom:0">這門課在單元 7 附學的「由小算到大列表法」，其實就是動態規劃（第 6 章）的前身；網格上的方向陣列，則是第 7 章 BFS／DFS 的基礎。所以 AP325 讀起來，會發現很多東西是這門課的延伸。</p></div>
+
+</section>
+
+<section class="block" id="ap325"><span id="s07" class="anchor"></span>
+  <h2><span class="num">07</span>自學教材：AP325 與其他資源</h2>
+  <p>建議依照章節順序讀，每讀完一章就把章末練習寫完。練習題的測資和範例程式可以從目錄頁的連結下載。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>章節</th><th>內容</th><th>對應題本</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2Fg2kqHh5_Q4eQnz-mfNu3Kw" target="_blank" rel="noopener">目錄與自序 ↗</a></td><td>從這裡進入，所有章節都可以從目錄點過去</td><td>—</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FcxeMXUXUTPyYV9Y7aDDkMQ" target="_blank" rel="noopener">第 0 章 教材說明與預備知識 ↗</a></td><td>Python 輸入輸出、常用語法的補強</td><td>中級複習</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2F-S3l7yyURd2njwdZBb8uSQ" target="_blank" rel="noopener">第 1 章 遞迴 ↗</a></td><td>遞迴的寫法與窮舉</td><td>中高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FQ0XdukkCSy-pP0tfMqkBPA" target="_blank" rel="noopener">第 2 章 排序與二分搜 ↗</a></td><td>排序的應用、二分搜尋</td><td>中高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FL9sVPW65R8yu0voahymg7g" target="_blank" rel="noopener">第 3 章 佇列與堆疊 ↗</a></td><td>queue／stack 的操作與經典題型</td><td>中高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FljCtWhYHS5y8i1EyBBtjnA" target="_blank" rel="noopener">第 4 章 貪心演算法與掃瞄線 ↗</a></td><td>貪心策略、掃描線</td><td>高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2F4rrHVrX9QpSMqGQJyuUuQA" target="_blank" rel="noopener">第 5 章 分治演算法 ↗</a></td><td>分而治之</td><td>高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FUADYv_GBSW-POkaRsugMaA" target="_blank" rel="noopener">第 6 章 動態規劃 ↗</a></td><td>DP 的基本題型</td><td>高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2FHnjpQSPXTBSus0IYLOIsSQ" target="_blank" rel="noopener">第 7 章 基本圖論演算法 ↗</a></td><td>BFS、DFS、最短路徑等</td><td>中高級～高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2F-Gn5oT88R5SBzuyN5Eybtw" target="_blank" rel="noopener">第 8 章 樹上演算法 ↗</a></td><td>樹的走訪與相關問題</td><td>高級</td></tr>
+        <tr><td><a href="https://hackmd.io/@bangyewu/Hy2kbYLI6/%2F8oukn1DrSC-qcAGL73fIFw" target="_blank" rel="noopener">Problem List ↗</a></td><td>全書練習題清單</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-3">
+    <div class="tile"><h4><span class="ico">🎬</span>Python 零基礎到 APCS 實作三級分</h4>
+      <p>吳邦一教授的教學影片與講義，目標跟這門課一樣，適合回家複習或補進度。<a href="https://www.youtube.com/playlist?list=PLpmg1QLbgMuSIDOgOcwf0Fbbn2ZDR7s-X" target="_blank" rel="noopener">影片 ↗</a>　<a href="https://drive.google.com/drive/folders/1mnVdO2LHq7e4vesn6pt_R0-S6YWtz4Q4" target="_blank" rel="noopener">講義 ↗</a></p></div>
+    <div class="tile"><h4><span class="ico">📝</span>Python 程式識讀 125 題</h4>
+      <p>吳邦一教授自編的識讀練習題（非考古題），適合加強識讀分數。<a href="https://drive.google.com/file/d/1WaZOpxgcz23vEil2UOzLWXrtYeUr0Nnc/view?usp=drive_link" target="_blank" rel="noopener">開啟 PDF ↗</a></p></div>
+    <div class="tile"><h4><span class="ico">📂</span>吳邦一的 APCS 題解目錄</h4>
+      <p>歷屆實作題的 C++ 與 Python 題解。<a href="https://hackmd.io/@bangyewu/B13lefwMp" target="_blank" rel="noopener">開啟目錄 ↗</a></p></div>
+  </div>
+  <div class="callout tip"><span class="t">🎯 給認真練完這 4 次課的你</span>
+  <p style="margin-bottom:0">如果初級、中級都練熟了，代表你已經具備「用程式解決問題」最核心的能力：資料怎麼存、邏輯怎麼判斷、重複的事怎麼交給迴圈、複雜的邏輯怎麼拆成函式。中高級以上的內容，都是在這個基礎上多學幾種「解決問題的工具」。地基打穩了，自學 AP325 會走得更輕鬆。遇到看不懂的地方，歡迎帶來問老師。</p></div>
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit06b.html"><div class="dir">← 上一單元</div><div class="ttl">二維串列與網格模擬</div></a>
+    <a class="next" href="unit09.html"><div class="dir">下一單元 →</div><div class="ttl">識讀基本觀念與總整理</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 2 附：上機評測基本功（ZeroJudge 與考場規則）｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+  </div></nav>
+</header>
+
+<main class="wrap" data-unit="2">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 2 附</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">起點篇　補充單元</span>
+  <h1>上機評測基本功：ZeroJudge 與考場規則</h1>
+  <p>邏輯都對卻拿 0 分？大多是輸入輸出格式的問題。第一次上 ZeroJudge 之前先讀這一頁。</p>
+</section>
+
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+    <li>知道 Judge 怎麼評分，看得懂 AC、WA、TLE、RE、CE 是什麼意思</li>
+    <li>寫 Judge 題目時，<code>input()</code> 不放提示文字、輸出不多印說明文字</li>
+    <li>會用 <code>print(*a)</code>、<code>sep</code>、<code>end</code> 控制輸出格式</li>
+    <li>知道 APCS 考場只評分最後一次上傳的檔案，懂得「先拿子題分數」的作答策略</li>
+  </ul>
+</div>
+
+<section class="block" id="s01">
+  <h2><span class="num">01</span>Judge 是怎麼改你的程式？</h2>
+
+  <p>ZeroJudge 和 APCS 考場的程式實作，都是由電腦自動評分。流程是這樣的：</p>
+  <div class="timeline"><div class="tl-row">
+    <div class="tl-block a"><span class="tl-when">①</span><span class="tl-what">把測資當成「鍵盤輸入」餵給你的程式</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block b"><span class="tl-when">②</span><span class="tl-what">收集你 print 出來的每一個字</span></div>
+    <div class="tl-arrow">➜</div>
+    <div class="tl-block c"><span class="tl-when">③</span><span class="tl-what">跟標準答案逐字比對</span></div>
+  </div></div>
+  <p>重點在第 ③ 步：電腦不會「看懂」你的答案，它只會<strong>逐字比對</strong>。所以多印一個字、少一個空白、多一行，都會被判錯。一題通常有好幾筆測資（APCS 每題 20 筆），每通過一筆就拿那一筆的分數。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>結果</th><th>意思</th><th>通常是哪裡出問題</th></tr></thead>
+      <tbody>
+        <tr><td><strong>AC</strong>　Accepted</td><td>全部測資都通過</td><td>🎉</td></tr>
+        <tr><td><strong>NA</strong>　Not Accepted</td><td>部分測資通過（ZeroJudge 的說法），會拿到部分分數</td><td>子題只寫了簡單版、邊界情況沒處理</td></tr>
+        <tr><td><strong>WA</strong>　Wrong Answer</td><td>有執行完，但輸出跟答案不一樣</td><td>邏輯錯、<strong>輸出格式錯</strong>、多印了提示文字</td></tr>
+        <tr><td><strong>TLE</strong>　Time Limit Exceeded</td><td>跑太久，超過時間限制</td><td>無窮迴圈、迴圈層數太多、在等一筆不存在的輸入</td></tr>
+        <tr><td><strong>RE</strong>　Runtime Error</td><td>執行到一半當掉</td><td>索引超出範圍、轉型失敗、除以 0（看下面的錯誤訊息）</td></tr>
+        <tr><td><strong>CE</strong>　Compile Error</td><td>程式根本沒辦法執行</td><td>語法錯誤、縮排錯誤、選錯語言</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+<section class="block" id="s02">
+  <h2><span class="num">02</span>陷阱一：input() 括號裡不要放任何文字</h2>
+
+  <p>很多課本和網路範例會寫 <code>input("請輸入數字:")</code>，讓使用者知道要輸入什麼；寫給人用的程式這樣很好。但是在 Judge 上，<strong>括號裡的提示文字會被印到輸出裡</strong>，跟答案混在一起，結果就是 WA。</p>
+  <div class="grid cols-2">
+    <div>
+      <p><strong>❌ 會被判 WA</strong></p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">錯誤寫法</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = int(input(&quot;請輸入 a:&quot;))
+b = int(input(&quot;請輸入 b:&quot;))
+print(a + b)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+5
+<span class="muted">▼ 執行結果</span>
+請輸入 a:請輸入 b:8</div>
+  </div>
+
+    </div>
+    <div>
+      <p><strong>✅ 正確</strong></p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">正確寫法</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = int(input())
+b = int(input())
+print(a + b)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+3
+5
+<span class="muted">▼ 執行結果</span>
+8</div>
+  </div>
+
+    </div>
+  </div>
+  <p>左邊的執行結果就是 Judge 收到的輸出：「<code>請輸入 a:請輸入 b:8</code>」，跟正確答案「<code>8</code>」不一樣。在 IDLE 裡自己打字時，提示文字和你輸入的數字會分在不同行，看起來很正常，所以這個錯誤很難自己發現。</p>
+  <div class="callout warn"><span class="t">📌 規則</span>
+  <p style="margin-bottom:0">寫 Judge 題目時，<code>input()</code> 一律<strong>空括號</strong>。也不要印「答案是：」「請輸入」這類說明文字——<strong>題目要求印什麼，就只印什麼</strong>。<br>不是送 Judge 的程式（寫給別人用的小工具、專題作品），才在括號裡放提示文字，例如 <code>input("請輸入分數：")</code>。</p></div>
+
+</section>
+
+<section class="block" id="s03">
+  <h2><span class="num">03</span>陷阱二：輸出格式要一字不差</h2>
+
+  <p>題目的「輸出說明」和「範例輸出」就是格式規定。最常見的錯誤是把串列直接印出來：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">❌ 直接印串列</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [3, 1, 4]
+print(a)          # 會印出中括號和逗號</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+[3, 1, 4]</div>
+  </div>
+
+  <p>題目通常要的是「用一個空白隔開」。有三種寫法都可以：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">✅ 用空白隔開</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [3, 1, 4]
+print(*a)                      # 寫法 1：* 把串列拆開，預設用空白隔開
+print(&quot; &quot;.join(map(str, a)))   # 寫法 2：先轉成字串，再用空白接起來
+for x in a:                    # 寫法 3：一個一個印，不換行
+    print(x, end=&quot; &quot;)
+print()</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 1 4
+3 1 4
+3 1 4 </div>
+  </div>
+
+  <p><strong>寫法 1 的 <code>*</code> 是什麼？</strong>在串列前面加 <code>*</code>，意思是把串列「拆開」，一個一個傳給 print：<code>print(*[3, 1, 4])</code> 就等於 <code>print(3, 1, 4)</code>。print 收到好幾個值時，預設用一個空白隔開，所以剛好是 Judge 要的格式。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>想要的格式</th><th>寫法</th><th>印出</th></tr></thead>
+      <tbody>
+        <tr><td>同一行、空白隔開</td><td><code>print(a, b)</code> 或 <code>print(*lst)</code></td><td><code>3 5</code></td></tr>
+        <tr><td>同一行、不要空白</td><td><code>print(a, b, sep="")</code></td><td><code>35</code></td></tr>
+        <tr><td>用逗號隔開</td><td><code>print(*lst, sep=",")</code></td><td><code>3,1,4</code></td></tr>
+        <tr><td>每個一行</td><td><code>for x in lst: print(x)</code></td><td>3<br>1<br>4</td></tr>
+        <tr><td>數字後面接符號</td><td><code>print(f"{p}%")</code></td><td><code>50%</code></td></tr>
+        <tr><td>小數點後兩位</td><td><code>print(f"{x:.2f}")</code></td><td><code>3.14</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>另一個常見錯誤是<strong>除法</strong>：題目要整數，你卻用 <code>/</code>，結果印出 <code>2.0</code>。</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">/ 和 // 印出來不一樣</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">total, n = 10, 5
+print(total / n)    # 2.0  ← 多了 .0，WA
+print(total // n)   # 2    ← 整數除法</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+2.0
+2</div>
+  </div>
+
+  <div class="callout tip"><span class="t">✅ 送出前的檢查清單</span>
+  <p style="margin-bottom:0">① 範例輸入跑出來的結果，跟範例輸出<strong>逐字</strong>比對過嗎？ ② 有沒有多印說明文字或提示文字？ ③ 空白、換行、大小寫、標點跟範例一樣嗎？ ④ 該印整數的地方有沒有變成小數？</p></div>
+
+</section>
+
+<section class="block" id="s04">
+  <h2><span class="num">04</span>用範例測資自己先測</h2>
+
+  <p>每一題都會附「範例輸入／範例輸出」。在 IDLE 裡按 <kbd>F5</kbd> 執行後，把範例輸入<strong>整段複製、貼到 Shell 視窗</strong>，再按 Enter，就能看到你的程式印出什麼。</p>
+  <ol>
+    <li>範例都對了，<strong>不代表一定 AC</strong>。範例通常很小，真正的測資會有更多情況。</li>
+    <li>自己再想幾組「邊界測資」測一下：只有 1 筆資料、全部一樣、最大值、最小值、0、負數。</li>
+    <li>多行的範例輸入可以一次貼上，<code>input()</code> 會一行一行讀。</li>
+  </ol>
+  <div class="callout"><span class="t">💡 為什麼範例對了還是錯？</span>
+  <p style="margin-bottom:0">最常見的原因：① 只處理了範例剛好有的情況（例如範例沒有平手，你就沒處理平手）；② 迴圈範圍少算一個（<code>range(n)</code> 和 <code>range(1, n)</code>）；③ 題目說「保證」的條件你沒有用到，或是題目沒保證的你卻假設了。</p></div>
+
+</section>
+
+<section class="block" id="s05">
+  <h2><span class="num">05</span>APCS 考場規則：只算最後一次上傳</h2>
+
+  <p>APCS 官方〈作答系統說明〉有幾條規則一定要知道：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>規則</th><th>代表什麼</th></tr></thead>
+      <tbody>
+        <tr><td>每一題<strong>只保留並評分最後一次上傳</strong>的檔案</td><td>改到一半上傳，會蓋掉之前會過的版本。上傳前一定要先測過。</td></tr>
+        <tr><td>可以重複上傳，直到時間結束</td><td>可以先上傳簡單版拿部分分，之後再上傳更好的版本。</td></tr>
+        <tr><td>程式檔名要照題目規定</td><td>檔名錯了，系統找不到你的程式。</td></tr>
+        <tr><td>程式存在桌面的 backup 資料夾</td><td>系統會自動備份到伺服器，不要存到別的地方。</td></tr>
+        <tr><td>提早交卷之後就不能再上傳</td><td>確定每一題都上傳完成再交卷。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:.88rem;color:var(--text-faint)">資料來源：<a href="https://apcs.csie.ntnu.edu.tw/wp-content/uploads/2025/08/APCS%E4%BD%9C%E7%AD%94%E7%B3%BB%E7%B5%B1%E8%AA%AA%E6%98%8E.pdf" target="_blank" rel="noopener">APCS 作答系統說明（官方）↗</a>，實際規定以當次考試公告為準。</p>
+</section>
+
+<section class="block" id="s06">
+  <h2><span class="num">06</span>子題配分：先拿 60 分，再拚 100 分</h2>
+
+  <p>中級每一題都分成兩個子題，例如官方範例「特殊位置」：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>子題</th><th>配分</th><th>限制</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 子題</td><td>60 分</td><td><code>n = 1</code>（只有一列）</td></tr>
+        <tr><td>第 2 子題</td><td>40 分</td><td>無額外限制</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>意思是：<strong>就算你只會處理「只有一列」的情況，也能拿 60 分</strong>。中級 3 級分只要 150 分，三題都先拿到 60 分就有 180 分了。</p>
+  <ol>
+    <li>先讀子題限制，寫出能過第 1 子題的版本，測過範例後<strong>上傳</strong>。</li>
+    <li>把這個版本<strong>另存一份</strong>（例如 <code>p1_60.py</code>），再改進完整版。</li>
+    <li>完整版測過才上傳；如果時間不夠、改壞了，就把 60 分的版本再上傳回去。</li>
+  </ol>
+  <div class="callout warn"><span class="t">⚠ 不要卡在一題</span>
+  <p style="margin-bottom:0">實作考 120 分鐘、3 題，平均一題 40 分鐘。卡住超過 15 分鐘就先換下一題，回頭再寫。</p></div>
+
+</section>
+
+<section class="block" id="s07">
+  <h2><span class="num">07</span>ZeroJudge 送出步驟</h2>
+
+  <ol>
+    <li>到 <a href="https://zerojudge.tw/" target="_blank" rel="noopener">zerojudge.tw ↗</a> 註冊、登入（可以用 Google 帳號）。</li>
+    <li>打開題目（課程規劃頁的題號都可以直接點）。</li>
+    <li>先在 IDLE 寫好、用範例測過。</li>
+    <li>按題目頁的「解題」，語言選 <strong>Python</strong>，把整個程式貼上，送出。</li>
+    <li>看結果：AC 就完成；不是 AC 就點進去看是哪一筆測資錯、錯誤訊息是什麼。</li>
+  </ol>
+  <div class="callout tip"><span class="t">📌 第一題就從這裡開始</span>
+  <p style="margin-bottom:0">ZeroJudge <a href='https://zerojudge.tw/ShowProblem?problemid=a001' target='_blank' rel='noopener'>a001 哈囉</a>：讀入一個字串，印出 <code>hello, 字串</code>。注意逗號後面有一個空白——這就是「輸出格式要一字不差」的第一次練習。</p></div>
+
+</section>
+<div class="exercise qa-list">
+  <h3>✏️ 識讀練習：先自己追蹤，再按「顯示解答」</h3>
+  <ol>
+    <li>題目要求：讀入兩個整數（各一行），輸出兩數相加的結果。下面這個程式送上 Judge 會得到什麼結果？為什麼？
+      <pre class="workpre">x = int(input(&quot;x=&quot;))
+y = int(input(&quot;y=&quot;))
+print(&quot;x+y =&quot;, x + y)</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">x=y=x+y = 10</pre><p style="margin-bottom:0">會是 <strong>WA</strong>。兩個 <code>input()</code> 的提示文字和 <code>"x+y ="</code> 都會被印出來，跟答案只有一個數字不一樣。改成 <code>x = int(input())</code>、<code>print(x + y)</code>。</p></div>
+    </li>
+    <li>題目要求：一行讀入 n 個整數，<strong>由小到大</strong>輸出，用一個空白隔開。這個程式哪裡會錯？
+      <pre class="workpre">a = list(map(int, input().split()))
+a.sort()
+print(a)</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">[1, 2, 5, 9]</pre><p style="margin-bottom:0">印出了中括號和逗號，會被判 <strong>WA</strong>。改成 <code>print(*a)</code>。</p></div>
+    </li>
+    <li>題目要求：輸入 n 個成績，輸出平均（保證整除）。範例輸入 <code>80 90 100</code>，範例輸出 <code>90</code>。這個程式會印出什麼？
+      <pre class="workpre">a = list(map(int, input().split()))
+print(sum(a) / len(a))</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">90.0</pre><p style="margin-bottom:0">印出 <code>90.0</code>，多了 <code>.0</code>，<strong>WA</strong>。題目保證整除時用 <code>//</code>。</p></div>
+    </li>
+    <li>題目的輸入是「第一行一個整數 n，第二行 n 個整數」，要輸出 n 個整數的總和。範例輸入第一行是 <code>3</code>、第二行是 <code>5 2 9</code>。下面這個程式會印出什麼？
+      <pre class="workpre">a = list(map(int, input().split()))
+print(sum(a))</pre>
+      <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
+      <div class="answer"><p>執行結果：</p><pre class="workpre">3</pre><p style="margin-bottom:0">這個程式想算總和，卻只印出 <code>3</code>：<code>a = list(map(int, input().split()))</code> 只讀了第一行，把 n 當成資料，第二行根本沒讀到。要先 <code>n = int(input())</code>，再讀第二行。<a href='unit04b.html'>單元 4 附</a>的「多行輸入」會整理所有常見格式。</p></div>
+    </li>
+  </ol>
+</div>
+
+  <nav class="unit-nav">
+    <a class="prev" href="unit02.html"><div class="dir">← 上一單元</div><div class="ttl">變數、資料型態與輸出入</div></a>
+    <a class="next" href="unit03.html"><div class="dir">下一單元 →</div><div class="ttl">運算子大全：算術・比較・邏輯・位元</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/reading-viewer.js"></script>
+</body>
+</html>
