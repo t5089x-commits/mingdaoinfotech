@@ -1,0 +1,55 @@
+/* 高一多元選修版：各單元「本單元去哪裡 Judge」、Judge 與識讀練習頁 —— 只用 style.css 的顏色變數 */
+
+/* 狀態標籤 */
+.jtag {
+  display: inline-block; white-space: nowrap; font-size: .76rem; font-weight: 800;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--text-soft); vertical-align: middle;
+}
+.jtag.done { background: color-mix(in srgb, var(--ok) 14%, var(--surface)); color: color-mix(in srgb, var(--ok) 75%, var(--text)); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
+.jtag.must { background: var(--brand-soft); color: var(--brand-strong); border-color: color-mix(in srgb, var(--brand) 45%, transparent); }
+.jtag.bonus { border-style: dashed; }
+.jtag.reserved { color: var(--text-faint); border-style: dotted; }
+.jtag.now { background: var(--accent-soft); color: var(--warn); border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
+
+/* ZeroJudge 連結的「已派」與「保留」樣式（.zj 本體在 plan.css） */
+.zj.done { border-color: color-mix(in srgb, var(--ok) 55%, transparent); border-width: 1.5px; background: color-mix(in srgb, var(--ok) 8%, var(--surface)); }
+.zj.done b { color: color-mix(in srgb, var(--ok) 75%, var(--text)); }
+.zj.done b::before { content: "✓ "; }
+.zj.reserved { opacity: .6; border-style: dotted; }
+
+/* 表格 */
+table.jtable td { vertical-align: middle; }
+table.jtable td:first-child { white-space: nowrap; }
+table.jtable tr.j-done td:first-child .zj { margin-bottom: 0; }
+table.junits td { vertical-align: top; }
+table.junits td.u a { font-weight: 800; text-decoration: none; }
+table.junits td.u small { display: block; font-size: .78rem; color: var(--text-soft); white-space: normal; max-width: 9em; }
+table.junits .qchips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.judge-block h2 + p { margin-top: 0; }
+.wq-row { margin: 6px 0 0; line-height: 2; }
+.py125 h3 { font-size: 1rem; margin: 18px 0 6px; }
+
+.hw-pdfs { display: flex; flex-wrap: wrap; gap: 10px; }
+.tile.jdone .zj { margin-bottom: 4px; }
+
+/* 尚未開放的題目（沒有連結） */
+.zj.pending { cursor: default; opacity: .75; border-style: dashed; color: var(--text-soft); }
+.zj.pending small { color: var(--text-faint); }
+/* 只有網址帶老師密鑰時才顯示（script.js 的 .teacher-only 機制） */
+.teacher-box { margin: 14px 0 0; padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px dashed var(--brand); background: var(--brand-soft); }
+
+@media print {
+  .judge-block, .py125 { break-inside: avoid; }
+}
+
+/* 單元 7：factorial(4) 遞迴追蹤 —— 方塊加寬，函式名稱才不會疊在一起 */
+#rstep .vs-boxes { gap: 26px 12px; flex-wrap: wrap; }
+#rstep .vs-box { width: 112px; height: auto; min-height: 62px; padding: 6px 8px; box-sizing: border-box;
+  font-size: 1.1rem; line-height: 1.3; text-align: center; }
+#rstep .vs-box .vs-name { white-space: nowrap; }
+@media (max-width: 540px) {
+  #rstep .vs-box { width: 96px; min-height: 54px; font-size: .95rem; }
+  #rstep .vs-box .vs-name { font-size: .74rem; }
+}
