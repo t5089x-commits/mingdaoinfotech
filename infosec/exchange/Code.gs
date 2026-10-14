@@ -25,22 +25,21 @@
 function setupSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   ensureSheet(ss, '名冊', ['學號','姓名','PIN','起始資金USD','班級']);
-  ensureSheet(ss, '帳戶', ['學號','姓名','現金USD','BTC數量','ETH數量','已參加特別活動','最後更新']);
+  ensureSheet(ss, '帳戶', ['學號','姓名','現金USD','BTC數量','ETH數量','已中招關卡(USDT/BTC/ETH)','最後更新']);
   ensureSheet(ss, '交易紀錄', ['時間','學號','姓名','買/賣','幣種','數量','成交價USD','金額USD','成交後現金USD','備註','下單理由（學生填）']);
   ensureSheet(ss, '事件紀錄', ['時間','學號','姓名','事件','說明','影響金額USD']);
   var settings = ensureSheet(ss, '設定', ['參數','值','說明']);
-  if (settings.getLastRow() < 2) {
-    settings.getRange(2,1,8,3).setValues([
-      ['tradingOpen',     'FALSE', '交易時段開關：TRUE=開放下單、FALSE=關閉（上課才打開）'],
-      ['phishingEventOn', 'FALSE', '特別活動開關：TRUE=交易頁會出現特別活動（內容見老師設定說明.txt，此處刻意不寫明以免學生看到後台時猜到）'],
-      ['startingCapital', '100000','新同學的起始虛擬資金（USD）'],
-      ['phishBaitUSD',    '50000', '假廣告號稱可以「免費領取」的投資金（USD）'],
-      ['phishTakePct',    '30',    '上鉤後被模擬駭客轉走的現金比例（%）'],
-      ['teacherPassword', 'au/62l4xu.62k6cj86', '老師控制台密碼（請務必改成只有你知道的）'],
-      ['coins',           'BTC,ETH', '可交易幣種（目前支援 BTC,ETH）'],
-      ['autoWindow',      '',      '（進階/可留空）自動交易時段，例如 3@14:00-16:00 代表每週三 14-16 點；留空=只用上面的手動開關']
-    ]);
-  }
+  // 用 ensureSetting_ 逐一補齊：之後程式新增參數，再跑一次本功能就會補上缺的列，不會覆蓋你已改的值
+  ensureSetting_(settings,'tradingOpen','FALSE','交易時段開關：TRUE=開放下單、FALSE=關閉（上課才打開）');
+  ensureSetting_(settings,'eventUsdt','FALSE','特別活動① 現領USDT 這一關：TRUE=會出現（內容見老師設定說明.txt，刻意不寫明以免學生看後台就猜到）');
+  ensureSetting_(settings,'eventBtc','FALSE','特別活動② 辨識領BTC 這一關：TRUE=會出現');
+  ensureSetting_(settings,'eventEth','FALSE','特別活動③ 智能合約ETH 這一關：TRUE=會出現');
+  ensureSetting_(settings,'startingCapital','100000','新同學的起始虛擬資金（USD）');
+  ensureSetting_(settings,'phishBaitUSD','50000','假廣告號稱可以「免費領取」的投資金（USD）');
+  ensureSetting_(settings,'phishTakePct','30','上鉤後現金與持倉(BTC/ETH)各被轉走的比例（%）');
+  ensureSetting_(settings,'teacherPassword','au/62l4xu.62k6cj86','老師控制台密碼（請務必改成只有你知道的）');
+  ensureSetting_(settings,'coins','BTC,ETH','可交易幣種（目前支援 BTC,ETH）');
+  ensureSetting_(settings,'autoWindow','','（進階/可留空）自動交易時段，例如 3@14:00-16:00 代表每週三 14-16 點；留空=只用手動開關');
   ensureSheet(ss, '價格快取', ['幣種','最新價USD','更新時間']);
   SpreadsheetApp.getUi().alert('✅ 完成！已建立／檢查所有工作表。\n\n接下來：\n1. 到「名冊」貼上學號、姓名、PIN。\n2. 部署成網路應用程式（說明見設定檔）。');
 }
@@ -54,6 +53,13 @@ function ensureSheet(ss, name, headers) {
   }
   return sh;
 }
+/* 若「設定」裡還沒有這個參數，就補一列（不覆蓋已存在的值） */
+function ensureSetting_(sh, key, val, desc) {
+  var data = sh.getDataRange().getValues();
+  for (var i=1;i<data.length;i++){ if (String(data[i][0]).trim()===key) return; }
+  sh.appendRow([key, val, desc]);
+}
+function on_(v){ return String(v).toUpperCase()==='TRUE'; }
 
 /* 選單：方便老師自己在試算表產生 PIN / 重設一輪 */
 function onOpen() {
@@ -64,16 +70,14 @@ function onOpen() {
     .addSeparator()
     .addItem('開啟交易時段', 'menuOpenTrading')
     .addItem('關閉交易時段', 'menuCloseTrading')
-    .addItem('開啟特別活動', 'menuPhishOn')
-    .addItem('關閉特別活動', 'menuPhishOff')
+    .addItem('⛔ 關閉全部特別活動', 'menuAllEventsOff')
     .addSeparator()
     .addItem('⚠ 重設一輪（所有人回到起始資金）', 'resetRound')
     .addToUi();
 }
 function menuOpenTrading(){ setSetting('tradingOpen','TRUE');  toast_('交易時段已開啟'); }
 function menuCloseTrading(){ setSetting('tradingOpen','FALSE'); toast_('交易時段已關閉'); }
-function menuPhishOn(){ setSetting('phishingEventOn','TRUE');  toast_('特別活動已開啟'); }
-function menuPhishOff(){ setSetting('phishingEventOn','FALSE'); toast_('特別活動已關閉'); }
+function menuAllEventsOff(){ setSetting('eventUsdt','FALSE'); setSetting('eventBtc','FALSE'); setSetting('eventEth','FALSE'); toast_('已關閉全部特別活動'); }
 function toast_(m){ SpreadsheetApp.getActiveSpreadsheet().toast(m,'交易所',4); }
 
 function fillMissingPins() {
@@ -195,33 +199,47 @@ function order(req) {
    phishSubmit：學生在假頁面「送出」了（完全上鉤，套用後果）
    ★ 前端不會把任何輸入框的內容送過來，這裡也不接收、不儲存任何密碼。 */
 
+function anyEventOn_(S){ return on_(S.eventUsdt)||on_(S.eventBtc)||on_(S.eventEth); }
+function eventFlagFor_(S, variant){ return variant==='btc'?S.eventBtc : (variant==='eth'?S.eventEth : S.eventUsdt); }
+
 function phishClick(req) {
   var au = authStudent_(req);
   var S = getSettings_();
-  if (String(S.phishingEventOn).toUpperCase()!=='TRUE') return {ok:false,error:'事件未開啟'};
+  if (!anyEventOn_(S)) return {ok:false,error:'目前沒有進行中的活動'};
   appendRow_('事件紀錄',[new Date(), au.sid, au.name, '點了假廣告', '看到「免費領取投資金」廣告並點進去', '']);
-  return {ok:true, baitUSD: Number(S.phishBaitUSD||500)};
+  return {ok:true, baitUSD: Number(S.phishBaitUSD||50000), events: publicSettings_().events};
 }
 
 function phishSubmit(req) {
   var au = authStudent_(req);
   var S = getSettings_();
-  if (String(S.phishingEventOn).toUpperCase()!=='TRUE') return {ok:false,error:'事件未開啟'};
+  var variant = String(req.variant||'usdt').slice(0,20);
+  if (!on_(eventFlagFor_(S, variant))) return {ok:false,error:'這個活動目前沒有開放'};
+  var prices = getPrices_();
+  var pct = Number(S.phishTakePct||30)/100;
   var lock = LockService.getScriptLock(); lock.waitLock(8000);
   try {
     var acc = getAccount_(au.sid);
-    var already = acc.phished;
-    var pct = Number(S.phishTakePct||30)/100;
-    var lost = already ? 0 : round2_(acc.cash * pct);   // 只扣現金，且每人只會被扣一次
-    if (!already) {
-      acc.cash = round2_(acc.cash - lost);
-      acc.phished = true;
-      saveAccount_(acc);
-      appendRow_('事件紀錄',[new Date(), au.sid, au.name, '送出假表單（完全上鉤）',
-        '在特別活動頁面按下「領取」—— 系統只記錄這個動作，沒有收取任何輸入內容', -lost]);
-      appendRow_('交易紀錄',[new Date(), au.sid, au.name, '—', '—', '', '', round2_(lost), round2_(acc.cash), '⚠ 特別活動：資金被轉走', '']);
+    var caught = acc.caught ? acc.caught.split(',').filter(String) : [];
+    if (caught.indexOf(variant) >= 0) {   // 同一關每人只會中招一次
+      return {ok:true, already:true, lost:{cash:0,btc:0,eth:0}, lostUsd:0, pct:Math.round(pct*100), account:acc, prices:prices};
     }
-    return {ok:true, lost: lost, account: acc, already: already};
+    // 現金、BTC、ETH 都被轉走同一比例（預設 30%）
+    var lc = round2_(acc.cash * pct);
+    var lb = round8_(acc.btc  * pct);
+    var le = round8_(acc.eth  * pct);
+    acc.cash = round2_(acc.cash - lc);
+    acc.btc  = round8_(acc.btc  - lb);
+    acc.eth  = round8_(acc.eth  - le);
+    caught.push(variant); acc.caught = caught.join(',');
+    saveAccount_(acc);
+    var usdTotal = round2_(lc + lb*prices.btc + le*prices.eth);
+    var vname = variant==='btc' ? '辨識領BTC' : (variant==='eth' ? '智能合約ETH' : '現領USDT');
+    appendRow_('事件紀錄',[new Date(), au.sid, au.name, '完全上鉤（'+vname+'）',
+      '完成任務／按下領取 —— 系統只記錄這個動作，未收取任何輸入內容；被轉走 現金$'+lc+'、BTC '+lb+'、ETH '+le, -usdTotal]);
+    appendRow_('交易紀錄',[new Date(), au.sid, au.name, '—', '—', '', '', usdTotal, round2_(acc.cash),
+      '⚠ 特別活動('+vname+')：現金與持倉各被轉走 '+Math.round(pct*100)+'%', '']);
+    return {ok:true, already:false, lost:{cash:lc,btc:lb,eth:le}, lostUsd:usdTotal, pct:Math.round(pct*100), account:acc, prices:prices};
   } finally { lock.releaseLock(); }
 }
 
@@ -233,7 +251,7 @@ function teacherLogin(req) {
 }
 function teacherSet(req) {
   if (!teacherOk_(req)) return {ok:false,error:'老師密碼不正確'};
-  var allow = {tradingOpen:1, phishingEventOn:1, startingCapital:1, phishBaitUSD:1, phishTakePct:1};
+  var allow = {tradingOpen:1, eventUsdt:1, eventBtc:1, eventEth:1, startingCapital:1, phishBaitUSD:1, phishTakePct:1};
   if (!allow[req.key]) return {ok:false,error:'不允許修改這個參數'};
   setSetting(req.key, String(req.value));
   return {ok:true, settings: getSettings_()};
@@ -245,8 +263,9 @@ function teacherReport(req) {
   var list = rows.filter(function(r){return r[0];}).map(function(r){
     var cash=Number(r[2])||0, btc=Number(r[3])||0, eth=Number(r[4])||0;
     var equity = cash + btc*prices.btc + eth*prices.eth;
+    var raw=String(r[5]||''); if(raw==='TRUE'||raw==='FALSE')raw='';
     return {sid:r[0], name:r[1], cash:round2_(cash), btc:round8_(btc), eth:round8_(eth),
-            equity:round2_(equity), phished: String(r[5]).toUpperCase()==='TRUE'};
+            equity:round2_(equity), caught: raw, phished: raw!==''};
   });
   list.sort(function(a,b){return b.equity-a.equity;});
   var phishedCount = list.filter(function(x){return x.phished;}).length;
@@ -272,25 +291,26 @@ function findRoster_(sid){
 function getOrCreateAccount_(sid,name,start){
   var acc = getAccount_(sid);
   if (acc) return acc;
-  var row = [sid,name,round2_(start),0,0,'FALSE',new Date()];
+  var row = [sid,name,round2_(start),0,0,'',new Date()];
   sheet_('帳戶').appendRow(row);
-  return {sid:sid,name:name,cash:round2_(start),btc:0,eth:0,phished:false};
+  return {sid:sid,name:name,cash:round2_(start),btc:0,eth:0,caught:''};
 }
 function getAccount_(sid){
   var data = sheet_('帳戶').getDataRange().getValues();
   for (var i=1;i<data.length;i++){
     if (String(data[i][0]).trim()===sid){
+      var raw=String(data[i][5]||''); if(raw==='TRUE'||raw==='FALSE')raw='';  // 相容舊的布林值
       return {sid:sid,name:data[i][1],cash:Number(data[i][2])||0,
               btc:Number(data[i][3])||0,eth:Number(data[i][4])||0,
-              phished:String(data[i][5]).toUpperCase()==='TRUE', _row:i+1};
+              caught:raw, _row:i+1};
     }
   }
   return null;
 }
 function saveAccount_(acc){
-  var sh=sheet_('帳戶'); var r=acc._row;
-  if (!r){ sh.appendRow([acc.sid,acc.name,round2_(acc.cash),round8_(acc.btc),round8_(acc.eth),acc.phished?'TRUE':'FALSE',new Date()]); return; }
-  sh.getRange(r,3,1,5).setValues([[round2_(acc.cash),round8_(acc.btc),round8_(acc.eth),acc.phished?'TRUE':'FALSE',new Date()]]);
+  var sh=sheet_('帳戶'); var r=acc._row; var c=acc.caught||'';
+  if (!r){ sh.appendRow([acc.sid,acc.name,round2_(acc.cash),round8_(acc.btc),round8_(acc.eth),c,new Date()]); return; }
+  sh.getRange(r,3,1,5).setValues([[round2_(acc.cash),round8_(acc.btc),round8_(acc.eth),c,new Date()]]);
 }
 
 function getSettings_(){
@@ -305,9 +325,11 @@ function setSetting(key,val){
 }
 function publicSettings_(){
   var S=getSettings_();
+  var ev={ usdt:on_(S.eventUsdt), btc:on_(S.eventBtc), eth:on_(S.eventEth) };
   return { tradingOpen: tradingIsOpen_(S),
-           phishingEventOn: String(S.phishingEventOn).toUpperCase()==='TRUE',
-           phishBaitUSD: Number(S.phishBaitUSD||500) };
+           events: ev,
+           anyEvent: ev.usdt||ev.btc||ev.eth,
+           phishBaitUSD: Number(S.phishBaitUSD||50000) };
 }
 function tradingIsOpen_(S){
   if (String(S.tradingOpen).toUpperCase()==='TRUE') {

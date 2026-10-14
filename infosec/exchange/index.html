@@ -70,6 +70,27 @@
   .reveal .modal{border-top:6px solid var(--brand)}
   .big-emoji{font-size:2.4rem;text-align:center}
   .footer-note{text-align:center;margin-top:30px}
+  /* 三選一選項卡 */
+  .opt{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:12px 14px;margin-top:10px;cursor:pointer;background:var(--bg-elev);transition:.12s}
+  .opt:hover{border-color:#ef4444;transform:translateY(-1px);box-shadow:var(--shadow)}
+  .opt .oi{font-size:1.6rem;width:34px;text-align:center;flex:0 0 auto}
+  .opt .ot{flex:1 1 auto;font-size:.92rem} .opt .oa{color:#ef4444;font-weight:900;flex:0 0 auto}
+  /* 假 CAPTCHA */
+  .cap-head{display:flex;align-items:center;gap:8px;background:#ef4444;color:#fff;margin:-24px -24px 14px;
+    padding:14px 18px;border-radius:var(--radius) var(--radius) 0 0;font-size:1.02rem}
+  .cap-head .faint{color:rgba(255,255,255,.85)}
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .cap-tile{position:relative;aspect-ratio:1/1;border:2px solid var(--border);border-radius:8px;overflow:hidden;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--surface-2)}
+  .cap-tile img{width:100%;height:100%;object-fit:cover;display:block}
+  .cap-tile .emj{font-size:2rem} .cap-tile .chk{position:absolute;top:4px;left:4px;width:22px;height:22px;
+    background:#1a73e8;color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.8rem}
+  .cap-tile.sel{border-color:#1a73e8} .cap-tile.sel .chk{display:flex}
+  .cap-tile.sel img,.cap-tile.sel .emj{opacity:.78}
+  /* 假合約程式框 */
+  textarea.codebox{font-family:var(--mono);font-size:.82rem;background:var(--code-bg);color:var(--code-text);
+    border-color:#334155;line-height:1.5;white-space:pre;overflow-x:auto}
 </style>
 </head>
 <body>
@@ -177,8 +198,15 @@
       <div class="row" style="margin-top:6px">
         <div class="stat"><div class="k">交易時段</div><div class="v"><span id="tTrade">—</span></div>
           <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('tradingOpen')">切換 開/關</button></div>
-        <div class="stat"><div class="k">特別活動</div><div class="v"><span id="tPhish">—</span></div>
-          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('phishingEventOn')">切換 開/關</button></div>
+      </div>
+      <p class="fld" style="margin:14px 0 4px">特別活動（三關各自獨立，建議分三週各開一關）</p>
+      <div class="row">
+        <div class="stat"><div class="k">① 現領 USDT</div><div class="v"><span id="tE1">—</span></div>
+          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventUsdt')">切換 開/關</button></div>
+        <div class="stat"><div class="k">② 辨識領 BTC</div><div class="v"><span id="tE2">—</span></div>
+          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventBtc')">切換 開/關</button></div>
+        <div class="stat"><div class="k">③ 智能合約 ETH</div><div class="v"><span id="tE3">—</span></div>
+          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventEth')">切換 開/關</button></div>
       </div>
       <div style="margin-top:14px"><button class="btn" onclick="teacherReport()">📈 看全班排行榜</button>
         <span class="faint" id="tReportMeta" style="margin-left:10px"></span></div>
@@ -208,7 +236,6 @@ var FILLS=[];          // 本次登入的成交
 var pollTimer=null;
 var API=window.EXCHANGE_API||'';
 var CFG=window.EXCHANGE_CFG||{pollSeconds:20};
-document.getElementById('pollN').textContent=CFG.pollSeconds||20;
 
 /* ---------- API 呼叫（text/plain 避免 CORS 預檢）---------- */
 function api(payload){
@@ -300,8 +327,8 @@ function render(r){
   var pe=document.getElementById('aPnl');
   pe.textContent=(pnl>=0?'▲ +':'▼ ')+money(Math.abs(pnl))+'　('+(pnl>=0?'+':'')+pct.toFixed(2)+'%)';
   pe.className='v '+(pnl>=0?'pos':'neg');
-  // 資安事件：假廣告
-  renderAd(!!S.phishingEventOn, S.phishBaitUSD||500, !!a.phished);
+  // 特別活動：假廣告（依三個獨立開關 + 這位同學已中招的關卡決定）
+  renderAd(S.events||{}, a.caught||'', S.phishBaitUSD||50000);
 }
 
 /* ---------- 下單 ---------- */
@@ -339,69 +366,144 @@ function renderFills(){
    安全設計：假頁面的輸入框只是「演示」，送出時前端完全不讀取、也不傳送
    任何欄位內容；後端只記錄「這位同學點了/送了」這個動作並套用遊戲內後果。
    任何時候都沒有蒐集或儲存密碼。 */
-function renderAd(on, bait, phished){
-  var m=document.getElementById('adMount');
-  if(!on){m.innerHTML='';return;}
-  if(phished){
-    m.innerHTML='<div class="xcard" style="border-color:var(--danger)"><h2 style="color:var(--danger)">💀 你已經被詐騙過一次了</h2><p class="muted" style="margin:0">剛才那個「免費領投資金」的廣告是假的，你的部分資金已經被轉走、拿不回來了。等一下老師會帶大家一起看：那個廣告有哪些破綻？為什麼「免費送錢」永遠是詐騙？以後在真實世界看到類似訊息該怎麼辦？</p></div>';
-    return;
-  }
-  m.innerHTML='<div class="fakead" onclick="phishClick()"><span class="x">廣告 ✕</span>'+
-    '<b>🎁 限時福利！幣圈福利社</b><br>玩一個 30 秒小遊戲，<span class="blink">立刻免費領取 $'+bait+' 投資金</span>到你的帳戶！名額有限，<b>手刀點我參加 →</b></div>';
+var AD_BAIT=50000;   // 最近一次廣告的金額，給 chooser 用
+function availVariants(events, caught){
+  var caughtList = caught? String(caught).split(','):[];
+  return ['usdt','btc','eth'].filter(function(k){ return events[k] && caughtList.indexOf(k)<0; });
 }
+function renderAd(events, caught, bait){
+  AD_BAIT=bait; var m=document.getElementById('adMount');
+  events=events||{};
+  var avail=availVariants(events, caught);
+  var anyOn=events.usdt||events.btc||events.eth;
+  if(avail.length>0){
+    m.innerHTML='<div class="fakead" onclick="phishClick()"><span class="x">廣告 ✕</span>'+
+      '<b>🎁 限時福利！幣圈福利社</b><br>玩一個 30 秒小遊戲，<span class="blink">立刻免費領取 $'+bait+' 投資金</span>到你的帳戶！名額有限，<b>手刀點我參加 →</b></div>';
+  } else if(anyOn && caught){
+    m.innerHTML='<div class="xcard" style="border-color:var(--danger)"><h2 style="color:var(--danger)">💀 你已經被詐騙過了</h2><p class="muted" style="margin:0">剛才那個「免費領投資金」的廣告是假的，你的現金與持倉（BTC／ETH）都已經被轉走一部分、拿不回來了。等一下老師會帶大家一起看：那個廣告有哪些破綻？為什麼「免費送錢」永遠是詐騙？以後在真實世界看到類似訊息該怎麼辦？</p></div>';
+  } else {
+    m.innerHTML='';
+  }
+}
+function modalBg(id,cls){var bg=document.createElement('div');bg.className='modal-bg '+cls;bg.id=id;document.body.appendChild(bg);return bg;}
 function phishClick(){
   api({action:'phishClick',sid:SESS.sid,token:SESS.token}).then(function(r){
-    var bait=(r&&r.baitUSD)||50000;
-    openFakeClaim(bait);
+    var bait=(r&&r.baitUSD)||AD_BAIT;
+    var events=(r&&r.events)||((LAST&&LAST.settings&&LAST.settings.events)||{});
+    var caught=(LAST&&LAST.account&&LAST.account.caught)||'';
+    var avail=availVariants(events, caught);
+    if(avail.length===0){ return; }
+    if(avail.length===1){ pick(avail[0], bait); }   // 只開一關 → 直接進該關
+    else openChooser(bait, avail);
   });
 }
-function openFakeClaim(bait){
-  var bg=document.createElement('div');
-  bg.className='modal-bg scam'; bg.id='scamModal';
-  bg.innerHTML=
-   '<div class="modal">'+
+function pick(v,bait){ if(v==='usdt')pickUSDT(bait); else if(v==='btc')pickBTC(bait); else pickETH(bait); }
+/* 入口：只列出「本週有開」的關卡 */
+function openChooser(bait, avail){
+  var rows={
+    usdt:'<div class="opt" onclick="pickUSDT('+bait+')"><div class="oi">💵</div><div class="ot"><b>現領 USDT</b><br><span class="faint">最快！直接把 $'+bait+' USDT 撥進你的帳戶</span></div><span class="oa">→</span></div>',
+    btc:'<div class="opt" onclick="pickBTC('+bait+')"><div class="oi">₿</div><div class="ot"><b>明道推動虛擬貨幣 · 領 BTC</b><br><span class="faint">完成身分驗證小任務，領取等值 BTC 獎勵</span></div><span class="oa">→</span></div>',
+    eth:'<div class="opt" onclick="pickETH('+bait+')"><div class="oi">Ξ</div><div class="ot"><b>協助部署智能合約 · 賺 ETH</b><br><span class="faint">幫校長送出一份合約，完成即賺 ETH 報酬</span></div><span class="oa">→</span></div>'
+  };
+  var bg=modalBg('scamModal','scam');
+  bg.innerHTML='<div class="modal">'+
    '<div class="big-emoji">🎁💰</div>'+
-   '<h2 style="text-align:center;margin:6px 0 2px">幣圈福利社 · 投資金領取</h2>'+
-   '<p class="muted" style="text-align:center;margin-top:0">恭喜！你被抽中可領取 <b>$'+bait+'</b> 免費投資金<br>只要「驗證身分」就能立即入帳 👇</p>'+
-   '<label class="fld">學號</label><input class="in" placeholder="輸入學號">'+
-   '<label class="fld" style="margin-top:8px">交易 PIN（驗證身分用）</label><input class="in" type="password" placeholder="輸入你的 PIN">'+
-   '<button class="btn" style="width:100%;margin-top:14px;background:#ef4444" onclick="phishSubmit()">✅ 立即領取 $'+bait+'</button>'+
-   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">我不要了</button>'+
+   '<h2 style="text-align:center;margin:6px 0 2px">幣圈福利社 · 領取 $'+bait+' 投資金</h2>'+
+   '<p class="muted" style="text-align:center;margin-top:0">明道中學大久校長聯手「幣圈福利社」，限時發放投資金！<br>挑一個方式完成任務，立刻入帳 👇</p>'+
+   avail.map(function(k){return rows[k];}).join('')+
+   '<button class="btn ghost" style="width:100%;margin-top:12px" onclick="closeModal()">我不要了</button>'+
    '<p class="faint" style="margin-top:10px;text-align:center">⏳ 剩餘 00:29…手腳要快！</p>'+
    '</div>';
-  document.body.appendChild(bg);
 }
-function phishSubmit(){
-  /* ★ 注意：這裡「故意」不去讀取上面兩個輸入框的值，什麼都不會送出。
-     真實的釣魚網站就是要騙你把帳密填進去送出 —— 這個演練要教的正是
-     「你願意點、願意填」這個動作本身就是危險，而不是密碼內容。 */
+/* 選項 1：USDT 直接領（假表單釣帳密） */
+function pickUSDT(bait){
+  closeModal(); var bg=modalBg('scamModal','scam');
+  bg.innerHTML='<div class="modal"><div class="big-emoji">💵</div>'+
+   '<h2 style="text-align:center;margin:6px 0 2px">現領 USDT</h2>'+
+   '<p class="muted" style="text-align:center;margin-top:0">只要「驗證身分」就能立即入帳 <b>$'+bait+' USDT</b> 👇</p>'+
+   '<label class="fld">學號</label><input class="in" placeholder="輸入學號">'+
+   '<label class="fld" style="margin-top:8px">交易 PIN（驗證身分用）</label><input class="in" type="password" placeholder="輸入你的 PIN">'+
+   '<button class="btn" style="width:100%;margin-top:14px;background:#ef4444" onclick="phishSubmit(\'usdt\')">✅ 立即領取 $'+bait+'</button>'+
+   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button></div>';
+}
+/* ★ 老師可編輯：辨識任務裡「正確答案」的照片清單（放在 img/ 資料夾）。
+   要新增校長/主管照片：把圖片檔放進 exchange/img/，再把檔名加到這個陣列即可。
+   干擾項用的是下面 DECOY_EMOJI 的物品 emoji，沒有用到任何真人政治人物照片。 */
+var LEADER_IMAGES=['img/daju1.png','img/daju2.png','img/daju3.png','img/lead_principal.png'];
+var DECOY_EMOJI=['🧯','🐱','🍕','🚗','🌳','🏠','🧋','⚽'];
+/* 選項 2：BTC 辨識任務（假 CAPTCHA，辨識大久校長／明道師長） */
+function pickBTC(bait){
+  closeModal(); var bg=modalBg('scamModal','scam');
+  var tiles=LEADER_IMAGES.map(function(s){return {daju:1,src:s};});
+  var need=9-tiles.length; for(var k=0;k<need;k++){ tiles.push({e:DECOY_EMOJI[k%DECOY_EMOJI.length]}); }
+  for(var i=tiles.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=tiles[i];tiles[i]=tiles[j];tiles[j]=t;}
+  var grid=tiles.map(function(t){
+    var inner=t.daju?'<img src="'+t.src+'" alt="">':'<span class="emj">'+t.e+'</span>';
+    return '<div class="cap-tile" onclick="this.classList.toggle(\'sel\')">'+inner+'<span class="chk">✓</span></div>';
+  }).join('');
+  bg.innerHTML='<div class="modal"><div class="cap-head"><span class="live-dot"></span><b>驗證你不是機器人</b><span class="faint" style="margin-left:auto">幣圈福利社 reCAPTCHA</span></div>'+
+   '<div class="xcard" style="margin:0 0 10px;background:var(--surface-2)"><p style="margin:0;font-size:.92rem">🏫 <b>明道中學的大久校長</b>為了鼓勵同學認識虛擬貨幣，特別發放一筆 BTC 獎勵金。要領取，請先完成身分驗證——<b>先證明你認得大久校長</b> 👇</p></div>'+
+   '<p class="fld">請選出所有「大久校長」的照片</p>'+
+   '<div class="cap-grid">'+grid+'</div>'+
+   '<button class="btn" style="width:100%;margin-top:12px;background:#ef4444" onclick="phishSubmit(\'btc\')">驗證並領取 BTC</button>'+
+   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button></div>';
+}
+/* 選項 3：ETH 智能合約（盲簽／授權詐騙 approve scam） */
+function pickETH(bait){
+  closeModal(); var bg=modalBg('scamModal','scam');
+  var code='contract 幣圈福利社獎勵 {\n  function claim() {\n    approve(0xF0D3She, 你錢包裡的全部資產);  // 授權對方動用\n    transfer(所有 USDT / BTC / ETH → 0xF0D3She);\n  }\n}';
+  bg.innerHTML='<div class="modal"><div class="big-emoji">Ξ📜</div>'+
+   '<h2 style="text-align:center;margin:6px 0 2px">協助部署智能合約</h2>'+
+   '<p class="muted" style="text-align:center;margin-top:0">大久校長說智能合約人手不足！<br>幫忙把下面這份合約「送出部署」，完成就能賺 ETH 報酬 👇</p>'+
+   '<p class="fld">智能合約內容（看不懂沒關係，送出就好）</p>'+
+   '<textarea class="in codebox" rows="6">'+code+'</textarea>'+
+   '<button class="btn" style="width:100%;margin-top:12px;background:#ef4444" onclick="phishSubmit(\'eth\')">✅ 我同意並部署合約（Approve）</button>'+
+   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button>'+
+   '<p class="faint" style="margin-top:8px">※ 這份合約不管你怎麼改，送出的結果都一樣。</p></div>';
+}
+function phishSubmit(variant){
+  /* ★ 前端完全不讀取、也不送出任何輸入框／合約框的內容；後端只記錄
+     「這位同學完成了這個動作」並套用遊戲內後果，全程不收集任何密碼。 */
   closeModal();
-  api({action:'phishSubmit',sid:SESS.sid,token:SESS.token}).then(function(r){
-    var lost=(r&&r.lost)||0;
-    openReveal(lost, r&&r.already);
+  api({action:'phishSubmit',sid:SESS.sid,token:SESS.token,variant:variant}).then(function(r){
+    openReveal(variant, r||{});
     refresh();
   });
 }
-function openReveal(lost, already){
-  var bg=document.createElement('div');
-  bg.className='modal-bg reveal'; bg.id='revealModal';
-  var body = already
-    ? '<p class="muted">你剛才已經被騙過一次了，這次沒有再被扣款。</p>'
-    : '<p>你剛剛按下「領取」的那一刻，你的帳戶就被詐騙集團清掉了一大筆——<b class="neg">'+money(lost)+'</b> 被轉走，<b>拿不回來</b>。<br><br>那個「免費領錢」的廣告從頭到尾都是假的。沒有人會平白送你錢；會這樣講的，100% 是詐騙。</p>';
-  bg.innerHTML=
-   '<div class="modal">'+
-   '<div class="big-emoji">💀</div>'+
+function openReveal(variant, r){
+  var already=r.already, L=r.lost||{cash:0,btc:0,eth:0};
+  var bg=modalBg('revealModal','reveal');
+  var lossLine = (!already && (L.cash||L.btc||L.eth))
+    ? '<div class="xcard" style="margin:10px 0;background:var(--surface-2)"><b class="neg">💸 被轉走的資產（各 '+(r.pct||30)+'%，拿不回來）</b>'+
+      '<ul style="margin:8px 0 0;padding-left:1.1em;font-size:.9rem;color:var(--text)">'+
+      '<li>現金：<b class="neg">'+money(L.cash)+'</b></li>'+
+      '<li>BTC：<b class="neg">'+q8(L.btc)+' ₿</b></li>'+
+      '<li>ETH：<b class="neg">'+q8(L.eth)+' Ξ</b></li></ul>'+
+      '<p class="faint" style="margin:8px 0 0">換算約 '+money(r.lostUsd||0)+'</p></div>'
+    : '';
+  var intro, extra;
+  if(already){ intro='<p class="muted">你剛才已經被騙過一次了，這次沒有再被扣款。</p>'; extra=''; }
+  else if(variant==='btc'){
+    intro='<p>你剛剛為了「領 BTC」乖乖完成了那個辨識大久校長的驗證——<b>恭喜你，成為了詐騙集團的幫手</b> 🎉。你親手幫他們證明「這個帳號是真人在操作」，接著他們就把你帳戶裡的資產搬走了。</p>'+
+      '<div class="xcard" style="margin:10px 0;background:var(--warn-soft);border-color:var(--warn)"><p style="margin:0;font-size:.92rem">📸 <b>而且那些照片，全都是上網 google「明道中學 校長／主管」就能輕易找到的公開照片。</b>千萬不要因為畫面上是你認識的人、熟悉的師長，就覺得「這個一定是真的」——<strong>詐騙最愛借用你信任的人的臉</strong>。</p></div>';
+    extra='<li>詐騙<strong>冒用大久校長／學校的名義</strong>取得你的信任（真正的校長不會這樣發錢）</li><li>那個「證明你是真人」的驗證是假的，你其實是在<strong>幫詐騙完成動作</strong></li>';
+  } else if(variant==='eth'){
+    intro='<p>你剛剛「幫忙部署」的那份合約，其實寫的是<b>「把你錢包裡的幣全部授權給對方、再全部轉走」</b>。你沒看懂就按了「同意（Approve）」——資產就這樣被搬空了一大截。</p>';
+    extra='<li>要你<strong>簽署／同意一份看不懂的合約（approve 授權）</strong>——這是 Web3 最常見的盜領手法</li><li>「反正送出就好、不用看」正是詐騙要的：<strong>盲簽</strong></li>';
+  } else {
+    intro='<p>你剛剛按下「領取」的那一刻，你的帳戶就被詐騙集團清掉了一大筆。那個「免費領錢」的廣告從頭到尾都是假的。</p>';
+    extra='<li>要你在<strong>不明頁面輸入帳號／PIN</strong>去「驗證身分」</li>';
+  }
+  bg.innerHTML='<div class="modal"><div class="big-emoji">💀</div>'+
    '<h2 style="text-align:center;color:var(--danger);margin:6px 0 10px">你，被詐騙了。</h2>'+
-   body+
-   '<div class="xcard" style="margin:12px 0;background:var(--surface-2)"><b>🔎 回頭看，這個廣告其實破綻百出：</b>'+
+   intro + lossLine +
+   '<div class="xcard" style="margin:12px 0;background:var(--surface-2)"><b>🔎 回頭看，破綻其實很明顯：</b>'+
    '<ul style="margin:8px 0 0;padding-left:1.1em;color:var(--text-soft);font-size:.9rem">'+
-   '<li>「免費送錢」「限時」「名額有限」——先勾起你的貪念、再逼你急著動作</li>'+
-   '<li>要你在<strong>不明頁面輸入帳號／PIN</strong>去「驗證身分」</li>'+
+   '<li>「免費送錢」「限時」「名額有限」——先勾貪念、再逼你急</li>'+
+   extra +
    '<li>來源根本不是你原本信任的系統</li></ul></div>'+
-   '<p class="faint">👨‍🏫 這是資安課的一次真實體驗：剛才那筆錢是虛擬的，被扣掉是為了讓你親身記住這個感覺。<strong>而且這個假頁面其實根本沒有讀取你打的字</strong>——它要的只是你「肯點、肯填」這個動作。真正的詐騙網站，則會把你送出去的帳號密碼整包拿走。</p>'+
-   '<button class="btn" style="width:100%;margin-top:6px" onclick="closeModal()">我記住了</button>'+
-   '</div>';
-  document.body.appendChild(bg);
+   '<p class="faint">👨‍🏫 這是資安課的真實體驗：錢是虛擬的，被扣是為了讓你親身記住這感覺。真正的大久校長才不會這樣發錢——<strong>詐騙最愛冒用你信任的人</strong>。而且這些頁面根本沒讀取你打的字，它要的只是你「肯做這個動作」。</p>'+
+   '<button class="btn" style="width:100%;margin-top:6px" onclick="closeModal()">我記住了</button></div>';
 }
 function closeModal(){['scamModal','revealModal'].forEach(function(id){var e=document.getElementById(id);if(e)e.remove();});}
 
@@ -418,8 +520,11 @@ function teacherLogin(){
   });
 }
 function paintSettings(S){
-  document.getElementById('tTrade').textContent=(String(S.tradingOpen).toUpperCase()==='TRUE')?'🟢 開放':'🔴 關閉';
-  document.getElementById('tPhish').textContent=(String(S.phishingEventOn).toUpperCase()==='TRUE')?'🟢 進行中':'⚪ 關閉';
+  function on(k){return String(S[k]).toUpperCase()==='TRUE';}
+  document.getElementById('tTrade').textContent=on('tradingOpen')?'🟢 開放':'🔴 關閉';
+  document.getElementById('tE1').textContent=on('eventUsdt')?'🟢 進行中':'⚪ 關閉';
+  document.getElementById('tE2').textContent=on('eventBtc')?'🟢 進行中':'⚪ 關閉';
+  document.getElementById('tE3').textContent=on('eventEth')?'🟢 進行中':'⚪ 關閉';
 }
 function tToggle(key){
   api({action:'teacherLogin',teacherPassword:TPW}).then(function(r){
