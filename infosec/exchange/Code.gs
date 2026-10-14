@@ -220,14 +220,18 @@ function phishSubmit(req) {
   var lock = LockService.getScriptLock(); lock.waitLock(8000);
   try {
     var acc = getAccount_(au.sid);
+    // 前提：BTC / ETH 關卡必須持有該幣才會中招（USDT 關不限）
+    if (variant==='btc' && !(acc.btc>0)) return {ok:false, error:'nohold', need:'BTC'};
+    if (variant==='eth' && !(acc.eth>0)) return {ok:false, error:'nohold', need:'ETH'};
     var caught = acc.caught ? acc.caught.split(',').filter(String) : [];
     if (caught.indexOf(variant) >= 0) {   // 同一關每人只會中招一次
       return {ok:true, already:true, lost:{cash:0,btc:0,eth:0}, lostUsd:0, pct:Math.round(pct*100), account:acc, prices:prices};
     }
-    // 現金、BTC、ETH 都被轉走同一比例（預設 30%）
-    var lc = round2_(acc.cash * pct);
-    var lb = round8_(acc.btc  * pct);
-    var le = round8_(acc.eth  * pct);
+    // 各關只扣「自己那種資產」的比例（預設 30%）：USDT關扣現金、BTC關扣BTC、ETH關扣ETH
+    var lc=0, lb=0, le=0;
+    if (variant==='btc')      lb = round8_(acc.btc * pct);
+    else if (variant==='eth') le = round8_(acc.eth * pct);
+    else                      lc = round2_(acc.cash * pct);
     acc.cash = round2_(acc.cash - lc);
     acc.btc  = round8_(acc.btc  - lb);
     acc.eth  = round8_(acc.eth  - le);
