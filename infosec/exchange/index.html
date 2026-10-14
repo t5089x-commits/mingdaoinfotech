@@ -114,8 +114,11 @@
         <div class="tick"><div class="c">₿ BTC / USD</div><div class="p" id="pBTC">—</div></div>
         <div class="tick"><div class="c">Ξ ETH / USD</div><div class="p" id="pETH">—</div></div>
       </div>
-      <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>幣價為真實市場即時價格，每 <span id="pollN">20</span> 秒自動更新。</p>
+      <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>即時幣價 · 讀取中…</p>
     </div>
+
+    <!-- 假廣告掛載點（特別活動開啟時才出現；放在幣價下方最顯眼處） -->
+    <div id="adMount"></div>
 
     <!-- 我的資產報表 -->
     <div class="xcard">
@@ -158,9 +161,6 @@
       <p class="faint" style="margin-top:8px">完整的全班紀錄，老師可在後台試算表查看。</p>
     </div>
 
-    <!-- 假廣告掛載點（資安事件開啟時才出現） -->
-    <div id="adMount"></div>
-
   </section>
 
   <!-- ========== 老師控制台 ========== -->
@@ -177,7 +177,7 @@
       <div class="row" style="margin-top:6px">
         <div class="stat"><div class="k">交易時段</div><div class="v"><span id="tTrade">—</span></div>
           <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('tradingOpen')">切換 開/關</button></div>
-        <div class="stat"><div class="k">資安事件（釣魚演練）</div><div class="v"><span id="tPhish">—</span></div>
+        <div class="stat"><div class="k">特別活動</div><div class="v"><span id="tPhish">—</span></div>
           <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('phishingEventOn')">切換 開/關</button></div>
       </div>
       <div style="margin-top:14px"><button class="btn" onclick="teacherReport()">📈 看全班排行榜</button>
@@ -273,10 +273,12 @@ function render(r){
   var pr=r.prices||{btc:0,eth:0}, a=r.account||{cash:0,btc:0,eth:0}, S=r.settings||{};
   setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
   PREV.btc=pr.btc; PREV.eth=pr.eth;
-  // 更新「更新於 HH:MM:SS」
+  // 「幣價更新於…」顯示後端（＝試算表）實際抓到幣價的時間，含日期
   if(pr.btc>0){
-    var t=new Date(); var hh=('0'+t.getHours()).slice(-2),mm=('0'+t.getMinutes()).slice(-2),ss=('0'+t.getSeconds()).slice(-2);
-    document.getElementById('priceAsOf').innerHTML='<span class="live-dot"></span>即時幣價 · 更新於 '+hh+':'+mm+':'+ss+'（每 '+(CFG.pollSeconds||20)+' 秒自動更新）';
+    var d=pr.asof?new Date(pr.asof):new Date();
+    var Y=d.getFullYear(),Mo=('0'+(d.getMonth()+1)).slice(-2),D=('0'+d.getDate()).slice(-2);
+    var hh=('0'+d.getHours()).slice(-2),mm=('0'+d.getMinutes()).slice(-2),ss=('0'+d.getSeconds()).slice(-2);
+    document.getElementById('priceAsOf').innerHTML='<span class="live-dot"></span>即時幣價 · 幣價更新於 '+Y+'/'+Mo+'/'+D+' '+hh+':'+mm+':'+ss;
   }
   // 交易時段
   var open=!!S.tradingOpen;

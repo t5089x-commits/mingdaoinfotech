@@ -25,14 +25,14 @@
 function setupSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   ensureSheet(ss, '名冊', ['學號','姓名','PIN','起始資金USD','班級']);
-  ensureSheet(ss, '帳戶', ['學號','姓名','現金USD','BTC數量','ETH數量','已被釣魚','最後更新']);
+  ensureSheet(ss, '帳戶', ['學號','姓名','現金USD','BTC數量','ETH數量','已參加特別活動','最後更新']);
   ensureSheet(ss, '交易紀錄', ['時間','學號','姓名','買/賣','幣種','數量','成交價USD','金額USD','成交後現金USD','備註','下單理由（學生填）']);
   ensureSheet(ss, '事件紀錄', ['時間','學號','姓名','事件','說明','影響金額USD']);
   var settings = ensureSheet(ss, '設定', ['參數','值','說明']);
   if (settings.getLastRow() < 2) {
     settings.getRange(2,1,8,3).setValues([
       ['tradingOpen',     'FALSE', '交易時段開關：TRUE=開放下單、FALSE=關閉（上課才打開）'],
-      ['phishingEventOn', 'FALSE', '資安事件（釣魚演練）開關：TRUE=交易頁會出現假廣告'],
+      ['phishingEventOn', 'FALSE', '特別活動開關：TRUE=交易頁會出現特別活動（內容見老師設定說明.txt，此處刻意不寫明以免學生看到後台時猜到）'],
       ['startingCapital', '100000','新同學的起始虛擬資金（USD）'],
       ['phishBaitUSD',    '50000', '假廣告號稱可以「免費領取」的投資金（USD）'],
       ['phishTakePct',    '30',    '上鉤後被模擬駭客轉走的現金比例（%）'],
@@ -64,16 +64,16 @@ function onOpen() {
     .addSeparator()
     .addItem('開啟交易時段', 'menuOpenTrading')
     .addItem('關閉交易時段', 'menuCloseTrading')
-    .addItem('開啟資安事件（釣魚演練）', 'menuPhishOn')
-    .addItem('關閉資安事件', 'menuPhishOff')
+    .addItem('開啟特別活動', 'menuPhishOn')
+    .addItem('關閉特別活動', 'menuPhishOff')
     .addSeparator()
     .addItem('⚠ 重設一輪（所有人回到起始資金）', 'resetRound')
     .addToUi();
 }
 function menuOpenTrading(){ setSetting('tradingOpen','TRUE');  toast_('交易時段已開啟'); }
 function menuCloseTrading(){ setSetting('tradingOpen','FALSE'); toast_('交易時段已關閉'); }
-function menuPhishOn(){ setSetting('phishingEventOn','TRUE');  toast_('資安事件已開啟：交易頁會出現假廣告'); }
-function menuPhishOff(){ setSetting('phishingEventOn','FALSE'); toast_('資安事件已關閉'); }
+function menuPhishOn(){ setSetting('phishingEventOn','TRUE');  toast_('特別活動已開啟'); }
+function menuPhishOff(){ setSetting('phishingEventOn','FALSE'); toast_('特別活動已關閉'); }
 function toast_(m){ SpreadsheetApp.getActiveSpreadsheet().toast(m,'交易所',4); }
 
 function fillMissingPins() {
@@ -218,8 +218,8 @@ function phishSubmit(req) {
       acc.phished = true;
       saveAccount_(acc);
       appendRow_('事件紀錄',[new Date(), au.sid, au.name, '送出假表單（完全上鉤）',
-        '在釣魚頁面按下「領取」—— 系統只記錄這個動作，沒有收取任何輸入內容', -lost]);
-      appendRow_('交易紀錄',[new Date(), au.sid, au.name, '—', '—', '', '', round2_(lost), round2_(acc.cash), '⚠ 資安事件：被模擬駭客轉走', '']);
+        '在特別活動頁面按下「領取」—— 系統只記錄這個動作，沒有收取任何輸入內容', -lost]);
+      appendRow_('交易紀錄',[new Date(), au.sid, au.name, '—', '—', '', '', round2_(lost), round2_(acc.cash), '⚠ 特別活動：資金被轉走', '']);
     }
     return {ok:true, lost: lost, account: acc, already: already};
   } finally { lock.releaseLock(); }
