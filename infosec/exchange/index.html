@@ -94,6 +94,28 @@
   /* 假合約程式框 */
   textarea.codebox{font-family:var(--mono);font-size:.82rem;background:var(--code-bg);color:var(--code-text);
     border-color:#334155;line-height:1.5;white-space:pre;overflow-x:auto}
+  /* 分頁 */
+  .tabs{display:flex;gap:8px;margin-top:14px;border-top:1px solid var(--border);padding-top:12px}
+  .tab{flex:1 1 0;cursor:pointer;border:1px solid var(--border);background:var(--surface-2);color:var(--text-soft);
+    border-radius:var(--radius-sm);padding:10px;font-weight:800;font-size:.95rem}
+  .tab.active{background:var(--brand);color:#fff;border-color:transparent}
+  /* 三幣報價 */
+  .tickers3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tickers3 .p{font-size:1.02rem}
+  @media(max-width:560px){.tickers3{grid-template-columns:1fr}.tickers3 .p{font-size:1.25rem}}
+  /* 排行榜 */
+  table.lb{width:100%;border-collapse:collapse;font-size:.9rem}
+  table.lb th,table.lb td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+  table.lb td.num{text-align:right;font-family:var(--mono);font-weight:800;white-space:nowrap}
+  table.lb .nm{font-weight:700}
+  .lb-bar{height:7px;border-radius:4px;background:var(--brand);margin-top:5px;min-width:3px}
+  table.lb tr.me{background:var(--brand-soft)}
+  html[data-theme="dark"] table.lb tr.me{background:#06312b}
+  table.lb .rk{font-weight:900;color:var(--text-soft);width:30px;text-align:center}
+  /* 三張獨立廣告卡的配色 */
+  .fakead.ad-usdt{background:linear-gradient(120deg,#16a34a,#15803d 80%)}
+  .fakead.ad-btc{background:linear-gradient(120deg,#f7931a,#9a3412 85%)}
+  .fakead.ad-eth{background:linear-gradient(120deg,#6b7df0,#312e81 85%)}
 </style>
 </head>
 <body>
@@ -112,7 +134,7 @@
   <section id="loginView">
     <div class="xcard" style="margin-top:26px">
       <h2>🔐 登入交易所</h2>
-      <p class="muted" style="margin-top:0">用你的<strong>學號</strong>和老師給的 <strong>PIN</strong> 登入，開始用虛擬美元練習買賣加密貨幣。</p>
+      <p class="muted" style="margin-top:0">用你的<strong>學號</strong>和老師給的 <strong>PIN</strong> 登入，用虛擬台幣練習買賣加密貨幣。</p>
       <div class="row">
         <div><label class="fld">學號（當作你的帳號 ID）</label><input class="in" id="sid" inputmode="numeric" placeholder="例如 310215" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('pin').focus();}"></div>
         <div><label class="fld">PIN（4 位數，老師發給你）</label><input class="in" id="pin" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}"></div>
@@ -134,55 +156,77 @@
           <button class="btn ghost" style="padding:7px 12px;margin-left:8px" onclick="logout()">登出</button>
         </div>
       </div>
-      <div class="tickers" style="margin-top:14px">
-        <div class="tick"><div class="c">₿ BTC / USD</div><div class="p" id="pBTC">—</div></div>
-        <div class="tick"><div class="c">Ξ ETH / USD</div><div class="p" id="pETH">—</div></div>
-      </div>
-      <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>即時幣價 · 讀取中…</p>
-    </div>
-
-    <!-- 假廣告掛載點（特別活動開啟時才出現；放在幣價下方最顯眼處） -->
-    <div id="adMount"></div>
-
-    <!-- 我的資產報表 -->
-    <div class="xcard">
-      <h2>📊 我的資產報表</h2>
-      <div class="assets">
-        <div class="stat"><div class="k">起始資金</div><div class="v" id="aStart">—</div></div>
-        <div class="stat"><div class="k">現金 USD</div><div class="v" id="aCash">—</div></div>
-        <div class="stat"><div class="k">持有 BTC（市值）</div><div class="v" id="aBTC">—</div></div>
-        <div class="stat"><div class="k">持有 ETH（市值）</div><div class="v" id="aETH">—</div></div>
-        <div class="stat big"><div class="k">總資產（現金＋持倉市值）</div><div class="v" id="aEquity">—</div></div>
-        <div class="stat big"><div class="k">損益</div><div class="v" id="aPnl">—</div></div>
+      <div class="tabs">
+        <button class="tab active" id="tabTradeBtn" onclick="switchTab('trade')">💱 我的交易</button>
+        <button class="tab" id="tabBoardBtn" onclick="switchTab('board')">🏆 全班排行榜</button>
       </div>
     </div>
 
-    <!-- 下單 -->
-    <div class="xcard">
-      <h2>💱 下單</h2>
-      <div class="row">
-        <div><label class="fld">幣種</label>
-          <select class="in" id="oCoin"><option value="BTC">BTC 比特幣</option><option value="ETH">ETH 以太幣</option></select></div>
-        <div><label class="fld">動作</label>
-          <select class="in" id="oSide"><option value="buy">買入（花 USD）</option><option value="sell">賣出（換回 USD）</option></select></div>
-        <div><label class="fld">金額（USD）</label>
-          <input class="in" id="oUSD" inputmode="decimal" placeholder="例如 5000" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('oReason').focus();}"></div>
+    <!-- ====== 交易分頁 ====== -->
+    <div id="paneTrade">
+      <div class="xcard">
+        <div class="tickers3">
+          <div class="tick"><div class="c">💵 USDT / TWD</div><div class="p" id="pUSDT">—</div></div>
+          <div class="tick"><div class="c">₿ BTC / TWD</div><div class="p" id="pBTC">—</div></div>
+          <div class="tick"><div class="c">Ξ ETH / TWD</div><div class="p" id="pETH">—</div></div>
+        </div>
+        <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>即時幣價 · 讀取中…</p>
       </div>
-      <div style="margin-top:12px">
-        <label class="fld">💬 為什麼現在這樣操作？（必填，至少 5 個字）</label>
-        <textarea class="in" id="oReason" rows="3" placeholder="說說你的判斷：看到什麼新聞／價格走勢？可以貼上連結，或用自己的話說明為什麼現在買／賣。"></textarea>
+
+      <!-- 假廣告掛載點（特別活動開啟時才出現；三關各一張卡） -->
+      <div id="adMount"></div>
+
+      <!-- 我的資產報表（台幣計） -->
+      <div class="xcard">
+        <h2>📊 我的資產報表（以台幣計）</h2>
+        <div class="assets">
+          <div class="stat"><div class="k">起始資金</div><div class="v" id="aStart">—</div></div>
+          <div class="stat"><div class="k">台幣現金 TWD</div><div class="v" id="aCash">—</div></div>
+          <div class="stat"><div class="k">USDT（市值）</div><div class="v" id="aUSDT">—</div></div>
+          <div class="stat"><div class="k">BTC（市值）</div><div class="v" id="aBTC">—</div></div>
+          <div class="stat"><div class="k">ETH（市值）</div><div class="v" id="aETH">—</div></div>
+          <div class="stat"><div class="k">總資產</div><div class="v" id="aEquity">—</div></div>
+          <div class="stat big"><div class="k">損益</div><div class="v" id="aPnl">—</div></div>
+        </div>
       </div>
-      <div style="margin-top:14px"><button class="btn" id="orderBtn" onclick="doOrder()">送出委託</button>
-        <span class="faint" id="orderHint" style="margin-left:10px"></span></div>
-      <div class="msg" id="orderMsg"></div>
+
+      <!-- 兌換 / 下單 -->
+      <div class="xcard">
+        <h2>💱 兌換 / 下單（用台幣買賣幣）</h2>
+        <div class="row">
+          <div><label class="fld">幣種</label>
+            <select class="in" id="oCoin"><option value="USDT">USDT 泰達幣</option><option value="BTC">BTC 比特幣</option><option value="ETH">ETH 以太幣</option></select></div>
+          <div><label class="fld">動作</label>
+            <select class="in" id="oSide"><option value="buy">買入（花 TWD）</option><option value="sell">賣出（換回 TWD）</option></select></div>
+          <div><label class="fld">金額（TWD）</label>
+            <input class="in" id="oTWD" inputmode="decimal" placeholder="例如 30000" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('oReason').focus();}"></div>
+        </div>
+        <div style="margin-top:12px">
+          <label class="fld">💬 為什麼現在這樣操作？（必填，至少 5 個字）</label>
+          <textarea class="in" id="oReason" rows="3" placeholder="說說你的判斷：看到什麼新聞／價格走勢？可以貼上連結，或用自己的話說明為什麼現在買／賣。"></textarea>
+        </div>
+        <div style="margin-top:14px"><button class="btn" id="orderBtn" onclick="doOrder()">送出委託</button>
+          <span class="faint" id="orderHint" style="margin-left:10px"></span></div>
+        <div class="msg" id="orderMsg"></div>
+      </div>
+
+      <!-- 我的歷史交易紀錄 -->
+      <div class="xcard">
+        <h2>🧾 我的歷史交易紀錄</h2>
+        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價(TWD)</th><th>金額(TWD)</th></tr></thead>
+          <tbody id="histRows"><tr><td colspan="6" class="muted" style="text-align:center">讀取中…</td></tr></tbody></table>
+        <p class="faint" style="margin-top:8px">包含你曾經被詐騙的紀錄（紅字 ⚠）。完整全班紀錄老師可在後台試算表查看。</p>
+      </div>
     </div>
 
-    <!-- 近期成交 -->
-    <div class="xcard">
-      <h2>🧾 這次登入的成交紀錄</h2>
-      <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價</th><th>金額</th></tr></thead>
-        <tbody id="fillRows"><tr><td colspan="6" class="muted" style="text-align:center">尚無成交</td></tr></tbody></table>
-      <p class="faint" style="margin-top:8px">完整的全班紀錄，老師可在後台試算表查看。</p>
+    <!-- ====== 排行榜分頁 ====== -->
+    <div id="paneBoard" class="hide">
+      <div class="xcard">
+        <h2>🏆 全班資產排行榜（以台幣計）</h2>
+        <p class="faint" id="boardMeta" style="margin-top:0">讀取中…</p>
+        <div id="boardWrap"></div>
+        <p class="faint" style="margin-top:10px">為保護隱私，姓名顯示成「劉O華」。排行榜依目前總資產（台幣）排序。</p>
+      </div>
     </div>
 
   </section>
@@ -234,8 +278,8 @@ try{var _t=localStorage.getItem('xtheme');if(_t)document.documentElement.setAttr
 /* ---------- 狀態 ---------- */
 var SESS=null;         // {sid, token, name, start}
 var LAST=null;         // 最近一次 state
-var PREV={btc:null,eth:null};   // 上一次幣價（用來判斷漲跌、做跳動效果）
-var FILLS=[];          // 本次登入的成交
+var PREV={usdt:null,btc:null,eth:null};   // 上一次幣價（判斷漲跌、跳動效果）
+var CURTAB='trade';
 var pollTimer=null;
 var API=window.EXCHANGE_API||'';
 var CFG=window.EXCHANGE_CFG||{pollSeconds:20};
@@ -250,16 +294,17 @@ function api(payload){
     .catch(function(e){return {ok:false,error:'連線失敗，請檢查網路或後端網址'};});
 }
 
-function money(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function twd(n){return 'NT$'+Math.round(Number(n)||0).toLocaleString('en-US');}        // 台幣，整數
+function twd2(n){return 'NT$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});} // USDT 價
 function q8(n){return (Number(n)||0).toFixed(8).replace(/0+$/,'').replace(/\.$/,'')||'0';}
 function showMsg(id,text,kind){var el=document.getElementById(id);el.textContent=text;el.className='msg '+(kind||'err');}
 function clearMsg(id){var el=document.getElementById(id);el.className='msg';el.textContent='';}
-function setTick(id, val, prev){
+function setTick(id, val, prev, fmt){
   var el=document.getElementById(id); if(!el)return;
-  el.textContent=money(val);
+  el.textContent=(fmt||twd)(val);
   if(prev!=null && val!==prev){
     var cls=val>prev?'up':'down';
-    el.classList.remove('up','down'); void el.offsetWidth;   // 重新觸發動畫
+    el.classList.remove('up','down'); void el.offsetWidth;
     el.classList.add(cls);
   }
 }
@@ -273,7 +318,7 @@ function doLogin(){
   api({action:'login',sid:sid,pin:pin}).then(function(r){
     document.getElementById('loginBtn').disabled=false;
     if(!r.ok){showMsg('loginMsg',r.error||'登入失敗');return;}
-    SESS={sid:sid,token:r.token,name:r.name,start:(r.start!=null?r.start:r.account.cash)};
+    SESS={sid:sid,token:r.token,name:r.name,start:(r.start!=null?r.start:r.account.twd)};
     try{sessionStorage.setItem('xsess',JSON.stringify(SESS));}catch(e){}
     enterApp(r);
   });
@@ -289,6 +334,7 @@ function enterApp(r){
   document.getElementById('hiName').textContent=SESS.name;
   document.getElementById('hiSid').textContent=SESS.sid;
   render(r);
+  loadHistory();
   if(pollTimer)clearInterval(pollTimer);
   pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);
 }
@@ -300,9 +346,9 @@ function refresh(){ if(!SESS)return;
 function render(r){
   LAST=r;
   if(r.start!=null&&SESS){SESS.start=r.start;}
-  var pr=r.prices||{btc:0,eth:0}, a=r.account||{cash:0,btc:0,eth:0}, S=r.settings||{};
-  setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
-  PREV.btc=pr.btc; PREV.eth=pr.eth;
+  var pr=r.prices||{usdt:0,btc:0,eth:0}, a=r.account||{twd:0,usdt:0,btc:0,eth:0}, S=r.settings||{};
+  setTick('pUSDT', pr.usdt, PREV.usdt, twd2); setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
+  PREV.usdt=pr.usdt; PREV.btc=pr.btc; PREV.eth=pr.eth;
   // 「幣價更新於…」顯示後端（＝試算表）實際抓到幣價的時間，含日期
   if(pr.btc>0){
     var d=pr.asof?new Date(pr.asof):new Date();
@@ -317,21 +363,22 @@ function render(r){
   st.className='pill '+(open?'open':'closed');
   document.getElementById('orderBtn').disabled=!open;
   document.getElementById('orderHint').textContent=open?'':'老師尚未開放交易時段';
-  // 資產
-  var btcVal=a.btc*pr.btc, ethVal=a.eth*pr.eth;
-  var equity=a.cash+btcVal+ethVal;
-  var start=SESS.start||100000;
-  document.getElementById('aStart').textContent=money(start);
-  document.getElementById('aCash').textContent=money(a.cash);
-  document.getElementById('aBTC').textContent=q8(a.btc)+' ₿　'+money(btcVal);
-  document.getElementById('aETH').textContent=q8(a.eth)+' Ξ　'+money(ethVal);
-  document.getElementById('aEquity').textContent=money(equity);
+  // 資產（台幣計）
+  var usdtVal=a.usdt*pr.usdt, btcVal=a.btc*pr.btc, ethVal=a.eth*pr.eth;
+  var equity=a.twd+usdtVal+btcVal+ethVal;
+  var start=SESS.start||1000000;
+  document.getElementById('aStart').textContent=twd(start);
+  document.getElementById('aCash').textContent=twd(a.twd);
+  document.getElementById('aUSDT').textContent=q8(a.usdt)+' 💵　'+twd(usdtVal);
+  document.getElementById('aBTC').textContent=q8(a.btc)+' ₿　'+twd(btcVal);
+  document.getElementById('aETH').textContent=q8(a.eth)+' Ξ　'+twd(ethVal);
+  document.getElementById('aEquity').textContent=twd(equity);
   var pnl=equity-start, pct=start?(pnl/start*100):0;
   var pe=document.getElementById('aPnl');
-  pe.textContent=(pnl>=0?'▲ +':'▼ ')+money(Math.abs(pnl))+'　('+(pnl>=0?'+':'')+pct.toFixed(2)+'%)';
+  pe.textContent=(pnl>=0?'▲ +':'▼ ')+twd(Math.abs(pnl))+'　('+(pnl>=0?'+':'')+pct.toFixed(2)+'%)';
   pe.className='v '+(pnl>=0?'pos':'neg');
-  // 特別活動：假廣告（依三個獨立開關 + 這位同學已中招的關卡 + 是否持有該幣）
-  renderAd(S.events||{}, a.caught||'', S.phishBaitUSD||50000, a);
+  // 特別活動：三張獨立廣告卡（依三個開關 + 已中招關卡決定；不看是否持有）
+  renderAd(S.events||{}, a.caught||'', S.phishBait||50000);
 }
 
 /* ---------- 下單 ---------- */
@@ -339,94 +386,108 @@ function doOrder(){
   clearMsg('orderMsg');
   var coin=document.getElementById('oCoin').value;
   var side=document.getElementById('oSide').value;
-  var usd=parseFloat(document.getElementById('oUSD').value);
-  if(!(usd>0)){showMsg('orderMsg','請輸入大於 0 的金額');return;}
+  var amt=parseFloat(document.getElementById('oTWD').value);
+  if(!(amt>0)){showMsg('orderMsg','請輸入大於 0 的台幣金額');return;}
   var reason=document.getElementById('oReason').value.trim();
   if(reason.length<5){showMsg('orderMsg','送出前請先寫下你這筆下單的理由（至少 5 個字，可貼連結或自己說明）');document.getElementById('oReason').focus();return;}
   document.getElementById('orderBtn').disabled=true;
-  api({action:'order',sid:SESS.sid,token:SESS.token,side:side,coin:coin,amountUSD:usd,reason:reason}).then(function(r){
+  api({action:'order',sid:SESS.sid,token:SESS.token,side:side,coin:coin,amountTWD:amt,reason:reason}).then(function(r){
     document.getElementById('orderBtn').disabled=false;
     if(!r.ok){showMsg('orderMsg',r.error||'下單失敗');return;}
     var f=r.filled;
-    showMsg('orderMsg','✅ 已成交：'+(f.side==='buy'?'買入':'賣出')+' '+q8(f.qty)+' '+f.coin+'（成交價 '+money(f.price)+'）','ok');
-    FILLS.unshift({t:new Date(),side:f.side,coin:f.coin,qty:f.qty,price:f.price,usd:f.usd});
-    renderFills();
-    render({prices:r.prices,account:r.account,settings:(LAST&&LAST.settings)||{}});
-    document.getElementById('oUSD').value='';
+    showMsg('orderMsg','✅ 已成交：'+(f.side==='buy'?'買入':'賣出')+' '+q8(f.qty)+' '+f.coin+'（成交價 '+twd(f.price)+'）','ok');
+    render({prices:r.prices,account:r.account,settings:(LAST&&LAST.settings)||{},start:SESS.start});
+    loadHistory();
+    document.getElementById('oTWD').value='';
     document.getElementById('oReason').value='';
   });
 }
-function renderFills(){
-  var tb=document.getElementById('fillRows');
-  if(!FILLS.length){tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">尚無成交</td></tr>';return;}
-  tb.innerHTML=FILLS.slice(0,12).map(function(f){
-    var hhmm=f.t.toTimeString().slice(0,5);
-    if(f.scam){
-      var qtyStr=f.coin==='USDT'?('-'+money(f.usd)):('-'+q8(f.qty)+' '+f.coin);
-      return '<tr style="color:var(--danger)"><td>'+hhmm+'</td><td>⚠ 被詐騙</td><td>'+f.coin+'</td><td>'+qtyStr+'</td><td>—</td><td>-'+money(f.usd)+'</td></tr>';
-    }
-    return '<tr><td>'+hhmm+'</td><td>'+(f.side==='buy'?'買':'賣')+'</td><td>'+f.coin+'</td><td>'+q8(f.qty)+'</td><td>'+money(f.price)+'</td><td>'+money(f.usd)+'</td></tr>';
-  }).join('');
+/* ---------- 分頁切換 ---------- */
+function switchTab(t){
+  CURTAB=t;
+  document.getElementById('paneTrade').classList.toggle('hide', t!=='trade');
+  document.getElementById('paneBoard').classList.toggle('hide', t!=='board');
+  document.getElementById('tabTradeBtn').classList.toggle('active', t==='trade');
+  document.getElementById('tabBoardBtn').classList.toggle('active', t==='board');
+  if(t==='board') loadBoard();
+}
+/* ---------- 我的歷史交易紀錄（含被詐騙） ---------- */
+function loadHistory(){
+  if(!SESS)return;
+  api({action:'history',sid:SESS.sid,token:SESS.token}).then(function(r){
+    var tb=document.getElementById('histRows'); if(!tb)return;
+    if(!r.ok||!r.rows||!r.rows.length){tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">尚無紀錄</td></tr>';return;}
+    tb.innerHTML=r.rows.map(function(x){
+      var scam=String(x.note||'').indexOf('⚠')>=0;
+      if(scam){
+        return '<tr style="color:var(--danger)"><td>'+x.t+'</td><td>⚠ 被詐騙</td><td>'+x.coin+'</td><td>-'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>-'+twd(x.amt)+'</td></tr>';
+      }
+      return '<tr><td>'+x.t+'</td><td>'+x.act+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>'+twd(x.amt)+'</td></tr>';
+    }).join('');
+  });
+}
+/* ---------- 全班排行榜 ---------- */
+function loadBoard(){
+  document.getElementById('boardMeta').textContent='讀取中…';
+  api({action:'board',sid:SESS.sid,token:SESS.token}).then(function(r){
+    if(!r.ok){document.getElementById('boardMeta').textContent=r.error||'讀取失敗';return;}
+    var list=r.board||[]; var max=list.length?list[0].twd:1; if(max<=0)max=1;
+    document.getElementById('boardMeta').textContent='共 '+list.length+' 人 · 依目前總資產排序';
+    var rows=list.map(function(x,i){
+      var me=(x.sid===SESS.sid);
+      var w=Math.max(3, Math.round(x.twd/max*100));
+      return '<tr'+(me?' class="me"':'')+'><td class="rk">'+(i+1)+'</td>'+
+        '<td><span class="nm">'+x.name+'</span> <span class="faint">'+x.sid+'</span>'+
+        '<div class="lb-bar" style="width:'+w+'%"></div></td>'+
+        '<td class="num">'+twd(x.twd)+'</td></tr>';
+    }).join('');
+    document.getElementById('boardWrap').innerHTML=
+      '<table class="lb"><thead><tr><th class="rk">#</th><th>學號 · 姓名</th><th style="text-align:right">總資產(TWD)</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  });
 }
 
 /* ================= 資安事件：釣魚演練 =================
    安全設計：假頁面的輸入框只是「演示」，送出時前端完全不讀取、也不傳送
    任何欄位內容；後端只記錄「這位同學點了/送了」這個動作並套用遊戲內後果。
    任何時候都沒有蒐集或儲存密碼。 */
-var AD_BAIT=50000;   // 最近一次廣告的金額，給 chooser 用
-function availVariants(events, caught, acc){
-  acc=acc||{}; var caughtList = caught? String(caught).split(','):[];
-  return ['usdt','btc','eth'].filter(function(k){
-    if(!events[k] || caughtList.indexOf(k)>=0) return false;
-    if(k==='btc') return (acc.btc||0)>0;   // 前提：要持有 BTC 才會被 BTC 關鎖定
-    if(k==='eth') return (acc.eth||0)>0;   // 前提：要持有 ETH
-    return true;
-  });
+var AD_BAIT=50000;
+/* 哪幾關有開、且這位同學還沒中過招（不看是否持有；沒持有者也看得到，點了才提示去買） */
+function availVariants(events, caught){
+  var caughtList = caught? String(caught).split(','):[];
+  return ['usdt','btc','eth'].filter(function(k){ return events[k] && caughtList.indexOf(k)<0; });
 }
-function renderAd(events, caught, bait, acc){
-  AD_BAIT=bait; var m=document.getElementById('adMount');
-  events=events||{};
-  var avail=availVariants(events, caught, acc);
+var AD_META={
+  usdt:{cls:'ad-usdt', title:'🎁 限時福利！幣圈福利社', sub:'驗證身分，立刻免費領取 {B} USDT 到你的帳戶！名額有限，手刀點我 →'},
+  btc :{cls:'ad-btc',  title:'🏫 明道中學推廣虛擬貨幣！', sub:'證明你是明道學生，就免費送你一筆 BTC 獎勵金！點我領取 →'},
+  eth :{cls:'ad-eth',  title:'📜 明道中學 智能合約獎勵計畫', sub:'參與執行一份智能合約，完成即賺 ETH 報酬！點我參加 →'}
+};
+function renderAd(events, caught, bait){
+  AD_BAIT=bait; var m=document.getElementById('adMount'); events=events||{};
+  var avail=availVariants(events, caught);
   var anyOn=events.usdt||events.btc||events.eth;
   if(avail.length>0){
-    m.innerHTML='<div class="fakead" onclick="phishClick()"><span class="x">廣告 ✕</span>'+
-      '<b>🎁 限時福利！幣圈福利社</b><br>玩一個 30 秒小遊戲，<span class="blink">立刻免費領取 $'+bait+' 投資金</span>到你的帳戶！名額有限，<b>手刀點我參加 →</b></div>';
+    m.innerHTML=avail.map(function(k){var M=AD_META[k];
+      return '<div class="fakead '+M.cls+'" onclick="adClick(\''+k+'\')"><span class="x">廣告 ✕</span>'+
+        '<b>'+M.title+'</b><br>'+M.sub.replace('{B}',bait)+'</div>';
+    }).join('');
   } else if(anyOn && caught){
-    m.innerHTML='<div class="xcard" style="border-color:var(--danger)"><h2 style="color:var(--danger)">💀 你已經被詐騙過了</h2><p class="muted" style="margin:0">剛才那個「免費領投資金」的廣告是假的，你的現金與持倉（BTC／ETH）都已經被轉走一部分、拿不回來了。等一下老師會帶大家一起看：那個廣告有哪些破綻？為什麼「免費送錢」永遠是詐騙？以後在真實世界看到類似訊息該怎麼辦？</p></div>';
+    m.innerHTML='<div class="xcard" style="border-color:var(--danger)"><h2 style="color:var(--danger)">💀 你已經被詐騙過了</h2><p class="muted" style="margin:0">剛才那個「免費領投資金」的廣告是假的，你被偷走的幣已經拿不回來了。等一下老師會帶大家一起看：那個廣告有哪些破綻？為什麼「免費送錢」永遠是詐騙？以後在真實世界看到類似訊息該怎麼辦？</p></div>';
   } else {
     m.innerHTML='';
   }
 }
 function modalBg(id,cls){var bg=document.createElement('div');bg.className='modal-bg '+cls;bg.id=id;document.body.appendChild(bg);return bg;}
-function phishClick(){
+/* 點某張廣告卡 → 沒有該幣就提示去買；有的話記錄點擊 → 進該關 */
+function adClick(variant){
+  var coin=variant==='btc'?'BTC':(variant==='eth'?'ETH':'USDT');
+  var acc=(LAST&&LAST.account)||{};
+  var have=coin==='BTC'?acc.btc:(coin==='ETH'?acc.eth:acc.usdt);
+  if(!(have>0)){ needCoinModal(coin); return; }   // 沒持有該幣 → 直接提示去兌換，不進詐騙流程
   api({action:'phishClick',sid:SESS.sid,token:SESS.token}).then(function(r){
-    var bait=(r&&r.baitUSD)||AD_BAIT;
-    var events=(r&&r.events)||((LAST&&LAST.settings&&LAST.settings.events)||{});
-    var caught=(LAST&&LAST.account&&LAST.account.caught)||'';
-    var avail=availVariants(events, caught, (LAST&&LAST.account)||{});
-    if(avail.length===0){ return; }
-    if(avail.length===1){ pick(avail[0], bait); }   // 只開一關 → 直接進該關
-    else openChooser(bait, avail);
+    pick(variant, (r&&r.baitUSD)||AD_BAIT);
   });
 }
 function pick(v,bait){ if(v==='usdt')pickUSDT(bait); else if(v==='btc')pickBTC(bait); else pickETH(bait); }
-/* 入口：只列出「本週有開」的關卡 */
-function openChooser(bait, avail){
-  var rows={
-    usdt:'<div class="opt" onclick="pickUSDT('+bait+')"><div class="oi">💵</div><div class="ot"><b>現領 USDT</b><br><span class="faint">最快！直接把 $'+bait+' USDT 撥進你的帳戶</span></div><span class="oa">→</span></div>',
-    btc:'<div class="opt" onclick="pickBTC('+bait+')"><div class="oi">₿</div><div class="ot"><b>明道推廣虛擬貨幣 · 領 BTC</b><br><span class="faint">完成真人驗證小任務，領取 BTC 獎勵（限持有 BTC 者）</span></div><span class="oa">→</span></div>',
-    eth:'<div class="opt" onclick="pickETH('+bait+')"><div class="oi">Ξ</div><div class="ot"><b>協助完成智能合約 · 賺 ETH</b><br><span class="faint">參與執行一份合約，完成即賺 ETH 報酬（限持有 ETH 者）</span></div><span class="oa">→</span></div>'
-  };
-  var bg=modalBg('scamModal','scam');
-  bg.innerHTML='<div class="modal">'+
-   '<div class="big-emoji">🎁💰</div>'+
-   '<h2 style="text-align:center;margin:6px 0 2px">幣圈福利社 · 領取 $'+bait+' 投資金</h2>'+
-   '<p class="muted" style="text-align:center;margin-top:0">明道中學大久校長聯手「幣圈福利社」，限時發放投資金！<br>挑一個方式完成任務，立刻入帳 👇</p>'+
-   avail.map(function(k){return rows[k];}).join('')+
-   '<button class="btn ghost" style="width:100%;margin-top:12px" onclick="closeModal()">我不要了</button>'+
-   '<p class="faint" style="margin-top:10px;text-align:center">⏳ 剩餘 00:29…手腳要快！</p>'+
-   '</div>';
-}
 /* 選項 1：USDT 直接領（假表單釣帳密） */
 function pickUSDT(bait){
   closeModal(); var bg=modalBg('scamModal','scam');
@@ -510,35 +571,33 @@ function pickETH(bait){
    '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button>'+
    '<p class="faint" style="margin-top:8px">※ 看不懂沒關係，把學號 PIN 填好、送出就好。</p></div>';
 }
+function needCoinModal(coin){
+  var bg=modalBg('scamModal','scam');
+  bg.innerHTML='<div class="modal"><div class="big-emoji">🪙</div>'+
+   '<h2 style="text-align:center;margin:6px 0 8px">你還沒有 '+coin+'！</h2>'+
+   '<p style="text-align:center">這個活動要「持有 '+coin+'」才能領取。<br>先回交易頁用台幣買一點 <b>'+coin+'</b>，再回來參加吧 😉</p>'+
+   '<button class="btn" style="width:100%;margin-top:10px" onclick="closeModal()">好，我去買 '+coin+'</button></div>';
+}
 function phishSubmit(variant){
   /* ★ 前端完全不讀取、也不送出任何輸入框／合約框的內容；後端只記錄
      「這位同學完成了這個動作」並套用遊戲內後果，全程不收集任何密碼。 */
   closeModal();
   api({action:'phishSubmit',sid:SESS.sid,token:SESS.token,variant:variant}).then(function(r){
     r=r||{};
-    if(!r.ok && r.error==='nohold'){ alert('這個活動限持有 '+(r.need||'該幣')+' 的同學參加喔。'); return; }
-    // 把這次被詐騙也列進「這次登入的成交紀錄」
-    if(r.ok && !r.already && r.lost){
-      var coin=variant==='btc'?'BTC':(variant==='eth'?'ETH':'USDT');
-      var qty=variant==='btc'?r.lost.btc:(variant==='eth'?r.lost.eth:r.lost.cash);
-      FILLS.unshift({t:new Date(),scam:true,coin:coin,qty:qty,usd:r.lostUsd||0});
-      renderFills();
-    }
+    if(!r.ok && r.error==='nohold'){ needCoinModal(r.need||'該幣'); return; }
+    if(!r.ok){ alert(r.error||'發生錯誤，請稍後再試'); return; }
     openReveal(variant, r);
-    refresh();
+    loadHistory(); refresh();
   });
 }
 function openReveal(variant, r){
-  var already=r.already, L=r.lost||{cash:0,btc:0,eth:0};
+  var already=r.already;
+  var coin=r.coin||(variant==='btc'?'BTC':(variant==='eth'?'ETH':'USDT'));
   var bg=modalBg('revealModal','reveal');
-  var items='';
-  if(L.cash) items+='<li>現金 USDT：<b class="neg">'+money(L.cash)+'</b></li>';
-  if(L.btc)  items+='<li>BTC：<b class="neg">'+q8(L.btc)+' ₿</b></li>';
-  if(L.eth)  items+='<li>ETH：<b class="neg">'+q8(L.eth)+' Ξ</b></li>';
-  var lossLine = (!already && items)
-    ? '<div class="xcard" style="margin:10px 0;background:var(--surface-2)"><b class="neg">💸 被轉走的資產（'+(r.pct||30)+'%，拿不回來）</b>'+
-      '<ul style="margin:8px 0 0;padding-left:1.1em;font-size:.9rem;color:var(--text)">'+items+'</ul>'+
-      '<p class="faint" style="margin:8px 0 0">換算約 '+money(r.lostUsd||0)+'</p></div>'
+  var lossLine = (!already && r.lost>0)
+    ? '<div class="xcard" style="margin:10px 0;background:var(--surface-2)"><b class="neg">💸 被偷走的資產（'+(r.pct||30)+'%，拿不回來）</b>'+
+      '<ul style="margin:8px 0 0;padding-left:1.1em;font-size:.9rem;color:var(--text)"><li>'+coin+'：<b class="neg">'+q8(r.lost)+' '+coin+'</b></li></ul>'+
+      '<p class="faint" style="margin:8px 0 0">換算約 '+twd(r.lostTWD||0)+'</p></div>'
     : '';
   var intro, extra;
   if(already){ intro='<p class="muted">你剛才已經被騙過一次了，這次沒有再被扣款。</p>'; extra=''; }
@@ -597,13 +656,13 @@ function tToggle(key){
 function teacherReport(){
   api({action:'teacherReport',teacherPassword:TPW}).then(function(r){
     if(!r.ok){document.getElementById('tReport').innerHTML='<p class="msg err" style="display:block">'+(r.error||'讀取失敗')+'</p>';return;}
-    document.getElementById('tReportMeta').textContent='共 '+r.total+' 人 · 已上鉤 '+r.phishedCount+' 人 · BTC '+money(r.prices.btc)+' / ETH '+money(r.prices.eth);
+    document.getElementById('tReportMeta').textContent='共 '+r.total+' 人 · 已上鉤 '+r.phishedCount+' 人 · BTC '+twd(r.prices.btc)+' / ETH '+twd(r.prices.eth);
     var rows=r.leaderboard.map(function(x,i){
       return '<tr><td>'+(i+1)+'</td><td style="text-align:left">'+x.name+' <span class="faint">'+x.sid+'</span></td>'+
-             '<td>'+money(x.equity)+'</td><td>'+money(x.cash)+'</td><td>'+q8(x.btc)+'</td><td>'+q8(x.eth)+'</td><td>'+(x.phished?'🎣':'')+'</td></tr>';
+             '<td>'+twd(x.equity)+'</td><td>'+twd(x.twd)+'</td><td>'+q8(x.usdt)+'</td><td>'+q8(x.btc)+'</td><td>'+q8(x.eth)+'</td><td>'+(x.phished?'🎣':'')+'</td></tr>';
     }).join('');
     document.getElementById('tReport').innerHTML=
-      '<table class="log"><thead><tr><th>#</th><th>姓名</th><th>總資產</th><th>現金</th><th>BTC</th><th>ETH</th><th>釣</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      '<table class="log"><thead><tr><th>#</th><th>姓名</th><th>總資產</th><th>TWD</th><th>USDT</th><th>BTC</th><th>ETH</th><th>釣</th></tr></thead><tbody>'+rows+'</tbody></table>';
   });
 }
 
@@ -613,7 +672,7 @@ function teacherReport(){
     document.getElementById('hiName').textContent=o.name;document.getElementById('hiSid').textContent=o.sid;
     api({action:'state',sid:o.sid,token:o.token}).then(function(r){
       if(r.ok){document.getElementById('loginView').classList.add('hide');document.getElementById('appView').classList.remove('hide');
-        render(r);if(pollTimer)clearInterval(pollTimer);pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);}
+        render(r);loadHistory();if(pollTimer)clearInterval(pollTimer);pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);}
       else{logout();}
     });
   }}catch(e){}
