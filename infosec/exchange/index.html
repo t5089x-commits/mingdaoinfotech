@@ -102,7 +102,9 @@
   /* 三幣報價 */
   .tickers3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   .tickers3 .p{font-size:1.02rem}
-  @media(max-width:560px){.tickers3{grid-template-columns:1fr}.tickers3 .p{font-size:1.25rem}}
+  .price-group{margin-bottom:12px}
+  .pg-title{font-weight:800;font-size:.88rem;color:var(--text-soft);margin:0 0 7px}
+  @media(max-width:560px){.tickers3{grid-template-columns:1fr 1fr 1fr}.tickers3 .p{font-size:.95rem}}
   /* 排行榜 */
   table.lb{width:100%;border-collapse:collapse;font-size:.9rem}
   table.lb th,table.lb td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
@@ -165,10 +167,21 @@
     <!-- ====== 交易分頁 ====== -->
     <div id="paneTrade">
       <div class="xcard">
-        <div class="tickers3">
-          <div class="tick"><div class="c">💵 USDT / TWD</div><div class="p" id="pUSDT">—</div></div>
-          <div class="tick"><div class="c">₿ BTC / TWD</div><div class="p" id="pBTC">—</div></div>
-          <div class="tick"><div class="c">Ξ ETH / TWD</div><div class="p" id="pETH">—</div></div>
+        <div class="price-group">
+          <div class="pg-title">💵 以台幣計價（用 TWD 買幣）</div>
+          <div class="tickers3">
+            <div class="tick"><div class="c">USDT / TWD</div><div class="p" id="pUSDT">—</div></div>
+            <div class="tick"><div class="c">₿ BTC / TWD</div><div class="p" id="pBTC">—</div></div>
+            <div class="tick"><div class="c">Ξ ETH / TWD</div><div class="p" id="pETH">—</div></div>
+          </div>
+        </div>
+        <div class="price-group">
+          <div class="pg-title">🪙 以泰達幣計價（用 USDT 買幣）</div>
+          <div class="tickers3">
+            <div class="tick"><div class="c">USDT / TWD</div><div class="p" id="pUSDT2">—</div></div>
+            <div class="tick"><div class="c">₿ BTC / USDT</div><div class="p" id="pBTCU">—</div></div>
+            <div class="tick"><div class="c">Ξ ETH / USDT</div><div class="p" id="pETHU">—</div></div>
+          </div>
         </div>
         <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>即時幣價 · 讀取中…</p>
       </div>
@@ -192,15 +205,18 @@
 
       <!-- 兌換 / 下單 -->
       <div class="xcard">
-        <h2>💱 兌換 / 下單（用台幣買賣幣）</h2>
+        <h2>💱 兌換 / 下單（可用台幣或泰達幣買賣）</h2>
         <div class="row">
           <div><label class="fld">幣種</label>
-            <select class="in" id="oCoin"><option value="USDT">USDT 泰達幣</option><option value="BTC">BTC 比特幣</option><option value="ETH">ETH 以太幣</option></select></div>
+            <select class="in" id="oCoin" onchange="onCoinChange()"><option value="USDT">USDT 泰達幣</option><option value="BTC">BTC 比特幣</option><option value="ETH">ETH 以太幣</option></select></div>
           <div><label class="fld">動作</label>
-            <select class="in" id="oSide"><option value="buy">買入（花 TWD）</option><option value="sell">賣出（換回 TWD）</option></select></div>
-          <div><label class="fld">金額（TWD）</label>
+            <select class="in" id="oSide"><option value="buy">買入</option><option value="sell">賣出</option></select></div>
+          <div><label class="fld">計價幣別（用什麼付/收）</label>
+            <select class="in" id="oQuote" onchange="onQuoteChange()"><option value="TWD">台幣 TWD</option><option value="USDT">泰達幣 USDT</option></select></div>
+          <div><label class="fld" id="oAmtLabel">金額（TWD）</label>
             <input class="in" id="oTWD" inputmode="decimal" placeholder="例如 30000" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('oReason').focus();}"></div>
         </div>
+        <p class="faint" id="pairHint" style="margin:6px 0 0"></p>
         <div style="margin-top:12px">
           <label class="fld">💬 為什麼現在這樣操作？（必填，至少 5 個字）</label>
           <textarea class="in" id="oReason" rows="3" placeholder="說說你的判斷：看到什麼新聞／價格走勢？可以貼上連結，或用自己的話說明為什麼現在買／賣。"></textarea>
@@ -213,7 +229,7 @@
       <!-- 我的歷史交易紀錄 -->
       <div class="xcard">
         <h2>🧾 我的歷史交易紀錄</h2>
-        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價(TWD)</th><th>金額(TWD)</th></tr></thead>
+        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價</th><th>金額</th></tr></thead>
           <tbody id="histRows"><tr><td colspan="6" class="muted" style="text-align:center">讀取中…</td></tr></tbody></table>
         <p class="faint" style="margin-top:8px">包含你曾經被詐騙的紀錄（紅字 ⚠）。完整全班紀錄老師可在後台試算表查看。</p>
       </div>
@@ -278,7 +294,7 @@ try{var _t=localStorage.getItem('xtheme');if(_t)document.documentElement.setAttr
 /* ---------- 狀態 ---------- */
 var SESS=null;         // {sid, token, name, start}
 var LAST=null;         // 最近一次 state
-var PREV={usdt:null,btc:null,eth:null};   // 上一次幣價（判斷漲跌、跳動效果）
+var PREV={usdt:null,btc:null,eth:null,btcU:null,ethU:null};   // 上一次幣價（判斷漲跌、跳動效果）
 var CURTAB='trade';
 var pollTimer=null;
 var API=window.EXCHANGE_API||'';
@@ -296,6 +312,7 @@ function api(payload){
 
 function twd(n){return 'NT$'+Math.round(Number(n)||0).toLocaleString('en-US');}        // 台幣，整數
 function twd2(n){return 'NT$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});} // USDT 價
+function usdtP(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2})+' USDT';}  // 以 USDT 計價
 function q8(n){return (Number(n)||0).toFixed(8).replace(/0+$/,'').replace(/\.$/,'')||'0';}
 function showMsg(id,text,kind){var el=document.getElementById(id);el.textContent=text;el.className='msg '+(kind||'err');}
 function clearMsg(id){var el=document.getElementById(id);el.className='msg';el.textContent='';}
@@ -334,6 +351,7 @@ function enterApp(r){
   document.getElementById('hiName').textContent=SESS.name;
   document.getElementById('hiSid').textContent=SESS.sid;
   render(r);
+  onCoinChange();
   loadHistory();
   if(pollTimer)clearInterval(pollTimer);
   pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);
@@ -347,8 +365,11 @@ function render(r){
   LAST=r;
   if(r.start!=null&&SESS){SESS.start=r.start;}
   var pr=r.prices||{usdt:0,btc:0,eth:0}, a=r.account||{twd:0,usdt:0,btc:0,eth:0}, S=r.settings||{};
-  setTick('pUSDT', pr.usdt, PREV.usdt, twd2); setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
-  PREV.usdt=pr.usdt; PREV.btc=pr.btc; PREV.eth=pr.eth;
+  setTick('pUSDT', pr.usdt, PREV.usdt, twd2); setTick('pUSDT2', pr.usdt, PREV.usdt, twd2);
+  setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
+  var bU=pr.usdt?pr.btc/pr.usdt:0, eU=pr.usdt?pr.eth/pr.usdt:0;
+  setTick('pBTCU', bU, PREV.btcU, usdtP); setTick('pETHU', eU, PREV.ethU, usdtP);
+  PREV.usdt=pr.usdt; PREV.btc=pr.btc; PREV.eth=pr.eth; PREV.btcU=bU; PREV.ethU=eU;
   // 「幣價更新於…」顯示後端（＝試算表）實際抓到幣價的時間，含日期
   if(pr.btc>0){
     var d=pr.asof?new Date(pr.asof):new Date();
@@ -382,20 +403,38 @@ function render(r){
 }
 
 /* ---------- 下單 ---------- */
+/* 幣種/計價幣別變動時的連動與提示 */
+function onCoinChange(){
+  var coin=document.getElementById('oCoin').value;
+  var qs=document.getElementById('oQuote');
+  var usdtOpt=qs.querySelector('option[value="USDT"]');
+  if(coin==='USDT'){ qs.value='TWD'; qs.disabled=true; if(usdtOpt)usdtOpt.disabled=true; }
+  else { qs.disabled=false; if(usdtOpt)usdtOpt.disabled=false; }
+  onQuoteChange();
+}
+function onQuoteChange(){
+  var coin=document.getElementById('oCoin').value;
+  var q=document.getElementById('oQuote').value;
+  document.getElementById('oAmtLabel').textContent='金額（'+(q==='USDT'?'USDT':'TWD')+'）';
+  var h=document.getElementById('pairHint');
+  if(coin==='USDT'){ h.textContent='USDT 只能用台幣買賣。'; }
+  else { h.textContent='用「'+(q==='USDT'?'泰達幣 USDT':'台幣 TWD')+'」買賣 '+coin+'。'; }
+}
 function doOrder(){
   clearMsg('orderMsg');
   var coin=document.getElementById('oCoin').value;
   var side=document.getElementById('oSide').value;
+  var quote=document.getElementById('oQuote').value;
   var amt=parseFloat(document.getElementById('oTWD').value);
-  if(!(amt>0)){showMsg('orderMsg','請輸入大於 0 的台幣金額');return;}
+  if(!(amt>0)){showMsg('orderMsg','請輸入大於 0 的金額');return;}
   var reason=document.getElementById('oReason').value.trim();
   if(reason.length<5){showMsg('orderMsg','送出前請先寫下你這筆下單的理由（至少 5 個字，可貼連結或自己說明）');document.getElementById('oReason').focus();return;}
   document.getElementById('orderBtn').disabled=true;
-  api({action:'order',sid:SESS.sid,token:SESS.token,side:side,coin:coin,amountTWD:amt,reason:reason}).then(function(r){
+  api({action:'order',sid:SESS.sid,token:SESS.token,side:side,coin:coin,quote:quote,amount:amt,reason:reason}).then(function(r){
     document.getElementById('orderBtn').disabled=false;
     if(!r.ok){showMsg('orderMsg',r.error||'下單失敗');return;}
-    var f=r.filled;
-    showMsg('orderMsg','✅ 已成交：'+(f.side==='buy'?'買入':'賣出')+' '+q8(f.qty)+' '+f.coin+'（成交價 '+twd(f.price)+'）','ok');
+    var f=r.filled; var pf=(f.quote==='USDT')?usdtP(f.price):twd(f.price);
+    showMsg('orderMsg','✅ 已成交：'+(f.side==='buy'?'買入':'賣出')+' '+q8(f.qty)+' '+f.coin+'（成交價 '+pf+'）','ok');
     render({prices:r.prices,account:r.account,settings:(LAST&&LAST.settings)||{},start:SESS.start});
     loadHistory();
     document.getElementById('oTWD').value='';
@@ -418,11 +457,15 @@ function loadHistory(){
     var tb=document.getElementById('histRows'); if(!tb)return;
     if(!r.ok||!r.rows||!r.rows.length){tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">尚無紀錄</td></tr>';return;}
     tb.innerHTML=r.rows.map(function(x){
-      var scam=String(x.note||'').indexOf('⚠')>=0;
+      var note=String(x.note||'');
+      var scam=note.indexOf('⚠')>=0;
+      var inUsdt=note.indexOf('USDT計價')>=0;
+      var pf=inUsdt?usdtP(x.price):twd(x.price);
+      var af=inUsdt?usdtP(x.amt):twd(x.amt);
       if(scam){
         return '<tr style="color:var(--danger)"><td>'+x.t+'</td><td>⚠ 被詐騙</td><td>'+x.coin+'</td><td>-'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>-'+twd(x.amt)+'</td></tr>';
       }
-      return '<tr><td>'+x.t+'</td><td>'+x.act+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>'+twd(x.amt)+'</td></tr>';
+      return '<tr><td>'+x.t+'</td><td>'+x.act+(inUsdt?'<span class="faint">·U</span>':'')+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+pf+'</td><td>'+af+'</td></tr>';
     }).join('');
   });
 }

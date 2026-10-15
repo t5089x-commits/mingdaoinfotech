@@ -141,41 +141,54 @@ function state(req) {
           account: acc, prices: getPrices_(), settings: publicSettings_()};
 }
 
+function coinPriceInQuote_(p, coin, quote){
+  if (quote==='TWD') return priceOf_(p, coin);        // coin 的台幣價
+  if (coin==='BTC') return p.usdt ? p.btc/p.usdt : 0; // coin 的 USDT 價 = 台幣價 / USDT台幣價
+  if (coin==='ETH') return p.usdt ? p.eth/p.usdt : 0;
+  return 0;
+}
 function order(req) {
   var au = authStudent_(req);
   var S = getSettings_();
   if (!tradingIsOpen_(S)) return {ok:false,error:'現在不是交易時段，老師還沒開放下單'};
   var coin = String(req.coin||'').toUpperCase();
   if (coin!=='USDT' && coin!=='BTC' && coin!=='ETH') return {ok:false,error:'幣種只支援 USDT／BTC／ETH'};
+  var quote = String(req.quote||'TWD').toUpperCase();
+  if (coin==='USDT') quote='TWD';                 // USDT 只能跟台幣兌換
+  if (quote!=='TWD' && quote!=='USDT') return {ok:false,error:'計價幣別只支援 TWD／USDT'};
+  if (quote===coin) return {ok:false,error:'計價幣別不能跟購入幣種相同'};
   var reason = String(req.reason||'').trim();
   if (reason.length < 5) return {ok:false,error:'下單前請先寫下你的理由（至少 5 個字，可貼新聞連結或自己說明）'};
   if (reason.length > 500) reason = reason.slice(0,500);
   var side = (req.side==='sell') ? 'sell':'buy';
   var prices = getPrices_();
-  var price = priceOf_(prices, coin);   // TWD 單價
+  var price = coinPriceInQuote_(prices, coin, quote);   // 1 個 coin 值多少「quote」
   if (!price || price<=0) return {ok:false,error:'目前抓不到幣價，請稍後再試'};
 
   var lock = LockService.getScriptLock(); lock.waitLock(8000);
   try {
     var acc = getAccount_(au.sid);
-    var qty, twd;
-    if (req.amountTWD != null) { twd = Number(req.amountTWD); qty = twd/price; }
-    else if (req.qty != null)  { qty = Number(req.qty);      twd = qty*price; }
-    else return {ok:false,error:'請輸入下單金額(TWD)或數量'};
-    if (!(qty>0) || !(twd>0)) return {ok:false,error:'數量／金額要大於 0'};
+    var amount = Number(req.amount != null ? req.amount : req.amountTWD);   // 以 quote 計價
+    if (!(amount>0)) return {ok:false,error:'金額要大於 0'};
+    var qty = amount/price;
+    var qbal = quote==='TWD' ? acc.twd : acc.usdt;    // 用來付款/收款的餘額
 
     if (side==='buy') {
-      if (twd > acc.twd + 1e-6) return {ok:false,error:'台幣不足（現有 NT$'+fmt_(acc.twd)+'）'};
-      acc.twd -= twd; addCoin_(acc, coin, qty);
+      if (amount > qbal + 1e-6) return {ok:false,error:(quote==='TWD'?'台幣不足（現有 NT$'+fmt_(qbal)+'）':'USDT 不足（現有 '+qbal.toFixed(2)+' USDT）')};
+      if (quote==='TWD') acc.twd -= amount; else addCoin_(acc,'USDT',-amount);
+      addCoin_(acc, coin, qty);
     } else {
       var have = coinOf_(acc, coin);
       if (qty > have + 1e-12) return {ok:false,error:'持有的 '+coin+' 不夠賣（現有 '+fmt8_(have)+'）'};
-      acc.twd += twd; addCoin_(acc, coin, -qty);
+      addCoin_(acc, coin, -qty);
+      if (quote==='TWD') acc.twd += amount; else addCoin_(acc,'USDT',amount);
     }
     saveAccount_(acc);
+    var note = quote==='USDT' ? '以USDT計價' : '';
     appendRow_('交易紀錄',[new Date(), au.sid, au.name, (side==='buy'?'買':'賣'), coin,
-                           round8_(qty), round2_(price), round2_(twd), round2_(acc.twd), '', reason]);
-    return {ok:true, account: acc, prices: prices, filled:{side:side,coin:coin,qty:round8_(qty),price:round2_(price),twd:round2_(twd)}};
+                           round8_(qty), round2_(price), round2_(amount), round2_(acc.twd), note, reason]);
+    return {ok:true, account: acc, prices: prices,
+            filled:{side:side, coin:coin, quote:quote, qty:round8_(qty), price:round2_(price), amount:round2_(amount)}};
   } finally { lock.releaseLock(); }
 }
 
