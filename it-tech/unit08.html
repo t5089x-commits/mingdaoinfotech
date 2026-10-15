@@ -40,7 +40,15 @@
 <p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下就能複製程式碼。上課時把它貼到頁面最下方的
 <a href="https://www.programiz.com/python-programming/online-compiler/" target="_blank" rel="noopener"><strong>Programiz 線上 Python 編譯器</strong></a>
 （免安裝、開瀏覽器就能跑）即可看到執行結果。</p></div><section class="block">
-  <h2><span class="num">01</span>開發環境</h2>
+  <h2><span class="num">01</span>開始之前：程式到底是什麼？</h2>
+
+<p>正式敲程式碼前，先花十幾分鐘看兩支影片，建立「程式語言是什麼、程式在做什麼」的直覺——之後學語法會更有感覺。</p>
+<figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=EFmxPMdBqmU" target="_blank" rel="noopener" title="Animation vs. Coding（Alan Becker）"><img class="video-thumb" src="https://img.youtube.com/vi/EFmxPMdBqmU/hqdefault.jpg" alt="Animation vs. Coding（Alan Becker）" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=EFmxPMdBqmU" target="_blank" rel="noopener">&#9654; Animation vs. Coding（Alan Becker） <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>全程沒有一句旁白，卻把「變數、迴圈、條件判斷」用火柴人演了出來——學完這個單元再回來看一次，會更有感覺。</figcaption></figure>
+<figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=R149u6LGFDo" target="_blank" rel="noopener" title="程式語言到底是什麼？（電子大小事）"><img class="video-thumb" src="https://img.youtube.com/vi/R149u6LGFDo/hqdefault.jpg" alt="程式語言到底是什麼？（電子大小事）" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=R149u6LGFDo" target="_blank" rel="noopener">&#9654; 程式語言到底是什麼？（電子大小事 Electronic things） <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>電腦其實只看得懂 0 和 1，「程式語言」就是人和電腦之間的翻譯橋樑——這支把這件事講得很清楚。</figcaption></figure>
+<div class="callout tip"><span class="t">👀 看的時候想一想</span>
+<p>① 電腦只看得懂 0 和 1，那「程式語言」是用來溝通什麼的橋樑？② Alan Becker 那支裡，哪些畫面對應到「變數」「重複（迴圈）」「如果…就…（條件判斷）」？先猜猜看，學完這單元再回來對答案。</p></div>
+</section><section class="block">
+  <h2><span class="num">02</span>開發環境</h2>
   
 <p>要寫 Python，你需要一個能編輯與執行程式的環境。本課程上課採用<strong>免安裝的線上編譯器</strong>，方便隨開隨用：</p>
 <div class="grid cols-2">
@@ -59,7 +67,7 @@ print("明道的阿翔開始學 Python 了！")
 print("我最喜歡的數字是 9487")</code></pre>
 </div>
 </section><section class="block">
-  <h2><span class="num">02</span>變數 Variable</h2>
+  <h2><span class="num">03</span>變數 Variable</h2>
   
 <p>變數用來<strong>存放資料</strong>，可以把它想成一個<strong>貼了名字的箱子</strong>：用指定運算子 <code>=</code> 把右邊的值放進左邊的箱子。Python 也支援一次指定多個變數。</p>
 <div class="code-card">
@@ -236,7 +244,7 @@ print(str(1))</code></pre>
 </div>
 
 </section><section class="block">
-  <h2><span class="num">03</span>資料型態 Data Type</h2>
+  <h2><span class="num">04</span>資料型態 Data Type</h2>
   
 <p>Python 內建型態主要分三類，用 <code>type()</code> 可以查看某個值是什麼型別：</p>
 <div class="table-wrap"><table class="center">
@@ -300,7 +308,7 @@ double b = 3.2;     // 想放小數，要另外宣告一個 double</code></pre>
 <p style="margin-bottom:0">對照之下，Python 是<strong>動態型別</strong>：不用宣告型別，同一個變數想放什麼型別都行，型別跟著「目前的值」走。<strong>C++</strong> 比較嚴謹、執行快；<strong>Python</strong> 比較彈性、寫起來快。各有優缺點，沒有絕對好壞。</p></div>
 
 </section><section class="block">
-  <h2><span class="num">04</span>型別轉換 Casting</h2>
+  <h2><span class="num">05</span>型別轉換 Casting</h2>
   
 <p>把一個值從一種型態轉成另一種，就叫做<strong>轉型（casting）</strong>。常用這四個函式：</p>
 <div class="table-wrap"><table class="center">

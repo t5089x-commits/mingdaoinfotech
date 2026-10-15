@@ -34,6 +34,7 @@
 <li>用生活比喻理解電腦「輸入 → 運算 → 輸出」的運作</li>
 <li>認識電腦五大單元各自負責什麼工作</li>
 <li>知道 CPU 是什麼，以及哪些因素會影響它的快慢</li>
+<li>分辨 GPU 和 CPU 的差別，並說出為什麼 AI／遊戲特別需要 GPU</li>
   </ul>
 </div><section class="block" id="sec1">
   <h2><span class="num">01</span>電腦怎麼運作？用「一家餐廳」來想</h2>
@@ -71,8 +72,33 @@
 <div class="callout"><span class="t">🔎 想更深入（可略過）</span>
 <p>CPU 每做一個指令，其實會經過「擷取 → 解碼 → 執行 → 儲存」四個小步驟（合稱一個機器週期）。這部分是進階內容，先知道「CPU 一步步照指令做事」就夠了。</p></div>
 
+</section><section class="block" id="sec-gpu">
+  <h2><span class="num">04</span>補充：除了 CPU，為什麼還要 GPU？</h2>
+
+<p>我們剛剛說 CPU（廚房）什麼都能算。那為什麼打遊戲、剪影片、跑 AI 的電腦，還要另外花大錢買「顯示卡（<strong>GPU</strong>，圖形處理器）」？因為有一種工作，CPU 做起來特別吃虧。</p>
+<div class="callout"><span class="t">🎮 先想一想</span>
+<p>為什麼文書處理用內建顯示就夠，但打 3A 大作、剪 4K 影片、跑 AI 就要搶很貴的顯示卡？</p></div>
+<p>差別在「<strong>做事的方式</strong>」。用兩種人來比喻最好懂：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🧑‍🎓 CPU ＝ 幾個博士生</h4><p>人<strong>少</strong>（核心少），但每個都很強，擅長<strong>複雜、要照順序、要判斷</strong>的任務：開作業系統、跑文書、執行程式邏輯。</p></div>
+  <div class="tile"><h4>🧒 GPU ＝ 幾千個國小生</h4><p>每個只會<strong>簡單的加減乘除</strong>，但靠人海戰術，<strong>同一瞬間一起算</strong>（平行處理）：螢幕上幾百萬個像素、影像、AI 的大量矩陣運算。</p></div>
+</div>
+<div class="callout tip"><span class="t">💡 一句話記住</span>
+<p><strong>CPU 擅長把「一件難事」做得快；GPU 擅長把「一萬件簡單的事」同時做完。</strong></p></div>
+<div class="table-wrap"><table>
+<thead><tr><th>比較項目</th><th>🧠 CPU 中央處理器</th><th>🎨 GPU 圖形處理器</th></tr></thead>
+<tbody>
+<tr><td><strong>核心數</strong></td><td>少（數個～數十個）</td><td>多（數百～數千個）</td></tr>
+<tr><td><strong>每個核心</strong></td><td>強、功能齊全</td><td>簡單、專算數學</td></tr>
+<tr><td><strong>擅長</strong></td><td>複雜邏輯、順序任務</td><td>大量重複、可平行的運算</td></tr>
+<tr><td><strong>比喻</strong></td><td>幾個博士生</td><td>幾千個國小生</td></tr>
+<tr><td><strong>典型工作</strong></td><td>作業系統、文書、開程式</td><td>繪圖、影片、遊戲、AI、挖礦</td></tr>
+</tbody></table></div>
+<figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=fKK933KK6Gg" target="_blank" rel="noopener" title="NVIDIA × Mythbusters：GPU vs CPU 繪圖示範"><img class="video-thumb" src="https://img.youtube.com/vi/fKK933KK6Gg/hqdefault.jpg" alt="NVIDIA × Mythbusters GPU vs CPU 示範" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=fKK933KK6Gg" target="_blank" rel="noopener">&#9654; NVIDIA × Mythbusters：用噴漆槍示範 GPU vs CPU <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>CPU 用「單噴頭」一點一點畫笑臉；GPU「砰」一聲一次噴出整幅蒙娜麗莎——平行處理的威力一看就懂（約 1.5 分鐘）。</figcaption></figure>
+<div class="callout"><span class="t">🚀 接到時事：AI 為什麼讓 NVIDIA 爆紅？</span>
+<p>AI 訓練說穿了就是「海量的矩陣加減乘」——正好是 GPU 最拿手、CPU 最吃虧的事。所以這幾年 AI 一紅，做 GPU 的 <strong>NVIDIA</strong> 就成了全球市值最高的公司之一。你搶不到的那張顯示卡，和新聞上的 AI 浪潮，其實是同一件事。</p></div>
 </section><section class="block" id="sec4">
-  <h2><span class="num">04</span>資料放哪裡？儲存單元金字塔</h2>
+  <h2><span class="num">05</span>資料放哪裡？儲存單元金字塔</h2>
   
 <p>電腦裡存放資料的地方不只一種，它們像金字塔一樣分層：<strong>越上面越快、越貴、容量越小；越下面越慢、越便宜、容量越大</strong>。</p>
 <p>另外要記得：暫存器、快取、主記憶體是<strong>揮發性</strong>（一斷電資料就不見），硬碟／SSD 是<strong>非揮發性</strong>（斷電資料還在）——這也是為什麼打字要記得存檔！</p>
@@ -90,6 +116,7 @@
   <li>CPU 是由哪兩個單元合起來的？</li>
   <li>其他條件相同時，時脈 3.5 GHz 與 2.0 GHz 的 CPU 哪個比較快？</li>
   <li>為什麼打字打到一半突然停電，沒存檔的內容會不見？（提示：揮發性）</li>
+  <li>為什麼跑 AI 或打遊戲時，GPU 常常比 CPU 更吃香？用「博士生 vs 國小生」的比喻說說看。</li>
 </ol>
   <div class="reveal" onclick="toggleAnswer(this)">▶ 顯示解答</div>
     <div class="answer">
@@ -99,6 +126,7 @@
 <li>控制單元 ＋ 算術邏輯單元。</li>
 <li>3.5 GHz 較快（時脈較高）。</li>
 <li>因為打字的內容暫時放在「記憶體（RAM）」，它是揮發性的，一斷電就消失；存檔是把它寫進非揮發性的硬碟／SSD。</li>
+<li>因為遊戲畫面、AI 運算屬於「大量又重複、可以同時做」的簡單運算——正是幾千個「國小生」(GPU) 人海戰術的強項；交給幾個「博士生」(CPU) 一題一題算反而慢。</li>
 </ol></div>
 </div>
   <nav class="unit-nav">
