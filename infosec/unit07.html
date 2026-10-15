@@ -40,14 +40,44 @@
 </div><section class="block" id="sec1">
   <h2><span class="num">01</span>從「帳本」到「可執行程式」</h2>
   
-<p>比特幣的區塊鏈基本上是一本「誰付給誰多少錢」的公開帳本。以太坊（Ethereum）在這個基礎上多加了一件事：<strong>讓區塊鏈也能執行程式碼</strong>，這段自動執行、寫死在鏈上、任何人都無法片面竄改的程式碼，就叫做<strong>智能合約（Smart Contract）</strong>。</p>
+<p>比特幣的區塊鏈基本上是一本「誰付給誰多少錢」的公開帳本。<strong>以太坊（Ethereum，2015 年上線）</strong>在這個基礎上多加了一件事：<strong>讓區塊鏈也能執行程式碼</strong>。它的願景常被稱為「世界電腦」——不只記帳，還能跑各種程式。這段部署後就照規則自動執行的程式碼，就叫做<strong>智能合約（Smart Contract）</strong>。</p>
+<div class="callout"><span class="t">⚖️ 「寫死在鏈上、不可竄改」——是理想，不是鐵律</span>
+<p>智能合約常被說成「程式即法律（code is law）、一旦部署誰都不能改」。這是<strong>技術上的預設</strong>沒錯，但它有兩個現實的但書：① 合約<strong>本身可能寫錯、有漏洞</strong>（出事了也照樣自動執行）；② 當整個社群決定時，<strong>鏈甚至可以被「改寫歷史」</strong>。這兩件事，等一下的「The DAO 事件」會一次讓你看到。</p>
+</div>
 <div class="grid cols-2">
   <div class="tile"><h4>📜 智能合約</h4><p>「如果條件 A 成立，就自動執行 B」的程式碼，部署在區塊鏈上後就會照規則自動執行，不需要中間人。</p></div>
   <div class="tile"><h4>📱 DApp</h4><p>Decentralized Application，用智能合約當後端邏輯的應用程式，例如去中心化交易所、借貸平台。</p></div>
 </div>
+<figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=B5iIbdCpjCc" target="_blank" rel="noopener" title="一口氣搞懂 ETH 以太坊｜腦哥 Chill塊鏈"><img class="video-thumb" src="https://img.youtube.com/vi/B5iIbdCpjCc/hqdefault.jpg" alt="一口氣搞懂 ETH 以太坊｜腦哥 Chill塊鏈" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=B5iIbdCpjCc" target="_blank" rel="noopener">&#9654; 一口氣搞懂 ETH 以太坊｜腦哥 Chill塊鏈 <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>腦哥 Chill塊鏈 的以太坊全解（約 46 分鐘，課外延伸）—— 想完整搞懂以太坊在做什麼，看這一支。</figcaption></figure>
+
+</section><section class="block" id="secDAO">
+  <h2><span class="num">02</span>The DAO 事件：當「程式即法律」遇上駭客</h2>
+<p>以太坊史上最著名、也最能講清楚「數位信任」的事件，就發生在它上線的隔年。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🏦 The DAO 是什麼（2016）</h4><p>一個完全靠智能合約運作的「去中心化自治組織」，史上最大的群眾募資之一，募到當時約 <strong>1.5 億美元</strong>等值的 ETH，規則全寫在合約裡、由持幣人投票決定資金用途。</p></div>
+  <div class="tile"><h4>💀 駭客怎麼得手</h4><p>駭客利用合約的「<strong>重入（reentrancy）漏洞</strong>」——在系統還沒更新餘額前反覆提領，像 ATM 吐完錢卻忘了扣帳，一偷再偷，捲走約 <strong>360 萬顆 ETH（當時約 6,000 萬美元，約基金的三分之一）</strong>。</p></div>
+</div>
+<div class="callout"><span class="t">🤯 最燒腦的地方：駭客「沒有違規」</span>
+<p>合約號稱「程式即法律（code is law）」——駭客做的每一步，其實都是<strong>照合約寫的規則</strong>在執行。問題出在<strong>合約自己寫錯了</strong>。於是整個社群陷入兩難：<strong>要不要出手把錢追回來？</strong></p>
+</div>
+<div class="diagram-card"><svg class="diagram" viewBox="0 0 560 150" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="dao-ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="195" y="8" width="170" height="40" rx="9"/><text x="280" y="33" text-anchor="middle" class="devt" style="font-size:13px">原本的以太坊鏈（被駭）</text><rect class="dev" x="30" y="100" width="210" height="42" rx="9"/><text x="135" y="118" text-anchor="middle" class="devt" style="font-size:12.5px">硬分叉：把交易倒轉、追回錢</text><text x="135" y="134" text-anchor="middle" class="cap2" style="font-size:10px">→ 現在的「以太坊 ETH」</text><rect class="dev" x="320" y="100" width="210" height="42" rx="9"/><text x="425" y="118" text-anchor="middle" class="devt" style="font-size:12.5px">堅持不可竄改、不回頭</text><text x="425" y="134" text-anchor="middle" class="cap2" style="font-size:10px">→ 「以太坊經典 ETC」</text><line class="flow" x1="255" y1="50" x2="150" y2="98" marker-end="url(#dao-ar)"/><line class="flow" x1="305" y1="50" x2="410" y2="98" marker-end="url(#dao-ar)"/></svg><div class="cap" style="margin-top:8px;font-size:.84rem;color:var(--text-soft)">同一條鏈，為了「要不要追回被偷的錢」而分裂成兩條。</div></div>
+<p>社群投票的結果是：多數人支持「<strong>硬分叉（hard fork）</strong>」——把區塊鏈倒轉到被駭之前、把錢追回來。這條「改寫過歷史」的鏈，就是<strong>我們現在用的以太坊（ETH）</strong>。而堅持「程式即法律、鏈絕對不能被竄改」的少數人，不接受這次倒轉，留在原本那條鏈上，變成了<strong>以太坊經典（Ethereum Classic, ETC）</strong>。</p>
+<div class="callout tip"><span class="t">💬 課堂討論：你會怎麼選？</span>
+<p>「追回被偷的錢」聽起來很正義——但它也<strong>親手打破了「不可竄改」這個區塊鏈最核心的承諾</strong>。如果這次可以為了好理由倒轉，下次呢？由誰決定什麼是「好理由」？<br>這就是為什麼 <strong>ETC 的支持者認為「程式即法律」不能有例外</strong>。沒有標準答案，但這個兩難，正是「去中心化到底把信任放在哪裡」最好的思考題。</p>
+</div>
+
+</section><section class="block" id="secNow">
+  <h2><span class="num">03</span>現在的以太坊在做什麼？</h2>
+<div class="grid cols-2">
+  <div class="tile"><h4>🔋 2022 年「合併」：不再挖礦</h4><p>以太坊在 2022 年（The Merge）從「拚算力挖礦（PoW）」改成「<strong>質押 ETH 來記帳（權益證明 PoS）</strong>」，耗電量大幅下降。對照一下：<strong>比特幣目前還在挖礦，以太坊已經不挖了。</strong></p></div>
+  <div class="tile"><h4>🧰 它現在的主要用途</h4><p>去中心化金融（DeFi）、NFT、DAO、以及把交易搬到更便宜的「第二層（L2）」。很多新的加密應用都是蓋在以太坊上。</p></div>
+</div>
+<div class="callout"><span class="t">🔗 跟你交易所裡的 USDT 有什麼關係？</span>
+<p><strong>市面上大多數穩定幣（USDT、USDC）其實就是「發行在以太坊上」的智能合約代幣。</strong>也就是說，你在模擬交易所裡買的 USDT，背後正是這一套以太坊智能合約在運作。穩定幣到底是什麼、為什麼能「穩定」，下一個附錄單元（07 附）會用 USDT 來講。</p>
+</div>
 
 </section><section class="block" id="sec2">
-  <h2><span class="num">02</span>DeFi 與 DAO</h2>
+  <h2><span class="num">04</span>DeFi 與 DAO</h2>
   <div class="table-wrap">
 <table class="center">
   <thead><tr><th>名詞</th><th>白話解釋</th><th>例子</th></tr></thead>
@@ -55,7 +85,7 @@
 </table>
 </div>
 </section><section class="block" id="sec3">
-  <h2><span class="num">03</span>延伸影片：預測市場——智能合約的新玩法</h2>
+  <h2><span class="num">05</span>延伸影片：預測市場——智能合約的新玩法</h2>
   <div class="grid cols-1">
   <figure class="video-embed"><a class="video-facade" href="https://www.youtube.com/watch?v=sq5nbne5tao" target="_blank" rel="noopener" title="全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈"><img class="video-thumb" src="https://img.youtube.com/vi/sq5nbne5tao/hqdefault.jpg" alt="全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈" loading="lazy" onerror="this.style.display=&apos;none&apos;"><span class="video-play">&#9654;</span></a><a class="video-title-link" href="https://www.youtube.com/watch?v=sq5nbne5tao" target="_blank" rel="noopener">&#9654; 全世界最瘋的「賭場」，正在改變人類預測未來的方式...｜腦哥 Chill塊鏈 <span class="vt-ext">在 YouTube 觀看 &#8599;</span></a><figcaption>去中心化預測市場（如 Polymarket）是智能合約的實際應用：用市場機制讓大家「用錢包票」預測未來事件。</figcaption></figure>
 </div><div class="callout tip"><span class="t">🤔 看完想一想</span>
@@ -69,7 +99,7 @@
 </div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">以太坊/智能合約的技術細節（如 Gas 費、EVM）屬於進階內容，基本版先不展開，聚焦在「概念＋案例」。</p>
 </div>
   <section class="block" id="sec4">
-  <h2><span class="num">04</span>🎯 今天學這個，我可以拿來幹嘛？</h2>
+  <h2><span class="num">06</span>🎯 今天學這個，我可以拿來幹嘛？</h2>
   <p>智能合約已經悄悄出現在很多生活工具裡，認識它可以幫你避開一些常見的坑，也能看懂「AI＋DApp」這種新組合到底在講什麼。</p>
   <div class="table-wrap"><table class="center"><thead><tr><th>常見情境</th><th>你可以怎麼判斷</th></tr></thead><tbody>
   <tr><td>網站要求「連接錢包」才能領獎勵</td><td>連接錢包本身通常安全，但接下來如果跳出「簽署一筆交易」，務必先看清楚內容再簽——很多詐騙就是騙你簽下「授權對方轉走資產」的合約</td></tr>
@@ -80,7 +110,7 @@
   </section>
   <nav class="unit-nav">
     <a class="prev" href="unit06.html"><div class="dir">← 上一單元</div><div class="ttl">虛擬貨幣與比特幣</div></a>
-    <a class="next" href="unit08.html"><div class="dir">下一單元 →</div><div class="ttl">定期評量</div></a>
+    <a class="next" href="unit07b.html"><div class="dir">下一單元 →</div><div class="ttl">附：穩定幣與 USDT</div></a>
   </nav>
 </main>
 <footer class="site">

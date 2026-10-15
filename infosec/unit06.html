@@ -33,10 +33,10 @@
 </section><div class="goals">
   <h2>🎯 學習目標</h2>
   <ul>
-<li>知道比特幣的誕生故事與幾個關鍵時刻（中本聰、披薩日）</li>
-<li>認識比特幣的專有名詞：地址、聰、礦工、挖礦、獎勵</li>
+<li>說得出比特幣<strong>如何從一份白皮書走到今天</strong>（誕生 → 大眾化 → 數位黃金）</li>
+<li>認識比特幣的專有名詞與運作（地址、聰、礦工、挖礦）——技術部分扣回單元 4、5 學過的區塊鏈與 Hash</li>
 <li>建立私鑰／公鑰／地址三者關係的直覺，為後面的公開金鑰單元鋪路</li>
-<li>理解 51% 攻擊的原理與為什麼「很貴、不划算」</li>
+<li>說得出比特幣<strong>未來可能的用途與限制</strong>，並理解「不是你的私鑰，就不是你的幣」</li>
   </ul>
 </div><section class="block" id="sec1">
   <h2><span class="num">01</span>比特幣的誕生故事</h2>
@@ -49,9 +49,33 @@
 <p>用今天的價格回推，那 1 萬顆比特幣的故事常被拿來說「早期不懂得長期持有」的教訓 —— 但反過來想，也正是因為有人願意拿它換真實商品，比特幣才第一次證明自己可以當「錢」用。</p>
 </div>
 
+</section><section class="block" id="secTime">
+  <h2><span class="num">02</span>它怎麼走到今天？—— 比特幣發展時間軸</h2>
+<p>比特幣不是一夕爆紅，而是從「極客的實驗」慢慢被世界接受的過程。這條線也剛好對照出它的角色怎麼從「電子現金」變成今天常被說的「數位黃金」：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>時間</th><th>發生什麼事</th><th>意義</th></tr></thead>
+  <tbody>
+  <tr><td>2008</td><td>中本聰發表比特幣白皮書（正逢全球金融海嘯）</td><td>對銀行、央行信任崩壞的背景下，提出「不需要中間人」的錢</td></tr>
+  <tr><td>2009</td><td>第一個區塊（創世區塊）誕生，網路正式啟動</td><td>概念變成真的在跑的系統</td></tr>
+  <tr><td>2010</td><td>披薩日：第一次用比特幣買到真實商品</td><td>第一次證明它可以當「錢」用</td></tr>
+  <tr><td>2013–2017</td><td>走出極客圈、價格大漲大跌，第一波泡沫與新聞熱潮</td><td>開始被大眾認識，但也充滿投機與詐騙</td></tr>
+  <tr><td>2021</td><td>市值一度破 1 兆美元；薩爾瓦多把比特幣列為法定貨幣</td><td>從「資產」走向「國家級」的話題</td></tr>
+  <tr><td>2024</td><td>美國核准比特幣「現貨 ETF」，大量傳統資金進場</td><td>「數位黃金」的定位被主流金融確立</td></tr>
+  <tr><td>2025–26</td><td>更多機構、甚至部分國家把比特幣納入資產配置／儲備</td><td>從「要不要相信它」變成「要配置多少」</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">🧭 一句話抓重點</span>
+<p>比特幣的發展史，其實就是一部「數位信任」如何從<strong>無人相信 → 小眾狂熱 → 主流接受</strong>的歷史。它解決的核心問題始終沒變：<strong>在沒有銀行當中間人的情況下，怎麼讓一群互不信任的人共用一本不能偽造的帳本。</strong></p>
+</div>
+
 </section><section class="block" id="sec2">
-  <h2><span class="num">02</span>比特幣是什麼？四項關鍵創新</h2>
-  
+  <h2><span class="num">03</span>比特幣是什麼？四項關鍵創新</h2>
+
+<div class="callout tip"><span class="t">🔁 技術部分：接續前面學過的，這裡帶過就好</span>
+<p>下面四項裡，「公開帳本（區塊鏈）」你在<strong>單元 4</strong> 已經學過它怎麼用區塊＋鏈結做到不可竄改；「工作證明」背後靠的 <strong>Hash 雜湊</strong>則是<strong>單元 5</strong> 的內容。所以這一段重點不是重學技術，而是看<strong>這些技術「組合」起來，怎麼讓比特幣這種錢成立</strong>。</p>
+</div>
 <p>比特幣代表數十年密碼學與分散式系統研究的高峰，融合了四項關鍵創新：</p>
 <div class="grid cols-2">
   <div class="tile"><h4><span class="ico">🌐</span>去中心化的點對點網路</h4><p>不存在中央伺服器，是比特幣協議本身。</p></div>
@@ -73,7 +97,7 @@
 </div>
 
 </section><section class="block" id="sec3">
-  <h2><span class="num">03</span>挖礦、獎勵與專有名詞</h2>
+  <h2><span class="num">04</span>挖礦、獎勵與專有名詞</h2>
   
 <p>礦工靠什麼拿到比特幣獎勵？下面是簡化過的流程：</p>
 <div class="diagram-card"><svg class="diagram" viewBox="0 0 614 126" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="mnar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" class="arh"/></marker></defs><rect class="dev" x="10" y="44" width="138" height="66" rx="9"/><text x="79.0" y="66" text-anchor="middle" style="font-size:19px">📥</text><text x="79.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">蒐集交易</text><text x="79.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">打包成候選區塊</text><rect class="dev" x="162" y="44" width="138" height="66" rx="9"/><text x="231.0" y="66" text-anchor="middle" style="font-size:19px">🧮</text><text x="231.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">競猜 Nonce</text><text x="231.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">反覆試算，找出符合難度的雜湊</text><rect class="dev" x="314" y="44" width="138" height="66" rx="9"/><text x="383.0" y="66" text-anchor="middle" style="font-size:19px">📢</text><text x="383.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">廣播新區塊</text><text x="383.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">全網其他節點驗證後接受</text><rect class="dev" x="466" y="44" width="138" height="66" rx="9"/><text x="535.0" y="66" text-anchor="middle" style="font-size:19px">🎁</text><text x="535.0" y="83" text-anchor="middle" class="devt" style="font-size:13px">獲得獎勵</text><text x="535.0" y="98" text-anchor="middle" class="cap2" style="font-size:8.8px">新發行比特幣＋區塊內所有手續費</text><line class="flow" x1="148" y1="77.0" x2="160" y2="77.0" marker-end="url(#mnar)"/><line class="flow" x1="300" y1="77.0" x2="312" y2="77.0" marker-end="url(#mnar)"/><line class="flow" x1="452" y1="77.0" x2="464" y2="77.0" marker-end="url(#mnar)"/><text x="307.0" y="16" text-anchor="middle" class="cap" style="font-size:11px">⛏️ 誰先解出 Nonce，誰就記帳並拿走這個區塊的獎勵</text></svg><div class="cap" style="margin-top:8px;font-size:.84rem;color:var(--text-soft)">礦工蒐集交易、競猜出符合難度的答案、把新區塊廣播給全網驗證後，就能拿走這個區塊的獎勵。</div></div>
@@ -88,12 +112,26 @@
 </div>
 
 </section><section class="block" id="sec4">
-  <h2><span class="num">04</span>51% 攻擊：為什麼「很貴、不划算」</h2>
-  
+  <h2><span class="num">05</span>51% 攻擊：為什麼「很貴、不划算」</h2>
+
 <p>如果有人掌握全網超過 51% 的算力，理論上可以維護一條「秘密版本」的區塊鏈，等它比大家認可的鏈更長時再突然公布，讓其他礦工切換過去，藉此撤銷已經確認的交易（造成雙重支付）。</p>
 <div class="callout"><span class="t">💰 但代價極高</span>
 <p>以比特幣目前全網算力（2026 年已達數百 EH/s、約 800 EH/s 等級）估算，要掌握 50% 算力等於要買下數十萬台頂級礦機，加上電費、廠房等固定成本 —— 對比特幣這種總算力極大的鏈來說，攻擊成本遠高於能得到的好處；但對算力較小的區塊鏈而言，風險就不一定這麼低了（後面「Web3 資安風險」單元會再回來談）。</p>
 </div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">06</span>比特幣未來可以拿來做什麼？—— 用途與限制</h2>
+<p>認識了「它是什麼、怎麼來的」，更實用的問題是：<strong>比特幣到底能拿來幹嘛、又有哪些做不到？</strong></p>
+<div class="grid cols-2">
+  <div class="tile"><h4><span class="ico">🥇</span>數位黃金 · 價值儲存</h4><p>總量固定（最多 2100 萬顆、會減半），常被當成「抗通膨、對抗貨幣貶值」的避風港——這也是 2024 年現貨 ETF 之後最主流的定位。</p></div>
+  <div class="tile"><h4><span class="ico">🌏</span>跨境匯款</h4><p>不經過銀行、不受國界與營業時間限制，對某些跨國、被金融體系排除的人來說，是較快、較便宜的選項。</p></div>
+  <div class="tile"><h4><span class="ico">🏛️</span>機構與國家級儲備</h4><p>ETF、企業財報、甚至國家（如薩爾瓦多）開始把它列入資產配置，從「投機標的」慢慢被當成一種「數位資產類別」。</p></div>
+  <div class="tile"><h4><span class="ico">🧩</span>可程式化的「數位稀缺」</h4><p>它示範了「不靠任何中心機構，也能創造出數位世界的稀缺與所有權」——這個想法後來被以太坊（下一單元）延伸成更多應用。</p></div>
+</div>
+<div class="callout"><span class="t">⚠ 但它也有明顯的限制（這點很重要）</span>
+<p>比特幣其實<strong>不適合拿來買珍奶這種日常小額支付</strong>：一筆交易通常要等約 10 分鐘才較安全、網路壅塞時手續費會變貴，加上<strong>價格大幅波動</strong>（今天值這麼多、明天可能差很多），店家很難用它定價。<br>——「想要一種比較穩定、能拿來日常計價的加密貨幣」這個需求，正是<strong>穩定幣（下一個附錄單元會用 USDT 來講）</strong>出現的原因。你在交易所裡看到 <strong>USDT 幾乎不動、BTC 卻一直跳</strong>，就是這個差別。</p>
+</div>
+<div class="skill-box"><h4>🔐 資安重點：「不是你的私鑰，就不是你的幣」</h4><p style="margin-bottom:0">把比特幣放在交易所，等於把<strong>私鑰交給別人保管</strong>——交易所若被駭、倒閉或捲款，你的幣也可能一起消失（歷史上有 Mt.Gox 2014、FTX 2022 等慘案）。這正好呼應你們正在玩的<strong>模擬交易所</strong>：方便，但「方便」是用「把保管權交出去」換來的。真正安全的做法是自己掌握私鑰（冷錢包），代價則是你得自己為它的安全負責。</p></div>
 
 </section><div class="callout tip"><span class="t">🧭 這個單元的教學方式</span>
 <p>採用<strong>故事＋名詞卡</strong>的方式，循序漸進建立比特幣的核心概念：披薩日故事 → 四項關鍵創新（公開帳本、共識協議與量子威脅已經直接整合進上面的內容） → 挖礦與獎勵的圖解 → 專有名詞表 → 51% 攻擊，維持同一個敘事節奏、資訊量循序漸進，適合按部就班的班級。</p>

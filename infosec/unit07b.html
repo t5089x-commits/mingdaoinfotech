@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 7 附：穩定幣與 USDT｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">資安</span>
+      <span>資訊安全導論</span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+
+<main class="wrap" data-unit="7">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 7 附</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">Part 1　單元 7　附錄</span>
+  <h1>穩定幣與 USDT</h1>
+  <p>為什麼會有「不太會動」的加密貨幣？</p>
+
+<div class="hook-q"><span class="hook-tag">💭 先想一想</span><p>「你在模擬交易所裡有沒有發現：<strong>BTC、ETH 的價格一直在跳，USDT 卻幾乎都停在 NT$32 左右不太動？</strong>同樣是加密貨幣，為什麼差這麼多？」</p></div>
+
+</section><div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>說得出<strong>為什麼需要穩定幣</strong>，以及它是怎麼「錨定」法幣的</li>
+<li>認識穩定幣的<strong>三種做法</strong>（資產儲備型、超額抵押型、演算法型）與各自的風險</li>
+<li>理解一個關鍵轉折：穩定幣的信任，<strong>從「數學」退回「發行公司」</strong></li>
+<li>用 Terra/UST 崩盤案例，理解「號稱穩定 ≠ 真的穩定」</li>
+  </ul>
+</div><section class="block" id="sec1">
+  <h2><span class="num">01</span>為什麼需要「穩定幣」？</h2>
+<p>上一單元最後提到：比特幣、以太坊雖然厲害，但<strong>價格波動太大</strong>——今天值這麼多、明天可能差很多，沒辦法安心拿來日常計價或當「避風港」。於是市場想要一種東西：<strong>既是加密貨幣（可以在鏈上快速轉、進出交易所），價格又穩定、最好永遠等於 1 美元。</strong>這就是<strong>穩定幣（Stablecoin）</strong>。</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🎯 穩定幣在做的事</h4><p>把價值「<strong>錨定</strong>」在某個穩定的東西上（通常是美元），讓 1 顆穩定幣 ≈ 1 美元。<strong>USDT（泰達幣）</strong>就是全世界規模最大的穩定幣。</p></div>
+  <div class="tile"><h4>🛟 學生最常用它來做什麼</h4><p>在交易所裡，USDT 幾乎是「幣圈的現金」：想獲利了結、想避開暴跌，就把 BTC／ETH 換成 USDT「停泊」，等時機再換回來——你在模擬交易所做的，正是這件事。</p></div>
+</div>
+<div class="callout tip"><span class="t">🧭 所以回到開頭那題</span>
+<p>USDT 幾乎不動，是因為它「<strong>刻意被設計成跟美元綁在一起</strong>」；BTC／ETH 會跳，是因為它們的價格由市場供需決定、沒有錨。同樣叫加密貨幣，<strong>目的完全不同</strong>。</p>
+</div>
+
+</section><section class="block" id="sec2">
+  <h2><span class="num">02</span>怎麼做到「穩定」？三種做法</h2>
+<p>穩定幣要維持「1 顆 ≈ 1 美元」，靠的機制其實不只一種——而機制不同，<strong>風險也差很多</strong>：</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>做法</th><th>怎麼維持穩定</th><th>代表</th><th>風險</th></tr></thead>
+  <tbody>
+  <tr><td><strong>資產儲備型</strong><br>（法幣／國債）</td><td>發行商每發 1 顆，就在銀行存 1 美元等值的現金或美國國債當「準備金」</td><td><strong>USDT</strong>、USDC</td><td>你必須<strong>相信發行公司真的有那麼多儲備</strong>、而且沒亂花</td></tr>
+  <tr><td><strong>加密資產<br>超額抵押型</strong></td><td>用價值更高的加密資產（如 ETH）鎖進智能合約當抵押，才鑄出穩定幣</td><td>DAI</td><td>抵押的幣若暴跌，可能來不及清算而脫鉤</td></tr>
+  <tr><td><strong>演算法型</strong></td><td>不靠儲備，純用程式與另一種幣「互相套利」來撐住價格</td><td>Terra <strong>UST</strong><br>（已崩盤）</td><td>信心一旦崩潰，會<strong>瞬間瓦解</strong>（見下方案例）</td></tr>
+  </tbody>
+</table>
+</div>
+
+</section><section class="block" id="sec3">
+  <h2><span class="num">03</span>關鍵轉折：信任，從「數學」退回「公司」</h2>
+<p>這是整個單元最重要的資安觀念——把它跟比特幣對照就很清楚：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>₿ 比特幣的信任</h4><p>來自<strong>數學與去中心化</strong>：不需要相信任何人或公司，規則寫在程式裡、由全網共同維護。</p></div>
+  <div class="tile"><h4>💵 USDT 的信任</h4><p>卻<strong>回到「你信不信發行公司 Tether」</strong>：它說有足額儲備，你就得相信它真的有。這其實是一個<strong>中心化</strong>的東西。</p></div>
+</div>
+<div class="callout"><span class="t">🏢 USDT 的爭議與監管</span>
+<p>Tether 長期被質疑「儲備到底夠不夠、透明不透明」——它過去提供的多是「<strong>attestation（查核說明）</strong>」而非完整審計，2021 年還曾因此與美國紐約州和解。好消息是，<strong>2025 年美國通過了穩定幣專法（GENIUS Act）</strong>，開始要求儲備與揭露標準，Tether 也著手設立受美國監管的子公司。換句話說：穩定幣正從「自己說了算」走向「被政府管」——<strong>這背後反映的，正是『穩定』最終要靠制度與信任，而不只是程式。</strong></p>
+</div>
+<div class="skill-box"><h4>🔐 一句話記住</h4><p style="margin-bottom:0">比特幣想做到的是「<strong>不用相信任何人</strong>」；穩定幣（USDT）為了換取穩定，<strong>把信任交回給一家公司</strong>。沒有誰對誰錯，但你要很清楚：<strong>你手上的「穩定」，是建立在對誰的信任之上。</strong></p></div>
+
+</section><section class="block" id="sec4">
+  <h2><span class="num">04</span>震撼教育：號稱穩定，也可能一夕崩盤（Terra/UST）</h2>
+<p>穩定幣不是保證永遠穩定。最有名的案例發生在 <strong>2022 年 5 月</strong>：</p>
+<div class="callout"><span class="t">💥 三天蒸發約 400 億美元</span>
+<p><strong>UST</strong> 是一種「演算法型」穩定幣，不靠真實儲備、純靠程式與姊妹幣 LUNA 互相套利來維持 1 美元。當大量資金同時撤離、信心崩潰時，這套機制進入「死亡螺旋」：UST 跌破 1 美元 → 為救它狂印 LUNA → LUNA 暴跌到近乎歸零 → 更沒人信 UST……短短幾天，<strong>約 400 億美元市值人間蒸發</strong>，無數人血本無歸。</p>
+</div>
+<div class="callout tip"><span class="t">📌 這個案例教我們什麼</span>
+<p>① 「<strong>Stable</strong>（穩定）」只是名字，不是保證；② 看不懂它「靠什麼」維持穩定，就不要全押身家；③ 這也是為什麼「有真實儲備、又受監管」的穩定幣（如 USDC、監管後的 USDT），會比「純演算法」的更被信任。<strong>脫鉤（de-peg）風險，是每一種穩定幣都要面對的問題。</strong></p>
+</div>
+
+</section><section class="block" id="sec5">
+  <h2><span class="num">05</span>收尾：三種幣的定位，與它跟後面的連結</h2>
+<p>到這裡，你在交易所裡用到的三種幣，剛好可以排成一條「<strong>信任光譜</strong>」：從「完全去中心化」到「靠公司背書」。</p>
+<div class="table-wrap">
+<table class="center">
+  <thead><tr><th>幣</th><th>定位</th><th>信任來自</th><th>波動</th></tr></thead>
+  <tbody>
+  <tr><td><strong>BTC</strong></td><td>數位黃金 · 價值儲存</td><td>數學 ＋ 去中心化</td><td>大</td></tr>
+  <tr><td><strong>ETH</strong></td><td>世界電腦 · 智能合約平台</td><td>數學 ＋ 社群治理</td><td>大</td></tr>
+  <tr><td><strong>USDT</strong></td><td>穩定幣 · 計價／避風港</td><td><strong>信任發行公司 ＋ 儲備</strong></td><td>幾乎不動（除非脫鉤）</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">🔮 想一想：如果 USDT 突然不值 1 美元？</span>
+<p>假設有一天新聞爆出「Tether 儲備不足」、USDT 開始脫鉤——<strong>你交易所帳戶裡那些 USDT 會發生什麼事？</strong>你會第一時間想換成什麼？這個問題，之後的「單元 19 央行數位貨幣（CBDC）」會接著談：當連民間穩定幣都可能出事，<strong>由國家直接發行的「數位版法幣」</strong>，是不是更可信？還是另一種風險？</p>
+</div>
+
+</section><div class="callout tip"><span class="t">🧭 這個附錄單元的定位</span>
+<p>穩定幣是連接「加密貨幣」與「真實金融」的橋樑，也是學生在模擬交易所裡天天在用的東西。放在比特幣、以太坊之後當附錄，正好把三種幣的「信任光譜」一次收斂，並為後面的 CBDC、Web3 資安風險鋪路。</p>
+</div>
+  <nav class="unit-nav">
+    <a class="prev" href="unit07.html"><div class="dir">← 上一單元</div><div class="ttl">Ethereum 與智能合約</div></a>
+    <a class="next" href="unit08.html"><div class="dir">下一單元 →</div><div class="ttl">定期評量</div></a>
+  </nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師<br>
+  本教材網站供課堂教學使用（基本版草稿，內容會持續調整） · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
