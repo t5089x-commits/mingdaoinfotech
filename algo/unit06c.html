@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元 06 附：遞迴 Recursion｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* 遞迴呼叫堆疊動畫（本單元專用，自成一格、不依賴外部 class） */
+.rc-demo{border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0;background:var(--surface-2)}
+.rc-code{font-family:var(--mono);font-size:.86rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;line-height:1.75}
+.rc-code .rc-call{color:var(--brand-strong);font-weight:800;margin-top:4px}
+.rc-stage{min-height:160px;display:flex;align-items:flex-start;justify-content:center;padding:6px 0}
+.rc-stack{width:100%;max-width:480px;display:flex;flex-direction:column;gap:7px}
+.rc-frame{border:2px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface);display:flex;flex-direction:column;gap:2px;transition:all .18s}
+.rc-frame b{font-family:var(--mono);font-size:.95rem;color:var(--text)}
+.rc-frame span{font-size:.82rem;color:var(--text-faint)}
+.rc-wait{opacity:.8}
+.rc-base{border-color:var(--warn);background:var(--warn-soft)}
+.rc-ret{border-color:var(--brand);background:var(--brand-soft)}
+.rc-empty{color:var(--text-faint);font-size:.9rem;padding:24px;text-align:center}
+.rc-desc{background:var(--surface);border-left:4px solid var(--brand);border-radius:8px;padding:10px 14px;font-size:.92rem;margin:12px 0;min-height:52px;line-height:1.6}
+.rc-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rc-btns button{font:inherit;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer}
+.rc-btns button:hover{opacity:.88}
+#rcProg{font-family:var(--mono);color:var(--text-faint);font-weight:700}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="6">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>單元 06 附</span></nav>
+<section class="unit-hero">
+  <span class="kicker">演算法篇　新增單元（附錄）</span>
+  <h1>遞迴 Recursion：把大問題拆成小問題</h1>
+  <p>遞迴是「函式自己呼叫自己」的技巧，核心精神是把一個大問題，拆成<b>同樣型態、但規模更小</b>的問題。它是後面<b>樹狀結構走訪、快速排序、合併排序、二元搜尋</b>的共同底層——這一單元先把遞迴本身弄懂，後面那些才會順。</p>
+</section>
+<div class="goals">
+  <h2>🎯 學習目標</h2>
+  <ul>
+<li>說得出遞迴的兩大要件：<b>終止條件（base case）</b>與<b>遞迴關係（recursive case）</b></li>
+<li>能用「找終止條件 → 寫關係式 → 由小算到大」三步驟追蹤遞迴的結果</li>
+<li>看懂「呼叫堆疊」：遞迴為什麼一層層疊上去、再一層層回來（接上一單元的堆疊）</li>
+<li>會畫呼叫樹、算呼叫次數，並理解為什麼費氏數列遞迴是 O(2ⁿ)</li>
+<li>知道遞迴與迴圈如何互換，以及「分治法」如何把遞迴用在排序與搜尋</li>
+  </ul>
+</div>
+<div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
+<p>每個範例右上角有 <strong>⧉ 複製</strong> 按鈕，點一下複製程式碼，貼到你電腦上的 <strong>IDLE</strong> 就能執行看看結果。還不熟悉 IDLE 的話，可以先看<a href="unit01b.html">單元 01b：IDLE 操作入門</a>。</p></div>
+
+<section class="block">
+  <h2><span class="num">01</span>什麼是遞迴？兩大要件</h2>
+
+<p>遞迴（Recursion）就是<b>一個函式在它自己的定義裡，又呼叫了自己</b>。聽起來像繞口令，但生活裡到處都是：</p>
+<div class="grid cols-3">
+  <div class="tile"><h4>🪆 俄羅斯套娃</h4><p>打開一個娃娃，裡面是「一個更小的同款娃娃」，一直到最小的那個為止。</p></div>
+  <div class="tile"><h4>🙋 問「我排第幾個」</h4><p>你不知道，就問前一個人；他也問他前面那個……問到最前面的人說「我第 1 個」，答案再一個一個加回來。</p></div>
+  <div class="tile"><h4>📖 查字典</h4><p>查一個詞，解釋裡又出現不懂的詞，再去查——直到看到一個你本來就懂的詞為止。</p></div>
+</div>
+<p>每一個遞迴都一定要有這兩塊，缺一不可：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🛑 終止條件（base case）</h4><p>問題小到<b>不需要再拆、直接有答案</b>的情況。例如「最小的娃娃」「排第 1 個的人」。沒有它，遞迴會永遠停不下來。</p></div>
+  <div class="tile"><h4>🔁 遞迴關係（recursive case）</h4><p>把問題<b>縮小一點點</b>，再呼叫自己去解那個更小的問題。關鍵是每次都要「更靠近終止條件」。</p></div>
+</div>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">階乘 factorial：n! = n × (n−1)!</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python">def fac(n):
+    if n == 1:            # 🛑 終止條件：1! = 1，直接回傳
+        return 1
+    return n * fac(n - 1) # 🔁 遞迴關係：n! = n × (n−1)!
+
+print(fac(4))   # 24</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">int fac(int n) {
+    if (n == 1)                 // 🛑 終止條件
+        return 1;
+    return n * fac(n - 1);      // 🔁 遞迴關係
+}
+// fac(4) 會回傳 24</code></pre>
+</div>
+<div class="callout warn"><span class="t">⚠ 一定要有終止條件</span>
+<p>如果忘了寫終止條件，或寫錯讓它永遠碰不到，遞迴就會一直呼叫下去、停不下來（本單元最後一節會示範會發生什麼事）。「每次都更靠近終止條件」是寫遞迴最重要的檢查點。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">02</span>遞迴呼叫堆疊：一層層疊上去，再一層層回來</h2>
+
+<p>電腦怎麼記住「算到一半、還在等結果」的那些呼叫？靠的是<b>呼叫堆疊（call stack）</b>——正是你<a href="unit06.html">上一單元</a>學的<b>堆疊（後進先出）</b>。每呼叫一次，就把這一層疊上去；碰到終止條件後，再一層層彈出、把答案往回帶。</p>
+<p>按「下一步」，親手追一遍 <code>fac(4)</code> 的過程：</p>
+
+<div class="rc-demo" id="recStack">
+  <div class="rc-code">
+    <div>def fac(n):</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;if n == 1: return 1</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;return n * fac(n - 1)</div>
+    <div class="rc-call">print(fac(4))</div>
+  </div>
+  <div class="rc-stage"><div class="rc-stack" id="rcStack"></div></div>
+  <div class="rc-desc" id="rcDesc">按「下一步 →」開始追蹤 fac(4) 的呼叫過程。</div>
+  <div class="rc-btns">
+    <button onclick="rcStep(-1)">← 上一步</button>
+    <span id="rcProg">0 / 8</span>
+    <button onclick="rcStep(1)">下一步 →</button>
+    <button onclick="rcReset()">↺ 重設</button>
+  </div>
+</div>
+<script>
+var RC=[
+ {d:"準備呼叫 fac(4)。呼叫堆疊目前是空的，按「下一步 →」開始。",f:[]},
+ {d:"呼叫 fac(4)：n=4 不是終止條件，要先算出 fac(3) 才能算 4 × fac(3)。先把 fac(4) 疊上呼叫堆疊。",f:[["fac(4)","要算 4 × fac(3)","wait"]]},
+ {d:"呼叫 fac(3)：一樣要先算 fac(2)，再往上疊一層。",f:[["fac(4)","等 fac(3) 回來","wait"],["fac(3)","要算 3 × fac(2)","wait"]]},
+ {d:"呼叫 fac(2)：還是要先算 fac(1)。堆疊越疊越高。",f:[["fac(4)","等 fac(3) 回來","wait"],["fac(3)","等 fac(2) 回來","wait"],["fac(2)","要算 2 × fac(1)","wait"]]},
+ {d:"呼叫 fac(1)：n==1，碰到終止條件！直接回傳 1，不再往下呼叫。這是整串的「最底」。",f:[["fac(4)","等 fac(3) 回來","wait"],["fac(3)","等 fac(2) 回來","wait"],["fac(2)","等 fac(1) 回來","wait"],["fac(1)","n==1 → return 1","base"]]},
+ {d:"fac(1) 回傳 1，從堆疊彈出。輪到 fac(2)：2 × 1 = 2。",f:[["fac(4)","等 fac(3) 回來","wait"],["fac(3)","等 fac(2) 回來","wait"],["fac(2)","2 × 1 = 2 ✓","ret"]]},
+ {d:"fac(2) 回傳 2，彈出。輪到 fac(3)：3 × 2 = 6。",f:[["fac(4)","等 fac(3) 回來","wait"],["fac(3)","3 × 2 = 6 ✓","ret"]]},
+ {d:"fac(3) 回傳 6，彈出。輪到 fac(4)：4 × 6 = 24。",f:[["fac(4)","4 × 6 = 24 ✓","ret"]]},
+ {d:"fac(4) 回傳 24 ✅ 整個呼叫結束！注意：最後呼叫的 fac(1) 最先算完回來——這就是「後進先出」的堆疊。",f:[]}
+];
+var rcI=0;
+function rcRender(){
+  var s=RC[rcI];
+  var box=document.getElementById('rcStack');
+  box.innerHTML = s.f.length
+    ? s.f.map(function(fr,i){return '<div class="rc-frame rc-'+fr[2]+'" style="margin-left:'+(i*18)+'px"><b>'+fr[0]+'</b><span>'+fr[1]+'</span></div>';}).join('')
+    : '<div class="rc-empty">（呼叫堆疊是空的）</div>';
+  document.getElementById('rcDesc').textContent=s.d;
+  document.getElementById('rcProg').textContent=rcI+' / '+(RC.length-1);
+}
+function rcStep(d){rcI=Math.max(0,Math.min(RC.length-1,rcI+d));rcRender();}
+function rcReset(){rcI=0;rcRender();}
+rcRender();
+</script>
+<div class="callout tip"><span class="t">💡 兩個方向要分清楚</span>
+<p><b>往下呼叫（疊上去）</b>：fac(4) → fac(3) → fac(2) → fac(1)，問題一路變小。<b>往回回傳（彈出來）</b>：fac(1) → fac(2) → fac(3) → fac(4)，答案一路算回來。遞迴的「威力」與「代價」都藏在這一來一回裡。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">03</span>追蹤遞迴的三個步驟</h2>
+
+<p>看到一段遞迴，不用硬想它「整個」在幹嘛，照這三步做就能追出答案：</p>
+<div class="grid cols-3">
+  <div class="tile"><h4>① 找終止條件</h4><p>哪一行<b>不會再呼叫自己</b>？那就是 base case，例如 <code>if n == 1: return 1</code>。</p></div>
+  <div class="tile"><h4>② 寫出關係式</h4><p>把程式翻成數學式，例如 <code>f(n) = n × f(n−1)</code>。看清楚是 <code>n−1</code> 還是 <code>n−2</code>、是加還是乘。</p></div>
+  <div class="tile"><h4>③ 由小算到大</h4><p>從 base case 開始<b>列表</b>：f(1)、f(2)、f(3)…一路往上，直到題目問的那個。</p></div>
+</div>
+<div class="callout tip"><span class="t">💡 為什麼要「由小算到大」，而不是從大往下展開？</span>
+<p style="margin-bottom:0">從 f(10) 往下展開，會寫出一長串等待的算式，很容易漏算或算錯。反過來從最小的開始列表，每一格只要用前面算好的數字，又快又穩。</p></div>
+
+<p>用次方 <code>G(a, x) = a × G(a, x−1)</code> 示範「由小算到大」的列表：</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">次方：a 的 x 次方</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def G(a, x):
+    if x == 0:          # 任何數的 0 次方 = 1
+        return 1
+    return a * G(a, x - 1)
+
+print(G(3, 4))   # 81</code></pre>
+</div>
+<div class="table-wrap">
+  <table class="center">
+    <thead><tr><th>呼叫</th><th>x == 0？</th><th>接下來（往下呼叫）</th><th>回傳值（往回算）</th></tr></thead>
+    <tbody>
+      <tr><td>G(3, 4)</td><td>否</td><td>先呼叫 G(3, 3)</td><td>3 × 27 = <b>81</b></td></tr>
+      <tr><td>G(3, 3)</td><td>否</td><td>先呼叫 G(3, 2)</td><td>3 × 9 = 27</td></tr>
+      <tr><td>G(3, 2)</td><td>否</td><td>先呼叫 G(3, 1)</td><td>3 × 3 = 9</td></tr>
+      <tr><td>G(3, 1)</td><td>否</td><td>先呼叫 G(3, 0)</td><td>3 × 1 = 3</td></tr>
+      <tr><td>G(3, 0)</td><td>是</td><td>終止，不再呼叫</td><td>1</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>由上往下看「接下來」欄是<b>往下呼叫</b>；碰到終止條件後，再由下往上看「回傳值」欄，一層層把答案算回來，最上面的 G(3, 4) 就是 81。</p>
+
+</section><section class="block">
+  <h2><span class="num">04</span>遞迴 vs 迴圈：同一件事的兩種寫法</h2>
+
+<p>很多遞迴都能改寫成迴圈，反之亦然。以階乘為例：</p>
+<div class="grid cols-2">
+  <div class="tile"><h4>🔁 迴圈版</h4>
+  <div class="code-card" style="margin:6px 0 0">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">迴圈</span><span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def fac(n):
+    ans = 1
+    for i in range(2, n + 1):
+        ans *= i
+    return ans</code></pre>
+  </div></div>
+  <div class="tile"><h4>🪆 遞迴版</h4>
+  <div class="code-card" style="margin:6px 0 0">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">遞迴</span><span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def fac(n):
+    if n == 1:
+        return 1
+    return n * fac(n - 1)</code></pre>
+  </div></div>
+</div>
+<div class="table-wrap">
+  <table class="center">
+    <thead><tr><th></th><th>迴圈</th><th>遞迴</th></tr></thead>
+    <tbody>
+      <tr><td>記憶體</td><td>省（不用疊呼叫堆疊）</td><td>較多（每層都佔一格堆疊）</td></tr>
+      <tr><td>可讀性</td><td>單純重複時很清楚</td><td>「自我相似」的問題寫起來最自然</td></tr>
+      <tr><td>最適合</td><td>一直線的重複</td><td>樹狀、分治、要「走到底再回來」的問題</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="callout tip"><span class="t">🧭 結論：不是誰比較好，是「問題長什麼樣」</span>
+<p style="margin-bottom:0">一直線的重複，用迴圈最省；但像<b>樹的走訪</b>、<b>把陣列切一半各自處理</b>這類「問題裡面還有同款小問題」的結構，用遞迴會乾淨到不可思議——這正是後面幾個單元的主角。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">05</span>兩個分支：費氏數列、呼叫樹與效能</h2>
+
+<p>如果一次呼叫自己<b>兩次</b>，展開就不是一條鏈子，而是一棵「呼叫樹」：</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">費氏數列 fib(n) = fib(n−1) + fib(n−2)</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def fib(n):
+    if n &lt;= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print([fib(i) for i in range(10)])
+# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</code></pre>
+</div>
+<div class="code-card"><div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">fib(4) 的呼叫樹</span></div>
+<pre><code>fib(4)
+├── fib(3)
+│   ├── fib(2)
+│   │   ├── fib(1) → 1
+│   │   └── fib(0) → 0
+│   └── fib(1) → 1
+└── fib(2)
+    ├── fib(1) → 1
+    └── fib(0) → 0</code></pre></div>
+<p>要回答「<b>總共呼叫了幾次</b>」，數樹上的節點就好：fib(4) 一共呼叫 9 次。</p>
+<div class="callout warn"><span class="t">📈 連到「複雜度」主軸：為什麼費氏遞迴這麼慢？</span>
+<p>注意樹裡 fib(2) 被重算 2 次、fib(1) 被重算 3 次——<b>同樣的東西一直重算</b>。所以 n 每多 1，呼叫次數就差不多變兩倍：fib(1)→1 次、fib(2)→3、fib(3)→5、fib(4)→9、fib(5)→15、fib(6)→25……這就是 <b>O(2ⁿ)</b> 的指數成長，大概 fib(40) 就慢到你等不下去。這也說明：遞迴寫得「對」不等於「有效率」，之後學到的「記憶化／動態規劃」就是在救這件事。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">06</span>遞迴裡的 print：放呼叫前、後，順序完全不同</h2>
+
+<p><code>print</code> 放在遞迴呼叫的<b>前面</b>還是<b>後面</b>，印出的順序完全相反。這個觀念，之後的「樹走訪（前序／後序）」會直接用到：</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">print 在呼叫前 vs. 呼叫後</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def down(n):
+    if n == 0: return
+    print(n, end=" ")   # 先印，再往下呼叫
+    down(n - 1)
+
+def up(n):
+    if n == 0: return
+    up(n - 1)           # 先往下呼叫，回來才印
+    print(n, end=" ")
+
+down(3); print()   # 3 2 1
+up(3);   print()   # 1 2 3</code></pre>
+</div>
+<p>追這種題目的訣竅：把呼叫樹畫出來，<b>「進入」一個呼叫時寫下前面的 print，「離開」時寫下後面的 print</b>。</p>
+
+</section><section class="block">
+  <h2><span class="num">07</span>分治法：遞迴真正的威力（接後面的排序與搜尋）</h2>
+
+<p>遞迴最厲害的用法叫做<b>分治法（Divide and Conquer）</b>，三個字：<b>切開 → 各自解 → 合併</b>。把一個大問題切成幾個同款的小問題，分別用遞迴解掉，再把小答案併成大答案。</p>
+<p>舉個例子：用分治法找出一個陣列裡的最大值——把陣列切兩半，各自找出最大，再取兩者較大的那個。</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">分治法求最大值</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def find_max(arr, lo, hi):
+    if lo == hi:                 # 🛑 只剩一個元素，它就是最大
+        return arr[lo]
+    mid = (lo + hi) // 2
+    left_max  = find_max(arr, lo, mid)      # 切左半，各自解
+    right_max = find_max(arr, mid + 1, hi)  # 切右半，各自解
+    return max(left_max, right_max)         # 合併：取兩邊較大的
+
+a = [3, 9, 1, 7, 4, 8]
+print(find_max(a, 0, len(a) - 1))   # 9</code></pre>
+</div>
+<div class="callout tip"><span class="t">🔭 這就是你接下來幾個單元的骨架</span>
+<p style="margin-bottom:0"><b>快速排序</b>、<b>合併排序</b>、<b>二元搜尋</b>全都是分治法：切一半、遞迴處理、再合併或擇一。所以把遞迴弄懂，等於先把後面三個重頭戲的底層先學起來了——這也是我們把遞迴排在它們前面的原因。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">08</span>遞迴的除錯：終止條件出錯會怎樣？</h2>
+
+<p>遞迴最常見的 bug 都跟終止條件有關。第一種：<b>根本沒寫</b>終止條件，永遠停不下來，Python 會在疊太多層後當掉：</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">❌ 沒有終止條件</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def fac(n):
+    return n * fac(n - 1)   # 忘了寫終止條件
+
+print(fac(3))
+# RecursionError: maximum recursion depth exceeded</code></pre>
+</div>
+<p>第二種：終止條件<b>放錯位置</b>。下面這個 <code>if n &gt;= 0</code> 會讓 n=0 時還繼續呼叫 <code>fun(-1)</code>，一路乘到 0，結果永遠是 0：</p>
+<div class="code-card">
+  <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">終止條件寫錯：答案永遠是 0</span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+  <pre><code data-lang="python">def fun(n):
+    fac = 1
+    if n &gt;= 0:                  # 錯：n=0 時還會往下，乘到 fun(-1)
+        fac = n * fun(n - 1)
+    return fac
+
+print(fun(4))   # 0（不是 24！）</code></pre>
+</div>
+<div class="callout tip"><span class="t">🧪 除錯三問</span>
+<p style="margin-bottom:0">遞迴跑出怪結果時，問自己：① 有沒有終止條件？② 每次呼叫是不是都更靠近終止條件？③ 終止條件的「邊界」對不對（是 <code>== 1</code> 還是 <code>&lt;= 1</code>、是 <code>&gt; 0</code> 還是 <code>&gt;= 0</code>）？九成的遞迴 bug 都在這三題裡。</p></div>
+
+</section><section class="block">
+  <h2><span class="num">09</span>課堂練習（分兩層：先求人人會，再挑戰）</h2>
+
+<div class="exercise">
+  <h3>✏️ 基礎題（每個人都要會）</h3>
+  <ol>
+    <li><code>f(5)</code> 回傳多少？<pre style="font-family:var(--mono);font-size:.85rem;margin:6px 0">def f(n):
+    if n == 1: return 1
+    return n + f(n - 1)</pre>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>f(n) = n + f(n−1)，f(1)=1，所以是 1+2+3+4+5 = <b>15</b>。</p></div>
+    </li>
+    <li>這段程式印出什麼？<pre style="font-family:var(--mono);font-size:.85rem;margin:6px 0">def p(n):
+    if n &lt;= 0: return
+    p(n - 2)
+    print(n, end=' ')
+p(7)</pre>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>print 在呼叫之後，所以先一路呼叫到 p(−1)，再往回印：<b>1 3 5 7</b>。</p></div>
+    </li>
+    <li><code>h(1234)</code> 回傳多少？它在算什麼？<pre style="font-family:var(--mono);font-size:.85rem;margin:6px 0">def h(n):
+    if n &lt; 10: return n
+    return h(n // 10) + n % 10</pre>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>每次取出最後一位加起來：h(1234)=h(123)+4=…= <b>10</b>。這個函式在算「<b>各位數字的和</b>」。</p></div>
+    </li>
+  </ol>
+</div>
+<div class="exercise">
+  <h3>🔥 挑戰題（想走資工的往這裡衝）</h3>
+  <ol>
+    <li><code>g(4)</code> 回傳多少？<pre style="font-family:var(--mono);font-size:.85rem;margin:6px 0">def g(n):
+    if n &lt;= 1: return 1
+    return g(n - 1) + 2 * g(n - 2)</pre>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>列表：g(0)=1、g(1)=1、g(2)=1+2×1=3、g(3)=3+2×1=5、g(4)=5+2×3=<b>11</b>。</p></div>
+    </li>
+    <li>呼叫 <code>fib(5)</code> 一共會呼叫 fib 幾次（含自己）？<pre style="font-family:var(--mono);font-size:.85rem;margin:6px 0">def fib(n):
+    if n &lt;= 1: return n
+    return fib(n - 1) + fib(n - 2)</pre>
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>畫呼叫樹數節點，共 <b>15</b> 次。可用第 05 節的方法驗證（在函式裡加 count）。</p></div>
+    </li>
+    <li>河內塔：把 n 個盤子從 A 搬到 C（每次只搬一個、大盤不能疊小盤），最少要搬幾次？試著寫出遞迴關係 <code>T(n)</code>。
+      <p class="reveal" onclick="this.nextElementSibling.classList.toggle('show')">▸ 看答案</p>
+      <div class="answer"><p>先把上面 n−1 個搬到 B、最大的搬到 C、再把 n−1 個從 B 搬到 C：<code>T(n) = 2·T(n−1) + 1</code>，T(1)=1。算出來是 <b>2ⁿ − 1</b>。這題就是下面 judge 的 a227。</p></div>
+    </li>
+  </ol>
+</div>
+
+</section><section class="block">
+  <h2><span class="num">🧩</span>本單元練習（ZeroJudge）</h2>
+<p>遞迴要寫成「能 AC 的程式」觀念才算真的通。送出前先確認輸入／輸出格式一字不差。</p>
+<div class="table-wrap">
+  <table class="center">
+    <thead><tr><th>題號</th><th>題目</th><th>練什麼</th><th>層級</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=d212" target="_blank" rel="noopener"><b>d212</b></a></td><td>東東爬階梯</td><td>遞迴入門、爬樓梯關係式（跟費氏很像）</td><td>基礎</td></tr>
+      <tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=a227" target="_blank" rel="noopener"><b>a227</b></a></td><td>三龍杯 → 河內之塔</td><td>經典遞迴／分治，對應上面挑戰題</td><td>挑戰</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</section>
+<div class="unit-nav">
+  <a href="unit06b.html"><span class="dir">← 上一單元</span>附 堆疊 vs 佇列 比較</a>
+  <a class="next" href="unit07.html"><span class="dir">下一單元 →</span>07 資料結構(五) 樹狀結構</a>
+</div>
+</main>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ 單元 06 附：遞迴 Recursion</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
