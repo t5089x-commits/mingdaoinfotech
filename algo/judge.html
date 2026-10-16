@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroJudge 練習題總表｜明道中學 · 基礎演算法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.jt-lv{font-family:var(--mono);font-size:.82rem;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.jt-base{background:var(--brand-soft);color:var(--brand-strong)}
+.jt-mid{background:var(--accent-soft);color:var(--accent)}
+.jt-hard{background:var(--warn-soft);color:var(--warn)}
+.jt-adv{background:color-mix(in srgb,var(--warn) 22%,var(--surface));color:var(--warn)}
+.jt-done{color:var(--ok);font-weight:800;font-size:.8rem}
+.jt-u{font-weight:800;white-space:nowrap}
+table.jt td,table.jt th{vertical-align:middle}
+table.jt tr.grp td{background:var(--surface-2);font-weight:800;color:var(--text-soft);font-size:.9rem}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">ALG</span>
+      <span>明道中學 · 基礎演算法<small>高二資訊科技 · Python 為主，對照 C++</small></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="0">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>ZeroJudge 練習題總表</span></nav>
+<section class="unit-hero">
+  <span class="kicker">練習總覽</span>
+  <h1>🧩 ZeroJudge 練習題總表</h1>
+  <p>把每個單元對應的 ZeroJudge 題目整理成一張表。點題號直接開題；送出前記得輸入不要放提示文字、輸出格式一字不差。所有題目都已確認存在、依單元與難度分類。</p>
+</section>
+<div class="callout tip"><span class="t">🏷️ 難度與狀態說明</span>
+<p>
+<span class="jt-lv jt-base">基礎</span> 每個人都要會
+<span class="jt-lv jt-mid">中</span> 寫完基礎再來
+<span class="jt-lv jt-hard">挑戰</span> 行有餘力／想衝資工
+<span class="jt-lv jt-adv">進階</span> 給想深入的同學
+<span class="jt-done">✅ 已派</span> 已出過的作業（括號是第幾次）
+</p></div>
+
+<div class="table-wrap">
+<table class="center jt">
+<thead><tr><th>單元</th><th>題號</th><th>題目</th><th>練什麼</th><th>難度</th></tr></thead>
+<tbody>
+<tr class="grp"><td colspan="5">基礎與銜接篇</td></tr>
+<tr><td class="jt-u"><a href="unit02b.html">02 附</a> 函式／串列／輸入</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=a002" target="_blank" rel="noopener"><b>a002</b></a></td><td>簡易加法</td><td>split()／map() 讀輸入、基本運算</td><td><span class="jt-lv jt-base">基礎</span> <span class="jt-done">✅已派(1)</span></td></tr>
+
+<tr class="grp"><td colspan="5">資料結構篇</td></tr>
+<tr><td class="jt-u" rowspan="7"><a href="unit03.html">03</a> 陣列</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=f345" target="_blank" rel="noopener"><b>f345</b></a></td><td>新手練習題—陣列</td><td>陣列基本操作</td><td><span class="jt-lv jt-base">基礎</span> <span class="jt-done">✅已派(2)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=d074" target="_blank" rel="noopener"><b>d074</b></a></td><td>電腦教室</td><td>陣列應用</td><td><span class="jt-lv jt-mid">中</span> <span class="jt-done">✅已派(2)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=f579" target="_blank" rel="noopener"><b>f579</b></a></td><td>購物車</td><td>陣列累加／處理</td><td><span class="jt-lv jt-mid">中</span> <span class="jt-done">✅已派(3)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=j605" target="_blank" rel="noopener"><b>j605</b></a></td><td>程式考試</td><td>APCS 綜合實作</td><td><span class="jt-lv jt-mid">中</span> <span class="jt-done">✅已派(3)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=h026" target="_blank" rel="noopener"><b>h026</b></a></td><td>猜拳</td><td>條件判斷／陣列</td><td><span class="jt-lv jt-base">基礎</span> <span class="jt-done">✅已派(4)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=c294" target="_blank" rel="noopener"><b>c294</b></a></td><td>三角形辨別</td><td>條件判斷</td><td><span class="jt-lv jt-base">基礎</span> <span class="jt-done">✅已派(4)</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=o711" target="_blank" rel="noopener"><b>o711</b></a></td><td>裝飲料</td><td>模擬／計算</td><td><span class="jt-lv jt-mid">中</span> <span class="jt-done">✅已派(4)</span></td></tr>
+
+<tr><td class="jt-u" rowspan="2"><a href="unit03b.html">03 附</a> 字串</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=c290" target="_blank" rel="noopener"><b>c290</b></a></td><td>秘密差</td><td>數字當字串、奇偶位數分開加</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=c462" target="_blank" rel="noopener"><b>c462</b></a></td><td>交錯字串</td><td>字串走訪＋字元判斷</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+
+<tr><td class="jt-u" rowspan="2"><a href="unit03c.html">03 附</a> 二維／網格</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=h027" target="_blank" rel="noopener"><b>h027</b></a></td><td>矩陣總和</td><td>讀入二維表格、雙層走訪</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=g276" target="_blank" rel="noopener"><b>g276</b></a></td><td>魔王迷宮</td><td>方向陣列＋網格模擬</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+
+<tr><td class="jt-u"><a href="unit04.html">04</a> 鏈結串列</td><td colspan="4" style="color:var(--text-faint)">以理解原理為主，暫不另出 judge（若要我再補進階題）</td></tr>
+
+<tr><td class="jt-u" rowspan="2"><a href="unit05.html">05</a> 佇列</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=e447" target="_blank" rel="noopener"><b>e447</b></a></td><td>queue 練習</td><td>佇列基本操作（FIFO）</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=f166" target="_blank" rel="noopener"><b>f166</b></a></td><td>傳送點</td><td>BFS／佇列應用</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+
+<tr><td class="jt-u" rowspan="3"><a href="unit06.html">06</a> 堆疊</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=b923" target="_blank" rel="noopener"><b>b923</b></a></td><td>stack 堆疊的模板題</td><td>堆疊基本操作（push／pop／top）</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=b838" target="_blank" rel="noopener"><b>b838</b></a></td><td>104北二2.括號問題</td><td>用堆疊做括號配對</td><td><span class="jt-lv jt-mid">中</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=f698" target="_blank" rel="noopener"><b>f698</b></a></td><td>後序運算式求值</td><td>用堆疊計算後序式</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+
+<tr><td class="jt-u" rowspan="2"><a href="unit06c.html">06 附</a> 遞迴</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=d212" target="_blank" rel="noopener"><b>d212</b></a></td><td>東東爬階梯</td><td>遞迴入門、爬樓梯關係式</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td><a href="https://zerojudge.tw/ShowProblem?problemid=a227" target="_blank" rel="noopener"><b>a227</b></a></td><td>三龍杯 → 河內之塔</td><td>經典遞迴／分治</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+
+<tr><td class="jt-u"><a href="unit07.html">07</a> 樹狀結構</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=c463" target="_blank" rel="noopener"><b>c463</b></a></td><td>apcs 樹狀圖分析</td><td>樹的建立與分析</td><td><span class="jt-lv jt-adv">進階</span></td></tr>
+
+<tr><td class="jt-u"><a href="unit08.html">08</a> 集合</td><td colspan="4" style="color:var(--text-faint)">以理解原理為主，暫不另出 judge（若要我再補進階題）</td></tr>
+
+<tr class="grp"><td colspan="5">演算法篇</td></tr>
+<tr><td class="jt-u"><a href="unit09.html">09–11</a> 基礎排序<br><span style="font-weight:400;font-size:.85rem;color:var(--text-faint)">泡沫／選擇／插入</span></td><td><a href="https://zerojudge.tw/ShowProblem?problemid=c431" target="_blank" rel="noopener"><b>c431</b></a></td><td>Sort ! Sort ! Sort !</td><td>排序基本題（三種基礎排序都能解）</td><td><span class="jt-lv jt-base">基礎</span></td></tr>
+<tr><td class="jt-u"><a href="unit12.html">12–13</a> 快排／合併</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=a233" target="_blank" rel="noopener"><b>a233</b></a></td><td>排序法～～～ 挑戰極限</td><td>大量資料排序（逼你用高效排序或內建）</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+<tr><td class="jt-u"><a href="unit14.html">14</a> 排序效能分析</td><td colspan="4" style="color:var(--text-faint)">觀念／比較單元，不另出 judge</td></tr>
+<tr><td class="jt-u"><a href="unit15.html">15</a> 循序搜尋</td><td colspan="4" style="color:var(--text-faint)">觀念單元，循序搜尋幾乎任何找資料題都算，不另出 judge</td></tr>
+<tr><td class="jt-u"><a href="unit16.html">16</a> 二元搜尋</td><td><a href="https://zerojudge.tw/ShowProblem?problemid=c575" target="_blank" rel="noopener"><b>c575</b></a></td><td>APCS 2017 基地台</td><td>二分搜尋（在答案上二分）</td><td><span class="jt-lv jt-hard">挑戰</span></td></tr>
+<tr><td class="jt-u"><a href="unit17.html">17</a> 搜尋分析</td><td colspan="4" style="color:var(--text-faint)">觀念／比較單元，不另出 judge</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout"><span class="t">📝 幾個備註</span>
+<p>① <b>鏈結串列、集合</b>定位為「理解原理」，ZeroJudge 上這兩類的入門好題很少，先不放；需要的話再幫你找進階題。<br>
+② <b>佇列、二元搜尋</b>的「保底基礎題」中，佇列已用 e447；二元搜尋 ZeroJudge 上多半偏難，c575 之外若要更基礎的保底題，再幫你挖。<br>
+③ 想調整哪一題、哪個難度，或要我把某單元換題，跟我說即可。</p></div>
+
+</main>
+<footer class="site">基礎演算法教材網站 ｜ 明道中學高二資訊科技課程 ｜ ZeroJudge 練習題總表</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
