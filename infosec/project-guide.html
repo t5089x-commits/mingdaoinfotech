@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>專題報告指南：變成你的學習歷程｜資訊安全導論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.pg-step{border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:12px 0;background:var(--surface)}
+.pg-step h3{margin:0 0 4px}
+.pg-step .pg-n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:var(--brand);color:#fff;font-weight:800;margin-right:8px;font-size:.9rem}
+.pg-step .pg-wc{float:right;font-size:.8rem;color:var(--text-faint);font-weight:700}
+.pg-prompt{font-size:.9rem;color:var(--text-soft);margin:6px 0 0}
+.pg-check{list-style:none;padding:0;margin:0}
+.pg-check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px dashed var(--border);font-size:.95rem}
+.pg-check li:before{content:"☐";position:absolute;left:4px;top:6px;font-size:1.1rem;color:var(--brand)}
+.pg-check li:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="logo">資安</span><span>資訊安全導論</span></a>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">課程首頁</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切換深淺色">🌙</button>
+  </div>
+</header>
+<main class="wrap" data-unit="9">
+<nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>專題報告指南</span></nav>
+<section class="unit-hero">
+  <span class="kicker">專題 · 學習歷程指南</span>
+  <h1>專題報告指南</h1>
+  <p>把你這學期的資安專題，變成一份<strong>可以放進學習歷程檔案、交給大學教授看</strong>的成果。這一頁是你從單元 9（啟動）一路做到單元 15（發表）隨時可以回來對照的規格與檢核表。</p>
+</section>
+
+<div class="hook-q"><span class="hook-tag">💭 先想一想</span><p>「同一份專題，為什麼有人拿去申請大學很加分，有人卻只是『交一份作業』？」差別幾乎都在：有沒有寫出<strong>過程與反思</strong>，而不是只有成品。</p></div>
+
+<section class="block" id="why">
+  <h2><span class="num">01</span>先搞懂：教授到底在看什麼？</h2>
+<p>這幾件事先知道，你的力氣才會花在對的地方：</p>
+<div class="grid cols-3">
+  <div class="card"><h3>⏱️ 看很快</h3><p>教授平均<strong>一份看不到 15 分鐘</strong>、常常不到 10 分鐘。所以<strong>開頭 100 字</strong>要直接講「你做了什麼、發現什麼」。</p></div>
+  <div class="card"><h3>🧭 看過程</h3><p>他們最在意的不是成品多漂亮，而是<strong>「歷程」</strong>——你怎麼想的、卡在哪、怎麼解決、想法有什麼改變。</p></div>
+  <div class="card"><h3>🎯 看連結</h3><p>近一半教授把<strong>「和你想讀的科系有沒有關」</strong>排第一。你要幫教授看出：這份專題跟你的志向怎麼接起來。</p></div>
+</div>
+<div class="callout tip"><span class="t">💡 重質不重量</span>
+<p>學習歷程「課程學習成果」每學年最多上傳 6 件、申請時最多勾選 3 件。<strong>一份做深、寫好，勝過交很多份淺的。</strong>這門課的專題，目標就是幫你做出「其中一份好的」。</p></div>
+<div class="callout warn"><span class="t">⚠ 文組同學特別看這裡：資安跟我有關嗎？</span>
+<p>非常有關——重點不是「你會不會寫程式」，而是「你怎麼把資安連到你想走的路」。下面第 03 節有一張「你想讀的科系 × 可以切的角度」對照表，先去看一眼，你會發現題目其實很好找。</p></div>
+</section>
+
+<section class="block" id="structure">
+  <h2><span class="num">02</span>報告要有哪幾塊？（7 段架構）</h2>
+<p>不管你走哪條路線（技術／議題研究／未來機制），一份能進學習歷程的報告，建議包含這 7 段。字數是參考，重點是每一段「有寫到位」：</p>
+
+<div class="pg-step"><h3><span class="pg-n">1</span>摘要 / 亮點<span class="pg-wc">約 100–150 字</span></h3>
+<p class="pg-prompt">用一兩句話講清楚：你做了什麼、最重要的發現或成果是什麼。這是教授最先（有時也是唯一）會看的 100 字，像新聞標題一樣要抓住人。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">2</span>學習動機<span class="pg-wc">約 150–250 字</span></h3>
+<p class="pg-prompt">為什麼選這個題目？從一個<strong>真實的</strong>起點出發（你或家人被詐騙過、某則新聞、某次好奇），避免「因為資安很重要」這種範本語。越真實越有說服力。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">3</span>探究過程<span class="pg-wc">最重要・約 400–600 字＋圖</span></h3>
+<p class="pg-prompt">怎麼做的？按時間或步驟寫，<strong>一定要寫出「遇到的困難 → 怎麼解決 → 改了幾次」</strong>。附上截圖、照片、草稿、查到的資料來源。這一段決定你的報告是「有歷程」還是「只有結果」。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">4</span>成果<span class="pg-wc">約 200–300 字＋作品</span></h3>
+<p class="pg-prompt">做出了什麼？研究報告、懶人包、海報、小工具、訪談紀錄、問卷結果都算。放上最終作品的畫面或連結。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">5</span>反思與成長<span class="pg-wc">約 200–300 字</span></h3>
+<p class="pg-prompt">你學到什麼？想法有什麼改變？哪裡如果重做會做得不一樣？<strong>失敗或做不完也可以寫</strong>——只要反思夠誠實、夠深，一樣加分。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">6</span>與未來志向的連結<span class="pg-wc">約 100–200 字</span></h3>
+<p class="pg-prompt">這份專題和你想讀的科系／方向怎麼接起來？（見下方第 03 節的對照表）這段幫教授看出「你是有方向的人」。</p></div>
+
+<div class="pg-step"><h3><span class="pg-n">7</span>AI 使用聲明<span class="pg-wc">1–3 行</span></h3>
+<p class="pg-prompt">有用到 ChatGPT、Claude 等 AI 工具，就<strong>誠實寫出用在哪、怎麼用</strong>（例如「用 AI 協助整理訪談逐字稿，分析與結論是自己寫的」）。代寫是被禁止的；誠實揭露反而是加分的素養。</p></div>
+</section>
+
+<section class="block" id="crossfield">
+  <h2><span class="num">03</span>你想讀的科系 × 可以切的角度（文組必看）</h2>
+<p>資安不是只有資工能用。找一個你可能想走的方向，照著切，題目馬上有了：</p>
+<div class="table-wrap">
+<table class="center">
+<thead><tr><th>想申請的方向</th><th>可以切的角度</th><th>專題例子</th></tr></thead>
+<tbody>
+<tr><td><strong>法律 / 法政</strong></td><td>數位法律、個資法、網路犯罪責任</td><td>分析一則個資外洩事件，在《個人資料保護法》下誰該負責</td></tr>
+<tr><td><strong>財經 / 商管</strong></td><td>金融科技、詐騙防範、穩定幣監管</td><td>研究 USDT 穩定幣的風險與各國監管，做成投資人防雷指南</td></tr>
+<tr><td><strong>傳播 / 新聞</strong></td><td>假訊息、Deepfake、媒體識讀</td><td>製作「如何辨識 AI 深偽新聞／語音詐騙」的懶人包</td></tr>
+<tr><td><strong>社會 / 政治</strong></td><td>數位治理、隱私、數位身分</td><td>設計一個兼顧隱私的校園數位身分／數位學生證方案</td></tr>
+<tr><td><strong>心理 / 教育</strong></td><td>詐騙心理、資安素養教育</td><td>調查「同學為什麼會點進釣魚連結」＋設計一份防詐教材</td></tr>
+<tr><td><strong>設計 / 人文</strong></td><td>科技與社會、資安的視覺溝通</td><td>把區塊鏈或加密原理，做成給長輩看得懂的防詐圖解</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">🔗 三條路線怎麼對應</span>
+<p>上面大多偏「議題研究型（路線 B）」或「未來機制發想型（路線 C）」——這正是<strong>不用寫程式</strong>也能做得很好的方向。想動手做工具的同學走「技術實作型（路線 A）」，一樣套這 7 段架構。</p></div>
+</section>
+
+<section class="block" id="checklist">
+  <h2><span class="num">04</span>交出去前，自己先打勾（檢核表）</h2>
+<p>每一項都能打勾，你的報告就有進學習歷程的水準了：</p>
+<div class="skill-box"><h4>✅ 專題報告自評檢核表</h4>
+<ul class="pg-check">
+<li>開頭 100 字就講清楚「我做了什麼、發現什麼」</li>
+<li>有「為什麼選這題」的<strong>真實</strong>動機（不是範本語）</li>
+<li>探究過程寫出了<strong>遇到的困難與怎麼解決</strong>（這格最常被漏掉）</li>
+<li>有具體成果（報告／懶人包／海報／工具／訪談／問卷…）</li>
+<li>有反思：學到什麼、想法怎麼改變（失敗也誠實寫）</li>
+<li>有連到<strong>我可能想讀的科系／方向</strong></li>
+<li>有用 AI 的話，已誠實註明用在哪</li>
+<li>版面乾淨、重點一眼找得到（記得教授看不到 15 分鐘）</li>
+<li>全部是自己（和組員）做的，沒有代寫</li>
+</ul></div>
+<div class="callout warn"><span class="t">🚫 常見扣分地雷</span>
+<p>① 只秀成品、沒有過程；② 一次塞太多、重點散掉；③ 動機空泛像罐頭；④ 版面花俏但內容很薄；⑤ 找人／全程 AI 代寫。避開這五個，你就贏一半了。</p></div>
+</section>
+
+<section class="block" id="download">
+  <h2><span class="num">05</span>開始動手：下載範本</h2>
+<p>這份範本已經把上面 7 段和檢核表做成可以直接打字的格式，每一段都有提示，照著填就好：</p>
+<p><a class="video-link-btn" href="assets/handouts/專題報告範本.docx" target="_blank" rel="noopener">📄 下載專題報告範本（Word）↗</a></p>
+<div class="callout tip"><span class="t">🗓️ 邊做邊記，不要最後才補</span>
+<p>最好的做法：<strong>每做一個段落，兩天內就把當下的想法、卡住的地方、怎麼解決記下來</strong>。到單元 15 要整理時，你會慶幸自己有留軌跡——臨時回想永遠寫不出真實的歷程。本課程單元 13–15（成果製作）就是帶你一段一段把這份報告補起來。</p></div>
+</section>
+
+<nav class="unit-nav">
+  <a class="prev" href="unit09.html"><div class="dir">← 回專題啟動</div><div class="ttl">單元 9：專題啟動（PBL）</div></a>
+  <a class="next" href="unit13.html"><div class="dir">成果製作 →</div><div class="ttl">單元 13：成果製作（一）</div></a>
+</nav>
+</main>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師　·　專題報告指南（學習歷程）
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
