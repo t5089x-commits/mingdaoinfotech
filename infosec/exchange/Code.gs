@@ -15,6 +15,19 @@
      「這位學號完成了這個動作」並套用遊戲內後果。
    =================================================================== */
 
+/* ---------- 幣價來源設定：CoinGecko 免費 Demo 金鑰 ----------
+   ⚠ 幣價一直卡住／更新很慢？因為 CoinGecko 免費 API 是依「IP」限流，
+   而 Apps Script 跟全世界成千上萬個腳本共用 Google 的 IP，很容易被
+   整批限流（429）→ 抓價失敗 → 卡在舊價。
+   解法：到 https://www.coingecko.com/en/api/pricing 免費申請一組「Demo」
+   金鑰（免費額度約 30 次/分、1 萬次/月，依『金鑰』限流，不受別人影響）。
+   ★ 金鑰「不要」寫進這份程式、也不要上傳 GitHub，改存在 Apps Script 的
+     「指令碼屬性」裡（只有你看得到，公開 repo 也不會外洩）：
+       左側齒輪「專案設定」→ 捲到最下「指令碼屬性」→「新增指令碼屬性」
+       → 名稱填 COINGECKO_KEY、值貼上你的 Demo 金鑰 → 儲存。
+   下面這行會自動從指令碼屬性讀金鑰；留空也能跑，但會不穩、容易卡住。 */
+var COINGECKO_KEY = (PropertiesService.getScriptProperties().getProperty('COINGECKO_KEY') || '');
+
 /* ---------- 一次性設定：第一次使用請執行 setupSheets() ---------- */
 
 function setupSheets() {
@@ -371,19 +384,25 @@ function inAutoWindow_(spec){
   }catch(e){ return true; }
 }
 
-/* ---------- 價格（CoinGecko，以台幣 TWD 計價，快取 60 秒） ---------- */
+/* ---------- 價格（CoinGecko，以台幣 TWD 計價，快取 30 秒） ---------- */
 function getPrices_(){
   var cache=CacheService.getScriptCache();
   var hit=cache.get('pricesTWD');
   if (hit){ try{return JSON.parse(hit);}catch(e){} }
   var p=fetchPrices_();
-  if (p){ cache.put('pricesTWD', JSON.stringify(p), 60); writePriceCache_(p); return p; }
-  return readPriceCache_();
+  if (p){ cache.put('pricesTWD', JSON.stringify(p), 30); writePriceCache_(p); return p; }
+  // 抓取失敗（例如被限流）：退回試算表舊價，但也快取 20 秒，
+  // 避免多位學生同時狂敲 CoinGecko、讓限流雪上加霜。
+  var fb=readPriceCache_();
+  try{ cache.put('pricesTWD', JSON.stringify(fb), 20); }catch(e){}
+  return fb;
 }
 function fetchPrices_(){
   try{
     var url='https://api.coingecko.com/api/v3/simple/price?ids=tether,bitcoin,ethereum&vs_currencies=twd';
-    var res=UrlFetchApp.fetch(url,{muteHttpExceptions:true});
+    var opt={muteHttpExceptions:true};
+    if (COINGECKO_KEY){ opt.headers={'x-cg-demo-api-key':COINGECKO_KEY}; }
+    var res=UrlFetchApp.fetch(url,opt);
     if (res.getResponseCode()!==200) return null;
     var d=JSON.parse(res.getContentText());
     return {usdt:d.tether.twd, btc:d.bitcoin.twd, eth:d.ethereum.twd, asof:new Date().toISOString()};
