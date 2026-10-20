@@ -11,5 +11,5 @@ window.EXCHANGE_API = "https://script.google.com/macros/s/AKfycbzsawmkym4WI83RSC
 window.EXCHANGE_CFG = {
   title: "資安幣圈模擬交易所",
   coins: ["BTC", "ETH"],
-  pollSeconds: 20           // 每隔幾秒自動更新一次幣價與帳戶
+  pollSeconds: 12           // 每隔幾秒自動更新一次幣價與帳戶（原為 20，調快）
 };
