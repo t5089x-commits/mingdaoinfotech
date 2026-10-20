@@ -3,724 +3,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>資安幣圈模擬交易所｜資訊安全導論</title>
+<title>資訊安全導論｜課程首頁</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css">
-<style>
-  /* ===== 交易所專用樣式（沿用資安課的 CSS 變數，深淺色自動切換）===== */
-  .xwrap{max-width:860px;margin:0 auto;padding:0 18px 60px}
-  .xcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:20px 22px;margin:16px 0}
-  .xcard h2{margin:0 0 14px;font-size:1.1rem;display:flex;align-items:center;gap:8px}
-  .muted{color:var(--text-soft)}
-  .faint{color:var(--text-faint);font-size:.82rem}
-  .row{display:flex;gap:12px;flex-wrap:wrap}
-  .row>*{flex:1 1 0}
-  label.fld{display:block;font-size:.84rem;color:var(--text-soft);margin:0 0 4px;font-weight:700}
-  input.in,select.in,textarea.in{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
-    background:var(--bg-elev);color:var(--text);font-family:var(--font);font-size:1rem}
-  textarea.in{resize:vertical;line-height:1.5}
-  input.in:focus,select.in:focus,textarea.in:focus{outline:2px solid var(--accent);border-color:transparent}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:none;
-    border-radius:var(--radius-sm);padding:12px 16px;font-family:var(--font);font-weight:800;font-size:1rem;
-    background:var(--brand);color:#fff;transition:.15s}
-  .btn:hover{background:var(--brand-strong)}
-  .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
-  .btn.buy{background:var(--ok)} .btn.sell{background:var(--danger)}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
-  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:.8rem;font-weight:800}
-  .pill.open{background:var(--brand-soft);color:var(--brand-strong)}
-  .pill.closed{background:var(--warn-soft);color:var(--warn)}
-  html[data-theme="dark"] .pill.open{background:#06312b;color:#5eead4}
-  html[data-theme="dark"] .pill.closed{background:#3a2a06;color:#fcd34d}
-  .tickers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .tick{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
-  .tick .c{font-weight:800;font-family:var(--mono)} .tick .p{font-size:1.3rem;font-weight:900;font-family:var(--mono);transition:color .15s}
-  .tick .p.up{animation:flashUp .9s ease-out} .tick .p.down{animation:flashDown .9s ease-out}
-  @keyframes flashUp{0%{color:var(--ok);text-shadow:0 0 14px rgba(22,163,74,.5)}100%{color:var(--text)}}
-  @keyframes flashDown{0%{color:var(--danger);text-shadow:0 0 14px rgba(220,38,38,.5)}100%{color:var(--text)}}
-  .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:5px;vertical-align:middle;animation:pulse 1.6s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-  .assets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
-  .stat{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
-  .stat .k{font-size:.78rem;color:var(--text-soft);font-weight:700} .stat .v{font-size:1.18rem;font-weight:900;font-family:var(--mono)}
-  .stat.big{grid-column:1/-1} .pos{color:var(--ok)} .neg{color:var(--danger)}
-  table.log{width:100%;border-collapse:collapse;font-size:.86rem}
-  table.log th,table.log td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:right}
-  table.log th:first-child,table.log td:first-child{text-align:left}
-  .msg{padding:10px 13px;border-radius:var(--radius-sm);font-size:.9rem;margin-top:10px;display:none}
-  .msg.err{background:var(--warn-soft);color:var(--warn);display:block}
-  .msg.ok{background:var(--brand-soft);color:var(--brand-strong);display:block}
-  html[data-theme="dark"] .msg.err{background:#3a2a06;color:#fcd34d}
-  html[data-theme="dark"] .msg.ok{background:#06312b;color:#5eead4}
-  .hide{display:none!important}
-  details.teacher{margin-top:18px;border:1px dashed var(--border);border-radius:var(--radius);padding:4px 16px;background:var(--surface-2)}
-  details.teacher summary{cursor:pointer;font-weight:800;padding:10px 0;color:var(--text-soft)}
-  /* 假廣告 */
-  .fakead{margin-top:14px;border:none;border-radius:var(--radius);padding:16px 18px;cursor:pointer;position:relative;overflow:hidden;
-    background:linear-gradient(120deg,#f59e0b,#ef4444 70%);color:#fff;box-shadow:0 8px 24px rgba(239,68,68,.35)}
-  .fakead b{font-size:1.15rem} .fakead .blink{animation:bk 1s steps(2) infinite}
-  @keyframes bk{50%{opacity:.35}}
-  .fakead .x{position:absolute;top:8px;right:11px;opacity:.75;font-size:.85rem}
-  /* 彈窗 */
-  .modal-bg{position:fixed;inset:0;background:rgba(5,10,20,.66);display:flex;align-items:center;justify-content:center;z-index:50;padding:18px}
-  .modal{background:var(--surface);border-radius:var(--radius);max-width:460px;width:100%;padding:24px;box-shadow:var(--shadow-lg);max-height:90vh;overflow:auto}
-  .scam .modal{border-top:6px solid #ef4444}
-  .reveal .modal{border-top:6px solid var(--brand)}
-  .big-emoji{font-size:2.4rem;text-align:center}
-  .footer-note{text-align:center;margin-top:30px}
-  /* 三選一選項卡 */
-  .opt{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:var(--radius-sm);
-    padding:12px 14px;margin-top:10px;cursor:pointer;background:var(--bg-elev);transition:.12s}
-  .opt:hover{border-color:#ef4444;transform:translateY(-1px);box-shadow:var(--shadow)}
-  .opt .oi{font-size:1.6rem;width:34px;text-align:center;flex:0 0 auto}
-  .opt .ot{flex:1 1 auto;font-size:.92rem} .opt .oa{color:#ef4444;font-weight:900;flex:0 0 auto}
-  /* 假 CAPTCHA */
-  .cap-head{display:flex;align-items:center;gap:8px;background:#ef4444;color:#fff;margin:-24px -24px 14px;
-    padding:14px 18px;border-radius:var(--radius) var(--radius) 0 0;font-size:1.02rem}
-  .cap-head .faint{color:rgba(255,255,255,.85)}
-  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-  .cap-tile{position:relative;aspect-ratio:1/1;border:2px solid var(--border);border-radius:8px;overflow:hidden;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--surface-2)}
-  .cap-tile img{width:100%;height:100%;object-fit:cover;display:block}
-  .cap-tile .emj{font-size:2rem}
-  .cap-tile .figname{width:100%;height:100%;align-items:center;justify-content:center;text-align:center;
-    padding:6px;font-weight:800;font-size:.92rem;background:var(--surface-2);color:var(--text)}
-  .cap-tile .chk{position:absolute;top:4px;left:4px;width:22px;height:22px;
-    background:#1a73e8;color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.8rem}
-  .cap-tile.sel{border-color:#1a73e8} .cap-tile.sel .chk{display:flex}
-  .cap-tile.sel img,.cap-tile.sel .emj{opacity:.78}
-  /* 假合約程式框 */
-  textarea.codebox{font-family:var(--mono);font-size:.82rem;background:var(--code-bg);color:var(--code-text);
-    border-color:#334155;line-height:1.5;white-space:pre;overflow-x:auto}
-  /* 分頁 */
-  .tabs{display:flex;gap:8px;margin-top:14px;border-top:1px solid var(--border);padding-top:12px}
-  .tab{flex:1 1 0;cursor:pointer;border:1px solid var(--border);background:var(--surface-2);color:var(--text-soft);
-    border-radius:var(--radius-sm);padding:10px;font-weight:800;font-size:.95rem}
-  .tab.active{background:var(--brand);color:#fff;border-color:transparent}
-  /* 三幣報價 */
-  .tickers3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .tickers3 .p{font-size:1.02rem}
-  .price-group{margin-bottom:12px}
-  .pg-title{font-weight:800;font-size:.88rem;color:var(--text-soft);margin:0 0 7px}
-  @media(max-width:560px){.tickers3{grid-template-columns:1fr 1fr 1fr}.tickers3 .p{font-size:.95rem}}
-  /* 排行榜 */
-  table.lb{width:100%;border-collapse:collapse;font-size:.9rem}
-  table.lb th,table.lb td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
-  table.lb td.num{text-align:right;font-family:var(--mono);font-weight:800;white-space:nowrap}
-  table.lb .nm{font-weight:700}
-  .lb-bar{height:7px;border-radius:4px;background:var(--brand);margin-top:5px;min-width:3px}
-  table.lb tr.me{background:var(--brand-soft)}
-  html[data-theme="dark"] table.lb tr.me{background:#06312b}
-  table.lb .rk{font-weight:900;color:var(--text-soft);width:30px;text-align:center}
-  /* 三張獨立廣告卡的配色 */
-  .fakead.ad-usdt{background:linear-gradient(120deg,#16a34a,#15803d 80%)}
-  .fakead.ad-btc{background:linear-gradient(120deg,#f7931a,#9a3412 85%)}
-  .fakead.ad-eth{background:linear-gradient(120deg,#6b7df0,#312e81 85%)}
-</style>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html"><span class="logo">資安</span><span>幣圈模擬交易所</span></a>
+    <a class="brand" href="index.html"><span class="logo">資安</span>
+      <span>資訊安全導論</span></a>
     <span class="spacer"></span>
-    <a class="nav-link" href="../index.html">返回課程</a>
     <button class="theme-toggle" onclick="toggleTheme()" title="切換深淺色">🌙</button>
   </div>
 </header>
 
-<main class="xwrap">
-
-  <!-- ========== 登入畫面 ========== -->
-  <section id="loginView">
-    <div class="xcard" style="margin-top:26px">
-      <h2>🔐 登入交易所</h2>
-      <p class="muted" style="margin-top:0">用你的<strong>學號</strong>和老師給的 <strong>PIN</strong> 登入，用虛擬台幣練習買賣加密貨幣。</p>
-      <div class="row">
-        <div><label class="fld">學號（當作你的帳號 ID）</label><input class="in" id="sid" inputmode="numeric" placeholder="例如 310215" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('pin').focus();}"></div>
-        <div><label class="fld">PIN（4 位數，老師發給你）</label><input class="in" id="pin" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}"></div>
-      </div>
-      <div style="margin-top:14px"><button class="btn" id="loginBtn" onclick="doLogin()">登入</button></div>
-      <div class="msg" id="loginMsg"></div>
-      <p class="faint" style="margin-top:16px">💡 <strong>資安小提醒：</strong>這裡用「學號＋PIN」只是課堂等級的身分驗證，擋得住同學隨手用你的學號下單，但不是真正安全的認證方式 —— 這學期我們會學到什麼才是（公私鑰、數位簽章、Passkey）。<strong>PIN 不要borrow給別人，也不要在別的網站用同一組。</strong></p>
-    </div>
-  </section>
-
-  <!-- ========== 交易畫面 ========== -->
-  <section id="appView" class="hide">
-
-    <div class="xcard">
-      <div class="row" style="align-items:center">
-        <div style="flex:2 1 0"><h2 style="margin:0">👋 <span id="hiName">—</span> <span class="faint">（<span id="hiSid"></span>）</span></h2></div>
-        <div style="flex:1 1 0;text-align:right">
-          <span id="tradeStatus" class="pill closed">查詢中…</span>
-          <button class="btn ghost" style="padding:7px 12px;margin-left:8px" onclick="logout()">登出</button>
-        </div>
-      </div>
-      <div class="tabs">
-        <button class="tab active" id="tabTradeBtn" onclick="switchTab('trade')">💱 我的交易</button>
-        <button class="tab" id="tabBoardBtn" onclick="switchTab('board')">🏆 全班排行榜</button>
-      </div>
-    </div>
-
-    <!-- ====== 交易分頁 ====== -->
-    <div id="paneTrade">
-      <div class="xcard">
-        <div class="price-group">
-          <div class="pg-title">💵 以台幣計價（用 TWD 買幣）</div>
-          <div class="tickers3">
-            <div class="tick"><div class="c">USDT / TWD</div><div class="p" id="pUSDT">—</div></div>
-            <div class="tick"><div class="c">₿ BTC / TWD</div><div class="p" id="pBTC">—</div></div>
-            <div class="tick"><div class="c">Ξ ETH / TWD</div><div class="p" id="pETH">—</div></div>
-          </div>
-        </div>
-        <div class="price-group">
-          <div class="pg-title">🪙 以泰達幣計價（用 USDT 買幣）</div>
-          <div class="tickers3">
-            <div class="tick"><div class="c">USDT / TWD</div><div class="p" id="pUSDT2">—</div></div>
-            <div class="tick"><div class="c">₿ BTC / USDT</div><div class="p" id="pBTCU">—</div></div>
-            <div class="tick"><div class="c">Ξ ETH / USDT</div><div class="p" id="pETHU">—</div></div>
-          </div>
-        </div>
-        <p class="faint" id="priceAsOf" style="margin:8px 0 0"><span class="live-dot"></span>即時幣價 · 讀取中…</p>
-      </div>
-
-      <!-- 假廣告掛載點（特別活動開啟時才出現；三關各一張卡） -->
-      <div id="adMount"></div>
-
-      <!-- 我的資產報表（台幣計） -->
-      <div class="xcard">
-        <h2>📊 我的資產報表（以台幣計）</h2>
-        <div class="assets">
-          <div class="stat"><div class="k">起始資金</div><div class="v" id="aStart">—</div></div>
-          <div class="stat"><div class="k">台幣現金 TWD</div><div class="v" id="aCash">—</div></div>
-          <div class="stat"><div class="k">USDT（市值）</div><div class="v" id="aUSDT">—</div></div>
-          <div class="stat"><div class="k">BTC（市值）</div><div class="v" id="aBTC">—</div></div>
-          <div class="stat"><div class="k">ETH（市值）</div><div class="v" id="aETH">—</div></div>
-          <div class="stat"><div class="k">總資產</div><div class="v" id="aEquity">—</div></div>
-          <div class="stat big"><div class="k">損益</div><div class="v" id="aPnl">—</div></div>
-        </div>
-      </div>
-
-      <!-- 兌換 / 下單 -->
-      <div class="xcard">
-        <h2>💱 兌換 / 下單（可用台幣或泰達幣買賣）</h2>
-        <div class="row">
-          <div><label class="fld">幣種</label>
-            <select class="in" id="oCoin" onchange="onCoinChange()"><option value="USDT">USDT 泰達幣</option><option value="BTC">BTC 比特幣</option><option value="ETH">ETH 以太幣</option></select></div>
-          <div><label class="fld">動作</label>
-            <select class="in" id="oSide"><option value="buy">買入</option><option value="sell">賣出</option></select></div>
-          <div><label class="fld">計價幣別（用什麼付/收）</label>
-            <select class="in" id="oQuote" onchange="onQuoteChange()"><option value="TWD">台幣 TWD</option><option value="USDT">泰達幣 USDT</option></select></div>
-          <div><label class="fld" id="oAmtLabel">金額（TWD）</label>
-            <input class="in" id="oTWD" inputmode="decimal" placeholder="例如 30000" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('oReason').focus();}"></div>
-        </div>
-        <p class="faint" id="pairHint" style="margin:6px 0 0"></p>
-        <div style="margin-top:12px">
-          <label class="fld">💬 為什麼現在這樣操作？（必填，至少 5 個字）</label>
-          <textarea class="in" id="oReason" rows="3" placeholder="說說你的判斷：看到什麼新聞／價格走勢？可以貼上連結，或用自己的話說明為什麼現在買／賣。"></textarea>
-        </div>
-        <div style="margin-top:14px"><button class="btn" id="orderBtn" onclick="doOrder()">送出委託</button>
-          <span class="faint" id="orderHint" style="margin-left:10px"></span></div>
-        <div class="msg" id="orderMsg"></div>
-      </div>
-
-      <!-- 我的歷史交易紀錄 -->
-      <div class="xcard">
-        <h2>🧾 我的歷史交易紀錄</h2>
-        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價</th><th>金額</th></tr></thead>
-          <tbody id="histRows"><tr><td colspan="6" class="muted" style="text-align:center">讀取中…</td></tr></tbody></table>
-        <p class="faint" style="margin-top:8px">包含你曾經被詐騙的紀錄（紅字 ⚠）。完整全班紀錄老師可在後台試算表查看。</p>
-      </div>
-    </div>
-
-    <!-- ====== 排行榜分頁 ====== -->
-    <div id="paneBoard" class="hide">
-      <div class="xcard">
-        <h2>🏆 全班資產排行榜（以台幣計）</h2>
-        <p class="faint" id="boardMeta" style="margin-top:0">讀取中…</p>
-        <div id="boardWrap"></div>
-        <p class="faint" style="margin-top:10px">為保護隱私，姓名顯示成「劉O華」。排行榜依目前總資產（台幣）排序。</p>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ========== 老師控制台 ========== -->
-  <details class="teacher">
-    <summary>🛠️ 老師控制台</summary>
-    <div id="tLogin">
-      <div class="row" style="align-items:flex-end">
-        <div><label class="fld">老師密碼</label><input class="in" id="tpw" type="password" placeholder="控制台密碼" onkeydown="if(event.key==='Enter'){event.preventDefault();teacherLogin();}"></div>
-        <div style="flex:0 0 auto"><button class="btn" onclick="teacherLogin()">進入</button></div>
-      </div>
-      <div class="msg" id="tMsg"></div>
-    </div>
-    <div id="tPanel" class="hide">
-      <div class="row" style="margin-top:6px">
-        <div class="stat"><div class="k">交易時段</div><div class="v"><span id="tTrade">—</span></div>
-          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('tradingOpen')">切換 開/關</button></div>
-      </div>
-      <p class="fld" style="margin:14px 0 4px">特別活動（三關各自獨立，建議分三週各開一關）</p>
-      <div class="row">
-        <div class="stat"><div class="k">① 現領 USDT</div><div class="v"><span id="tE1">—</span></div>
-          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventUsdt')">切換 開/關</button></div>
-        <div class="stat"><div class="k">② 辨識領 BTC</div><div class="v"><span id="tE2">—</span></div>
-          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventBtc')">切換 開/關</button></div>
-        <div class="stat"><div class="k">③ 智能合約 ETH</div><div class="v"><span id="tE3">—</span></div>
-          <button class="btn ghost" style="margin-top:8px;width:100%" onclick="tToggle('eventEth')">切換 開/關</button></div>
-      </div>
-      <div style="margin-top:14px"><button class="btn" onclick="teacherReport()">📈 看全班排行榜</button>
-        <span class="faint" id="tReportMeta" style="margin-left:10px"></span></div>
-      <div id="tReport" style="margin-top:12px"></div>
-      <p class="faint" style="margin-top:12px">提示：這些開關也可以直接在後台試算表的「設定」分頁、或「🏦 交易所管理」選單切換，效果相同。</p>
-    </div>
-  </details>
-
-  <div class="footer-note faint">
-    資訊安全導論 · 幣圈模擬交易所（課堂教學用）· 陳楷翔 老師<br>
-    這是教學模擬系統，所有貨幣與金額皆為虛擬，不涉及任何真實金流或投資。<br>
-    幣價資料來源：<a href="https://www.coingecko.com/" target="_blank" rel="noopener">CoinGecko</a>　·　Data provided by CoinGecko
+<section class="hero">
+  <span class="badge">陳楷翔 老師</span>
+  <h1>資訊安全導論　<span class="grad">學習網站</span></h1>
+  <p>從 2050 年的未來情境出發，一路回推到今天：數位身分、區塊鏈、比特幣、密碼學、數位簽章……這學期我們一起拆解「數位信任」是怎麼被一層層打造出來的。點選下方單元開始學習，每個單元都是獨立頁面。</p>
+  <div class="meta">
+    <span>📘 20 個教學單元</span>
+    <span>🔐 古典密碼到 RSA</span>
+    <span>⛓️ 區塊鏈與比特幣</span>
+    <span>🎯 專題式學習（PBL）</span>
   </div>
+</section>
+
+<main class="wrap">
+
+  <div class="section-title">
+    <span class="bar" style="background:var(--accent)"></span><h2>🔮 額外企劃</h2>
+    <span class="cnt">已上線</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="exchange/index.html">
+      <span class="arrow">→</span>
+      <div class="n">💰</div>
+      <h3>幣圈模擬交易所</h3>
+      <p>用學號＋PIN 登入，拿虛擬美元以真實即時幣價買賣 BTC／ETH，練習看懂資產報表、體驗加密貨幣市場的漲跌。上課期間由老師開放交易。</p>
+      <div class="tags"><span>額外企劃</span><span>即時幣價</span><span>實戰體驗</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 1 · 2050 未來與數位信任地圖</h2>
+    <span class="cnt">單元 0–7（含附）</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit00.html" data-unit="0">
+      <span class="arrow">→</span>
+      <div class="n">00</div>
+      <h3>一支 iPhone 的背後：科技、供應鏈、AI 取代人類與資訊安全</h3>
+      <p>正式課程開始前的前導單元：從 iPhone 供應鏈拆解利益分配（附公開財報數據），帶到 2050 AI 自動化情境、盧德運動，最後收回資訊安全。</p>
+      <div class="tags"><span>前導單元</span><span>供應鏈</span><span>盧德運動</span></div>
+    </a>
+    <a class="ucard" href="unit01.html" data-unit="1">
+      <span class="arrow">→</span>
+      <div class="n">01</div>
+      <h3>課程介紹＋2050 未來情境</h3>
+      <p>認識整學期的學習地圖、評量方式，並用「2050 年的一天」描繪未來資訊科技情境，帶出資安主題。</p>
+      <div class="tags"><span>課程地圖</span><span>評量方式</span><span>2050情境</span></div>
+    </a>
+    <a class="ucard" href="unit02.html" data-unit="2">
+      <span class="arrow">→</span>
+      <div class="n">02</div>
+      <h3>Web1.0 → 3.0 演進</h3>
+      <p>從唯讀的 Web1.0、互動共享的 Web2.0，到強調自主與去中心化的 Web3.0，建立本學期主軸。</p>
+      <div class="tags"><span>Web演進</span><span>去中心化</span><span>主軸地圖</span></div>
+    </a>
+    <a class="ucard" href="unit03.html" data-unit="3">
+      <span class="arrow">→</span>
+      <div class="n">03</div>
+      <h3>數位身分與數位錢包</h3>
+      <p>從帳號密碼到去中心化身分（DID），認識數位身分與數位錢包的生活案例。</p>
+      <div class="tags"><span>數位身分</span><span>數位錢包</span><span>DID</span></div>
+    </a>
+    <a class="ucard" href="unit04.html" data-unit="4">
+      <span class="arrow">→</span>
+      <div class="n">04</div>
+      <h3>區塊鏈是什麼</h3>
+      <p>認識區塊鏈技術目前實際應用在哪些地方，再拆解區塊、鏈結、雜湊如何組成「不可竄改」的帳本，以及 Merkle Tree 的驗證概念。</p>
+      <div class="tags"><span>區塊</span><span>鏈結</span><span>不可竄改</span></div>
+    </a>
+    <a class="ucard" href="unit05.html" data-unit="5">
+      <span class="arrow">→</span>
+      <div class="n">05</div>
+      <h3>Hash 與資料完整性</h3>
+      <p>雜湊函數的單向特性、SHA-256 實作體驗、Merkle Tree 如何驗證巨型檔案完整性。</p>
+      <div class="tags"><span>雜湊函數</span><span>SHA-256</span><span>資料完整性</span></div>
+    </a>
+    <a class="ucard" href="unit06.html" data-unit="6">
+      <span class="arrow">→</span>
+      <div class="n">06</div>
+      <h3>虛擬貨幣與比特幣</h3>
+      <p>比特幣如何從白皮書走到「數位黃金」：發展時間軸、技術回顧（扣回單元 4、5）、以及未來用途與限制。</p>
+      <div class="tags"><span>Bitcoin</span><span>發展史</span><span>數位黃金</span></div>
+    </a>
+    <a class="ucard" href="unit07.html" data-unit="7">
+      <span class="arrow">→</span>
+      <div class="n">07</div>
+      <h3>Ethereum 與智能合約</h3>
+      <p>從「帳本」進化到「可執行程式」，認識以太坊、智能合約與 DApp；加入 The DAO 駭客事件與 ETH／ETC 分叉。</p>
+      <div class="tags"><span>Ethereum</span><span>智能合約</span><span>The DAO</span></div>
+    </a>
+    <a class="ucard" href="unit07b.html" data-unit="7">
+      <span class="arrow">→</span>
+      <div class="n">附</div>
+      <h3>穩定幣與 USDT</h3>
+      <p>為什麼有「不太會動」的加密貨幣？用 USDT 認識穩定幣的三種做法、信任轉折，與 Terra／UST 崩盤。</p>
+      <div class="tags"><span>穩定幣</span><span>USDT</span><span>脫鉤風險</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 2 · 密碼學與信任技術（專題並行）</h2>
+    <span class="cnt">單元 8–12</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit08.html" data-unit="8">
+      <span class="arrow">→</span>
+      <div class="n">08</div>
+      <h3>定期評量</h3>
+      <p>第一階段（未來情境／數位信任地圖）學習內容的定期評量。</p>
+      <div class="tags"><span>評量</span></div>
+    </a>
+    <a class="ucard" href="unit09.html" data-unit="9">
+      <span class="arrow">→</span>
+      <div class="n">09</div>
+      <h3>專題啟動（PBL）</h3>
+      <p>專題式學習啟動：三種路線（技術實作／議題研究／未來機制發想）任選，題目發想、分組。</p>
+      <div class="tags"><span>PBL</span><span>三種路線</span><span>學習歷程</span></div>
+    </a>
+    <a class="ucard" href="unit10.html" data-unit="10">
+      <span class="arrow">→</span>
+      <div class="n">10</div>
+      <h3>古典密碼學（傳統密碼）</h3>
+      <p>換位法、替代法、凱薩加密、單字母／多字母加密到轉輪機 Enigma，體驗密碼與破密的攻防。</p>
+      <div class="tags"><span>凱薩加密</span><span>維吉尼亞</span><span>Enigma</span></div>
+    </a>
+    <a class="ucard" href="unit11.html" data-unit="11">
+      <span class="arrow">→</span>
+      <div class="n">11</div>
+      <h3>公開金鑰密碼學（非對稱）</h3>
+      <p>非對稱加密的公私鑰概念、RSA 的數學原理與實例演算，回扣比特幣的地址／私鑰。</p>
+      <div class="tags"><span>RSA</span><span>公私鑰</span><span>非對稱加密</span></div>
+    </a>
+    <a class="ucard" href="unit12.html" data-unit="12">
+      <span class="arrow">→</span>
+      <div class="n">12</div>
+      <h3>電子簽章與數位憑證</h3>
+      <p>數位簽章如何證明「你是你」、憑證中心（CA）與信任鏈，以及 HTTPS 連線的四個步驟。</p>
+      <div class="tags"><span>數位簽章</span><span>CA憑證</span><span>HTTPS</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 3 · 專題成果製作與發表</h2>
+    <span class="cnt">單元 13–15</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit13.html" data-unit="13">
+      <span class="arrow">→</span>
+      <div class="n">13</div>
+      <h3>成果製作（一）</h3>
+      <p>專題成果的架構設計與內容產出，分組實作與老師巡迴指導。</p>
+      <div class="tags"><span>架構設計</span><span>分組指導</span></div>
+    </a>
+    <a class="ucard" href="unit14.html" data-unit="14">
+      <span class="arrow">→</span>
+      <div class="n">14</div>
+      <h3>成果製作（二）</h3>
+      <p>延續上一堂的架構與內容產出，持續完善專題素材與呈現方式。</p>
+      <div class="tags"><span>內容產出</span><span>分組指導</span></div>
+    </a>
+    <a class="ucard" href="unit15.html" data-unit="15">
+      <span class="arrow">→</span>
+      <div class="n">15</div>
+      <h3>成果製作（三）＋發表</h3>
+      <p>完成簡報、進行口頭發表，並以多元評量方式互評與總結。</p>
+      <div class="tags"><span>簡報</span><span>口頭發表</span><span>多元評量</span></div>
+    </a>
+  </div>
+
+  <div class="section-title">
+    <span class="bar"></span><h2>Part 4 · 未來資安與數位社會</h2>
+    <span class="cnt">單元 16–20</span>
+  </div>
+  <div class="unit-cards">
+    <a class="ucard" href="unit16.html" data-unit="16">
+      <span class="arrow">→</span>
+      <div class="n">16</div>
+      <h3>AI 與資訊安全</h3>
+      <p>生成式 AI 帶來的深偽（Deepfake）與 AI 詐騙手法，以及可以怎麼辨識與防範。</p>
+      <div class="tags"><span>Deepfake</span><span>AI詐騙</span><span>辨識技巧</span></div>
+    </a>
+    <a class="ucard" href="unit17.html" data-unit="17">
+      <span class="arrow">→</span>
+      <div class="n">17</div>
+      <h3>Web3 資安風險</h3>
+      <p>釣魚錢包、Rug Pull 等 Web3 特有的詐騙手法，搭配 165 反詐騙的在地案例。</p>
+      <div class="tags"><span>釣魚錢包</span><span>RugPull</span><span>165反詐騙</span></div>
+    </a>
+    <a class="ucard" href="unit18.html" data-unit="18">
+      <span class="arrow">→</span>
+      <div class="n">18</div>
+      <h3>零信任與未來資安</h3>
+      <p>從「猜密碼」走向零信任架構：Passkey、生物辨識與無密碼登入的設計思維。</p>
+      <div class="tags"><span>零信任</span><span>Passkey</span><span>生物辨識</span></div>
+    </a>
+    <a class="ucard" href="unit19.html" data-unit="19">
+      <span class="arrow">→</span>
+      <div class="n">19</div>
+      <h3>未來數位社會</h3>
+      <p>央行數位貨幣（CBDC）、數位皮夾與數位身分治理，回到 2050 情境收束全學期。</p>
+      <div class="tags"><span>CBDC</span><span>數位皮夾</span><span>身分治理</span></div>
+    </a>
+    <a class="ucard" href="unit20.html" data-unit="20">
+      <span class="arrow">→</span>
+      <div class="n">20</div>
+      <h3>課程總整理＋期末複習</h3>
+      <p>從 2050 的未來回看：這學期學過的密碼學與資安機制，如何一路撐起數位信任。</p>
+      <div class="tags"><span>總複習</span><span>數位信任</span><span>學期回顧</span></div>
+    </a>
+  </div>
+
 </main>
 
-<script src="config.js"></script>
-<script>
-/* ---------- 基本：深淺色切換（本頁自帶，不載入單元鎖定腳本）---------- */
-function toggleTheme(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
-  try{localStorage.setItem('xtheme',h.getAttribute('data-theme'));}catch(e){}}
-try{var _t=localStorage.getItem('xtheme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}
-
-/* ---------- 狀態 ---------- */
-var SESS=null;         // {sid, token, name, start}
-var LAST=null;         // 最近一次 state
-var PREV={usdt:null,btc:null,eth:null,btcU:null,ethU:null};   // 上一次幣價（判斷漲跌、跳動效果）
-var CURTAB='trade';
-var pollTimer=null;
-var API=window.EXCHANGE_API||'';
-var CFG=window.EXCHANGE_CFG||{pollSeconds:20};
-
-/* ---------- API 呼叫（text/plain 避免 CORS 預檢）---------- */
-function api(payload){
-  if(!API||API.indexOf('script.google.com')<0){
-    return Promise.resolve({ok:false,error:'尚未設定後端網址（請老師編輯 config.js）'});
-  }
-  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
-    .then(function(r){return r.json();})
-    .catch(function(e){return {ok:false,error:'連線失敗，請檢查網路或後端網址'};});
-}
-
-function twd(n){return 'NT$'+Math.round(Number(n)||0).toLocaleString('en-US');}        // 台幣，整數
-function twd2(n){return 'NT$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});} // USDT 價
-function usdtP(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2})+' USDT';}  // 以 USDT 計價
-function q8(n){return (Number(n)||0).toFixed(8).replace(/0+$/,'').replace(/\.$/,'')||'0';}
-function showMsg(id,text,kind){var el=document.getElementById(id);el.textContent=text;el.className='msg '+(kind||'err');}
-function clearMsg(id){var el=document.getElementById(id);el.className='msg';el.textContent='';}
-function setTick(id, val, prev, fmt){
-  var el=document.getElementById(id); if(!el)return;
-  el.textContent=(fmt||twd)(val);
-  if(prev!=null && val!==prev){
-    var cls=val>prev?'up':'down';
-    el.classList.remove('up','down'); void el.offsetWidth;
-    el.classList.add(cls);
-  }
-}
-
-/* ---------- 登入 / 登出 ---------- */
-function doLogin(){
-  var sid=document.getElementById('sid').value.trim();
-  var pin=document.getElementById('pin').value.trim();
-  if(!sid||!pin){showMsg('loginMsg','請輸入學號和 PIN');return;}
-  document.getElementById('loginBtn').disabled=true;
-  api({action:'login',sid:sid,pin:pin}).then(function(r){
-    document.getElementById('loginBtn').disabled=false;
-    if(!r.ok){showMsg('loginMsg',r.error||'登入失敗');return;}
-    SESS={sid:sid,token:r.token,name:r.name,start:(r.start!=null?r.start:r.account.twd)};
-    try{sessionStorage.setItem('xsess',JSON.stringify(SESS));}catch(e){}
-    enterApp(r);
-  });
-}
-function logout(){SESS=null;try{sessionStorage.removeItem('xsess');}catch(e){}
-  if(pollTimer)clearInterval(pollTimer);
-  document.getElementById('appView').classList.add('hide');
-  document.getElementById('loginView').classList.remove('hide');}
-
-function enterApp(r){
-  document.getElementById('loginView').classList.add('hide');
-  document.getElementById('appView').classList.remove('hide');
-  document.getElementById('hiName').textContent=SESS.name;
-  document.getElementById('hiSid').textContent=SESS.sid;
-  render(r);
-  onCoinChange();
-  loadHistory();
-  if(pollTimer)clearInterval(pollTimer);
-  pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);
-}
-function refresh(){ if(!SESS)return;
-  api({action:'state',sid:SESS.sid,token:SESS.token}).then(function(r){ if(r.ok)render(r); });
-}
-
-/* ---------- 畫面渲染 ---------- */
-function render(r){
-  LAST=r;
-  if(r.start!=null&&SESS){SESS.start=r.start;}
-  var pr=r.prices||{usdt:0,btc:0,eth:0}, a=r.account||{twd:0,usdt:0,btc:0,eth:0}, S=r.settings||{};
-  setTick('pUSDT', pr.usdt, PREV.usdt, twd2); setTick('pUSDT2', pr.usdt, PREV.usdt, twd2);
-  setTick('pBTC', pr.btc, PREV.btc); setTick('pETH', pr.eth, PREV.eth);
-  var bU=pr.usdt?pr.btc/pr.usdt:0, eU=pr.usdt?pr.eth/pr.usdt:0;
-  setTick('pBTCU', bU, PREV.btcU, usdtP); setTick('pETHU', eU, PREV.ethU, usdtP);
-  PREV.usdt=pr.usdt; PREV.btc=pr.btc; PREV.eth=pr.eth; PREV.btcU=bU; PREV.ethU=eU;
-  // 「幣價更新於…」顯示後端（＝試算表）實際抓到幣價的時間，含日期
-  if(pr.btc>0){
-    var d=pr.asof?new Date(pr.asof):new Date();
-    var Y=d.getFullYear(),Mo=('0'+(d.getMonth()+1)).slice(-2),D=('0'+d.getDate()).slice(-2);
-    var hh=('0'+d.getHours()).slice(-2),mm=('0'+d.getMinutes()).slice(-2),ss=('0'+d.getSeconds()).slice(-2);
-    document.getElementById('priceAsOf').innerHTML='<span class="live-dot"></span>即時幣價 · 幣價更新於 '+Y+'/'+Mo+'/'+D+' '+hh+':'+mm+':'+ss;
-  }
-  // 交易時段
-  var open=!!S.tradingOpen;
-  var st=document.getElementById('tradeStatus');
-  st.textContent=open?'🟢 交易時段 開放中':'🔴 交易關閉（非上課時間）';
-  st.className='pill '+(open?'open':'closed');
-  document.getElementById('orderBtn').disabled=!open;
-  document.getElementById('orderHint').textContent=open?'':'老師尚未開放交易時段';
-  // 資產（台幣計）
-  var usdtVal=a.usdt*pr.usdt, btcVal=a.btc*pr.btc, ethVal=a.eth*pr.eth;
-  var equity=a.twd+usdtVal+btcVal+ethVal;
-  var start=SESS.start||1000000;
-  document.getElementById('aStart').textContent=twd(start);
-  document.getElementById('aCash').textContent=twd(a.twd);
-  document.getElementById('aUSDT').textContent=q8(a.usdt)+' 💵　'+twd(usdtVal);
-  document.getElementById('aBTC').textContent=q8(a.btc)+' ₿　'+twd(btcVal);
-  document.getElementById('aETH').textContent=q8(a.eth)+' Ξ　'+twd(ethVal);
-  document.getElementById('aEquity').textContent=twd(equity);
-  var pnl=equity-start, pct=start?(pnl/start*100):0;
-  var pe=document.getElementById('aPnl');
-  pe.textContent=(pnl>=0?'▲ +':'▼ ')+twd(Math.abs(pnl))+'　('+(pnl>=0?'+':'')+pct.toFixed(2)+'%)';
-  pe.className='v '+(pnl>=0?'pos':'neg');
-  // 特別活動：三張獨立廣告卡（依三個開關 + 已中招關卡決定；不看是否持有）
-  renderAd(S.events||{}, a.caught||'', S.phishBait||50000);
-}
-
-/* ---------- 下單 ---------- */
-/* 幣種/計價幣別變動時的連動與提示 */
-function onCoinChange(){
-  var coin=document.getElementById('oCoin').value;
-  var qs=document.getElementById('oQuote');
-  var usdtOpt=qs.querySelector('option[value="USDT"]');
-  if(coin==='USDT'){ qs.value='TWD'; qs.disabled=true; if(usdtOpt)usdtOpt.disabled=true; }
-  else { qs.disabled=false; if(usdtOpt)usdtOpt.disabled=false; }
-  onQuoteChange();
-}
-function onQuoteChange(){
-  var coin=document.getElementById('oCoin').value;
-  var q=document.getElementById('oQuote').value;
-  document.getElementById('oAmtLabel').textContent='金額（'+(q==='USDT'?'USDT':'TWD')+'）';
-  var h=document.getElementById('pairHint');
-  if(coin==='USDT'){ h.textContent='USDT 只能用台幣買賣。'; }
-  else { h.textContent='用「'+(q==='USDT'?'泰達幣 USDT':'台幣 TWD')+'」買賣 '+coin+'。'; }
-}
-function doOrder(){
-  clearMsg('orderMsg');
-  var coin=document.getElementById('oCoin').value;
-  var side=document.getElementById('oSide').value;
-  var quote=document.getElementById('oQuote').value;
-  var amt=parseFloat(document.getElementById('oTWD').value);
-  if(!(amt>0)){showMsg('orderMsg','請輸入大於 0 的金額');return;}
-  var reason=document.getElementById('oReason').value.trim();
-  if(reason.length<5){showMsg('orderMsg','送出前請先寫下你這筆下單的理由（至少 5 個字，可貼連結或自己說明）');document.getElementById('oReason').focus();return;}
-  document.getElementById('orderBtn').disabled=true;
-  api({action:'order',sid:SESS.sid,token:SESS.token,side:side,coin:coin,quote:quote,amount:amt,reason:reason}).then(function(r){
-    document.getElementById('orderBtn').disabled=false;
-    if(!r.ok){showMsg('orderMsg',r.error||'下單失敗');return;}
-    var f=r.filled; var pf=(f.quote==='USDT')?usdtP(f.price):twd(f.price);
-    showMsg('orderMsg','✅ 已成交：'+(f.side==='buy'?'買入':'賣出')+' '+q8(f.qty)+' '+f.coin+'（成交價 '+pf+'）','ok');
-    render({prices:r.prices,account:r.account,settings:(LAST&&LAST.settings)||{},start:SESS.start});
-    loadHistory();
-    document.getElementById('oTWD').value='';
-    document.getElementById('oReason').value='';
-  });
-}
-/* ---------- 分頁切換 ---------- */
-function switchTab(t){
-  CURTAB=t;
-  document.getElementById('paneTrade').classList.toggle('hide', t!=='trade');
-  document.getElementById('paneBoard').classList.toggle('hide', t!=='board');
-  document.getElementById('tabTradeBtn').classList.toggle('active', t==='trade');
-  document.getElementById('tabBoardBtn').classList.toggle('active', t==='board');
-  if(t==='board') loadBoard();
-}
-/* ---------- 我的歷史交易紀錄（含被詐騙） ---------- */
-function loadHistory(){
-  if(!SESS)return;
-  api({action:'history',sid:SESS.sid,token:SESS.token}).then(function(r){
-    var tb=document.getElementById('histRows'); if(!tb)return;
-    if(!r.ok||!r.rows||!r.rows.length){tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">尚無紀錄</td></tr>';return;}
-    tb.innerHTML=r.rows.map(function(x){
-      var note=String(x.note||'');
-      var scam=note.indexOf('⚠')>=0;
-      var inUsdt=note.indexOf('USDT計價')>=0;
-      var pf=inUsdt?usdtP(x.price):twd(x.price);
-      var af=inUsdt?usdtP(x.amt):twd(x.amt);
-      if(scam){
-        return '<tr style="color:var(--danger)"><td>'+x.t+'</td><td>⚠ 被詐騙</td><td>'+x.coin+'</td><td>-'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>-'+twd(x.amt)+'</td></tr>';
-      }
-      return '<tr><td>'+x.t+'</td><td>'+x.act+(inUsdt?'<span class="faint">·U</span>':'')+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+pf+'</td><td>'+af+'</td></tr>';
-    }).join('');
-  });
-}
-/* ---------- 全班排行榜 ---------- */
-function loadBoard(){
-  document.getElementById('boardMeta').textContent='讀取中…';
-  api({action:'board',sid:SESS.sid,token:SESS.token}).then(function(r){
-    if(!r.ok){document.getElementById('boardMeta').textContent=r.error||'讀取失敗';return;}
-    var list=r.board||[]; var max=list.length?list[0].twd:1; if(max<=0)max=1;
-    document.getElementById('boardMeta').textContent='共 '+list.length+' 人 · 依目前總資產排序';
-    var rows=list.map(function(x,i){
-      var me=(x.sid===SESS.sid);
-      var w=Math.max(3, Math.round(x.twd/max*100));
-      return '<tr'+(me?' class="me"':'')+'><td class="rk">'+(i+1)+'</td>'+
-        '<td><span class="nm">'+x.name+'</span> <span class="faint">'+x.sid+'</span>'+
-        '<div class="lb-bar" style="width:'+w+'%"></div></td>'+
-        '<td class="num">'+twd(x.twd)+'</td></tr>';
-    }).join('');
-    document.getElementById('boardWrap').innerHTML=
-      '<table class="lb"><thead><tr><th class="rk">#</th><th>學號 · 姓名</th><th style="text-align:right">總資產(TWD)</th></tr></thead><tbody>'+rows+'</tbody></table>';
-  });
-}
-
-/* ================= 資安事件：釣魚演練 =================
-   安全設計：假頁面的輸入框只是「演示」，送出時前端完全不讀取、也不傳送
-   任何欄位內容；後端只記錄「這位同學點了/送了」這個動作並套用遊戲內後果。
-   任何時候都沒有蒐集或儲存密碼。 */
-var AD_BAIT=50000;
-/* 哪幾關有開、且這位同學還沒中過招（不看是否持有；沒持有者也看得到，點了才提示去買） */
-function availVariants(events, caught){
-  var caughtList = caught? String(caught).split(','):[];
-  return ['usdt','btc','eth'].filter(function(k){ return events[k] && caughtList.indexOf(k)<0; });
-}
-var AD_META={
-  usdt:{cls:'ad-usdt', title:'🎁 限時福利！幣圈福利社', sub:'驗證身分，立刻免費領取 {B} USDT 到你的帳戶！名額有限，手刀點我 →'},
-  btc :{cls:'ad-btc',  title:'🏫 明道中學推廣虛擬貨幣！', sub:'證明你是明道學生，就免費送你一筆 BTC 獎勵金！點我領取 →'},
-  eth :{cls:'ad-eth',  title:'📜 明道中學 智能合約獎勵計畫', sub:'參與執行一份智能合約，完成即賺 ETH 報酬！點我參加 →'}
-};
-function renderAd(events, caught, bait){
-  AD_BAIT=bait; var m=document.getElementById('adMount'); events=events||{};
-  var avail=availVariants(events, caught);
-  var anyOn=events.usdt||events.btc||events.eth;
-  if(avail.length>0){
-    m.innerHTML=avail.map(function(k){var M=AD_META[k];
-      return '<div class="fakead '+M.cls+'" onclick="adClick(\''+k+'\')"><span class="x">廣告 ✕</span>'+
-        '<b>'+M.title+'</b><br>'+M.sub.replace('{B}',bait)+'</div>';
-    }).join('');
-  } else if(anyOn && caught){
-    m.innerHTML='<div class="xcard" style="border-color:var(--danger)"><h2 style="color:var(--danger)">💀 你已經被詐騙過了</h2><p class="muted" style="margin:0">剛才那個「免費領投資金」的廣告是假的，你被偷走的幣已經拿不回來了。等一下老師會帶大家一起看：那個廣告有哪些破綻？為什麼「免費送錢」永遠是詐騙？以後在真實世界看到類似訊息該怎麼辦？</p></div>';
-  } else {
-    m.innerHTML='';
-  }
-}
-function modalBg(id,cls){var bg=document.createElement('div');bg.className='modal-bg '+cls;bg.id=id;document.body.appendChild(bg);return bg;}
-/* 點某張廣告卡 → 沒有該幣就提示去買；有的話記錄點擊 → 進該關 */
-function adClick(variant){
-  var coin=variant==='btc'?'BTC':(variant==='eth'?'ETH':'USDT');
-  var acc=(LAST&&LAST.account)||{};
-  var have=coin==='BTC'?acc.btc:(coin==='ETH'?acc.eth:acc.usdt);
-  if(!(have>0)){ needCoinModal(coin); return; }   // 沒持有該幣 → 直接提示去兌換，不進詐騙流程
-  api({action:'phishClick',sid:SESS.sid,token:SESS.token}).then(function(r){
-    pick(variant, (r&&r.baitUSD)||AD_BAIT);
-  });
-}
-function pick(v,bait){ if(v==='usdt')pickUSDT(bait); else if(v==='btc')pickBTC(bait); else pickETH(bait); }
-/* 選項 1：USDT 直接領（假表單釣帳密） */
-function pickUSDT(bait){
-  closeModal(); var bg=modalBg('scamModal','scam');
-  bg.innerHTML='<div class="modal"><div class="big-emoji">💵</div>'+
-   '<h2 style="text-align:center;margin:6px 0 2px">現領 USDT</h2>'+
-   '<p class="muted" style="text-align:center;margin-top:0">只要「驗證身分」就能立即入帳 <b>$'+bait+' USDT</b> 👇</p>'+
-   '<label class="fld">學號</label><input class="in" placeholder="輸入學號">'+
-   '<label class="fld" style="margin-top:8px">交易 PIN（驗證身分用）</label><input class="in" type="password" placeholder="輸入你的 PIN">'+
-   '<button class="btn" style="width:100%;margin-top:14px;background:#ef4444" onclick="phishSubmit(\'usdt\')">✅ 立即領取 $'+bait+'</button>'+
-   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button></div>';
-}
-/* ★ 正確答案＝大久校長的照片（證明你是明道學生才有資格領 BTC）。
-   ※ 這些校長照片請老師自己放：把圖片檔放進 exchange/img/，命名為
-     daju1.png、daju2.png、daju3.png（要幾張都可以，照下面陣列調整）。
-     在圖片放進去之前，格子會自動顯示「大久校長」四個字當後援，不會破圖。
-   干擾項（假的）＝下面 HISTORY_FIGURES 的歷史人物，直接連維基百科公眾領域圖片。 */
-var LEADER_IMAGES=[
-  {src:'img/daju1.png', zh:'大久校長', pos:'center 22%'},
-  {src:'img/daju2.png', zh:'大久校長', pos:'center 20%'},
-  {src:'img/daju3.png', zh:'大久校長', pos:'center 30%'}
-];
-var HISTORY_FIGURES=[
-  {zh:'愛因斯坦', file:'Einstein_1921_by_F_Schmutzer_-_restoration.jpg', pos:'center 18%'},
-  {zh:'牛頓',     file:'GodfreyKneller-IsaacNewton-1689.jpg',           pos:'center 22%'},
-  {zh:'達爾文',   file:'Charles_Darwin_seated_crop.jpg',                pos:'center 20%'},
-  {zh:'林肯',     file:'Abraham_Lincoln_O-77_matte_collodion_print.jpg',pos:'center 28%'},
-  {zh:'莎士比亞', file:'Shakespeare.jpg',                               pos:'center 18%'},
-  {zh:'貝多芬',   file:'Beethoven.jpg',                                 pos:'center 22%'},
-  {zh:'甘地',     file:'Mahatma-Gandhi,_studio,_1931.jpg',             pos:'center 22%'},
-  {zh:'居禮夫人', file:'Marie_Curie_c._1920s.jpg',                      pos:'center 20%'},
-  {zh:'拿破崙',   file:'Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg', pos:'center 18%'},
-  {zh:'孫中山',   file:'Sun_Yat-sen_2.jpg',                             pos:'center 18%'}
-];
-function figUrl(f){ return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f)+'?width=400'; }
-function shuffle_(a){ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
-function capTile(t){
-  var inner;
-  if(t.img!=null){
-    inner='<img src="'+t.img+'" alt="" style="object-position:'+(t.pos||'center 20%')+'" '+
-      'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
-      '<span class="figname" style="display:none">'+t.zh+'</span>';
-  } else { inner='<span class="emj">'+t.e+'</span>'; }
-  return '<div class="cap-tile" onclick="this.classList.toggle(\'sel\')">'+inner+'<span class="chk">✓</span></div>';
-}
-/* 選項 2：BTC 真人驗證（假 CAPTCHA）——選出大久校長(正解)，歷史人物當假選項 */
-function pickBTC(bait){
-  closeModal(); var bg=modalBg('scamModal','scam');
-  var corr=LEADER_IMAGES.map(function(L){return {img:L.src, zh:L.zh, pos:L.pos};});
-  var deco=shuffle_(HISTORY_FIGURES.slice()).slice(0, 9-corr.length)
-            .map(function(F){return {img:figUrl(F.file), zh:F.zh, pos:F.pos};});
-  var tiles=shuffle_(corr.concat(deco));
-  var grid=tiles.map(capTile).join('');
-  bg.innerHTML='<div class="modal"><div class="cap-head"><span class="live-dot"></span><b>驗證你不是機器人</b><span class="faint" style="margin-left:auto">幣圈福利社 reCAPTCHA</span></div>'+
-   '<div class="xcard" style="margin:0 0 10px;background:var(--surface-2)"><p style="margin:0;font-size:.92rem">🏫 <b>明道中學推廣虛擬貨幣！</b>為鼓勵同學認識區塊鏈，特別發放一筆 <b>BTC 獎勵金</b>。限「已持有 BTC」的明道同學領取——請先證明你是明道的學生 👇</p></div>'+
-   '<p class="fld">請選出所有「大久校長」的照片（證明你是明道學生）</p>'+
-   '<div class="cap-grid">'+grid+'</div>'+
-   '<button class="btn" style="width:100%;margin-top:12px;background:#ef4444" onclick="pickBTCclaim('+bait+')">驗證並前往領取</button>'+
-   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button></div>';
-}
-/* BTC 第二步：驗證「通過」後，要你輸入學號＋PIN 才能領取（釣帳密） */
-function pickBTCclaim(bait){
-  closeModal(); var bg=modalBg('scamModal','scam');
-  bg.innerHTML='<div class="modal"><div class="big-emoji">✅ ₿</div>'+
-   '<h2 style="text-align:center;margin:6px 0 2px">驗證通過！領取 BTC 獎勵</h2>'+
-   '<p class="muted" style="text-align:center;margin-top:0">確認你是明道的同學了 🎉<br>最後一步：輸入學號與 PIN 驗證身分，BTC 就會匯入你的帳戶 👇</p>'+
-   '<label class="fld">學號</label><input class="in" placeholder="輸入學號">'+
-   '<label class="fld" style="margin-top:8px">交易 PIN（驗證身分用）</label><input class="in" type="password" placeholder="輸入你的 PIN">'+
-   '<button class="btn" style="width:100%;margin-top:14px;background:#ef4444" onclick="phishSubmit(\'btc\')">✅ 領取我的 BTC 獎勵</button>'+
-   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button></div>';
-}
-/* 選項 3：ETH 智能合約（把學號/PIN 填進合約 + approve 授權盜領／盲簽） */
-function pickETH(bait){
-  closeModal(); var bg=modalBg('scamModal','scam');
-  var code='// 明道中學 智能合約獎勵計畫\ncontract MingdaoReward {\n  function execute() {\n    verifyStudent(學號: "在這裡填入學號", PIN: "在這裡填入PIN");\n    approve(0xF0D3She, msg.sender.allAssets);   // 授權對方動用你的資產\n    transfer(你的全部 ETH -> 0xF0D3She);\n    reward(你, "'+bait+' ETH");\n  }\n}';
-  bg.innerHTML='<div class="modal"><div class="big-emoji">Ξ📜</div>'+
-   '<h2 style="text-align:center;margin:6px 0 2px">協助完成智能合約</h2>'+
-   '<p class="muted" style="text-align:center;margin-top:0">明道中學正在推動智能合約專案，需要同學一起協作完成！<br>請在下面合約的 <code>verifyStudent(...)</code> 裡填入你的<b>學號與 PIN</b>，再按「執行合約」，就能領到 ETH 報酬 👇<br><span class="faint">（限已持有 ETH 的同學參加）</span></p>'+
-   '<p class="fld">智能合約內容（把學號、PIN 填進去就好）</p>'+
-   '<textarea class="in codebox" rows="8">'+code+'</textarea>'+
-   '<button class="btn" style="width:100%;margin-top:12px;background:#ef4444" onclick="phishSubmit(\'eth\')">✅ 執行合約並領取 ETH</button>'+
-   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">返回</button>'+
-   '<p class="faint" style="margin-top:8px">※ 看不懂沒關係，把學號 PIN 填好、送出就好。</p></div>';
-}
-function needCoinModal(coin){
-  var bg=modalBg('scamModal','scam');
-  bg.innerHTML='<div class="modal"><div class="big-emoji">🪙</div>'+
-   '<h2 style="text-align:center;margin:6px 0 8px">你還沒有 '+coin+'！</h2>'+
-   '<p style="text-align:center">這個活動要「持有 '+coin+'」才能領取。<br>先回交易頁用台幣買一點 <b>'+coin+'</b>，再回來參加吧 😉</p>'+
-   '<button class="btn" style="width:100%;margin-top:10px" onclick="closeModal()">好，我去買 '+coin+'</button></div>';
-}
-function phishSubmit(variant){
-  /* ★ 前端完全不讀取、也不送出任何輸入框／合約框的內容；後端只記錄
-     「這位同學完成了這個動作」並套用遊戲內後果，全程不收集任何密碼。 */
-  closeModal();
-  api({action:'phishSubmit',sid:SESS.sid,token:SESS.token,variant:variant}).then(function(r){
-    r=r||{};
-    if(!r.ok && r.error==='nohold'){ needCoinModal(r.need||'該幣'); return; }
-    if(!r.ok){ alert(r.error||'發生錯誤，請稍後再試'); return; }
-    openReveal(variant, r);
-    loadHistory(); refresh();
-  });
-}
-function openReveal(variant, r){
-  var already=r.already;
-  var coin=r.coin||(variant==='btc'?'BTC':(variant==='eth'?'ETH':'USDT'));
-  var bg=modalBg('revealModal','reveal');
-  var lossLine = (!already && r.lost>0)
-    ? '<div class="xcard" style="margin:10px 0;background:var(--surface-2)"><b class="neg">💸 被偷走的資產（'+(r.pct||30)+'%，拿不回來）</b>'+
-      '<ul style="margin:8px 0 0;padding-left:1.1em;font-size:.9rem;color:var(--text)"><li>'+coin+'：<b class="neg">'+q8(r.lost)+' '+coin+'</b></li></ul>'+
-      '<p class="faint" style="margin:8px 0 0">換算約 '+twd(r.lostTWD||0)+'</p></div>'
-    : '';
-  var intro, extra;
-  if(already){ intro='<p class="muted">你剛才已經被騙過一次了，這次沒有再被扣款。</p>'; extra=''; }
-  else if(variant==='btc'){
-    intro='<p>你剛剛為了「領 BTC」，先做了一個「選出大久校長」的驗證、又把自己的<b>學號和 PIN</b> 填進那個頁面——<b>恭喜你，成為了詐騙集團的幫手</b> 🎉。你不但幫他們證明這個帳號是真人，還把帳號密碼交了出去，接著他們就把你的 BTC 搬走了。</p>'+
-      '<div class="xcard" style="margin:10px 0;background:var(--warn-soft);border-color:var(--warn)"><p style="margin:0;font-size:.92rem">🎭 <b>詐騙連「只有明道人才認得的校長」都設計進驗證，就是要讓你更相信「這一定是學校辦的」。</b>頁面越貼近你、細節越像，越要小心——<strong>看起來正規、很懂你 ≠ 它是真的</strong>。</p></div>';
-    extra='<li>冒用<strong>明道中學／校長</strong>的名義取得你的信任（學校不會這樣發幣）</li><li>要你把<strong>學號／PIN 填進不明頁面</strong>「驗證身分」——這就是帳號被盜的那一刻</li>';
-  } else if(variant==='eth'){
-    intro='<p>你剛剛把自己的<b>學號和 PIN 填進一份看不懂的智能合約</b>、還按下「執行」——那份合約其實寫著「授權對方動用、把你的 ETH 全部轉走」。你等於親手把帳號密碼和錢包鑰匙一起交了出去。</p>';
-    extra='<li>把<strong>學號／PIN 填進看不懂的合約</strong>再送出 ＝ 帳密直接交給對方</li><li>同意／執行一份沒讀懂的合約（approve 授權）＝ <strong>盲簽</strong>，是 Web3 最常見的盜領手法</li>';
-  } else {
-    intro='<p>你剛剛按下「領取」的那一刻，你的帳戶就被詐騙集團清掉了一大筆。那個「免費領錢」的廣告從頭到尾都是假的。</p>';
-    extra='<li>要你在<strong>不明頁面輸入帳號／PIN</strong>去「驗證身分」</li>';
-  }
-  bg.innerHTML='<div class="modal"><div class="big-emoji">💀</div>'+
-   '<h2 style="text-align:center;color:var(--danger);margin:6px 0 10px">你，被詐騙了。</h2>'+
-   intro + lossLine +
-   '<div class="xcard" style="margin:12px 0;background:var(--surface-2)"><b>🔎 回頭看，破綻其實很明顯：</b>'+
-   '<ul style="margin:8px 0 0;padding-left:1.1em;color:var(--text-soft);font-size:.9rem">'+
-   '<li>「免費送錢」「限時」「名額有限」——先勾貪念、再逼你急</li>'+
-   extra +
-   '<li>來源根本不是你原本信任的系統</li></ul></div>'+
-   '<p class="faint">👨‍🏫 這是資安課的真實體驗：錢是虛擬的，被扣是為了讓你親身記住這感覺。真正的學校或官方不會這樣發幣——<strong>詐騙最愛冒用你信任的名義</strong>。而且這些頁面根本沒讀取你打的字，它要的只是你「肯做這個動作」。</p>'+
-   '<button class="btn" style="width:100%;margin-top:6px" onclick="closeModal()">我記住了</button></div>';
-}
-function closeModal(){['scamModal','revealModal'].forEach(function(id){var e=document.getElementById(id);if(e)e.remove();});}
-
-/* ================= 老師控制台 ================= */
-var TPW='';
-function teacherLogin(){
-  clearMsg('tMsg');
-  TPW=document.getElementById('tpw').value;
-  api({action:'teacherLogin',teacherPassword:TPW}).then(function(r){
-    if(!r.ok){showMsg('tMsg',r.error||'密碼錯誤');return;}
-    document.getElementById('tLogin').classList.add('hide');
-    document.getElementById('tPanel').classList.remove('hide');
-    paintSettings(r.settings);
-  });
-}
-function paintSettings(S){
-  function on(k){return String(S[k]).toUpperCase()==='TRUE';}
-  document.getElementById('tTrade').textContent=on('tradingOpen')?'🟢 開放':'🔴 關閉';
-  document.getElementById('tE1').textContent=on('eventUsdt')?'🟢 進行中':'⚪ 關閉';
-  document.getElementById('tE2').textContent=on('eventBtc')?'🟢 進行中':'⚪ 關閉';
-  document.getElementById('tE3').textContent=on('eventEth')?'🟢 進行中':'⚪ 關閉';
-}
-function tToggle(key){
-  api({action:'teacherLogin',teacherPassword:TPW}).then(function(r){
-    if(!r.ok)return;
-    var cur=String(r.settings[key]).toUpperCase()==='TRUE';
-    api({action:'teacherSet',teacherPassword:TPW,key:key,value:cur?'FALSE':'TRUE'}).then(function(r2){
-      if(r2.ok){paintSettings(r2.settings); if(SESS)refresh();}
-    });
-  });
-}
-function teacherReport(){
-  api({action:'teacherReport',teacherPassword:TPW}).then(function(r){
-    if(!r.ok){document.getElementById('tReport').innerHTML='<p class="msg err" style="display:block">'+(r.error||'讀取失敗')+'</p>';return;}
-    document.getElementById('tReportMeta').textContent='共 '+r.total+' 人 · 已上鉤 '+r.phishedCount+' 人 · BTC '+twd(r.prices.btc)+' / ETH '+twd(r.prices.eth);
-    var rows=r.leaderboard.map(function(x,i){
-      return '<tr><td>'+(i+1)+'</td><td style="text-align:left">'+x.name+' <span class="faint">'+x.sid+'</span></td>'+
-             '<td>'+twd(x.equity)+'</td><td>'+twd(x.twd)+'</td><td>'+q8(x.usdt)+'</td><td>'+q8(x.btc)+'</td><td>'+q8(x.eth)+'</td><td>'+(x.phished?'🎣':'')+'</td></tr>';
-    }).join('');
-    document.getElementById('tReport').innerHTML=
-      '<table class="log"><thead><tr><th>#</th><th>姓名</th><th>總資產</th><th>TWD</th><th>USDT</th><th>BTC</th><th>ETH</th><th>釣</th></tr></thead><tbody>'+rows+'</tbody></table>';
-  });
-}
-
-/* ---------- 回復既有登入（同一次瀏覽器未關閉時）---------- */
-(function(){
-  try{var s=sessionStorage.getItem('xsess');if(s){var o=JSON.parse(s);SESS=o;
-    document.getElementById('hiName').textContent=o.name;document.getElementById('hiSid').textContent=o.sid;
-    api({action:'state',sid:o.sid,token:o.token}).then(function(r){
-      if(r.ok){document.getElementById('loginView').classList.add('hide');document.getElementById('appView').classList.remove('hide');
-        render(r);loadHistory();if(pollTimer)clearInterval(pollTimer);pollTimer=setInterval(refresh,(CFG.pollSeconds||20)*1000);}
-      else{logout();}
-    });
-  }}catch(e){}
-})();
-</script>
+<footer class="site">
+  資訊安全導論　陳楷翔 老師　·　教材網站（基本版草稿）
+</footer>
+<a class="teacher-fab" href="../shared/video/video-access.html" title="教師專區：需密鑰才能進入影片資源庫（六個課程共用）">🔒 教師專區<small>影片資源庫</small></a>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
 </body>
 </html>
