@@ -24,6 +24,7 @@
     <a href="index.html">🏠 課程首頁</a>
     <a href="schedule.html">📅 課程規劃（練習題目表）</a>
     <a href="functions.html">𝑓x 函式統整表</a>
+    <a href="cpp.html">⇄ C++ 對照</a>
   </div></nav>
 </header>
 
@@ -196,6 +197,8 @@ print(y)                # [1, 2, 3, 99]　←　y 被函式改變了！</code></
   </div>
   <div class="callout warn"><span class="t">⚠ 這是 APCS 除錯題最愛考的觀念</span>
   <p style="margin-bottom:0">數字、字串是<strong>不可變（immutable）</strong>型態，傳進函式後在函式裡怎麼改，都不會影響外面的原始變數。但 list 是<strong>可變（mutable）</strong>型態，函式拿到的是「同一個 list」，在函式裡用 <code>.append()</code>、<code>[i]=</code> 這種<strong>直接修改內容</strong>的操作，會反映到外面。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">C++ 可以用 <code>int &amp;x</code> 傳參考改到外面的變數；Python 傳數字進函式，怎麼改都改不到外面。 完整對照見 <a href="cpp.html#func">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s04">

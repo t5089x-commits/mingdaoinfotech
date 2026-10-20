@@ -25,6 +25,7 @@
     <a href="index.html">🏠 課程首頁</a>
     <a href="schedule.html">📅 課程規劃（練習題目表）</a>
     <a href="functions.html">𝑓x 函式統整表</a>
+    <a href="cpp.html">⇄ C++ 對照</a>
   </div></nav>
 </header>
 
@@ -110,6 +111,8 @@ n 是 0
   <p style="margin-bottom:0"><code>if x:</code> 的意思是「x 不是 0」，所以 <code>x</code> 是 <code>5</code>、<code>-1</code> 都會進去。巢狀 if 裡混著這種寫法時（官方識讀範例第 10 題），先把每個條件換成「是不是 0」再追蹤。</p></div>
   <div class="callout tip"><span class="t">🟥 跑出紅字了？先看最後一行</span>
   <p style="margin-bottom:0">寫 <code>if</code> 最常遇到的是 <code>IndentationError</code>（下一行沒縮排）和 <code>SyntaxError</code>（少了冒號、用了全形符號）。紅字只要看<strong>最後一行</strong>的錯誤種類，再看上一行寫的 <code>line 幾</code>。常見錯誤訊息整理在 <a href="unit09.html#s04">單元 9 §04 看懂錯誤訊息</a>，第一次出錯就可以先去對照。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">C++ 用 <code>{ }</code> 和 <code>else if</code>；Python 用縮排、冒號和 <code>elif</code>。 完整對照見 <a href="cpp.html#logic">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s02">
@@ -219,6 +222,8 @@ print()</code></pre>
   </script>
   <div class="callout"><span class="t">🔎 break vs continue，一次記住</span>
   <p style="margin-bottom:0"><code>break</code>：整個迴圈<strong>直接結束</strong>，後面的迴圈不再跑。<code>continue</code>：<strong>只跳過這一輪</strong>剩下的程式碼，迴圈繼續跑下一輪。兩個都只作用在<strong>最靠近它的那一層</strong>迴圈。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">Python 在 <code>for</code> 迴圈裡改 <code>i</code> 不會影響下一輪；迴圈跑完後 <code>i</code> 停在最後一個值（C++ 會停在 n）。 完整對照見 <a href="cpp.html#loop">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s03">

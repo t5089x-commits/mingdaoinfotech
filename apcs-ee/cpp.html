@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ ⇄ Python 對照表｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+    <a href="cpp.html" class="on" aria-current="page">⇄ C++ 對照</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>C++ ⇄ Python 對照表</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">學過 C++ 的同學看這裡</span>
+  <h1>C++ ⇄ Python 對照表</h1>
+  <p>你們現在每週上 C++，週六寫 Python。兩種語言長得很像，但有幾個地方規則剛好相反：寫程式會出錯，識讀題會答錯。這一頁把容易混淆的地方放在一起，每個例子的兩邊程式都實際執行過。</p>
+</section>
+
+<section class="block" id="top10">
+  <h2><span class="num">01</span>最容易被 C++ 習慣害到的 10 件事</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th><th>寫錯會怎樣</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>7 / 2</code> 是 <code>3</code></td><td><code>7 / 2</code> 是 <code>3.5</code>；要整數用 <code>7 // 2</code></td><td>輸出多了小數，Judge 判 WA</td></tr>
+        <tr><td>2</td><td><code>-7 / 2</code> 是 <code>-3</code>、<code>-7 % 2</code> 是 <code>-1</code></td><td><code>-7 // 2</code> 是 <code>-4</code>、<code>-7 % 2</code> 是 <code>1</code></td><td><strong>識讀題直接答錯</strong></td></tr>
+        <tr><td>3</td><td><code>&amp;&amp;</code>　<code>||</code>　<code>!</code></td><td><code>and</code>　<code>or</code>　<code>not</code>，而且回傳的是其中一邊的值</td><td>語法錯誤；識讀題答錯</td></tr>
+        <tr><td>4</td><td><code>1 &lt;= x &lt;= 9</code> 永遠成立（先算出 0 或 1，再拿去跟 9 比）</td><td><code>1 &lt;= x &lt;= 9</code> 就是數學的意思</td><td>判斷結果完全不同</td></tr>
+        <tr><td>5</td><td><code>i++</code>、<code>i--</code></td><td>沒有這種寫法，要寫 <code>i += 1</code></td><td>語法錯誤</td></tr>
+        <tr><td>6</td><td><code>{ }</code> 和 <code>;</code> 決定範圍</td><td>縮排和冒號 <code>:</code> 決定範圍</td><td>IndentationError，或程式跑進錯的區塊</td></tr>
+        <tr><td>7</td><td><code>else if</code></td><td><code>elif</code></td><td>語法錯誤</td></tr>
+        <tr><td>8</td><td><code>vector b = a;</code> 是複製一份</td><td><code>b = a</code> 是同一個串列，改 b 等於改 a</td><td><strong>識讀題答錯</strong></td></tr>
+        <tr><td>9</td><td><code>for</code> 迴圈裡改 <code>i</code> 會影響下一輪；迴圈結束後 <code>i</code> 是 n</td><td>改 <code>i</code> 不影響下一輪；結束後 <code>i</code> 是 n-1</td><td><strong>識讀題答錯</strong></td></tr>
+        <tr><td>10</td><td><code>char</code> 可以直接加減：<code>'A' + 1</code>、<code>c - '0'</code></td><td>字元就是字串，不能加數字：用 <code>chr(ord(c) + 1)</code>、<code>int(c)</code></td><td>TypeError</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout tip"><span class="t">💡 怎麼用這一頁</span>
+  <p style="margin-bottom:0">寫 Python 卡住、或識讀題的答案跟你想的不一樣時，先想想「是不是用 C++ 的規則在想」。下面各節依主題整理，左邊 C++、右邊 Python。</p></div>
+
+</section>
+
+<section class="block" id="io">
+  <h2><span class="num">02</span>輸入與輸出</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>要做的事</th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>讀一個整數</td><td><code>cin &gt;&gt; n;</code></td><td><code>n = int(input())</code></td></tr>
+        <tr><td>一行讀兩個整數</td><td><code>cin &gt;&gt; a &gt;&gt; b;</code></td><td><code>a, b = map(int, input().split())</code></td></tr>
+        <tr><td>讀一整行的數字</td><td>迴圈 <code>cin &gt;&gt; a[i];</code></td><td><code>a = list(map(int, input().split()))</code></td></tr>
+        <tr><td>印出、空白隔開</td><td><code>cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b &lt;&lt; endl;</code></td><td><code>print(a, b)</code></td></tr>
+        <tr><td>不換行</td><td>不寫 <code>endl</code></td><td><code>print(x, end="")</code></td></tr>
+        <tr><td>小數點後 2 位</td><td><code>printf("%.2f", x);</code></td><td><code>print(f"{x:.2f}")</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 最大的差別：cin 不管換行，input() 一次讀一整行</span>
+  <p style="margin-bottom:0">C++ 的 <code>cin &gt;&gt;</code> 會自動跳過空白和換行，數字放在同一行或分好幾行都讀得到。Python 的 <code>input()</code> 每呼叫一次就讀<strong>一整行</strong>，所以一定要照題目的輸入格式讀：同一行的用 <code>split()</code> 切開，不同行的就呼叫好幾次 <code>input()</code>。</p></div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
+    int s = 0;
+    for (int x : a) s += x;
+    cout &lt;&lt; s &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+4
+3 1 4 1
+<span class="muted">▼ 執行結果</span>
+9</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">n = int(input())
+a = list(map(int, input().split()))
+print(sum(a))</code></pre>
+    <div class="code-output show"><span class="muted">▼ 輸入（測資）</span>
+4
+3 1 4 1
+<span class="muted">▼ 執行結果</span>
+9</div>
+  </div>
+</div>
+  </div>
+
+</section>
+
+<section class="block" id="div">
+  <h2><span class="num">03</span>除法、餘數與大數字（識讀重點）</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++（int）</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>7 除以 2</td><td><code>7 / 2</code> → <code>3</code></td><td><code>7 / 2</code> → <code>3.5</code>，<code>7 // 2</code> → <code>3</code></td></tr>
+        <tr><td>-7 除以 2 的商</td><td><code>-7 / 2</code> → <code>-3</code>（往 0 靠）</td><td><code>-7 // 2</code> → <code>-4</code>（往下取整）</td></tr>
+        <tr><td>-7 除以 2 的餘數</td><td><code>-7 % 2</code> → <code>-1</code>（跟被除數同號）</td><td><code>-7 % 2</code> → <code>1</code>（跟除數同號）</td></tr>
+        <tr><td>次方</td><td><code>pow(2, 10)</code>（回傳小數）</td><td><code>2 ** 10</code> → <code>1024</code></td></tr>
+        <tr><td>整數上限</td><td><code>int</code> 約 21 億，超過會溢位</td><td>沒有上限</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    cout &lt;&lt; 7 / 2 &lt;&lt; &quot; &quot; &lt;&lt; 7.0 / 2 &lt;&lt; endl;
+    cout &lt;&lt; -7 / 2 &lt;&lt; &quot; &quot; &lt;&lt; -7 % 2 &lt;&lt; endl;
+    cout &lt;&lt; -13 / 5 &lt;&lt; &quot; &quot; &lt;&lt; -13 % 5 &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 3.5
+-3 -1
+-2 -3</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(7 // 2, 7 / 2)
+print(-7 // 2, -7 % 2)
+print(-13 // 5, -13 % 5)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+3 3.5
+-4 1
+-3 2</div>
+  </div>
+</div>
+  </div>
+  <div class="callout"><span class="t">🔎 識讀題怎麼辦</span>
+  <p style="margin-bottom:0">Python 的規則是：<code>//</code> 一律往下取整（往數線左邊），<code>%</code> 再用 <code>a == (a // b) * b + a % b</code> 算回來。除數是正數時，餘數一定落在 0～b-1。詳細說明在 <a href="unit03.html#s01">單元 3 §01</a>。</p></div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python 的整數沒有上限</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(2 ** 100)   # C++ 的 int、long long 都裝不下，Python 照算</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1267650600228229401496703205376</div>
+  </div>
+
+</section>
+
+<section class="block" id="logic">
+  <h2><span class="num">04</span>邏輯運算與條件判斷</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>且／或／非</td><td><code>&amp;&amp;</code>　<code>||</code>　<code>!</code></td><td><code>and</code>　<code>or</code>　<code>not</code></td></tr>
+        <tr><td>真／假</td><td><code>true</code>／<code>false</code>（印出來是 1／0）</td><td><code>True</code>／<code>False</code>（大寫開頭）</td></tr>
+        <tr><td>否則如果</td><td><code>else if (...) { }</code></td><td><code>elif ...:</code></td></tr>
+        <tr><td>三元運算</td><td><code>c ? a : b</code></td><td><code>a if c else b</code></td></tr>
+        <tr><td>連續比較</td><td><code>1 &lt;= x &lt;= 9</code> 是錯的寫法</td><td><code>1 &lt;= x &lt;= 9</code> 正確</td></tr>
+        <tr><td>and／or 的結果</td><td>一定是 true／false</td><td>回傳其中一邊的值：<code>3 and 5</code> 是 <code>5</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int x = 20;
+    cout &lt;&lt; (1 &lt;= x &amp;&amp; x &lt;= 9) &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; (1 &lt;= x &lt;= 9) &lt;&lt; endl;   // 先算 1&lt;=x 得 1，再算 1&lt;=9
+    cout &lt;&lt; (3 &amp;&amp; 5) &lt;&lt; &quot; &quot; &lt;&lt; (0 || 7) &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+0 1
+1 1</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">x = 20
+print(1 &lt;= x &lt;= 9)
+print(3 and 5, 0 or 7)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+False
+5 7</div>
+  </div>
+</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱</span>
+  <p style="margin-bottom:0">Python 的 <code>and</code>／<code>or</code> 不一定回傳 True／False，而是回傳「決定結果的那一邊」的值。看到 <code>print(0 or 'A')</code> 這種題目，答案是 <code>A</code>，不是 <code>True</code>。規則見 <a href="unit03.html#s02">單元 3 §02</a>。</p></div>
+
+</section>
+
+<section class="block" id="loop">
+  <h2><span class="num">05</span>迴圈</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>跑 n 次</td><td><code>for (int i = 0; i &lt; n; i++)</code></td><td><code>for i in range(n):</code></td></tr>
+        <tr><td>從 a 到 b-1</td><td><code>for (int i = a; i &lt; b; i++)</code></td><td><code>for i in range(a, b):</code></td></tr>
+        <tr><td>每次減 2</td><td><code>for (int i = 10; i &gt; 0; i -= 2)</code></td><td><code>for i in range(10, 0, -2):</code></td></tr>
+        <tr><td>走訪每個元素</td><td><code>for (int x : a)</code></td><td><code>for x in a:</code></td></tr>
+        <tr><td>do-while</td><td>有</td><td>沒有，用 <code>while True:</code> 加 <code>break</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 兩個識讀陷阱</span>
+  <p style="margin-bottom:0">① C++ 在 <code>for</code> 裡改 <code>i</code>，下一輪會接著改過的值跑；Python 的 <code>for i in range(...)</code> 每一輪都重新從 range 拿下一個值，裡面改 <code>i</code> 沒用。② 迴圈跑完之後，C++ 的 <code>i</code> 停在 <code>n</code>（條件不成立才離開），Python 的 <code>i</code> 停在最後一個值 <code>n-1</code>。</p></div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    for (int i = 0; i &lt; 5; i++) {
+        cout &lt;&lt; i &lt;&lt; &quot; &quot;;
+        i += 1;
+    }
+    cout &lt;&lt; endl;
+    int i;
+    for (i = 0; i &lt; 5; i++) { }
+    cout &lt;&lt; i &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+0 2 4 
+5</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">for i in range(5):
+    print(i, end=&quot; &quot;)
+    i += 1
+print()
+for i in range(5):
+    pass
+print(i)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+0 1 2 3 4 
+4</div>
+  </div>
+</div>
+  </div>
+
+</section>
+
+<section class="block" id="list">
+  <h2><span class="num">06</span>陣列（vector）與串列（list）</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>n 個 0</td><td><code>vector&lt;int&gt; a(n, 0);</code></td><td><code>a = [0] * n</code></td></tr>
+        <tr><td>加到尾端</td><td><code>a.push_back(x);</code></td><td><code>a.append(x)</code></td></tr>
+        <tr><td>長度</td><td><code>a.size()</code></td><td><code>len(a)</code></td></tr>
+        <tr><td>排序</td><td><code>sort(a.begin(), a.end());</code></td><td><code>a.sort()</code> 或 <code>sorted(a)</code></td></tr>
+        <tr><td>最後一個</td><td><code>a[a.size() - 1]</code></td><td><code>a[-1]</code></td></tr>
+        <tr><td>超出範圍</td><td>不一定報錯，可能讀到亂七八糟的值</td><td>一定出錯：<code>IndexError</code></td></tr>
+        <tr><td>n×m 二維</td><td><code>vector&lt;vector&lt;int&gt;&gt; g(n, vector&lt;int&gt;(m, 0));</code></td><td><code>g = [[0] * m for _ in range(n)]</code></td></tr>
+        <tr><td>指定給另一個變數</td><td><code>b = a;</code> 複製一份</td><td><code>b = a</code> 是同一個；複製要 <code>a[:]</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    vector&lt;int&gt; a = {1, 2, 3};
+    vector&lt;int&gt; b = a;    // 複製一份
+    b[0] = 99;
+    cout &lt;&lt; a[0] &lt;&lt; &quot; &quot; &lt;&lt; b[0] &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1 99</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">a = [1, 2, 3]
+b = a                 # 同一個串列
+b[0] = 99
+print(a[0], b[0])</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+99 99</div>
+  </div>
+</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 識讀陷阱</span>
+  <p style="margin-bottom:0">這是 C++ 同學最常栽的一題：Python 的 <code>b = a</code> 只是多一個名字指向同一個串列，改 <code>b</code> 就是改 <code>a</code>。函式傳串列進去也一樣，函式裡改元素會改到外面。見 <a href="unit05.html#s05">單元 5 §05</a>、<a href="unit07.html#s03">單元 7 §03</a>。</p></div>
+
+</section>
+
+<section class="block" id="str">
+  <h2><span class="num">07</span>字元與字串</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>字元型態</td><td><code>char c = 'A';</code></td><td>沒有字元型態，<code>'A'</code> 就是長度 1 的字串</td></tr>
+        <tr><td>下一個字母</td><td><code>char(c + 1)</code></td><td><code>chr(ord(c) + 1)</code></td></tr>
+        <tr><td>數字字元轉數字</td><td><code>c - '0'</code></td><td><code>int(c)</code></td></tr>
+        <tr><td>是不是大寫</td><td><code>isupper(c)</code></td><td><code>c.isupper()</code></td></tr>
+        <tr><td>長度</td><td><code>s.size()</code></td><td><code>len(s)</code></td></tr>
+        <tr><td>取一段</td><td><code>s.substr(起點, <strong>長度</strong>)</code></td><td><code>s[起點:<strong>終點</strong>]</code>（不含終點）</td></tr>
+        <tr><td>改一個字</td><td><code>s[0] = 'a';</code> 可以</td><td>不行，要組新字串：<code>s = 'a' + s[1:]</code></td></tr>
+        <tr><td>數字 ↔ 字串</td><td><code>to_string(n)</code>、<code>stoi(s)</code></td><td><code>str(n)</code>、<code>int(s)</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    string s = &quot;APCS&quot;;
+    s[0] = &#x27;a&#x27;;
+    char c = &#x27;A&#x27;;
+    cout &lt;&lt; s &lt;&lt; &quot; &quot; &lt;&lt; s.substr(1, 2) &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; char(c + 2) &lt;&lt; &quot; &quot; &lt;&lt; (&#x27;7&#x27; - &#x27;0&#x27;) + 1 &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+aPCS PC C 8</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">s = &quot;APCS&quot;
+s = &#x27;a&#x27; + s[1:]
+c = &#x27;A&#x27;
+print(s, s[1:3], chr(ord(c) + 2), int(&#x27;7&#x27;) + 1)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+aPCS PC C 8</div>
+  </div>
+</div>
+  </div>
+  <div class="callout warn"><span class="t">⚠ 注意 substr 和切片</span>
+  <p style="margin-bottom:0"><code>s.substr(1, 2)</code> 是「從 1 開始拿 2 個字」；Python 的 <code>s[1:3]</code> 是「從 1 到 3、不含 3」，結果一樣是 2 個字，但第二個數字的意思不同。</p></div>
+
+</section>
+
+<section class="block" id="func">
+  <h2><span class="num">08</span>函式</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>C++</th><th>Python</th></tr></thead>
+      <tbody>
+        <tr><td>定義</td><td><code>int f(int x) { return x * 2; }</code></td><td><code>def f(x):</code>　換行縮排　<code>return x * 2</code></td></tr>
+        <tr><td>沒有回傳值</td><td><code>void f()</code></td><td>不寫 <code>return</code>，回傳的是 <code>None</code></td></tr>
+        <tr><td>在函式裡改到外面的變數</td><td>傳參考 <code>int &amp;x</code></td><td>數字、字串改不到；串列的元素改得到</td></tr>
+        <tr><td>回傳兩個值</td><td><code>pair</code>、<code>struct</code></td><td><code>return a, b</code></td></tr>
+        <tr><td>交換兩個變數</td><td><code>swap(a, b);</code></td><td><code>a, b = b, a</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid cols-2 cmp">
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">C++</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+void sw(int &amp;a, int &amp;b) {
+    int t = a; a = b; b = t;
+}
+int main() {
+    int x = 1, y = 2;
+    sw(x, y);
+    cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; y &lt;&lt; endl;
+}</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+2 1</div>
+  </div>
+</div>
+<div>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">Python</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">def sw(a, b):
+    a, b = b, a      # 只換了函式裡的 a、b
+
+x, y = 1, 2
+sw(x, y)
+print(x, y)          # 外面沒變
+x, y = y, x          # 要換就直接在外面換
+print(x, y)</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+1 2
+2 1</div>
+  </div>
+</div>
+  </div>
+
+</section>
+
+<section class="block" id="exam">
+  <h2><span class="num">09</span>那考 APCS 要用哪一種？</h2>
+  <p>APCS 的程式識讀，我們報考的是 <strong>Python 題本</strong>，所以識讀一定要用 Python 的規則來想，上面標「識讀陷阱」的地方要特別小心。</p>
+  <p>程式實作雖然可以選語言，但<strong>這門課統一用 Python</strong>：範例、講解、ZeroJudge 練習和模擬考都用 Python 寫，考 APCS 實作也請用 Python 作答。C++ 留在專業課好好學，這一頁只是幫你分清楚兩邊的規則，不要混在一起用。</p>
+
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="index.html"><div class="dir">← 回課程首頁</div><div class="ttl">資電APCS週六課程</div></a>
+    <a class="next" href="unit03.html"><div class="dir">相關單元 →</div><div class="ttl">運算子大全</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

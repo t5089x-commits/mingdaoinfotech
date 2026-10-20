@@ -62,6 +62,8 @@
   schedule.html       課程規劃（練習題目表）：4 次 × 7 節、每次的回家作業
   functions.html      函式與語法統整表
   mock.html           第 4 次課線上識讀模擬考（需密碼；assets/mock.*、mock-data.js）
+  cpp.html            C++ ⇄ Python 對照表（每頁頁首分頁都有連結）
+  pretest.html        第 1 次課前測（ZeroJudge 6 題＋識讀 8 題；紙本在 assets/handouts/pretest-reading.pdf）
   教學單元（14 個，依上課順序）：
     unit01.html   APCS 是什麼？課程地圖
     unit01b.html  IDLE 操作入門
@@ -221,3 +223,11 @@
     第 4 次第 1 節加上「寫成 O( )」；第 4 次第 4 節模擬考檢討順口帶 .clear()、tuple 走訪（Q45、Q50）。
     改在 _gen/schedule.py，已重新產生。
   - 單元 5 §03 補「小括號 ( ) 是 tuple」、§05 方法表補 .clear()；函式統整表補 3 項（共 100 項）。
+
+■ v13 調整
+  - 新增 cpp.html：C++ ⇄ Python 對照表（10 件最容易混淆的事、輸入輸出、除法與餘數、邏輯、迴圈、vector／list、字元字串、函式），
+    兩邊的程式都實際編譯／執行過；所有頁面頁首新增「⇄ C++ 對照」分頁，單元 2 附、3、4、4 附、5、6、7、9 的相關段落加上連結。
+  - 新增 pretest.html 與識讀前測紙本 PDF；教師解答另外給（不放網站）。
+  - 課程規劃第 1 次課：第 2 節改成前測，第 3 節合併「輸出入與運算子」並依前測結果調整；函式統整表課次同步更新。
+  - 實作統一用 Python（cpp.html 最後一節已改）。
+  - 前測加入挑戰題：識讀 9～11 題（函式、遞迴）、ZeroJudge e357、c002（遞迴）；時間改為實作 35 分鐘＋識讀 15 分鐘。

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 1 次課前測｜明道中學 · 資電APCS週六課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/tabs.css">
+<link rel="stylesheet" href="assets/plan.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">AP</span>
+      <span>明道中學 · 資電APCS週六課程<small>115 學年度第一學期 · 資電群二年級</small></span>
+    </a>
+    <span class="spacer"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切換深淺色" title="切換深淺色">🌙</button>
+  </div>
+  <nav class="page-tabs" aria-label="課程分頁"><div class="page-tabs-inner">
+    <a href="index.html">🏠 課程首頁</a>
+    <a href="schedule.html">📅 課程規劃（練習題目表）</a>
+    <a href="functions.html">𝑓x 函式統整表</a>
+    <a href="cpp.html">⇄ C++ 對照</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs"><a href="index.html">課程首頁</a> ／ <span>第 1 次課前測</span></nav>
+  <section class="unit-hero">
+  <span class="kicker">第 1 次課　第 2 節</span>
+  <h1>第 1 次課前測</h1>
+  <p>你們高一學過 Python，這份前測是看看還記得多少。<strong>不算成績</strong>，老師會依照全班的結果，決定第 1 次課哪些地方快速帶過、哪些地方要多講。</p>
+</section>
+
+<section class="block" id="how">
+  <h2><span class="num">📋</span>前測怎麼進行</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>部分</th><th>時間</th><th>內容</th><th>怎麼作答</th></tr></thead>
+      <tbody>
+        <tr><td>A　實作</td><td>35 分鐘</td><td>ZeroJudge 基本 6 題＋挑戰 2 題，由易到難</td><td>在 IDLE 寫好、用範例測過，再上 ZeroJudge 送出（語言選 Python）</td></tr>
+        <tr><td>B　識讀</td><td>15 分鐘</td><td>基本 8 題＋挑戰 3 題，追蹤程式印出什麼</td><td>用 Google 表單作答；用紙筆追蹤，<strong>不能執行程式</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn"><span class="t">📌 規則</span>
+  <p style="margin-bottom:0">前測時不看教學網站、不查資料、不問同學，寫不出來就跳下一題。結果只用來調整上課進度，老師會記錄下來當作之後輔導的參考，不影響任何成績。</p></div>
+
+</section>
+
+<section class="block" id="partA">
+  <h2><span class="num">A</span>實作：ZeroJudge 基本 6 題＋挑戰 2 題（35 分鐘）</h2>
+  <p>依序寫，能寫幾題就寫幾題，基本題寫完再挑戰。<code>input()</code> 括號裡不要放提示文字，輸出格式要跟範例一模一樣（見 <a href="unit02b.html">單元 2 附</a>）。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>題目（按下去開啟 ZeroJudge）</th><th>會用到</th></tr></thead>
+      <tbody>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=a002" target="_blank" rel="noopener"><b>a002</b>簡易加法</a></td><td>一行讀兩個整數</td></tr>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=d050" target="_blank" rel="noopener"><b>d050</b>妳那裡現在幾點了？</a></td><td>運算、%</td></tr>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=a003" target="_blank" rel="noopener"><b>a003</b>兩光法師占卜術</a></td><td>運算＋多重判斷</td></tr>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=d498" target="_blank" rel="noopener"><b>d498</b>我不說髒話</a></td><td>迴圈</td></tr>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=a038" target="_blank" rel="noopener"><b>a038</b>數字翻轉</a></td><td>字串、開頭的 0</td></tr>
+        <tr><td>基本</td><td><a class="zj must" href="https://zerojudge.tw/ShowProblem?problemid=c299" target="_blank" rel="noopener"><b>c299</b>連號或不連號</a></td><td>串列、排序（APCS 第 1 題）</td></tr>
+        <tr><td><strong>挑戰</strong></td><td><a class="zj challenge" href="https://zerojudge.tw/ShowProblem?problemid=e357" target="_blank" rel="noopener"><b>e357</b>遞迴函數練習</a></td><td>照題目給的遞迴式寫函式</td></tr>
+        <tr><td><strong>挑戰</strong></td><td><a class="zj challenge" href="https://zerojudge.tw/ShowProblem?problemid=c002" target="_blank" rel="noopener"><b>c002</b>10696 - f91</a></td><td>遞迴裡再呼叫遞迴、讀到 0 為止</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout tip"><span class="t">💡 寫完了？</span>
+  <p style="margin-bottom:0">挑戰的兩題是遞迴，高一可能沒學過，寫不出來沒關係，不影響第 1 次課的進度安排。全部都寫完的同學舉手，老師會請你幫忙看看旁邊同學卡在哪裡。</p></div>
+
+</section>
+
+<section class="block" id="partB">
+  <h2><span class="num">B</span>識讀：接下來 15 分鐘</h2>
+  <p>識讀前測用 Google 表單作答，共 11 題單選（基本 8 題＋挑戰 3 題），<strong>限時 15 分鐘</strong>。</p>
+  <p class="pt-form"><a class="mk-form-btn" href="https://forms.gle/EzvZjek82KPLaAde7" target="_blank" rel="noopener">📝 開啟識讀前測（Google 表單）</a></p>
+  <div class="callout warn"><span class="t">📌 作答規則</span>
+  <p style="margin-bottom:0">① 只能開這個表單，<strong>不能開其他網頁、不能上網查資料</strong>。② <strong>不能用 IDLE 或任何軟體執行程式</strong>，請用紙筆追蹤，可以在計算紙上畫追蹤表。③ 不能問同學、不能用手機。④ 15 分鐘時間到就提交，寫不出來的題目可以空著。⑤ 第 9～11 題是挑戰題，用到函式和遞迴，寫不出來沒關係。</p></div>
+<div class="teacher-only pt-teacher" data-tdisplay="block">
+  <h3>👀 老師模式：題目內容（和 Google 表單相同）</h3>
+  <p>網址有加老師密鑰才看得到這一區。紙本備用：<a href="assets/handouts/pretest-reading.pdf" target="_blank" rel="noopener">📄 識讀前測紙本 PDF</a></p>
+<ol class="pt-list">
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">print(17 // 5, 17 % 5)</pre>
+    <p class="pt-opts">(A) <code>3 2</code>　(B) <code>3.4 2</code>　(C) <code>3 3</code>　(D) <code>2 3</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">print(-7 // 2, -7 % 2)</pre>
+    <p class="pt-opts">(A) <code>-3 -1</code>　(B) <code>-4 1</code>　(C) <code>-3 1</code>　(D) <code>-4 -1</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">x = 0 or 5
+y = 3 and 0
+print(x, y)</pre>
+    <p class="pt-opts">(A) <code>5 0</code>　(B) <code>True False</code>　(C) <code>0 3</code>　(D) <code>1 0</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">c = 0
+for i in range(2, 20, 3):
+    c += 1
+print(c)</pre>
+    <p class="pt-opts">(A) <code>5</code>　(B) <code>6</code>　(C) <code>7</code>　(D) <code>18</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">t = 0
+for i in range(4):
+    for j in range(i):
+        t += 1
+print(t)</pre>
+    <p class="pt-opts">(A) <code>4</code>　(B) <code>10</code>　(C) <code>6</code>　(D) <code>16</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">s = &quot;APCS2027&quot;
+print(s[2:5], s[-1])</pre>
+    <p class="pt-opts">(A) <code>PCS 7</code>　(B) <code>CS20 7</code>　(C) <code>CS2 A</code>　(D) <code>CS2 7</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">a = [1, 2, 3]
+b = a
+b.append(4)
+print(len(a), len(b))</pre>
+    <p class="pt-opts">(A) <code>3 4</code>　(B) <code>3 3</code>　(C) <code>4 4</code>　(D) <code>執行錯誤</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">n = 2027
+s = 0
+while n &gt; 0:
+    s += n % 10
+    n //= 10
+print(s)</pre>
+    <p class="pt-opts">(A) <code>7</code>　(B) <code>11</code>　(C) <code>2027</code>　(D) <code>0</code></p></li>
+</ol>
+<h3>挑戰題（第 9～11 題，寫不出來沒關係）</h3>
+<p>這三題用到函式和遞迴，高一可能沒學過，會的就寫，不會就空著。挑戰題不影響第 1 次課的進度安排。</p>
+<ol class="pt-list" start="9">
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">def f(a, n):
+    a.append(n)
+    n += 1
+    return n
+
+x = [1]
+k = 5
+k2 = f(x, k)
+print(len(x), k, k2)</pre>
+    <p class="pt-opts">(A) <code>2 6 6</code>　(B) <code>1 5 6</code>　(C) <code>2 5 6</code>　(D) <code>2 5 5</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">def f(n):
+    if n &lt;= 1:
+        return 1
+    return n + f(n - 2)
+
+print(f(7))</pre>
+    <p class="pt-opts">(A) <code>16</code>　(B) <code>28</code>　(C) <code>15</code>　(D) <code>13</code></p></li>
+  <li><p>下面的程式印出什麼？</p><pre class="workpre">def p(n):
+    if n == 0:
+        return
+    p(n - 1)
+    print(n, end=&quot; &quot;)
+    p(n - 1)
+
+p(3)</pre>
+    <p class="pt-opts">(A) <code>3 2 1</code>　(B) <code>1 2 3</code>　(C) <code>3 2 1 1 2 3</code>　(D) <code>1 2 1 3 1 2 1</code></p></li>
+</ol>
+</div>
+
+</section>
+
+<section class="block" id="after">
+  <h2><span class="num">➜</span>前測之後</h2>
+  <p>老師會依照全班的結果調整第 1 次課：大部分同學都會的部分只挑重點講，把時間留給 ZeroJudge 實作和檢討；卡住的地方再回頭講清楚。不管前測寫得如何，第 1～4 次課的內容都會用到，教學網站上每個單元都可以回去複習。</p>
+  <p>現在正在學 C++ 的同學，識讀前測如果有幾題跟你想的答案不一樣，很可能是兩種語言的規則不同，先看看 <a href="cpp.html">C++ ⇄ Python 對照表</a>。</p>
+
+</section>
+
+  <nav class="unit-nav">
+    <a class="prev" href="schedule.html"><div class="dir">← 課程規劃</div><div class="ttl">第 1 次課</div></a>
+    <a class="next" href="unit02.html"><div class="dir">前測之後 →</div><div class="ttl">變數、資料型態與輸出入</div></a>
+  </nav>
+</main>
+
+<footer class="site">
+  明道中學 · 資電APCS週六課程（APCS 程式設計能力培訓班）　115 學年度第一學期　陳楷翔 老師<br>
+  本教材網站供課堂教學使用 · 聯絡信箱 <a href="mailto:t5089x@ms.mingdao.edu.tw">t5089x@ms.mingdao.edu.tw</a>
+</footer>
+<script src="../shared/core/progress.js"></script>
+<script src="assets/progress.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

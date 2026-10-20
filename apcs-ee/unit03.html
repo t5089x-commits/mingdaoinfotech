@@ -24,6 +24,7 @@
     <a href="index.html">🏠 課程首頁</a>
     <a href="schedule.html">📅 課程規劃（練習題目表）</a>
     <a href="functions.html">𝑓x 函式統整表</a>
+    <a href="cpp.html">⇄ C++ 對照</a>
   </div></nav>
 </header>
 
@@ -81,6 +82,8 @@ print(int(-7 / 2))          # -3（int() 才是直接去掉小數）</code></pre
   </div>
   <div class="callout"><span class="t">📌 記法</span>
   <p style="margin-bottom:0">除數 <code>b</code> 是正數時，<code>a % b</code> 的結果一定落在 <code>0</code>～<code>b-1</code>，不會是負的。所以 <code>-13 % 5</code> 是 <code>2</code>，商就是 <code>(-13 - 2) // 5 = -3</code>。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">C++ 的 <code>-7 / 2</code> 是 <code>-3</code>、<code>-7 % 2</code> 是 <code>-1</code>；Python 的 <code>-7 // 2</code> 是 <code>-4</code>、<code>-7 % 2</code> 是 <code>1</code>。識讀題要用 Python 的規則算。 完整對照見 <a href="cpp.html#div">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s02">
@@ -158,6 +161,8 @@ True False
   </div>
   <div class="callout"><span class="t">🔎 右邊不用看＝不會執行</span>
   <p style="margin-bottom:0"><code>and</code> 左邊是假、<code>or</code> 左邊是真時，右邊根本不會被算（短路）。所以 <code>x != 0 and 10 / x &gt; 1</code> 在 <code>x</code> 是 0 時會直接得到 <code>False</code>，不會發生除以 0 的錯誤。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">C++ 寫 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code>，Python 寫 <code>and</code>、<code>or</code>、<code>not</code>；而且 C++ 的 <code>1 &lt;= x &lt;= 9</code> 是錯的寫法，Python 卻是對的。 完整對照見 <a href="cpp.html#logic">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s03">
@@ -207,6 +212,8 @@ print(count)        # 3</code></pre>
   </div>
   <div class="callout warn"><span class="t">⚠ 識讀常見陷阱</span>
   <p style="margin-bottom:0"><code>/=</code> 之後變數就變成<strong>小數</strong>（例如 <code>6.0</code>），印出來會多一個 <code>.0</code>；想保持整數要用 <code>//=</code>。另外 Python <strong>沒有</strong> <code>a++</code>、<code>a--</code> 這種寫法，要寫成 <code>a += 1</code>、<code>a -= 1</code>。</p></div>
+  <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
+  <p style="margin-bottom:0">Python 沒有 <code>i++</code>、<code>i--</code>，要寫 <code>i += 1</code>。 完整對照見 <a href="cpp.html#top10">C++ ⇄ Python 對照表</a>。</p></div>
 </section>
 
 <section class="block" id="s04">

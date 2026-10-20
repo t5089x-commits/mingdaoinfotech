@@ -268,3 +268,16 @@ table.bc .print { color: var(--ok); font-weight: 700; }
 .apply-note { margin: 6px 0 10px; padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; font-size: .9rem; color: var(--text); }
 .apply-note b { color: var(--warn); }
 .apply-note ul { margin: 4px 0 0; padding-left: 1.2em; }
+
+/* ---------- C++ 對照表：左右兩欄程式 ---------- */
+.grid.cmp > div { min-width: 0; }
+.grid.cmp .code-card { margin-top: 0; }
+.callout.cpp-note { border-color: var(--accent); }
+
+/* ---------- 前測：Google 表單按鈕、老師區 ---------- */
+.pt-form { margin: 12px 0; }
+.mk-form-btn { display: inline-block; padding: 10px 18px; border-radius: 10px; font-weight: 800; text-decoration: none;
+  background: var(--brand); color: #fff; border: 1px solid var(--brand); }
+.mk-form-btn:hover { background: var(--brand-strong); }
+.mk-form-btn.off { background: var(--surface-2); color: var(--text-soft); border-color: var(--border); }
+.pt-teacher { margin-top: 16px; padding: 12px 14px; border: 2px dashed var(--accent); border-radius: 12px; }

@@ -24,6 +24,7 @@
     <a href="index.html">🏠 課程首頁</a>
     <a href="schedule.html">📅 課程規劃（練習題目表）</a>
     <a href="functions.html" class="on" aria-current="page">𝑓x 函式統整表</a>
+    <a href="cpp.html">⇄ C++ 對照</a>
   </div></nav>
 </header>
 
@@ -62,13 +63,13 @@
       <tbody>
         <tr><td class="name"><code>input()</code></td><td class="use">讀入一整行文字，結果一定是字串</td><td><pre class="ex">s = input()
 print(s, type(s))</pre></td><td><pre class="res"><span class="muted">輸入：42</span>
-42 &lt;class &#x27;str&#x27;&gt;</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
-        <tr><td class="name"><code>print(a, b)</code></td><td class="use">印出多個值，預設用空白隔開、最後換行</td><td><pre class="ex">print(3, 5, &#x27;ok&#x27;)</pre></td><td><pre class="res">3 5 ok</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
-        <tr><td class="name"><code>print(…, sep=…)</code></td><td class="use">指定多個值之間的分隔符號</td><td><pre class="ex">print(2026, 10, 5, sep=&#x27;/&#x27;)</pre></td><td><pre class="res">2026/10/5</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+42 &lt;class &#x27;str&#x27;&gt;</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>print(a, b)</code></td><td class="use">印出多個值，預設用空白隔開、最後換行</td><td><pre class="ex">print(3, 5, &#x27;ok&#x27;)</pre></td><td><pre class="res">3 5 ok</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>print(…, sep=…)</code></td><td class="use">指定多個值之間的分隔符號</td><td><pre class="ex">print(2026, 10, 5, sep=&#x27;/&#x27;)</pre></td><td><pre class="res">2026/10/5</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
         <tr><td class="name"><code>print(…, end=…)</code></td><td class="use">指定結尾，不換行就能接著印</td><td><pre class="ex">print(&#x27;A&#x27;, end=&#x27;&#x27;)
-print(&#x27;B&#x27;)</pre></td><td><pre class="res">AB</pre></td><td class="wk">第 1 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button></div></td></tr>
+print(&#x27;B&#x27;)</pre></td><td><pre class="res">AB</pre></td><td class="wk">第 1 次<br>第 3 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="19" title="看第 19 題">19</button></div></td></tr>
         <tr><td class="name"><code>f-string</code></td><td class="use">把變數直接嵌進字串</td><td><pre class="ex">x = 7
-print(f&#x27;[{x * 2}]&#x27;)</pre></td><td><pre class="res">[14]</pre></td><td class="wk">第 1 次<br>第 2 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button></div></td></tr>
+print(f&#x27;[{x * 2}]&#x27;)</pre></td><td><pre class="res">[14]</pre></td><td class="wk">第 1 次<br>第 3 節<div class="qchips"><button type="button" class="qchip" data-q="2" title="看第 2 題">2</button><button type="button" class="qchip" data-q="20" title="看第 20 題">20</button></div></td></tr>
         <tr><td class="name"><code>s.split()</code></td><td class="use">依空白把字串切成串列（元素還是字串）</td><td><pre class="ex">print(&#x27;3 5 7&#x27;.split())</pre></td><td><pre class="res">[&#x27;3&#x27;, &#x27;5&#x27;, &#x27;7&#x27;]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
         <tr><td class="name"><code>map(int, …)</code></td><td class="use">把每個元素都轉成整數</td><td><pre class="ex">print(list(map(int, [&#x27;3&#x27;, &#x27;5&#x27;])))</pre></td><td><pre class="res">[3, 5]</pre></td><td class="wk">第 1 次<br>第 7 節</td></tr>
         <tr><td class="name"><code>list(map(int, input().split()))</code></td><td class="use">APCS 最常見的一行讀多個整數</td><td><pre class="ex">nums = list(map(int, input().split()))
@@ -80,7 +81,7 @@ print(n * m)</pre></td><td><pre class="res"><span class="muted">輸入：3 4</sp
       <tr><td class="name"><code>print(*a)</code></td><td class="use">把串列拆開，用空白隔開印出（Judge 最常用）</td><td><pre class="ex">a = [3, 1, 4]
 print(*a)
 print(*a, sep=&#x27;,&#x27;)</pre></td><td><pre class="res">3 1 4
-3,1,4</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+3,1,4</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
         <tr><td class="name"><code>for _ in range(n): input()</code></td><td class="use">先讀 n，再讀 n 行</td><td><pre class="ex">n = int(input())
 for _ in range(n):
     a, b = map(int, input().split())
@@ -103,9 +104,9 @@ print(g)</pre></td><td><pre class="res"><span class="muted">輸入：2 3 ⏎ 1 2
     <table class="fn">
       <thead><tr><th>函式／寫法</th><th>用途</th><th>範例</th><th>執行結果</th><th>課次／識讀範例</th></tr></thead>
       <tbody>
-        <tr><td class="name"><code>int(x)</code></td><td class="use">轉成整數；字串裡要是整數</td><td><pre class="ex">print(int(&#x27;15&#x27;) + 1)</pre></td><td><pre class="res">16</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
-        <tr><td class="name"><code>str(x)</code></td><td class="use">轉成字串</td><td><pre class="ex">print(str(15) + &#x27;1&#x27;)</pre></td><td><pre class="res">151</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
-        <tr><td class="name"><code>round(x)</code></td><td class="use">取最接近的整數；剛好 .5 時取偶數</td><td><pre class="ex">print(round(3.7), round(2.5), round(3.5))</pre></td><td><pre class="res">4 2 4</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>int(x)</code></td><td class="use">轉成整數；字串裡要是整數</td><td><pre class="ex">print(int(&#x27;15&#x27;) + 1)</pre></td><td><pre class="res">16</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>str(x)</code></td><td class="use">轉成字串</td><td><pre class="ex">print(str(15) + &#x27;1&#x27;)</pre></td><td><pre class="res">151</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>round(x)</code></td><td class="use">取最接近的整數；剛好 .5 時取偶數</td><td><pre class="ex">print(round(3.7), round(2.5), round(3.5))</pre></td><td><pre class="res">4 2 4</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
         <tr><td class="name"><code>int(c) 處理每一位數</code></td><td class="use">把數字字串的每一位轉成數字相加</td><td><pre class="ex">code = &#x27;4710018&#x27;
 print(sum(int(c) for c in code))</pre></td><td><pre class="res">21</pre></td><td class="wk">第 2 次<br>第 3 節</td></tr>
         <tr><td class="name"><code>list(x)</code></td><td class="use">轉成串列</td><td><pre class="ex">print(list(range(4)))
@@ -252,8 +253,8 @@ print(cnt[0], cnt[1], cnt[13])</pre></td><td><pre class="res">3 1 2</pre></td><t
       <tbody>
         <tr><td class="name"><code>s[i]、s[i:j]</code></td><td class="use">取字元／取一段子字串</td><td><pre class="ex">s = &#x27;MINGDAO&#x27;
 print(s[0], s[1:4], s[:3])</pre></td><td><pre class="res">M ING MIN</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
-        <tr><td class="name"><code>s1 + s2</code></td><td class="use">串接字串</td><td><pre class="ex">print(&#x27;APCS&#x27; + &#x27;-&#x27; + &#x27;Py&#x27;)</pre></td><td><pre class="res">APCS-Py</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
-        <tr><td class="name"><code>s * n</code></td><td class="use">字串重複 n 次；乘 0 或 False 是空字串</td><td><pre class="ex">print(&#x27;ab&#x27; * 3, &#x27;[&#x27; + &#x27;x&#x27; * (1 &gt; 3) + &#x27;]&#x27;)</pre></td><td><pre class="res">ababab []</pre></td><td class="wk">第 1 次<br>第 2 節</td></tr>
+        <tr><td class="name"><code>s1 + s2</code></td><td class="use">串接字串</td><td><pre class="ex">print(&#x27;APCS&#x27; + &#x27;-&#x27; + &#x27;Py&#x27;)</pre></td><td><pre class="res">APCS-Py</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
+        <tr><td class="name"><code>s * n</code></td><td class="use">字串重複 n 次；乘 0 或 False 是空字串</td><td><pre class="ex">print(&#x27;ab&#x27; * 3, &#x27;[&#x27; + &#x27;x&#x27; * (1 &gt; 3) + &#x27;]&#x27;)</pre></td><td><pre class="res">ababab []</pre></td><td class="wk">第 1 次<br>第 3 節</td></tr>
         <tr><td class="name"><code>s[::-1]</code></td><td class="use">反轉字串</td><td><pre class="ex">print(&#x27;abcde&#x27;[::-1])</pre></td><td><pre class="res">edcba</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
         <tr><td class="name"><code>s.split(sep)</code></td><td class="use">依指定符號切開</td><td><pre class="ex">print(&#x27;8,9,10&#x27;.split(&#x27;,&#x27;))</pre></td><td><pre class="res">[&#x27;8&#x27;, &#x27;9&#x27;, &#x27;10&#x27;]</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
         <tr><td class="name"><code>sep.join(lst)</code></td><td class="use">把字串串列接起來</td><td><pre class="ex">print(&#x27;-&#x27;.join([&#x27;2026&#x27;, &#x27;10&#x27;, &#x27;05&#x27;]))</pre></td><td><pre class="res">2026-10-05</pre></td><td class="wk">第 2 次<br>第 4 節</td></tr>
