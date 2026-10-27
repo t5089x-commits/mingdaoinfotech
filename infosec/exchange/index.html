@@ -49,6 +49,7 @@
   table.log{width:100%;border-collapse:collapse;font-size:.86rem}
   table.log th,table.log td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:right}
   table.log th:first-child,table.log td:first-child{text-align:left}
+  table.log td.rsn{text-align:left;white-space:normal;max-width:240px;word-break:break-word;font-size:.8rem}
   .msg{padding:10px 13px;border-radius:var(--radius-sm);font-size:.9rem;margin-top:10px;display:none}
   .msg.err{background:var(--warn-soft);color:var(--warn);display:block}
   .msg.ok{background:var(--brand-soft);color:var(--brand-strong);display:block}
@@ -229,8 +230,8 @@
       <!-- 我的歷史交易紀錄 -->
       <div class="xcard">
         <h2>🧾 我的歷史交易紀錄</h2>
-        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價</th><th>金額</th></tr></thead>
-          <tbody id="histRows"><tr><td colspan="6" class="muted" style="text-align:center">讀取中…</td></tr></tbody></table>
+        <table class="log"><thead><tr><th>時間</th><th>動作</th><th>幣</th><th>數量</th><th>成交價</th><th>金額</th><th>下單理由</th></tr></thead>
+          <tbody id="histRows"><tr><td colspan="7" class="muted" style="text-align:center">讀取中…</td></tr></tbody></table>
         <p class="faint" style="margin-top:8px">包含你曾經被詐騙的紀錄（紅字 ⚠）。完整全班紀錄老師可在後台試算表查看。</p>
       </div>
     </div>
@@ -451,12 +452,13 @@ function switchTab(t){
   document.getElementById('tabBoardBtn').classList.toggle('active', t==='board');
   if(t==='board') loadBoard();
 }
+function escH(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 /* ---------- 我的歷史交易紀錄（含被詐騙） ---------- */
 function loadHistory(){
   if(!SESS)return;
   api({action:'history',sid:SESS.sid,token:SESS.token}).then(function(r){
     var tb=document.getElementById('histRows'); if(!tb)return;
-    if(!r.ok||!r.rows||!r.rows.length){tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">尚無紀錄</td></tr>';return;}
+    if(!r.ok||!r.rows||!r.rows.length){tb.innerHTML='<tr><td colspan="7" class="muted" style="text-align:center">尚無紀錄</td></tr>';return;}
     tb.innerHTML=r.rows.map(function(x){
       var note=String(x.note||'');
       var scam=note.indexOf('⚠')>=0;
@@ -464,9 +466,9 @@ function loadHistory(){
       var pf=inUsdt?usdtP(x.price):twd(x.price);
       var af=inUsdt?usdtP(x.amt):twd(x.amt);
       if(scam){
-        return '<tr style="color:var(--danger)"><td>'+x.t+'</td><td>⚠ 被詐騙</td><td>'+x.coin+'</td><td>-'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>-'+twd(x.amt)+'</td></tr>';
+        return '<tr style="color:var(--danger)"><td>'+x.t+'</td><td>⚠ 被詐騙</td><td>'+x.coin+'</td><td>-'+q8(x.qty)+'</td><td>'+twd(x.price)+'</td><td>-'+twd(x.amt)+'</td><td class="rsn faint">—</td></tr>';
       }
-      return '<tr><td>'+x.t+'</td><td>'+x.act+(inUsdt?'<span class="faint">·U</span>':'')+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+pf+'</td><td>'+af+'</td></tr>';
+      return '<tr><td>'+x.t+'</td><td>'+x.act+(inUsdt?'<span class="faint">·U</span>':'')+'</td><td>'+x.coin+'</td><td>'+q8(x.qty)+'</td><td>'+pf+'</td><td>'+af+'</td><td class="rsn">'+escH(x.reason)+'</td></tr>';
     }).join('');
   });
 }
