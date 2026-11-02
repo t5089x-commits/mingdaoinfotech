@@ -126,8 +126,118 @@ False True True
 False True</div>
   </div>
 
-  <h3><code>and</code>、<code>or</code> 回傳的是「其中一邊的值」</h3>
-  <p>兩邊都是 True／False 時，結果就跟上面的真值表一樣。但如果放的是數字或字串，<code>and</code>／<code>or</code> 回傳的是<strong>其中一邊原本的值</strong>，不一定是 True／False：</p>
+  <h3><code>and</code>、<code>or</code> 回傳的不是 True／False，是「某一邊的原值」</h3>
+  <p>先別急著背規則，<strong>自己猜一題</strong>：<code>print(3 and 5)</code> 會印出什麼？</p>
+  <div class="callout warn"><span class="t">🤔 幾乎每個人的直覺</span>
+  <p style="margin-bottom:0">3 是真、5 也是真，<code>and</code> 又是「兩個都要真」→ 想成「<code>True and True</code>」→ 很自然就猜答案是 <code>True</code>。</p></div>
+  <div class="callout tip"><span class="t">😮 其實印出的是 <code>5</code></span>
+  <p style="margin-bottom:0">不是 <code>True</code>！而且它的型別還是 <code>int</code>（<code>(3 and 5) == True</code> 會得到 <code>False</code>）。關鍵在於：Python 算 <code>and</code>／<code>or</code> 時，是<strong>從左到右一個一個判斷，而且會把「最後真正判斷到的那個運算元」整個回傳回來</strong>，不會自己幫你轉成 <code>True</code>／<code>False</code>。</p></div>
+  <p>把 <code>3 and 5</code> 的判斷過程拆開，就懂為什麼是 <code>5</code> 而不是 <code>True</code>：</p>
+  <ol style="padding-left:22px;margin:10px 0;line-height:1.9">
+    <li><code>and</code> 的意思是「<strong>兩個都要真</strong>」，所以一定先看左邊：<code>3</code> → 是真 → <span class="muted">還不能決定（萬一右邊是假，整句就變假了）</span> → 繼續往右看。</li>
+    <li>再看右邊：<code>5</code> → 也是真 → 兩邊都確認完了，<strong>就停在這裡</strong> → 回傳<strong>最後判斷到的那個值 <code>5</code></strong>。</li>
+  </ol>
+  <style>
+  .oat{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin:16px 0;overflow:hidden}
+  .oat-hd{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface-2);font-weight:800;font-size:.92rem}
+  .oat-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-bottom:1px solid var(--border)}
+  .oat-tab{font-family:var(--mono);font-size:.82rem;padding:5px 11px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text-soft);cursor:pointer}
+  .oat-tab.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+  .oat-stage{padding:30px 16px 24px;text-align:center}
+  .oat-expr{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:1.6rem;font-weight:800}
+  .oat-tok{position:relative;padding:10px 18px;border-radius:10px;border:2px solid var(--border);background:var(--surface-2);color:var(--text);transition:all .25s}
+  .oat-tok.focus{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-4px);box-shadow:0 8px 18px rgba(0,0,0,.14)}
+  .oat-tok.ret{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+  .oat-tok.dim{opacity:.35}
+  .oat-op{font-family:var(--mono);font-size:1.3rem;font-weight:800;color:var(--brand)}
+  .oat-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-family:var(--font);font-size:.7rem;font-weight:800;padding:1px 9px;border-radius:999px;white-space:nowrap}
+  .oat-badge.t{background:var(--ok);color:#fff}
+  .oat-badge.f{background:var(--danger);color:#fff}
+  .oat-ret{margin-top:20px;font-family:var(--mono);font-size:1rem;color:var(--text-soft);min-height:1.6em}
+  .oat-ret b{font-size:1.4rem;color:var(--ok)}
+  .oat-cap{padding:14px 16px;border-top:1px solid var(--border);background:var(--surface-2);font-size:.9rem;line-height:1.8;color:var(--text);min-height:3.4em}
+  .oat-cap code{font-family:var(--mono)}
+  .oat-ctrl{display:flex;gap:8px;align-items:center;padding:12px 14px;border-top:1px solid var(--border);flex-wrap:wrap}
+  .oat-btn{font-family:var(--font);font-size:.9rem;font-weight:700;padding:8px 16px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);cursor:pointer}
+  .oat-btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  .oat-btn:disabled{opacity:.4;cursor:default}
+  .oat-step{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--text-faint)}
+  </style>
+  <div class="oat" id="oatTrace">
+    <div class="oat-hd">▶ 動手跑一遍：按「下一步」看 Python 怎麼一步步判斷</div>
+    <div class="oat-tabs" data-role="tabs"></div>
+    <div class="oat-stage">
+      <div class="oat-expr" data-role="expr"></div>
+      <div class="oat-ret" data-role="ret"></div>
+    </div>
+    <div class="oat-cap" data-role="cap"></div>
+    <div class="oat-ctrl">
+      <button type="button" class="oat-btn" data-a="prev">◀ 上一步</button>
+      <button type="button" class="oat-btn primary" data-a="next">下一步 ▶</button>
+      <button type="button" class="oat-btn" data-a="reset">↺ 重來</button>
+      <span class="oat-step" data-role="stepno"></span>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var root=document.getElementById('oatTrace'); if(!root)return;
+    var EX=[
+      {k:'3 and 5',a:'3',b:'5',op:'and',at:true, bt:true},
+      {k:'0 and 5',a:'0',b:'5',op:'and',at:false,bt:true},
+      {k:'3 or 5', a:'3',b:'5',op:'or', at:true, bt:true},
+      {k:'0 or 5', a:'0',b:'5',op:'or', at:false,bt:true}
+    ];
+    var exIdx=0,step=0,steps=[];
+    var tabsEl=root.querySelector('[data-role=tabs]'),exprEl=root.querySelector('[data-role=expr]'),
+        retEl=root.querySelector('[data-role=ret]'),capEl=root.querySelector('[data-role=cap]'),
+        stepnoEl=root.querySelector('[data-role=stepno]');
+    function tb(v){return v?'真':'假';}
+    function build(ex){
+      var s=[];
+      s.push({foc:null,a:null,b:null,cap:'整句是 <code>'+ex.a+' '+ex.op+' '+ex.b+'</code>。Python 會<strong>從左到右</strong>一個一個判斷。按「下一步」開始。',ret:null});
+      s.push({foc:'a',a:ex.at,b:null,cap:'先看<strong>左邊</strong>：<code>'+ex.a+'</code> → '+(ex.at?'不是 0／空 → <strong>是真</strong>':'是 0 → <strong>是假</strong>'),ret:null});
+      var sc=(ex.op==='and'&&!ex.at)||(ex.op==='or'&&ex.at);
+      if(sc){
+        var w=ex.op==='and'?'<code>and</code> 只要有一邊是假，整句就<strong>不可能真</strong>':'<code>or</code> 只要有一邊是真，整句就<strong>一定真</strong>';
+        s.push({foc:'a',a:ex.at,b:null,dimB:true,cap:w+' → <strong>右邊不用看（短路）</strong> → 停在左邊，回傳 <code>'+ex.a+'</code>。',ret:{v:ex.a,from:'a'}});
+      }else{
+        var w2=ex.op==='and'?'左邊是真，<strong>還不能決定</strong>（萬一右邊是假，整句就假）→ 得繼續看右邊':'左邊是假，<strong>還不能決定</strong>（右邊若為真，整句就真）→ 得繼續看右邊';
+        s.push({foc:'a',a:ex.at,b:null,cap:w2+'。',ret:null});
+        s.push({foc:'b',a:ex.at,b:ex.bt,cap:'再看<strong>右邊</strong>：<code>'+ex.b+'</code> → '+(ex.bt?'是真':'是假')+'。兩邊都看完了，<strong>停在右邊</strong> → 回傳最後判斷到的 <code>'+ex.b+'</code>。',ret:{v:ex.b,from:'b'}});
+      }
+      return s;
+    }
+    function renderTabs(){tabsEl.innerHTML=EX.map(function(e,i){return '<button type="button" class="oat-tab'+(i===exIdx?' on':'')+'" data-i="'+i+'">'+e.k+'</button>';}).join('');}
+    function render(){
+      var ex=EX[exIdx],st=steps[step];
+      var aCls='oat-tok',bCls='oat-tok';
+      if(st.foc==='a')aCls+=' focus'; if(st.foc==='b')bCls+=' focus';
+      if(st.dimB)bCls+=' dim';
+      if(st.ret){if(st.ret.from==='a')aCls+=' ret';else bCls+=' ret';}
+      var aB=(st.a!=null)?'<span class="oat-badge '+(st.a?'t':'f')+'">'+tb(st.a)+'</span>':'';
+      var bB=(st.b!=null)?'<span class="oat-badge '+(st.b?'t':'f')+'">'+tb(st.b)+'</span>':'';
+      exprEl.innerHTML='<span class="'+aCls+'">'+aB+ex.a+'</span><span class="oat-op">'+ex.op+'</span><span class="'+bCls+'">'+bB+ex.b+'</span>';
+      retEl.innerHTML=st.ret?('回傳 → <b>'+st.ret.v+'</b>　<span style="color:var(--text-faint);font-size:.8rem">（是原本那個值，不是 True／False）</span>'):'';
+      capEl.innerHTML=st.cap;
+      stepnoEl.textContent='第 '+(step+1)+' / '+steps.length+' 步';
+      root.querySelector('[data-a=prev]').disabled=(step===0);
+      root.querySelector('[data-a=next]').disabled=(step===steps.length-1);
+    }
+    function load(i){exIdx=i;steps=build(EX[i]);step=0;renderTabs();render();}
+    tabsEl.addEventListener('click',function(e){var b=e.target.closest('.oat-tab');if(b)load(+b.dataset.i);});
+    root.querySelector('.oat-ctrl').addEventListener('click',function(e){
+      var a=e.target.closest('[data-a]');if(!a)return;var k=a.dataset.a;
+      if(k==='next'&&step<steps.length-1)step++;else if(k==='prev'&&step>0)step--;else if(k==='reset')step=0;
+      render();
+    });
+    load(0);
+  })();
+  </script>
+  <p>換成 <code>0 and 5</code> 剛好相反：第一步看左邊 <code>0</code> → 是<strong>假</strong> → <code>and</code> 只要有一邊假、整句就不可能真 → <strong>立刻停住、回傳 <code>0</code></strong>，右邊的 <code>5</code> 連看都不會去看。所以可以濃縮成一句：</p>
+  <div class="callout"><span class="t">📌 一句話規則</span>
+  <p style="margin:0"><code>and</code>：從左往右，<strong>一遇到「假」就停、回傳那個假值</strong>；全部都真就回傳<strong>最後一個</strong>。</p>
+  <p style="margin:4px 0 0"><code>or</code>：相反，<strong>一遇到「真」就停、回傳那個真值</strong>；全部都假就回傳<strong>最後一個</strong>。</p></div>
+  <p>兩邊剛好都是 <code>True</code>／<code>False</code> 時，結果就跟上面的真值表一樣（最後停在哪一個，那個本來就是 True／False）。但只要放的是數字或字串，回傳的就是<strong>原本那個值</strong>，不一定是 True／False：</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>運算</th><th>左邊是真</th><th>左邊是假</th></tr></thead>
