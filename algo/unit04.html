@@ -32,7 +32,8 @@
   <ul>
 <li>理解鏈結串列與陣列在記憶體配置上的差異</li>
 <li>認識單向、雙向、環狀三種鏈結串列</li>
-<li>能實作節點的建立、走訪、插入</li>
+<li>能實作節點的建立、走訪、插入與刪除</li>
+<li>能說出陣列與鏈結串列各自的優缺點，知道什麼情況該用哪一個</li>
   </ul>
 </div>
 <div class="callout tip"><span class="t">💻 如何執行這些程式？</span>
@@ -64,6 +65,11 @@
 </div>
 <div class="callout warn"><span class="t">⚠ 易混淆點：prev／next 格裡放的是「位址」，不是資料本身</span>
 <p>雙向圖裡的 <code>prev</code>、<code>next</code> 看起來像是跟 <code>data</code> 平起平坐的三個「一樣的格子」，很容易誤會成「prev 格裡存的是上一筆資料的複製、next 格裡存的是下一筆資料的複製」。<b>其實不是</b>——<code>prev</code> 和 <code>next</code> 存的都只是「指標（位址）」，指向另一個節點；只有中間的 <code>data</code> 格才是真正存放這個節點資料的地方。這也是為什麼圖上把 <code>prev</code>、<code>next</code> 用不同底色標出來，跟 <code>data</code> 做區分。</p></div>
+<div class="callout tip"><span class="t">🌍 生活中的三種鏈結串列</span>
+<p><b>單向｜尋寶／解謎接力：</b>第一張紙條告訴你第二個地點，到了才拿到下一張……每張紙條只知道「下一站在哪」，別的都不知道。想到第 5 站一定要從第 1 站一路找過去，也不能往回走——這正是單向：只有一個 <code>next</code>、一定從頭開始、想往前只能重來。</p>
+<p><b>雙向｜瀏覽器的上一頁／下一頁：</b>每一頁都記得「上一頁」和「下一頁」是誰，所以前進後退都行。音樂播放器上一首／下一首、Word 的復原／重做（Ctrl+Z／Ctrl+Y）也一樣——每個節點同時有 <code>prev</code> 和 <code>next</code>。</p>
+<p style="margin-bottom:0"><b>環狀｜行車紀錄器循環錄影：</b>記憶卡錄滿後，最新畫面自動蓋掉最舊的，繞一圈繼續用——「最後」接回「最前」、空間循環利用。<span class="muted">（資工加碼：作業系統讓多個程式「輪流」用 CPU 的 round-robin 排程，也是這個結構。）</span></p>
+</div>
 
 </section><section class="block">
   <h2><span class="num">03</span>建立與走訪</h2>
@@ -110,6 +116,77 @@ int main(){
     return 0;
 }</code></pre>
 </div>
+
+<p>上面是「手動」一個一個接。但實務上你常常<b>已經有一個普通的 list</b>，這時更常見的做法是寫一個函式，讓 list <b>自動</b>變成鏈結串列——就像把排好隊的人，從頭一個接一個牽起手：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">把一般 list 轉成鏈結串列</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python"># 把一般的 list 自動變成鏈結串列
+def build_from_list(arr):
+    head = tail = None
+    for x in arr:                 # 一個一個把元素接成節點
+        node = ListNode(x)
+        if head is None:          # 第一個節點：同時是頭，也是目前的尾
+            head = tail = node
+        else:                     # 其餘：接在尾巴後面，再把尾巴往後移
+            tail.next = node
+            tail = node
+    return head
+
+data = [10, 20, 30]
+head = build_from_list(data)      # 一行就自動變成 10 -&gt; 20 -&gt; 30</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">Node* buildFromList(int arr[], int n){
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    for (int i = 0; i &lt; n; i++){                // 一個一個接成節點
+        Node* node = new Node{arr[i], nullptr};
+        if (head == nullptr) head = tail = node;  // 第一個：同時是頭也是尾
+        else { tail-&gt;next = node; tail = node; }  // 其餘：接在尾巴後面
+    }
+    return head;
+}</code></pre>
+</div>
+<h3>走訪可以拿來做什麼？算長度、找資料</h3>
+<p>「從 <code>head</code> 沿著 <code>next</code> 一直走到 <code>None</code>」這個走訪模式，幾乎所有操作都用得到。例如算長度、搜尋某個值：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">走訪的應用：算長度、搜尋</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python"># 走訪的兩個常見應用：算長度、找某個值
+def length(head):
+    count = 0
+    node = head
+    while node:                # 從 head 一直走到 None
+        count += 1
+        node = node.next
+    return count
+
+def find(head, target):
+    node = head
+    while node:
+        if node.val == target:
+            return True        # 找到了
+        node = node.next
+    return False               # 走到 None 都沒找到</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">int length(Node* head){
+    int count = 0;
+    for (Node* n = head; n != nullptr; n = n-&gt;next) count++;
+    return count;
+}
+
+bool find(Node* head, int target){
+    for (Node* n = head; n != nullptr; n = n-&gt;next)
+        if (n-&gt;val == target) return true;
+    return false;
+}</code></pre>
+</div>
+<div class="callout"><span class="t">🔎 注意到了嗎？</span>
+<p style="margin-bottom:0">鏈結串列<b>沒有索引</b>，不能像 <code>arr[3]</code> 一步到位。想找第 k 個、或搜尋某個值，都只能從頭一個一個走 → 所以是 <b>O(n)</b>。這正是它跟陣列最關鍵的差別（最後一節會整理成一張表）。</p></div>
 </section>
 <div class="callout tip"><span class="t">💡 這裡用到的 class 是什麼？</span>
 <p><code>class</code> 是 Python 用來定義「自訂資料型態」的寫法。<code>ListNode</code> 這個 class 把「一個節點該有的東西」定義好：一個存資料的 <code>val</code>，一個存指標的 <code>next</code>。每次呼叫 <code>ListNode(1)</code>、<code>ListNode(2)</code>，就是照著這個模板<b>各自獨立產生</b>一個新的節點物件——這些物件的資料互不相干，但都遵守同一套「格式」。</p>
@@ -141,6 +218,53 @@ insert_after(head, 99)   # 在 head(值1) 後面插入 99
     node-&gt;next = newNode;
 }</code></pre>
 </div>
+
+<div class="callout warn"><span class="t">⚠ 為什麼這兩行不能對調？</span>
+<p style="margin-bottom:0"><code>new_node.next = node.next</code> 一定要在 <code>node.next = new_node</code> <b>之前</b>。如果先把 <code>node.next</code> 改成 <code>new_node</code>，<code>node</code> 原本後面那一整串就「找不到了」（斷鏈），再也接不回來。口訣：<b>先接好新節點的後面，再把前面接上來</b>。</p></div>
+<h3>刪除：讓前一個節點「跳過」它</h3>
+<p>刪除比插入更簡單——把前一個節點的 <code>next</code>「跳過」要刪的那個，它就從串列上消失了（不用搬動其他任何資料，一樣是 O(1)）：</p>
+<div class="code-card">
+  <div class="code-head">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="label">刪除某個節點</span>
+    <span class="langtabs"><button class="lang-btn active" onclick="switchLang(this,'py')">Python</button><button class="lang-btn " onclick="switchLang(this,'cpp')">C++</button></span>
+    <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span>
+  </div>
+  <pre class="lang-pane lang-py show"><code data-lang="python"># 刪除 node 後面那個節點
+def delete_after(node):
+    if node.next is not None:
+        node.next = node.next.next   # 讓 next 跳過中間那個，它就被「斷開」了
+
+# head: 1 -&gt; 99 -&gt; 2 -&gt; 3
+delete_after(head)   # 刪掉 head 後面的 99
+# 結果變成 1 -&gt; 2 -&gt; 3</code></pre><pre class="lang-pane lang-cpp "><code data-lang="cpp">void deleteAfter(Node* node){
+    if (node-&gt;next != nullptr){
+        Node* target = node-&gt;next;
+        node-&gt;next = target-&gt;next;  // 跳過 target
+        delete target;              // C++ 要自己釋放記憶體，Python 會自動回收
+    }
+}</code></pre>
+</div>
+</section>
+<section class="block">
+  <h2><span class="num">05</span>陣列 vs 鏈結串列：什麼時候用哪個？</h2>
+
+<p>這張表把整個單元串起來——同一件事，兩種結構誰比較快？</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>操作</th><th>陣列 (array)</th><th>鏈結串列 (linked list)</th></tr></thead>
+<tbody>
+<tr><td>讀取第 k 個元素</td><td><b>O(1)</b> ✅ 用索引一步到位</td><td>O(n)　要從 head 一個一個走</td></tr>
+<tr><td>在開頭插入／刪除</td><td>O(n)　後面全部要往後／往前搬</td><td><b>O(1)</b> ✅ 改指標就好</td></tr>
+<tr><td>在中間（已知位置）插入／刪除</td><td>O(n)　要搬動後面的元素</td><td><b>O(1)</b> ✅ 改指標就好</td></tr>
+<tr><td>搜尋某個值</td><td>O(n)</td><td>O(n)</td></tr>
+<tr><td>記憶體</td><td>必須連續</td><td>不必連續，但每個節點要多存一個指標</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout tip"><span class="t">📌 一句話選擇法</span>
+<p>常常要「用位置直接拿第 k 個」→ 用 <b>陣列</b>；常常在頭尾或中間「插入／刪除」→ 用 <b>鏈結串列</b>。</p>
+<p style="margin-bottom:0">其實生活中的鏈結串列很多：瀏覽器的上一頁／下一頁、音樂播放清單、文書軟體的復原／重做、作業系統管理記憶體……都是「常常插入刪除、不太需要用索引亂跳」的場景。</p></div>
 </section>
 <div class="unit-nav">
   <a href="unit03c.html"><span class="dir">← 上一單元</span>附 二維陣列與網格模擬</a>
