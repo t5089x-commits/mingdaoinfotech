@@ -163,8 +163,8 @@ False True</div>
   .oat-btn:disabled{opacity:.4;cursor:default}
   .oat-step{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--text-faint)}
   </style>
-  <div class="oat" id="oatTrace">
-    <div class="oat-hd">▶ 動手跑一遍：按「下一步」看 Python 怎麼一步步判斷</div>
+  <div class="oat" id="oatBool">
+    <div class="oat-hd">▶ 先練最單純的：兩邊都是 True／False（按「下一步」逐步判斷）</div>
     <div class="oat-tabs" data-role="tabs"></div>
     <div class="oat-stage">
       <div class="oat-expr" data-role="expr"></div>
@@ -180,22 +180,19 @@ False True</div>
   </div>
   <script>
   (function(){
-    var root=document.getElementById('oatTrace'); if(!root)return;
-    var EX=[
-      {k:'3 and 5',a:'3',b:'5',op:'and',at:true, bt:true},
-      {k:'0 and 5',a:'0',b:'5',op:'and',at:false,bt:true},
-      {k:'3 or 5', a:'3',b:'5',op:'or', at:true, bt:true},
-      {k:'0 or 5', a:'0',b:'5',op:'or', at:false,bt:true}
-    ];
+    function initOat(root, EX){
+    if(!root)return;
     var exIdx=0,step=0,steps=[];
     var tabsEl=root.querySelector('[data-role=tabs]'),exprEl=root.querySelector('[data-role=expr]'),
         retEl=root.querySelector('[data-role=ret]'),capEl=root.querySelector('[data-role=cap]'),
         stepnoEl=root.querySelector('[data-role=stepno]');
     function tb(v){return v?'真':'假';}
     function build(ex){
+      var isBool=(ex.a==='True'||ex.a==='False');
       var s=[];
       s.push({foc:null,a:null,b:null,cap:'整句是 <code>'+ex.a+' '+ex.op+' '+ex.b+'</code>。Python 會<strong>從左到右</strong>一個一個判斷。按「下一步」開始。',ret:null});
-      s.push({foc:'a',a:ex.at,b:null,cap:'先看<strong>左邊</strong>：<code>'+ex.a+'</code> → '+(ex.at?'不是 0／空 → <strong>是真</strong>':'是 0 → <strong>是假</strong>'),ret:null});
+      var lcap=isBool?'<strong>'+(ex.at?'是真':'是假')+'</strong>':(ex.at?'不是 0／空 → <strong>是真</strong>':'是 0 → <strong>是假</strong>');
+      s.push({foc:'a',a:ex.at,b:null,cap:'先看<strong>左邊</strong>：<code>'+ex.a+'</code> → '+lcap,ret:null});
       var sc=(ex.op==='and'&&!ex.at)||(ex.op==='or'&&ex.at);
       if(sc){
         var w=ex.op==='and'?'<code>and</code> 只要有一邊是假，整句就<strong>不可能真</strong>':'<code>or</code> 只要有一邊是真，整句就<strong>一定真</strong>';
@@ -217,7 +214,9 @@ False True</div>
       var aB=(st.a!=null)?'<span class="oat-badge '+(st.a?'t':'f')+'">'+tb(st.a)+'</span>':'';
       var bB=(st.b!=null)?'<span class="oat-badge '+(st.b?'t':'f')+'">'+tb(st.b)+'</span>':'';
       exprEl.innerHTML='<span class="'+aCls+'">'+aB+ex.a+'</span><span class="oat-op">'+ex.op+'</span><span class="'+bCls+'">'+bB+ex.b+'</span>';
-      retEl.innerHTML=st.ret?('回傳 → <b>'+st.ret.v+'</b>　<span style="color:var(--text-faint);font-size:.8rem">（是原本那個值，不是 True／False）</span>'):'';
+      var isBoolR=(ex.a==='True'||ex.a==='False');
+      var note=isBoolR?'　<span style="color:var(--text-faint);font-size:.8rem">（停在哪一邊，就回傳那一邊——這次剛好是布林值）</span>':'　<span style="color:var(--text-faint);font-size:.8rem">（是原本那個值，不是 True／False）</span>';
+      retEl.innerHTML=st.ret?('回傳 → <b>'+st.ret.v+'</b>'+note):'';
       capEl.innerHTML=st.cap;
       stepnoEl.textContent='第 '+(step+1)+' / '+steps.length+' 步';
       root.querySelector('[data-a=prev]').disabled=(step===0);
@@ -231,6 +230,21 @@ False True</div>
       render();
     });
     load(0);
+    }
+    var BOOL=[
+      {k:'True and False',a:'True', b:'False',op:'and',at:true, bt:false},
+      {k:'False and True',a:'False',b:'True', op:'and',at:false,bt:true },
+      {k:'True or False', a:'True', b:'False',op:'or', at:true, bt:false},
+      {k:'False or True', a:'False',b:'True', op:'or', at:false,bt:true }
+    ];
+    var NUM=[
+      {k:'3 and 5',a:'3',b:'5',op:'and',at:true, bt:true},
+      {k:'0 and 5',a:'0',b:'5',op:'and',at:false,bt:true},
+      {k:'3 or 5', a:'3',b:'5',op:'or', at:true, bt:true},
+      {k:'0 or 5', a:'0',b:'5',op:'or', at:false,bt:true}
+    ];
+    function go(){ initOat(document.getElementById('oatBool'), BOOL); initOat(document.getElementById('oatNum'), NUM); }
+    if(document.readyState!=='loading'){go();}else{document.addEventListener('DOMContentLoaded',go);}
   })();
   </script>
   <p>換成 <code>0 and 5</code> 剛好相反：第一步看左邊 <code>0</code> → 是<strong>假</strong> → <code>and</code> 只要有一邊假、整句就不可能真 → <strong>立刻停住、回傳 <code>0</code></strong>，右邊的 <code>5</code> 連看都不會去看。所以可以濃縮成一句：</p>
@@ -269,6 +283,45 @@ ok
 True False
 無名氏</div>
   </div>
+  <h3 style="margin-top:24px">▶ 進階：放「數字或字串」時，回傳的是「值」</h3>
+  <p>一樣用「下一步」跑跑看——這次兩邊不是 True／False，而是數字。注意回傳的到底是什麼：</p>
+  <div class="oat" id="oatNum">
+    <div class="oat-hd">▶ 為什麼 3 and 5 回傳 5、而不是 True？</div>
+    <div class="oat-tabs" data-role="tabs"></div>
+    <div class="oat-stage">
+      <div class="oat-expr" data-role="expr"></div>
+      <div class="oat-ret" data-role="ret"></div>
+    </div>
+    <div class="oat-cap" data-role="cap"></div>
+    <div class="oat-ctrl">
+      <button type="button" class="oat-btn" data-a="prev">◀ 上一步</button>
+      <button type="button" class="oat-btn primary" data-a="next">下一步 ▶</button>
+      <button type="button" class="oat-btn" data-a="reset">↺ 重來</button>
+      <span class="oat-step" data-role="stepno"></span>
+    </div>
+  </div>
+  <h3 style="margin-top:24px">再進階：and／or／not 混在一起</h3>
+  <p>三個邏輯運算子一起出現時，<strong>先算 <code>not</code> → 再算 <code>and</code> → 最後才 <code>or</code></strong>（就像先乘除、後加減）：</p>
+  <div class="code-card">
+    <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="label">and／or／not 混用</span>
+      <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
+    <pre><code data-lang="python">print(not True)                 # False
+print(not 0)                    # True（0 是假，not 之後變真）
+print(True and not False)       # True
+print(3 &gt; 2 and 5 &lt; 1)          # False（True and False）
+print(0 or 5 and 3)             # 3（先算 5 and 3 = 3，再 0 or 3）
+print(not (0 or 0))             # True（0 or 0 = 0 是假，not 變真）</code></pre>
+    <div class="code-output show"><span class="muted">▼ 執行結果</span>
+False
+True
+True
+False
+3
+True</div>
+  </div>
+  <div class="callout"><span class="t">💡 not 跟 and／or 不一樣</span>
+  <p style="margin-bottom:0"><code>not</code> <strong>一定</strong>回傳 <code>True</code> 或 <code>False</code>（它只問「真還假」，再給相反的布林值）；但 <code>and</code>／<code>or</code> 回傳的是<strong>其中一個運算元本身</strong>（可能是數字、字串）。完整的先後順序見本單元 <a href="#s04">§04 運算子優先順序</a>。</p></div>
   <div class="callout"><span class="t">🔎 右邊不用看＝不會執行</span>
   <p style="margin-bottom:0"><code>and</code> 左邊是假、<code>or</code> 左邊是真時，右邊根本不會被算（短路）。所以 <code>x != 0 and 10 / x &gt; 1</code> 在 <code>x</code> 是 0 時會直接得到 <code>False</code>，不會發生除以 0 的錯誤。</p></div>
   <div class="callout cpp-note"><span class="t">⇄ 學過 C++？這裡規則不一樣</span>
