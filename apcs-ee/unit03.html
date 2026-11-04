@@ -95,6 +95,8 @@ print(int(-7 / 2))          # -3（int() 才是直接去掉小數）</code></pre
       <span class="actions"><button class="code-btn" onclick="copyCode(this)">⧉ 複製</button></span></div>
     <pre><code data-lang="python">score = 78
 print(score &gt;= 60)                          # True
+print(score == 60)                          # False（score 是 78，78 ≠ 60）
+print(score != 60)                          # True （!= 是「不等於」，78 和 60 不同）
 print(score &gt;= 90 or score &gt;= 60)            # True（有一個為真就是 True）
 print(score &gt;= 60 and score &lt; 90)            # True（兩個都要為真）
 print(not (score &gt;= 60))                     # False
