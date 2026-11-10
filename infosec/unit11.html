@@ -91,13 +91,7 @@
 <p>公鑰 (e, n) 是公開的，任何人都知道。理論上如果能把 n 分解回 p × q，就能算出 φ(n)，進而算出私鑰 d —— 但當 p、q 是幾百位數的大質數時，<strong>大數質因數分解</strong>用現有電腦要花的時間長到不切實際。這正是 RSA 安全性的數學基礎。</p>
 <div class="tile"><h4><span class="ico">📄</span>RSA 數學原理教學（PDF）</h4><p>質數與模運算的補充教材，適合想深入理解 RSA 數學基礎的同學。</p><a class="video-link-btn" href="http://www.mathsgreat.com/prime_101/prime_101_018.pdf" target="_blank" rel="noopener">▶ 開啟連結 ↗</a></div>
 
-</section><div class="callout tip"><span class="t">🧭 這個單元的兩種教學方案（先都放上來，之後再挑一種調整／混用）</span>
-<p>RSA 的數字範例比較硬，可以挑一種節奏：</p>
-<div class="grid cols-2">
-  <div class="card"><h3>🅰️ 老師帶算 + 線上工具驗證</h3><p>老師在台上帶著全班一步步算過 p、q → n → φ(n) → e、d，卡住的地方（大數次方 mod）直接用線上計算機驗證，重點放在「流程看得懂」而非手算能力。</p></div>
-  <div class="card"><h3>🅱️ 小組任務：換一組更小的質數自己算</h3><p>把全班分組，每組拿到一組更小的質數（例如 p=7, q=13），自己走一遍金鑰產生 → 簽章 → 驗證的流程，最後互相驗證別組的簽章，體會「公鑰誰都能驗證，但只有私鑰持有人能簽出正確簽章」。</p></div>
-</div><p style="font-size:.85rem;color:var(--text-faint);margin-top:10px">小組任務版本更適合已經啟動 PBL 專題、想要更多動手體驗的班級；時間較緊的班級可用第一種方案。</p>
-</div>
+</section>
   <section class="block" id="sec4">
   <h2><span class="num">04</span>🎯 今天學這個，我可以拿來幹嘛？</h2>
   <p>公開金鑰到底在幹嘛？你手機、電腦裡其實已經天天在用它，只是被包裝成「看不見的背景機制」。</p>
